@@ -1,7 +1,7 @@
 {
-  "name": "api",
+  "name": "start_business_api",
   "version": "1.0.0",
-  "description": "Application server delivery marketplace",
+  "description": "Application server to sales by small entrepreneurs",
   "main": "index.js",
   "author": "Anderson Fernandes Ferreira",
   "license": "MIT",
@@ -24,6 +24,8 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "express": "^4.17.3"
+    "@prisma/client": "3.14.0",
+    "express": "^4.17.3",
+    "prisma": "^3.14.0"
   }
 }
