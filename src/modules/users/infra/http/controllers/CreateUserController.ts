@@ -1,6 +1,6 @@
+import { CreateUserService } from "@modules/users/services/CreateUserService";
 import { Request, Response } from "express";
 
-import { CreateUserService } from "../../../services/CreateUserService";
 import { UserRepository } from "../../prisma/repositories/UserRepository";
 
 export class CreateUserController {

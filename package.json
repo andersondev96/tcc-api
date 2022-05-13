@@ -6,9 +6,10 @@
   "author": "Anderson Fernandes Ferreira",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn src/server.ts"
+    "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.13",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
@@ -21,11 +22,15 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.5.1",
     "ts-node-dev": "^1.1.8",
+    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.5.5"
   },
   "dependencies": {
     "@prisma/client": "3.14.0",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.3",
+    "express-async-errors": "^3.1.1",
+    "express-errors": "^0.3.1",
     "prisma": "^3.14.0"
   }
 }
