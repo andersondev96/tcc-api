@@ -1,9 +1,10 @@
 import { User } from "@prisma/client";
-import { hash } from "bcryptjs";
+import { injectable, inject } from "tsyringe";
 
 import AppError from "@shared/errors/AppError";
 
 import { UserRepository } from "../infra/prisma/repositories/UserRepository";
+import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 
 interface IRequest {
   name: string;
@@ -11,8 +12,15 @@ interface IRequest {
   password: string;
 }
 
+@injectable()
 export class CreateUserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    @inject("UserRepository")
+    private userRepository: UserRepository,
+
+    @inject("HashProvider")
+    private hashProvider: IHashProvider
+  ) {}
 
   public async execute({ name, email, password }: IRequest): Promise<User> {
     const checkUserExists = await this.userRepository.findByMail(email);
@@ -21,7 +29,7 @@ export class CreateUserService {
       throw new AppError("Email address already used");
     }
 
-    const hashedPassword = await hash(password, 8);
+    const hashedPassword = await this.hashProvider.generateHash(password);
 
     const user = await this.userRepository.create({
       name,
