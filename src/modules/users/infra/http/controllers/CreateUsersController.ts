@@ -1,8 +1,9 @@
-import { CreateUserService } from "@modules/users/services/CreateUserService";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-export class CreateUserController {
+import { CreateUserService } from "@modules/users/services/CreateUserService";
+
+export class CreateUsersController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { name, email, password } = request.body;
 

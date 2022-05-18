@@ -1,9 +1,9 @@
-import { User } from "@prisma/client";
 import { injectable, inject } from "tsyringe";
 
 import AppError from "@shared/errors/AppError";
 
-import { UserRepository } from "../infra/prisma/repositories/UserRepository";
+import { User } from "../infra/prisma/entities/User";
+import { UsersRepository } from "../infra/prisma/repositories/UsersRepository";
 import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 
 interface IRequest {
@@ -15,8 +15,8 @@ interface IRequest {
 @injectable()
 export class CreateUserService {
   constructor(
-    @inject("UserRepository")
-    private userRepository: UserRepository,
+    @inject("UsersRepository")
+    private userRepository: UsersRepository,
 
     @inject("HashProvider")
     private hashProvider: IHashProvider

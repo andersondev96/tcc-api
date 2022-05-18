@@ -47,6 +47,8 @@
     "no-empty-function": "off",
     "lines-between-class-members": "off",
     "import/no-self-import": "off",
+    "no-constructor-return": "off",
+    "@typescript-eslint/no-var-requires": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -58,13 +60,13 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": ["module", "/^@shared/", ["parent", "sibling", "index"]],
+        "groups": ["module", "/^@/", ["parent", "sibling", "index"]],
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ],
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["**/*.spec.js"] }
+      { "devDependencies": ["**/*.spec.js", "jest.config.ts"] }
     ]
   },
   "settings": {
