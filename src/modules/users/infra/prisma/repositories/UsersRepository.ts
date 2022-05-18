@@ -1,7 +1,7 @@
+import { prisma } from "@database/prisma";
 import { ICreateUserDTO } from "@modules/users/dtos/ICreateUserDTO";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 
-import { prisma } from "../../../../../prisma";
 import { User } from "../entities/User";
 
 export class UsersRepository implements IUsersRepository {
