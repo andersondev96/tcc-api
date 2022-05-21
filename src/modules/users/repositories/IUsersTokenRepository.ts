@@ -2,12 +2,7 @@ import { ICreateUserTokenDTO } from "../dtos/ICreateUserTokenDTO";
 import { UserToken } from "../infra/prisma/entities/UserToken";
 
 export interface IUsersTokenRepository {
-  create({
-    user_id,
-    user,
-    expires_date,
-    refresh_token,
-  }: ICreateUserTokenDTO): Promise<UserToken>;
+  create(data: ICreateUserTokenDTO): Promise<UserToken>;
 
   findByUserAndRefreshToken(
     user_id: string,
