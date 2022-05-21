@@ -15,14 +15,6 @@ export class UsersTokenRepository implements IUsersTokenRepository {
     return token;
   }
 
-  async deleteById(id: string): Promise<void> {
-    await prisma.userToken.delete({
-      where: {
-        id,
-      },
-    });
-  }
-
   async findByUserAndRefreshToken(
     user_id: string,
     refresh_token: string
@@ -37,6 +29,14 @@ export class UsersTokenRepository implements IUsersTokenRepository {
     console.log(usersToken);
 
     return usersToken;
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await prisma.userToken.delete({
+      where: {
+        id,
+      },
+    });
   }
 
   async findByRefreshToken(refresh_token: string): Promise<UserToken> {
