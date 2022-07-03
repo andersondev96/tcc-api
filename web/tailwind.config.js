@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         blue: {
           800: '#30398E',
+          900: '#040721',
         },
         indigo: {
           400: '#478AD8',
