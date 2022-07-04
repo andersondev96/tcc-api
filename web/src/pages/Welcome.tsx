@@ -31,7 +31,7 @@ export const Welcome: React.FC = () => {
           <img 
             src={IconBusiness} 
             alt="" 
-            className="h-48 opacity-40"
+            className="h-44 opacity-40"
           />
         </div>
 
@@ -49,6 +49,10 @@ export const Welcome: React.FC = () => {
             Cadastrar
           </button>
         </div>
+        <div className="flex flex-col items-center justify-center mt-6">
+            <span className="font-montserrat font-light text-sm text-white">ou</span>
+            <span className="font-montserrat font-light text-sm text-white">Entre sem cadastrar</span>
+          </div>
       </div>
     </div>
   )
