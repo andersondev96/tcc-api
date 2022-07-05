@@ -68,6 +68,7 @@ export const SignUp: React.FC = () => {
                 />
   
                 <button
+                  onClick={() => navigate("/home")}
                   className="flex items-center justify-center mt-6 gap-3 bg-indigo-400 w-40 h-12 rounded hover:brightness-90 transition-opacity"
                 >
                   <FiSave size={24} color="#FFFFFF" />
