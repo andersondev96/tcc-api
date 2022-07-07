@@ -1,0 +1,88 @@
+.leaflet-popup-content-wrapper, .leaflet-popup.tip {
+  background-color: #8887E0;
+  width: 12.5rem;
+  height: 12.5rem;
+  -webkit-box-shadow: 3px -2px 5px -1px #000000; 
+  box-shadow: 3px -2px 5px -1px #000000;
+}
+
+.leaflet-popup-tip {
+background-color: #495AF5;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-container {
+  display: flex;
+  flex-direction: column;
+  width: 10.5rem;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-icon-like {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-icon-like .icon-heart:hover {
+    transition: color 0.3s;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-icon-like .icon-heart:hover {
+    color: red;
+    opacity: 0.8;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-image-container  {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-image-container .image  {
+  max-width: 2.625rem;
+  max-height: 2.625rem;
+  border-radius: 100%;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  margin-top: 0.75rem;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-description h1 {
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #FFFFFF;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-description span {
+  font-family: Montserrat, sans-serif;
+  font-weight: 300;
+  font-size: 0.825rem;
+  color: #FFFFFF;
+}
+
+.leaflet-popup-content-wrapper .leaflet-social-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.leaflet-popup-content-wrapper .leaflet-social-icons svg {
+  color: #FFFFFF;
+
+  cursor: pointer;
+  transition: filter 0.3s;
+}
+
+.leaflet-popup-content-wrapper .leaflet-social-icons svg:hover {
+  filter: brightness(0.8);
+}
