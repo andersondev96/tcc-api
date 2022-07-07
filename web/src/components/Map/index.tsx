@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
-
-import { AiFillHeart, AiOutlineCalculator, AiOutlineHeart, AiOutlineMail, AiOutlineWhatsApp } from 'react-icons/ai';
-import { fetchLocalMapBox } from '../utils/apiMapBox';
-
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { AiFillHeart, AiOutlineCalculator, AiOutlineMail, AiOutlineWhatsApp } from 'react-icons/ai';
 import { MdOutlineChatBubbleOutline } from 'react-icons/md';
-
-import CoffeeImg from '../assets/coffee.png';
+import CoffeeImg from '../../assets/coffee.png';
 import { BiWorld } from 'react-icons/bi';
-
 import './styles.css';
+import { Link } from 'react-router-dom';
 
 
 export const Map: React.FC = () => {
@@ -33,23 +29,25 @@ export const Map: React.FC = () => {
     latitude && longitude ? (
       <MapContainer
         center={[latitude, longitude]}
-        zoom={16} scrollWheelZoom={true} style={{ width: '100vw', height: '100vh' }}>
+        zoom={16} scrollWheelZoom={true} className="w-screen h-screen sm:min-w-min">
         <TileLayer
           url={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${import.meta.env.VITE_ACCESS_TOKEN_MAP_BOX}`}
         />
         <Marker position={[latitude, longitude]}>
           <Popup closeButton={false}>
             <div className="leaflet-popup-container">
-              <div className="leaflet-popup-icon-like">
-                <AiFillHeart className="icon-heart" size={18} />
-              </div>
-              <div className="leaflet-popup-image-container">
-                <img src={CoffeeImg} alt="Coffee" className="image" />
-              </div>
-              <div className="leaflet-popup-description">
-                <h1>Singhtglass Coffee</h1>
-                <span>Cafeteria</span>
-              </div>
+              <Link to="/business">
+                <div className="leaflet-popup-icon-like">
+                  <AiFillHeart className="icon-heart" size={18} />
+                </div>
+                <div className="leaflet-popup-image-container">
+                  <img src={CoffeeImg} alt="Coffee" className="image" />
+                </div>
+                <div className="leaflet-popup-description">
+                  <h1>Singhtglass Coffee</h1>
+                  <span>Cafeteria</span>
+                </div>
+              </Link>
               <div className="leaflet-social-icons">
                 <BiWorld size={16} />
                 <AiOutlineWhatsApp size={16} />
@@ -62,7 +60,7 @@ export const Map: React.FC = () => {
         </Marker>
 
         <Marker position={[-19.6020179, -43.2177258]}>
-          <Popup>
+          <Popup closeButton={false}>
             <div className="leaflet-popup-container">
               <div className="leaflet-popup-icon-like">
                 <AiFillHeart className="icon-heart" size={18} />
