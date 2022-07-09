@@ -29,24 +29,24 @@ export const Map: React.FC = () => {
     latitude && longitude ? (
       <MapContainer
         center={[latitude, longitude]}
-        zoom={16} scrollWheelZoom={true} className="w-screen h-screen sm:min-w-min">
+        zoom={16} scrollWheelZoom={true} className="w-screen h-screen mobile:min-w-min">
         <TileLayer
           url={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${import.meta.env.VITE_ACCESS_TOKEN_MAP_BOX}`}
         />
         <Marker position={[latitude, longitude]}>
           <Popup closeButton={false}>
             <div className="leaflet-popup-container">
-              <Link to="/business">
                 <div className="leaflet-popup-icon-like">
                   <AiFillHeart className="icon-heart" size={18} />
                 </div>
-                <div className="leaflet-popup-image-container">
-                  <img src={CoffeeImg} alt="Coffee" className="image" />
-                </div>
-                <div className="leaflet-popup-description">
-                  <h1>Singhtglass Coffee</h1>
-                  <span>Cafeteria</span>
-                </div>
+                <Link to="/business">
+                  <div className="leaflet-popup-image-container">
+                    <img src={CoffeeImg} alt="Coffee" className="image" />
+                  </div>
+                  <div className="leaflet-popup-description">
+                    <h1>Singhtglass Coffee</h1>
+                    <span>Cafeteria</span>
+                  </div>
               </Link>
               <div className="leaflet-social-icons">
                 <BiWorld size={16} />

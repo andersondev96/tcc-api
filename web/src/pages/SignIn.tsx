@@ -10,26 +10,26 @@ export const SignIn: React.FC = () => {
 
 
   return (
-    <div className="flex flex-row sm:flex-col justify-between sm:justify-start min-h-screen sm:w-screen">
-      <div className="flex w-1/2 h-screen sm:h-48 sm:w-full">
+    <div className="flex flex-row mobile:flex-col justify-between mobile:justify-start min-h-screen mobile:w-screen">
+      <div className="flex w-1/2 h-screen mobile:h-48 mobile:w-full">
         <img
           src={Banner}
           alt="Banner"
-          className="w-screen object-cover border-r-4 border-gray-300 sm:border-none"
+          className="w-screen object-cover border-r-4 border-gray-300 mobile:border-none"
         />
       </div>
-      <div className="flex flex-col items-center sm:items-start justify-center w-1/2 bg-blue-900 sm:bg-white sm:w-screen">
+      <div className="flex flex-col items-center mobile:items-start justify-center w-1/2 bg-blue-900 mobile:bg-white mobile:w-screen">
         <Link 
-          className="sm:hidden"
+          className="mobile:hidden"
           to="/" 
         >
           <div className="flex flex-row items-center gap-2">
             <ImArrowLeft color="#FFFFFF" />
-            <span className="font-montserrat text-white tex-sm">Voltar</span>
+            <span className="font-montserrat text-white tex-mobile">Voltar</span>
           </div>
         </Link>
-        <div className="flex flex-col bg-white h-[34.188rem] w-[28.5rem] rounded mt-4 sm:mt-0">
-          <div className="flex items-center p-8 h-[4.125rem] w-full sm:w-screen rounded-t sm:rounded-none bg-indigo-600">
+        <div className="flex flex-col bg-white h-[34.188rem] w-[28.5rem] rounded mt-4 mobile:mt-0">
+          <div className="flex items-center p-8 h-[4.125rem] w-full mobile:w-screen rounded-t mobile:rounded-none bg-indigo-600">
             <span className="font-inter font-medium uppercase text-white text-2xl">
               Login
             </span>

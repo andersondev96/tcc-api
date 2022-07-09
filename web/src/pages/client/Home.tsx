@@ -4,8 +4,8 @@ import { Range } from "../../components/Range";
 
 export const Home: React.FC = () => {
   return (
-    <div className="flex flex-row sm:flex-col-reverse justify-between">
-      <div className="flex flex-col gap-4 bg-blue-400 min-h-screen min-w-[22.125rem] py-[4.25rem] px-[3.125rem]">
+    <div className="flex flex-row mobile:flex-col-reverse justify-between">
+      <div className="flex flex-col gap-4 bg-blue-400 min-h-screen min-w-[22.125rem] py-[4.25rem] px-[3.125rem] mobile:hidden">
         <div className="flex flex-col gap-1">
           <label 
             htmlFor="category" 
@@ -15,10 +15,11 @@ export const Home: React.FC = () => {
             </label>
           <select 
             id="states"
-            name="" 
+            name="states" 
+            defaultValue="default"
             className="h-[2.75rem] px-[1.25rem] rounded border-none outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
-            <option value="default" selected disabled>Selecione uma opção</option>
+            <option value="default" disabled>Selecione uma opção</option>
             <option value="MG">Minas Gerais</option>
             <option value="SP">São Paulo</option>
           </select>
@@ -33,10 +34,11 @@ export const Home: React.FC = () => {
             </label>
           <select 
             id="city"
-            name="" 
+            name="city" 
+            defaultValue="default"
             className="h-[2.75rem] px-[1.25rem] rounded border-none outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
-            <option value="default" selected disabled>Selecione uma opção</option>
+            <option value="default" disabled>Selecione uma opção</option>
             <option value="Itabira">Itabira</option>
             <option value="João Monlevade">João Monlevade</option>
           </select>
@@ -52,9 +54,10 @@ export const Home: React.FC = () => {
           <select 
             id="categories"
             name="" 
+            defaultValue="default"
             className="h-[2.75rem] px-[1.25rem] rounded border-none outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
-            <option value="default" selected disabled>Selecione uma opção</option>
+            <option value="default" disabled>Selecione uma opção</option>
             <option value="Cafeteria">Cafeteria</option>
             <option value="Sorveteria">Sorveteria</option>
           </select>
