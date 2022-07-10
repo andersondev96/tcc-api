@@ -21,8 +21,6 @@ export const Map: React.FC = () => {
 
   useEffect(() => {
     setLocalization();
-    console.log(latitude);
-    console.log(longitude);
   }, [setLocalization]);
 
   return (
