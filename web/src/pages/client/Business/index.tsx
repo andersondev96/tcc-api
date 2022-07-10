@@ -7,10 +7,10 @@ import Coffee2 from '../../../assets/coffee-img2.jpg';
 import Coffee3 from '../../../assets/coffee-img3.jpg';
 import Coffee4 from '../../../assets/coffee-img4.jpg';
 import { Pictures } from "./components/Pictures";
-import { AiFillHeart } from "react-icons/ai";
 import { Assessments } from "./components/Assessments";
 import { AssessmentsForm } from "./components/AssessmentsForm";
 import { useState } from "react";
+import { ButtonAction } from "./components/ButtonAction";
 
 export const Business: React.FC = () => {
   const [like, setLike] = useState(false);
@@ -77,16 +77,7 @@ export const Business: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="flex items-center mobile:justify-center mobile:mt-4">
-            <button 
-              onClick={() => setLike(!like)}
-              className={`flex flex-row items-center justify-center gap-4 w-[9.375rem] h-[2.5rem] rounded hover:opacity-80 transition-opacity
-              ${like ? 'bg-red-500 border-none' : 'bg-transparent border  border-gray-900'}`}
-            >
-              <AiFillHeart size={24} color={`${like ? '#FFFFFF' : '#EB1B2E'}`} />
-              <span className={`font-inter font-light ${like ? 'text-white' : ''}`}>Favoritar</span>
-            </button>
-          </div>
+          <ButtonAction type="favorite" />
 
           <div className="flex flex-col mt-[2.25rem]">
             <div className="flex flex-col gap-[0.375rem]">

@@ -6,6 +6,8 @@ import { Card } from "./components/Card";
 import Coffee1 from "../../../assets/coffee-img1.jpg";
 
 export const Service: React.FC = () => {
+  
+
   return (
     <div className="flex flex-col">
       <Header />
