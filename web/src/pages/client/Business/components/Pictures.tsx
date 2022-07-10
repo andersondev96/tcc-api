@@ -8,7 +8,7 @@ export const Pictures: React.FC<PictureProps> = ({ image, description }) => {
       <img
         src={image}
         alt={description}
-        className="w-[6.25rem] h-16 object-fill rounded"
+        className="w-[6.25rem] h-16 object-cover rounded"
       />
   );
 }

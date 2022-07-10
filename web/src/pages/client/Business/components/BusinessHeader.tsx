@@ -3,6 +3,7 @@ import { AiFillStar, AiOutlineCalculator, AiOutlineMail, AiOutlineWhatsApp } fro
 import { BiWorld } from 'react-icons/bi';
 import { MdOutlineChatBubbleOutline } from 'react-icons/md';
 import CoffeeImg from '../../../../assets/coffee2.jpg';
+import { AssessmentsStars } from './AssessmentsStars';
 
 export const BusinessHeader: React.FC = () => {
   return (
@@ -29,11 +30,7 @@ export const BusinessHeader: React.FC = () => {
           <div className="flex flex-row mobile:flex-col items-center mt-[0.313rem] gap-[7.5rem] mobile:gap-1 mobile:mt-2">
             <div className="flex flex-row gap-[0.75rem] mobile:gap-2">
               <div className="flex flex-row items-center gap-[0.25rem]">
-                <AiFillStar size={16} color="#2F5AC7" />
-                <AiFillStar size={16} color="#2F5AC7" />
-                <AiFillStar size={16} color="#2F5AC7" />
-                <AiFillStar size={16} color="#2F5AC7" className="opacity-40" />
-                <AiFillStar size={16} color="#2F5AC7" className="opacity-40" />
+                <AssessmentsStars stars={3} />
               </div>
               <span
                 className="font-inter font-semibold text-xs text-gray-700"

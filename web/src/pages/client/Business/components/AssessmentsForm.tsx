@@ -1,4 +1,4 @@
-import { AssessmentsStars } from "./AssessmentsStars"
+import { AssessmentsStars } from "./AssessmentsStars";
 import AvatarImg from "../../../../assets/avatar.jpg";
 
 export const AssessmentsForm: React.FC = () => {

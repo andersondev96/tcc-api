@@ -10,8 +10,11 @@ import { Pictures } from "./components/Pictures";
 import { AiFillHeart } from "react-icons/ai";
 import { Assessments } from "./components/Assessments";
 import { AssessmentsForm } from "./components/AssessmentsForm";
+import { useState } from "react";
 
 export const Business: React.FC = () => {
+  const [like, setLike] = useState(false);
+
   const images = [
     { id: 1, image: Coffee1, description: "Image1" },
     { id: 2, image: Coffee2, description: "Image2" },
@@ -74,10 +77,14 @@ export const Business: React.FC = () => {
               ))}
             </div>
           </div>
-          <div>
-            <button className="flex flex-row items-center justify-center gap-4 border  border-gray-900 w-[9.375rem] h-[2.5rem] rounded hover:opacity-80 transition-opacity">
-              <AiFillHeart size={24} color="#FF0000" />
-              <span className="font-inter font-light">Favoritar</span>
+          <div className="flex items-center mobile:justify-center mobile:mt-4">
+            <button 
+              onClick={() => setLike(!like)}
+              className={`flex flex-row items-center justify-center gap-4 w-[9.375rem] h-[2.5rem] rounded hover:opacity-80 transition-opacity
+              ${like ? 'bg-red-500 border-none' : 'bg-transparent border  border-gray-900'}`}
+            >
+              <AiFillHeart size={24} color={`${like ? '#FFFFFF' : '#EB1B2E'}`} />
+              <span className={`font-inter font-light ${like ? 'text-white' : ''}`}>Favoritar</span>
             </button>
           </div>
 
