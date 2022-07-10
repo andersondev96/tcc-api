@@ -29,8 +29,6 @@ export const Card: React.FC<CardProps> = ({ image, product, stars, price }) => {
   const [displayHeart, setDisplayHeart] = useState(false);
   const [like, setLike] = useState(false);
 
-  console.log(displayHeart);
-
   return (
     <div
       className="flex flex-row items-center w-[20rem] mobile:w-[16rem] h-20 bg-gray-400  rounded"
