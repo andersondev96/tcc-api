@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { FiShoppingBag } from 'react-icons/fi';
 import { MdOutlineBusinessCenter } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import AvatarImg from '../../assets/avatar.jpg';
 
 export const Header: React.FC = () => {
@@ -12,26 +13,32 @@ export const Header: React.FC = () => {
 
           <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
             <AiOutlineHome size={32} color="#FFFFFF" />
-            <span
-              className="font-montserrat font-medium text-base text-white">
-              Home
-            </span>
+            <Link to="/home">
+              <span
+                className="font-montserrat font-medium text-base text-white">
+                Home
+              </span>
+            </Link>
           </li>
 
           <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
             <MdOutlineBusinessCenter size={32} color="#FFFFFF" />
-            <span
-              className="font-montserrat font-medium text-base text-white">
-              Negócio
-            </span>
+            <Link to="/business">
+              <span
+                className="font-montserrat font-medium text-base text-white">
+                Negócio
+              </span>
+            </Link>
           </li>
 
           <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
             <FiShoppingBag size={32} color="#FFFFFF" />
-            <span
-              className="font-montserrat font-medium text-base text-white">
-              Serviços
-            </span>
+            <Link to="/service">
+              <span
+                className="font-montserrat font-medium text-base text-white">
+                Serviços
+              </span>
+            </Link>
           </li>
         </ul>
         <ul className="flex flex-col items-center">

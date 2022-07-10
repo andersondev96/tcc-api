@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Business } from "./pages/client/Business";
+import { Service } from "./pages/client/Business/Service";
 import { Home } from "./pages/client/Home";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -13,6 +14,7 @@ export const Router: React.FC = () => {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/home" element={<Home />} />
       <Route path="/business" element={<Business />} />
+      <Route path="/service" element={<Service />} />
     </Routes>
   );
 }
