@@ -1,11 +1,25 @@
 
-import { AiFillStar, AiOutlineCalculator, AiOutlineMail, AiOutlineWhatsApp } from 'react-icons/ai';
+import { useState } from 'react';
+import {  AiOutlineCalculator, AiOutlineMail, AiOutlineWhatsApp } from 'react-icons/ai';
 import { BiWorld } from 'react-icons/bi';
 import { MdOutlineChatBubbleOutline } from 'react-icons/md';
 import CoffeeImg from '../../../../assets/coffee2.jpg';
 import { AssessmentsStars } from './AssessmentsStars';
 
+import { ModalContainer } from "../../../../components/ModalContainer";
+import { ModalCalculate } from './ModalCalculate';
+
 export const BusinessHeader: React.FC = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+  }  
+
   return (
     <div className="h-[10.375rem] mobile:h-[14.375rem] min-w-full bg-gray-200 border-b-2 border-gray-500">
       <div className="flex flex-row mobile:flex-col gap-[3.375rem] mobile:gap-2 px-[6.25rem] py-8 mobile:py-4">
@@ -68,11 +82,20 @@ export const BusinessHeader: React.FC = () => {
             <AiOutlineCalculator
               size={32}
               color="#28267C"
-              className="hover:brightness-90 transition-colors mobile:w-6"
+              className="hover:brightness-90 transition-colors cursor-pointer mobile:w-6"
+              onClick={openModal}
             />
           </div>
         </div>
       </div>
+
+      <ModalContainer
+        title="Solicitar orçamento"
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+      >
+        <ModalCalculate />
+      </ModalContainer>
     </div>
   )
 }

@@ -3,13 +3,14 @@ import { AiFillHeart, AiOutlineCalculator } from "react-icons/ai";
 
 interface ButtonActionProps {
   type: 'favorite' | 'calculate';
+  onClick?: () => void;
 }
 
-export const ButtonAction: React.FC<ButtonActionProps> = ({ type }) => {
+export const ButtonAction: React.FC<ButtonActionProps> = ({ type, onClick }) => {
   const [like, setLike] = useState(false);
 
   return (
-    <div className="flex items-center mobile:justify-center mobile:mt-4">
+    <div className="flex items-center mobile:justify-center mobile:mt-4" onClick={onClick}>
       <button
         onClick={type === 'favorite' ? () => setLike(!like) : () => {}}
         className={`flex flex-row items-center justify-center gap-4 ${type === 'favorite' ? 'w-[9.375rem]' : 'w-[12.5rem]'} h-[2.5rem] rounded hover:opacity-80 transition-opacity
