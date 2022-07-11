@@ -16,6 +16,8 @@ export const ModalContainer: React.FC<IModalContainerProps> = ({
   children
 }) => {
 
+  Modal.setAppElement('#root');
+
   const currentStyles = {
     content: {
       width: '900px',

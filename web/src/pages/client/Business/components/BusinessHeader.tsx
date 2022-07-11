@@ -8,17 +8,27 @@ import { AssessmentsStars } from './AssessmentsStars';
 
 import { ModalContainer } from "../../../../components/ModalContainer";
 import { ModalCalculate } from './ModalCalculate';
+import { ModalChat } from './ModalChat';
 
 export const BusinessHeader: React.FC = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalCalculeIsOpen, setModalCalculateIsOpen] = useState(false);
+  const [modalChatIsOpen, setModalChatIsOpen] = useState(false);
 
-  function openModal() {
-    setModalIsOpen(true);
+  function openModalCalculate() {
+    setModalCalculateIsOpen(true);
   }
 
-  function closeModal() {
-    setModalIsOpen(false);
-  }  
+  function closeModalCalculate() {
+    setModalCalculateIsOpen(false);
+  } 
+  
+  function openModalChat() {
+    setModalChatIsOpen(true);
+  }
+
+  function closeModalChat() {
+    setModalChatIsOpen(false);
+  } 
 
   return (
     <div className="h-[10.375rem] mobile:h-[14.375rem] min-w-full bg-gray-200 border-b-2 border-gray-500">
@@ -77,13 +87,14 @@ export const BusinessHeader: React.FC = () => {
               size={32}
               color="#EB1B2E"
               className="hover:brightness-90 transition-colors mobile:w-6"
+              onClick={openModalChat}
             />
 
             <AiOutlineCalculator
               size={32}
               color="#28267C"
               className="hover:brightness-90 transition-colors cursor-pointer mobile:w-6"
-              onClick={openModal}
+              onClick={openModalCalculate}
             />
           </div>
         </div>
@@ -91,11 +102,19 @@ export const BusinessHeader: React.FC = () => {
 
       <ModalContainer
         title="Solicitar orçamento"
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={modalCalculeIsOpen}
+        onRequestClose={closeModalCalculate}
       >
         <ModalCalculate />
       </ModalContainer>
+
+      <ModalContainer
+        title="Singhtglass Coffee"
+        isOpen={modalChatIsOpen}
+        onRequestClose={closeModalChat}
+      >
+        <ModalChat />
+      </ModalContainer>
     </div>
   )
-}
+} 

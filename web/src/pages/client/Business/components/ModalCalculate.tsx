@@ -1,10 +1,6 @@
 import { ImageItem } from "./ImageItem"
 
-
-
 export const ModalCalculate: React.FC = () => {
-
-
 
   return (
     <div className="flex flex-col px-[3.125rem] py-[4rem]">
