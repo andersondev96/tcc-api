@@ -67,7 +67,7 @@ export const Header: React.FC = () => {
           <div id="dropdownNavBar" className={`${!showDropdown ? 'hidden' : ''} absolute z-10 bg-white rounded shadow w-44 top-[3.125rem]`}>
             <ul className="py-1 text-sm text-gray-700"
             >
-              <Link to="#">
+              <Link to="/favorites">
                 <li className="cursor-pointer hover:bg-blue-200 hover:bg-opacity-40 transition-colors">
                   <span className="block px-4 py-2">Favoritos</span>
                 </li>
