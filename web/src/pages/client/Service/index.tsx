@@ -1,7 +1,7 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import { Header } from "../../../components/Header";
-import { BusinessHeader } from "./components/BusinessHeader";
-import { Card } from "./components/Card";
+import { BusinessHeader } from "../components/BusinessHeader";
+import { Card } from "../components/Card";
 
 import Coffee1 from "../../../assets/coffee-img1.jpg";
 

@@ -6,47 +6,51 @@ import { Link } from 'react-router-dom';
 import AvatarImg from '../../assets/avatar.jpg';
 
 export const Header: React.FC = () => {
-  const [cursorInUser, setCursorInUser] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <nav className="flex flex-row items-center px-[3.75rem] h-[4.125rem] bg-blue-400 mobile:hidden">
       <div className="flex flex-row items-center justify-between w-full">
         <ul className="flex flex-row items-center gap-12">
 
-          <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
-            <AiOutlineHome size={32} color="#FFFFFF" />
-            <Link to="/home">
+          <Link to="/home">
+            <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
+              <AiOutlineHome size={32} color="#FFFFFF" />
               <span
                 className="font-montserrat font-medium text-base text-white">
                 Home
               </span>
-            </Link>
-          </li>
+            </li>
+          </Link>
 
-          <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
-            <MdOutlineBusinessCenter size={32} color="#FFFFFF" />
-            <Link to="/business">
+          <Link to="/business">
+            <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
+              <MdOutlineBusinessCenter size={32} color="#FFFFFF" />
               <span
                 className="font-montserrat font-medium text-base text-white">
                 Negócio
               </span>
-            </Link>
-          </li>
+            </li>
+          </Link>
 
-          <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
-            <FiShoppingBag size={32} color="#FFFFFF" />
-            <Link to="/service">
+          <Link to="/service">
+            <li className="flex flex-row items-center gap-4 cursor-pointer hover:opacity-60 transition-opacity">
+              <FiShoppingBag size={32} color="#FFFFFF" />
               <span
                 className="font-montserrat font-medium text-base text-white">
                 Serviços
               </span>
-            </Link>
-          </li>
+            </li>
+          </Link>
         </ul>
-        <ul className="flex flex-col items-center">
+        <ul
+          className="flex flex-col items-center"
+          onMouseEnter={() => setShowDropdown(true)}
+          onMouseLeave={() => setShowDropdown(false)}
+        >
           <li id="dropdownNavLink" data-dropdown-toggle="dropdownNavbar" className="flex flex-col">
             <button
-              onMouseOver={() => setCursorInUser(true)}
+
               className={`flex flex-row items-center gap-6 cursor-pointer hover:opacity-60 transition-opacity`}
             >
               <img
@@ -60,10 +64,8 @@ export const Header: React.FC = () => {
               </span>
             </button>
           </li>
-          <div id="dropdownNavBar" className={`${!cursorInUser ? 'hidden' : ''} absolute z-10 bg-white rounded shadow w-44 top-14`}>
+          <div id="dropdownNavBar" className={`${!showDropdown ? 'hidden' : ''} absolute z-10 bg-white rounded shadow w-44 top-[3.125rem]`}>
             <ul className="py-1 text-sm text-gray-700"
-              onMouseOver={() => setCursorInUser(true)}
-              onMouseOut={() => setCursorInUser(false)}
             >
               <Link to="#">
                 <li className="cursor-pointer hover:bg-blue-200 hover:bg-opacity-40 transition-colors">

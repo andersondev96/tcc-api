@@ -1,4 +1,4 @@
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineCamera } from "react-icons/ai";
 import { FiSave } from "react-icons/fi";
 import { Header } from "../../../components/Header"
 
@@ -12,13 +12,21 @@ export const EditProfile: React.FC = () => {
         <span>Voltar</span>
       </button>
 
-      <div className="flex flex-col items-center p-[6.25rem]">
+      <div className="flex flex-col items-center py-[3.375rem]">
         <h1 className="font-montserrat font-medium text-2xl">Editar perfil</h1>
 
         <div className="mt-16">
           <div>
-            <input type="file" name="" id="" />
+            <label
+              htmlFor="dropzone-file"
+              className="flex flex-col justify-center items-center w-64 h-64 bg-green-300 rounded-full border-2 border-green-400 cursor-pointer hover:bg-green-400 transition-colors duration-300">
+              <div className="flex flex-col justify-center items-center pt-5 pb-6">
+                <AiOutlineCamera size={48} color="#08A358"/>
+              </div>
+              <input id="dropzone-file" type="file" className="hidden" accept="image/*" />
+            </label>
           </div>
+
           <div className="mt-16 flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <label htmlFor="">Nome</label>
@@ -73,12 +81,12 @@ export const EditProfile: React.FC = () => {
             </div>
 
             <div className="mt-4 flex flex-row items-center justify-center">
-            <button
-              className="w-[10rem] h-[3.125rem] flex flex-row items-center gap-2 justify-center rounded bg-indigo-400 font-inter text-2xl text-white uppercase hover:brightness-90 transition-colors"
-            >
-              <FiSave />
-              Salvar
-            </button>
+              <button
+                className="w-[10rem] h-[3.125rem] flex flex-row items-center gap-2 justify-center rounded bg-indigo-400 font-inter text-2xl text-white uppercase hover:brightness-90 transition-colors"
+              >
+                <FiSave />
+                Salvar
+              </button>
             </div>
 
           </div>

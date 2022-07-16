@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import Coffee1 from "../../../../assets/coffee-img1.jpg"
+import Coffee1 from "../../../assets/coffee-img1.jpg"
 
 export const ImageItem: React.FC = () => {
   const [itemSelected, setItemSelected] = useState(false);

@@ -1,6 +1,6 @@
 import { FiSend } from "react-icons/fi";
-import Coffee1 from '../../../../assets/coffee-img1.jpg';
-import UserAvatar from '../../../../assets/avatar.jpg';
+import Coffee1 from '../../../assets/coffee-img1.jpg';
+import UserAvatar from '../../../assets/avatar.jpg';
 
 export const ModalChat: React.FC = () => {
   return (

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Business } from "./pages/client/Business";
-import { Service } from "./pages/client/Business/Service";
+import { Service } from "./pages/client/Service";
 import { Home } from "./pages/client/Home";
 import { EditProfile } from "./pages/client/Profile/EditProfile";
 import { SignIn } from "./pages/SignIn";

@@ -3,10 +3,10 @@ import { useState } from 'react';
 import {  AiOutlineCalculator, AiOutlineMail, AiOutlineWhatsApp } from 'react-icons/ai';
 import { BiWorld } from 'react-icons/bi';
 import { MdOutlineChatBubbleOutline } from 'react-icons/md';
-import CoffeeImg from '../../../../assets/coffee2.jpg';
+import CoffeeImg from '../../../assets/coffee2.jpg';
 import { AssessmentsStars } from './AssessmentsStars';
 
-import { ModalContainer } from "../../../../components/ModalContainer";
+import { ModalContainer } from "../../../components/ModalContainer";
 import { ModalCalculate } from './ModalCalculate';
 import { ModalChat } from './ModalChat';
 

@@ -1,4 +1,4 @@
-import AvatarImg from "../../../../assets/avatar.jpg";
+import AvatarImg from "../../../assets/avatar.jpg";
 import { AssessmentsStars } from "./AssessmentsStars";
 
 interface AssessmentsProps {

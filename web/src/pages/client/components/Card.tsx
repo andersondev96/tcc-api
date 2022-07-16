@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AssessmentsStars } from "./AssessmentsStars";
-import { ModalContainer } from "../../../../components/ModalContainer";
-import Coffee1 from "../../../../assets/coffee-img1.jpg";
+import { ModalContainer } from "../../../components/ModalContainer";
+import Coffee1 from "../../../assets/coffee-img1.jpg";
 
 import { AiFillHeart } from "react-icons/ai";
 import { ModalService } from "./ModalService";

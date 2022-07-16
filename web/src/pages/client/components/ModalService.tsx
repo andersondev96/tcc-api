@@ -4,7 +4,7 @@ import { AssessmentsForm } from "./AssessmentsForm";
 import { AssessmentsStars } from "./AssessmentsStars";
 import { ButtonAction } from "./ButtonAction";
 
-import { ModalContainer } from "../../../../components/ModalContainer";
+import { ModalContainer } from "../../../components/ModalContainer";
 import { ModalCalculate } from './ModalCalculate';
 
 interface ModalServiceProps {

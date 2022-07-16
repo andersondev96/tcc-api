@@ -1,16 +1,16 @@
 import { Header } from "../../../components/Header";
-import { BusinessHeader } from './components/BusinessHeader';
-import { Paragraph } from "./components/Paragraph";
+import { BusinessHeader } from '../components/BusinessHeader';
+import { Paragraph } from "../components/Paragraph";
 
 import Coffee1 from '../../../assets/coffee-img1.jpg';
 import Coffee2 from '../../../assets/coffee-img2.jpg';
 import Coffee3 from '../../../assets/coffee-img3.jpg';
 import Coffee4 from '../../../assets/coffee-img4.jpg';
-import { Pictures } from "./components/Pictures";
-import { Assessments } from "./components/Assessments";
-import { AssessmentsForm } from "./components/AssessmentsForm";
+import { Pictures } from "../components/Pictures";
+import { Assessments } from "../components/Assessments";
+import { AssessmentsForm } from "../components/AssessmentsForm";
 import { useState } from "react";
-import { ButtonAction } from "./components/ButtonAction";
+import { ButtonAction } from "../components/ButtonAction";
 
 export const Business: React.FC = () => {
   const [like, setLike] = useState(false);
