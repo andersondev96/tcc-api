@@ -4,7 +4,7 @@ import { AiFillHeart, AiOutlineCalculator, AiOutlineMail, AiOutlineWhatsApp } fr
 import { MdOutlineChatBubbleOutline } from 'react-icons/md';
 import CoffeeImg from '../../assets/coffee.png';
 import { BiWorld } from 'react-icons/bi';
-import './styles.css';
+import './styles.scss';
 import { Link } from 'react-router-dom';
 
 

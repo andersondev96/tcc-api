@@ -4,7 +4,7 @@ import { Range } from "../../components/Range";
 
 export const Home: React.FC = () => {
   return (
-    <div className="flex flex-row mobile:flex-col-reverse justify-between">
+    <div className="flex flex-row mobile:flex-col-reverse">
       <div className="flex flex-col gap-4 bg-blue-400 min-h-screen min-w-[22.125rem] py-[4.25rem] px-[3.125rem] mobile:hidden">
         <div className="flex flex-col gap-1">
           <label 
@@ -77,7 +77,7 @@ export const Home: React.FC = () => {
       </div>
 
       <div>
-        <Map />
+        <Map/>
       </div>
     </div>
   );
