@@ -4,12 +4,12 @@ interface Props {
   children: ReactNode;
 }
 
-export const Td: React.FC<Props> = ({
+export const TableBody: React.FC<Props> = ({
   children
 }) => {
   return (
-    <td className="py-4 px-6">
+    <tbody>
       {children}
-    </td>
-  );
+    </tbody>
+  )
 }

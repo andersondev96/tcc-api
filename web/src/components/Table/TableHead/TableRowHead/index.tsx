@@ -4,11 +4,11 @@ interface Props {
   children: ReactNode;
 }
 
-export const Tr: React.FC<Props> = ({
+export const TableRowHead: React.FC<Props> = ({
   children
 }) => {
   return (
-    <tr>
+    <tr className="bg-black bg-opacity-5 rounded cursor-pointer">
       {children}
     </tr>
   );

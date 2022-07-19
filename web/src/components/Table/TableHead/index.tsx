@@ -4,11 +4,11 @@ interface Props {
   children: ReactNode;
 }
 
-export const Thead: React.FC<Props> = ({
+export const TableHead: React.FC<Props> = ({
   children
 }) => {
   return (
-    <thead className="font-semibold  bg-gray-300 dark:bg-gray-700 dark:text-gray-400 ">
+    <thead className="font-semibold  bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
       {children}
     </thead>
   )

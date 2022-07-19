@@ -1,11 +1,13 @@
 import { AiOutlineArrowLeft, AiOutlineEye, AiOutlineSearch } from "react-icons/ai"
 import { Header } from "../../../components/Header"
 import { Table } from "../../../components/Table"
-import { Tbody } from "../../../components/Table/Tbody"
-import { Td } from "../../../components/Table/Td"
-import { Th } from "../../../components/Table/Th"
-import { Thead } from "../../../components/Table/Thead"
-import { Tr } from "../../../components/Table/Tr"
+import { TableHead } from "../../../components/Table/TableHead";
+import { TableRowHead } from "../../../components/Table/TableHead/TableRowHead";
+import { TableHeader } from "../../../components/Table/TableHead/TableHeader";
+import { TableBody } from "../../../components/Table/TableBody";
+import { TableRowBody } from "../../../components/Table/TableBody/TableRowBody"
+import { TableData } from "../../../components/Table/TableData"
+import { PaginationTable } from "../../../components/PaginationTable";
 
 export const Budget: React.FC = () => {
   return (
@@ -33,69 +35,71 @@ export const Budget: React.FC = () => {
             </div>
 
             <Table>
-              <Thead>
-                <Tr>
-                  <Th>Data</Th>
-                  <Th>Empresa</Th>
-                  <Th>Objetivo do serviço</Th>
-                  <Th>Prazo</Th>
-                  <Th>Status</Th>
-                  <Th></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>04/07/2022</Td>
-                  <Td>Sightglass coffee</Td>
-                  <Td>Cappuccino para festa</Td>
-                  <Td>12/04/2022</Td>
-                  <Td>Finalizada</Td>
-                  <Td>
+              <TableHead>
+                <TableRowHead>
+                  <TableHeader>Data</TableHeader>
+                  <TableHeader>Empresa</TableHeader>
+                  <TableHeader>Objetivo do serviço</TableHeader>
+                  <TableHeader>Prazo</TableHeader>
+                  <TableHeader>Status</TableHeader>
+                  <TableHeader></TableHeader>
+                </TableRowHead>
+              </TableHead>
+              <TableBody>
+                <TableRowBody>
+                  <TableData>04/07/2022</TableData>
+                  <TableData>Sightglass coffee</TableData>
+                  <TableData>Cappuccino para festa</TableData>
+                  <TableData>12/04/2022</TableData>
+                  <TableData>Finalizada</TableData>
+                  <TableData>
                     <AiOutlineEye size={24} color="#547DE5" />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>04/07/2022</Td>
-                  <Td>Sightglass coffee</Td>
-                  <Td>Cappuccino para festa</Td>
-                  <Td>12/04/2022</Td>
-                  <Td>Finalizada</Td>
-                  <Td>
+                  </TableData>
+                </TableRowBody>
+                <TableRowBody>
+                  <TableData>04/07/2022</TableData>
+                  <TableData>Sightglass coffee</TableData>
+                  <TableData>Cappuccino para festa</TableData>
+                  <TableData>12/04/2022</TableData>
+                  <TableData>Finalizada</TableData>
+                  <TableData>
                     <AiOutlineEye size={24} color="#547DE5" />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>04/07/2022</Td>
-                  <Td>Sightglass coffee</Td>
-                  <Td>Cappuccino para festa</Td>
-                  <Td>12/04/2022</Td>
-                  <Td>Finalizada</Td>
-                  <Td>
+                  </TableData>
+                </TableRowBody>
+                <TableRowBody>
+                  <TableData>04/07/2022</TableData>
+                  <TableData>Sightglass coffee</TableData>
+                  <TableData>Cappuccino para festa</TableData>
+                  <TableData>12/04/2022</TableData>
+                  <TableData>Finalizada</TableData>
+                  <TableData>
                     <AiOutlineEye size={24} color="#547DE5" />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>04/07/2022</Td>
-                  <Td>Sightglass coffee</Td>
-                  <Td>Cappuccino para festa</Td>
-                  <Td>12/04/2022</Td>
-                  <Td>Finalizada</Td>
-                  <Td>
+                  </TableData>
+                </TableRowBody>
+                <TableRowBody>
+                  <TableData>04/07/2022</TableData>
+                  <TableData>Sightglass coffee</TableData>
+                  <TableData>Cappuccino para festa</TableData>
+                  <TableData>12/04/2022</TableData>
+                  <TableData>Finalizada</TableData>
+                  <TableData>
                     <AiOutlineEye size={24} color="#547DE5" />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>04/07/2022</Td>
-                  <Td>Sightglass coffee</Td>
-                  <Td>Cappuccino para festa</Td>
-                  <Td>12/04/2022</Td>
-                  <Td>Finalizada</Td>
-                  <Td>
-                    <AiOutlineEye size={24} color="#547DE5" />
-                  </Td>
-                </Tr>
-              </Tbody>
+                  </TableData>
+                </TableRowBody>
+                <TableRowBody>
+                  <TableData>04/07/2022</TableData>
+                  <TableData>Sightglass coffee</TableData>
+                  <TableData>Cappuccino para festa</TableData>
+                  <TableData>12/04/2022</TableData>
+                  <TableData>Finalizada</TableData>
+                  <TableData>
+                    <AiOutlineEye size={24} color="#547DE5" className="hover:text-blue-500" />
+                  </TableData>
+                </TableRowBody>
+              </TableBody>
             </Table>
+
+            <PaginationTable />
 
           </div>
         </div>
