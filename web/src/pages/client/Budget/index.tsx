@@ -8,8 +8,10 @@ import { TableBody } from "../../../components/Table/TableBody";
 import { TableRowBody } from "../../../components/Table/TableBody/TableRowBody"
 import { TableData } from "../../../components/Table/TableData"
 import { PaginationTable } from "../../../components/PaginationTable";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Budget: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col">
       <Header />
@@ -53,7 +55,9 @@ export const Budget: React.FC = () => {
                   <TableData>12/04/2022</TableData>
                   <TableData>Finalizada</TableData>
                   <TableData>
-                    <AiOutlineEye size={24} color="#547DE5" />
+                    <Link to="/budget/details">
+                      <AiOutlineEye size={24} color="#547DE5" />
+                    </Link>
                   </TableData>
                 </TableRowBody>
                 <TableRowBody>
@@ -63,7 +67,9 @@ export const Budget: React.FC = () => {
                   <TableData>12/04/2022</TableData>
                   <TableData>Finalizada</TableData>
                   <TableData>
-                    <AiOutlineEye size={24} color="#547DE5" />
+                    <Link to="/budget/details">
+                      <AiOutlineEye size={24} color="#547DE5" />
+                    </Link>
                   </TableData>
                 </TableRowBody>
                 <TableRowBody>
@@ -73,7 +79,9 @@ export const Budget: React.FC = () => {
                   <TableData>12/04/2022</TableData>
                   <TableData>Finalizada</TableData>
                   <TableData>
-                    <AiOutlineEye size={24} color="#547DE5" />
+                    <Link to="/budget/details">
+                      <AiOutlineEye size={24} color="#547DE5" />
+                    </Link>
                   </TableData>
                 </TableRowBody>
                 <TableRowBody>
@@ -83,7 +91,9 @@ export const Budget: React.FC = () => {
                   <TableData>12/04/2022</TableData>
                   <TableData>Finalizada</TableData>
                   <TableData>
-                    <AiOutlineEye size={24} color="#547DE5" />
+                    <Link to="/budget/details">
+                      <AiOutlineEye size={24} color="#547DE5" />
+                    </Link>
                   </TableData>
                 </TableRowBody>
                 <TableRowBody>
@@ -93,7 +103,9 @@ export const Budget: React.FC = () => {
                   <TableData>12/04/2022</TableData>
                   <TableData>Finalizada</TableData>
                   <TableData>
-                    <AiOutlineEye size={24} color="#547DE5" className="hover:text-blue-500" />
+                    <Link to="/budget/details">
+                      <AiOutlineEye size={24} color="#547DE5" />
+                    </Link>
                   </TableData>
                 </TableRowBody>
               </TableBody>
