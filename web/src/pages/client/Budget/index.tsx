@@ -9,6 +9,7 @@ import { TableRowBody } from "../../../components/Table/TableBody/TableRowBody"
 import { TableData } from "../../../components/Table/TableData"
 import { PaginationTable } from "../../../components/PaginationTable";
 import { Link, useNavigate } from "react-router-dom";
+import { PreviousPageButton } from "../components/PreviousPageButton";
 
 export const Budget: React.FC = () => {
   const navigate = useNavigate();
@@ -16,10 +17,7 @@ export const Budget: React.FC = () => {
     <div className="flex flex-col">
       <Header />
       <div className="flex flex-col p-12">
-        <button className="pb-0 flex flex-row items-center gap-2 font-montserrat font-semibold text-sm text-indigo-400">
-          <AiOutlineArrowLeft />
-          <span>Voltar</span>
-        </button>
+        <PreviousPageButton />
         <div className="flex flex-col">
           <div className="flex flex-col items-center py-[3.375rem] mobile:py-[1.75rem] mobile:items-start">
             <h1 className="font-montserrat font-medium text-2xl">Meus orçamentos</h1>

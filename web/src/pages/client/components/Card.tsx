@@ -41,7 +41,7 @@ export const Card: React.FC<CardProps> = ({ image, product, stars, price }) => {
               size={16}
               onClick={() => setLike(!like)}
               className="cursor-pointer"
-              color={`${like ? '#FF0000' : '#FFFFFF'}`}
+              color={`${like ? '#D0103F' : '#FFFFFF'}`}
             />
           ) : ''}
         </div>

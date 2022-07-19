@@ -2,16 +2,14 @@ import { AiOutlineArrowLeft, AiOutlineCheck, AiOutlineClose, AiOutlinePaperClip 
 import { Header } from "../../../../components/Header";
 
 import Coffee from "../../../../assets/coffee-img1.jpg";
+import { PreviousPageButton } from "../../components/PreviousPageButton";
 
 export const BudgetDetails: React.FC = () => {
   return (
     <div className="flex flex-col">
       <Header />
       <div className="flex flex-col p-12">
-        <button className="pb-0 flex flex-row items-center gap-2 font-montserrat font-semibold text-sm text-indigo-400">
-          <AiOutlineArrowLeft />
-          <span>Voltar</span>
-        </button>
+        <PreviousPageButton />
         <div className="flex flex-col items-center mobile:items-start">
           <div className="flex flex-col py-[3.375rem] mobile:py-[1.75rem] mobile:items-start">
             <h1 className="font-montserrat font-medium text-2xl">Orçamento</h1>

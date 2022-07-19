@@ -65,14 +65,14 @@ export const SignIn: React.FC = () => {
 
             <div className="flex flex-row justify-between mt-12 px-[3.875rem]">
               <span
-                className="font-montserrat font-light text-sm text-indigo-200 cursor-pointer hover:brightness-90"
+                className="font-montserrat font-light text-sm text-indigo-200 cursor-pointer hover:brightness-90 hover:underline"
               >
                 Esqueci a senha
               </span>
 
               <Link to="/sign-up">
                 <span
-                  className="font-montserrat font-light text-sm text-indigo-200 cursor-pointer hover:brightness-90"
+                  className="font-montserrat font-light text-sm text-indigo-200 cursor-pointer hover:brightness-90 hover:underline"
                 >
                   Cadastrar
                 </span>

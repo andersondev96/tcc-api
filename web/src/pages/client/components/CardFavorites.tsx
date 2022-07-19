@@ -26,7 +26,7 @@ export const CardFavorites: React.FC<CardFavoritesProps> = (
               <span className="font-montserrat font-medium text-sm leading-3">{description}</span>
               <AiFillHeart
                 size={16}
-                className="text-red-500 text-opacity-60 cursor-pointer hover:opacity-90 transition-opacity duration-300"
+                className="text-red-200 cursor-pointer hover:opacity-60 transition-opacity duration-300"
                 onClick={() => setFavorite(false)}
               />
             </div>

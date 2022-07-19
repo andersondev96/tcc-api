@@ -7,17 +7,15 @@ import Mechanic from "../../../assets/mechanic.jpg";
 import Interface from "../../../assets/interface.jpg";
 import Painting from "../../../assets/painting.jpg";
 import Candy from "../../../assets/candy.jpg";
+import { PreviousPageButton } from "../components/PreviousPageButton";
 
 export const Favorites: React.FC = () => {
   return (
     <div className="flex flex-col">
       <Header />
       <div className="flex flex-col p-12">
-        <button className="pb-0 flex flex-row items-center gap-2 font-montserrat font-semibold text-sm text-indigo-400">
-          <AiOutlineArrowLeft />
-          <span>Voltar</span>
-        </button>
-
+        <PreviousPageButton />
+        
         <div className="flex flex-col items-center py-[3.375rem] mobile:py-[1.75rem] mobile:items-start">
           <h1 className="font-montserrat font-medium text-2xl">Favoritos</h1>
         </div>

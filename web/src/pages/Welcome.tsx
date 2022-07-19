@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Banner from '../assets/image_onboarding.png';
 import IconBusiness from '../assets/icon_onboarding.png';
 
@@ -51,7 +51,9 @@ export const Welcome: React.FC = () => {
         </div>
         <div className="flex flex-col items-center justify-center mt-6">
             <span className="font-montserrat font-light text-sm text-white">ou</span>
-            <span className="font-montserrat font-light text-sm text-white">Entre sem cadastrar</span>
+            <Link to="/home" className="font-montserrat font-light text-sm text-white cursor-pointer hover:underline">
+              Entre sem cadastrar
+            </Link>
           </div>
       </div>
     </div>

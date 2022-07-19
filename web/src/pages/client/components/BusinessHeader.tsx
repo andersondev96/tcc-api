@@ -86,7 +86,7 @@ export const BusinessHeader: React.FC = () => {
             <MdOutlineChatBubbleOutline
               size={32}
               color="#EB1B2E"
-              className="hover:brightness-90 transition-colors mobile:w-6"
+              className="hover:brightness-90 transition-colors cursor-pointer mobile:w-6"
               onClick={openModalChat}
             />
 

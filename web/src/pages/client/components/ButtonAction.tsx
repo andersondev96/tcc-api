@@ -14,7 +14,7 @@ export const ButtonAction: React.FC<ButtonActionProps> = ({ type, onClick }) => 
       <button
         onClick={type === 'favorite' ? () => setLike(!like) : () => {}}
         className={`flex flex-row items-center justify-center gap-4 ${type === 'favorite' ? 'w-[9.375rem]' : 'w-[12.5rem]'} h-[2.5rem] rounded hover:opacity-80 transition-opacity
-              ${like ? 'bg-red-500 border-none' : 'bg-transparent border  border-gray-900'}`}
+              ${like ? 'bg-red-200 border-none' : 'bg-transparent border  border-gray-900'}`}
       >
         { type === 'favorite' ? (
           <AiFillHeart size={24} color={`${like ? '#FFFFFF' : '#EB1B2E'}`} />
