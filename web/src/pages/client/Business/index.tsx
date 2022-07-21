@@ -9,11 +9,9 @@ import Coffee4 from '../../../assets/coffee-img4.jpg';
 import { Pictures } from "../components/Pictures";
 import { Assessments } from "../components/Assessments";
 import { AssessmentsForm } from "../components/AssessmentsForm";
-import { useState } from "react";
 import { ButtonAction } from "../components/ButtonAction";
 
 export const Business: React.FC = () => {
-  const [like, setLike] = useState(false);
 
   const images = [
     { id: 1, image: Coffee1, description: "Image1" },

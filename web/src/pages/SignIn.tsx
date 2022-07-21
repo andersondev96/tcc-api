@@ -4,6 +4,7 @@ import { BiLogIn } from 'react-icons/bi'
 import { FcGoogle } from 'react-icons/fc';
 import Banner from '../assets/image_onboarding.png';
 import { Input } from '../components/Input';
+import { Button } from '../components/Button';
 
 export const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -19,9 +20,9 @@ export const SignIn: React.FC = () => {
         />
       </div>
       <div className="flex flex-col items-center mobile:items-start justify-center w-1/2 bg-blue-900 mobile:bg-white mobile:w-screen">
-        <Link 
+        <Link
           className="mobile:hidden"
-          to="/" 
+          to="/"
         >
           <div className="flex flex-row items-center gap-2">
             <ImArrowLeft color="#FFFFFF" />
@@ -49,17 +50,18 @@ export const SignIn: React.FC = () => {
                 placeholder="Digite a sua senha"
               />
 
-              <button
+              <Button
                 onClick={() => navigate("/home")}
-                className="flex items-center justify-center gap-3 bg-indigo-400 w-40 h-12 rounded hover:brightness-90 transition-opacity"
               >
+
                 <BiLogIn size={24} color="#FFFFFF" />
                 <span
                   className="font-inter text-lg text-white uppercase"
                 >
                   Entrar
                 </span>
-              </button>
+
+              </Button>
             </form>
 
 
