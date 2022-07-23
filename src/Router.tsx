@@ -9,6 +9,7 @@ import { Welcome } from "./pages/Welcome";
 import { Favorites } from "./pages/client/Favorites/Favorites";
 import { Budget } from "./pages/client/Budget";
 import { BudgetDetails } from "./pages/client/Budget/BudgetDetails";
+import { Dashboard } from "./pages/entrepreneur/Dashboard";
 
 export const Router: React.FC = () => {
   return (
@@ -23,6 +24,8 @@ export const Router: React.FC = () => {
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/budget" element={<Budget />} />
       <Route path="/budget/details" element={<BudgetDetails />} />
+
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 }
