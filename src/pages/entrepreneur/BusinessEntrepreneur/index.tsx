@@ -11,6 +11,7 @@ import Coffee4 from '../../../assets/coffee-img4.jpg';
 import { Pictures } from "../../client/components/Pictures";
 import { AssessmentsStars } from "../../client/components/AssessmentsStars";
 import { Assessments } from "../../client/components/Assessments";
+import { Link } from "react-router-dom";
 
 export const BusinessEntrepreneur: React.FC = () => {
   const images = [
@@ -21,9 +22,9 @@ export const BusinessEntrepreneur: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-row ">
+    <div className="flex flex-row">
       <SideBar />
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full sm:ml-64">
         <div className="flex flex-row items-center gap-12 mobile:gap-6 px-[6.25rem] py-12 bg-gray-200 border-b-2 border-gray-500">
           <img src={Coffee} alt="" className="h-16 w-16 mobile:w-12 mobile:h-12 object-fill rounded-full" />
           <span className="font-inter font-bold text-2xl text-gray-800">Singhtglass Coffee</span>
@@ -112,10 +113,12 @@ export const BusinessEntrepreneur: React.FC = () => {
 
           <span className="mt-4 font-inter font-light text-xs text-blue-400">Veja todos os comentários</span>
 
-          <button className="mt-12 mobile:mt-6 flex flex-row items-center justify-center gap-4 w-40 h-12 rounded bg-green-500 font-montserrat font-medium text-white cursor-pointer hover:brightness-90 duration-300">
-            <FiEdit2 />
-            <span>Editar</span>
-          </button>
+          <Link to="/dashboard/business/create">
+            <button className="mt-12 mobile:mt-6 flex flex-row items-center justify-center gap-4 w-40 h-12 rounded bg-green-500 font-montserrat font-medium text-white cursor-pointer hover:brightness-90 duration-300">
+              <FiEdit2 />
+              <span>Editar</span>
+            </button>
+          </Link>
         </div>
       </div>
     </div>

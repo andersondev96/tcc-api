@@ -11,6 +11,7 @@ import { Budget } from "./pages/client/Budget";
 import { BudgetDetails } from "./pages/client/Budget/BudgetDetails";
 import { Dashboard } from "./pages/entrepreneur/Dashboard";
 import { BusinessEntrepreneur } from "./pages/entrepreneur/BusinessEntrepreneur";
+import { BusinessCreate } from "./pages/entrepreneur/BusinessEntrepreneur/create";
 
 export const Router: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ export const Router: React.FC = () => {
 
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/dashboard/business" element={<BusinessEntrepreneur />} />
+      <Route path="/dashboard/business/create" element={<BusinessCreate />} />
     </Routes>
   );
 }
