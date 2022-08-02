@@ -41,7 +41,7 @@ export const SideBar: React.FC = () => {
               <BiStore size={24} />
             </ItemLink>
 
-            <ItemLink link="#" title="Serviços">
+            <ItemLink link="/dashboard/services" title="Serviços">
               <MdOutlineDesignServices size={24} />
             </ItemLink>
 
