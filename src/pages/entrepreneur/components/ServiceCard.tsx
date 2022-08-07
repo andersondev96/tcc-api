@@ -3,11 +3,16 @@ import { useState } from "react";
 import CoffeeImg1 from '../../../assets/coffee-img1.jpg';
 import { AiFillHeart, AiOutlineDelete } from 'react-icons/ai';
 import { FiEdit2 } from 'react-icons/fi';
+import { useNavigate } from "react-router-dom";
 
 export const ServiceCard: React.FC = () => {
+  const navigate = useNavigate();
   const [mouseEnter, setMouseEnter] = useState(false);
   return (
-    <div className="flex flex-col w-[12.5rem]">
+    <div 
+      className="flex flex-col w-[12.5rem]" 
+      onClick={() => navigate('/dashboard/services/show')}
+    >
       <div
         className="h-[12.5rem] border-4 border-gray-600 rounded"
         onMouseEnter={() => setMouseEnter(true)}
