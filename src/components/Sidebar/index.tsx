@@ -13,13 +13,27 @@ export const SideBar: React.FC = () => {
 
   return (
     <div className="flex flex-no-wrap">
-      <div className="p-2 absolute z-10 hidden mobile:block" onClick={() => setShowSideBarMobile(!showSideBarMobile)}>
-        <GiHamburgerMenu className={`text-xl  ${!showSideBarMobile ? 'text-black' : 'text-white'}`} />
+      <div
+        className="p-2 absolute z-10 hidden mobile:block"
+        onClick={() => setShowSideBarMobile(!showSideBarMobile)}
+      >
+        <GiHamburgerMenu
+          className={`text-xl  ${
+            !showSideBarMobile ? "text-black" : "text-white"
+          }`}
+        />
       </div>
-      <div className={`w-64 h-full fixed z-10 top-0 left-0 overflow-x-auto bg-indigo-600 shadow  flex-col sm:flex ${showSideBarMobile ? 'flex' : 'hidden'}`}>
+      <div
+        className={`w-64 h-full fixed z-10 top-0 left-0 overflow-x-auto bg-indigo-600 shadow  flex-col sm:flex ${
+          showSideBarMobile ? "flex" : "hidden"
+        }`}
+      >
         <div className="flex items-center mt-8 mb-2 px-8">
           <div className="w-10 h-10 bg-cover rounded-md mr-3">
-            <img src="https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_5.png" className="rounded-full h-full w-full overflow-hidden shadow" />
+            <img
+              src="https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_5.png"
+              className="rounded-full h-full w-full overflow-hidden shadow"
+            />
           </div>
           <div>
             <p className="text-gray-600 text-sm font-medium">Steve Doe</p>
@@ -45,7 +59,7 @@ export const SideBar: React.FC = () => {
               <MdOutlineDesignServices size={24} />
             </ItemLink>
 
-            <ItemLink link="#" title="Clientes">
+            <ItemLink link="/dashboard/clients" title="Clientes">
               <MdOutlinePeopleAlt size={24} />
             </ItemLink>
 
@@ -72,9 +86,6 @@ export const SideBar: React.FC = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
-}
-
-
+};

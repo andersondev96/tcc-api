@@ -15,6 +15,7 @@ import { BusinessCreate } from "./pages/entrepreneur/BusinessEntrepreneur/create
 import ServicesEntrepreneur from "./pages/entrepreneur/ServicesEntrepreneur";
 import { CreateServicesEntrepreneur } from "./pages/entrepreneur/ServicesEntrepreneur/create";
 import { ShowServicesEntrepreneur } from "./pages/entrepreneur/ServicesEntrepreneur/show";
+import { ClientsEntrepreneur } from "./pages/entrepreneur/ClientsEntrepreneur";
 
 export const Router: React.FC = () => {
   return (
@@ -33,9 +34,16 @@ export const Router: React.FC = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/dashboard/business" element={<BusinessEntrepreneur />} />
       <Route path="/dashboard/business/create" element={<BusinessCreate />} />
-      <Route path="/dashboard/services" element={<ServicesEntrepreneur/>} />
-      <Route path="/dashboard/create" element={<CreateServicesEntrepreneur/>} />
-      <Route path="/dashboard/services/show" element={<ShowServicesEntrepreneur />} />
+      <Route path="/dashboard/services" element={<ServicesEntrepreneur />} />
+      <Route
+        path="/dashboard/create"
+        element={<CreateServicesEntrepreneur />}
+      />
+      <Route
+        path="/dashboard/services/show"
+        element={<ShowServicesEntrepreneur />}
+      />
+      <Route path="/dashboard/clients" element={<ClientsEntrepreneur />} />
     </Routes>
   );
-}
+};
