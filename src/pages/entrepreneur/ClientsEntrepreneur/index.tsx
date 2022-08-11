@@ -17,44 +17,46 @@ export const ClientsEntrepreneur: React.FC = () => {
         <div className="flex flex-col items-center py-[3.375rem] mobile:py-[1.75rem] mobile:items-start">
           <h1 className="font-montserrat font-medium text-2xl">Clientes</h1>
         </div>
-        <div className="flex flex-col p-12">
+        <div className="flex flex-col px-12">
           <Search />
-          <Table>
-            <TableHead>
-              <TableRowHead>
-                <TableHeader>Nome</TableHeader>
-                <TableHeader>E-mail</TableHeader>
-                <TableHeader>Telefone</TableHeader>
-              </TableRowHead>
-            </TableHead>
-            <TableBody>
-              <TableRowBody>
-                <TableData>João Pedro Xavier</TableData>
-                <TableData>joao.xavier@gmail.com</TableData>
-                <TableData>(99) 99999-9999</TableData>
-              </TableRowBody>
-              <TableRowBody>
-                <TableData>João Pedro Xavier</TableData>
-                <TableData>joao.xavier@gmail.com</TableData>
-                <TableData>(99) 99999-9999</TableData>
-              </TableRowBody>
-              <TableRowBody>
-                <TableData>João Pedro Xavier</TableData>
-                <TableData>joao.xavier@gmail.com</TableData>
-                <TableData>(99) 99999-9999</TableData>
-              </TableRowBody>
-              <TableRowBody>
-                <TableData>João Pedro Xavier</TableData>
-                <TableData>joao.xavier@gmail.com</TableData>
-                <TableData>(99) 99999-9999</TableData>
-              </TableRowBody>
-              <TableRowBody>
-                <TableData>João Pedro Xavier</TableData>
-                <TableData>joao.xavier@gmail.com</TableData>
-                <TableData>(99) 99999-9999</TableData>
-              </TableRowBody>
-            </TableBody>
-          </Table>
+          <div className="mt-6">
+            <Table>
+              <TableHead>
+                <TableRowHead>
+                  <TableHeader>Nome</TableHeader>
+                  <TableHeader>E-mail</TableHeader>
+                  <TableHeader>Telefone</TableHeader>
+                </TableRowHead>
+              </TableHead>
+              <TableBody>
+                <TableRowBody>
+                  <TableData>João Pedro Xavier</TableData>
+                  <TableData>joao.xavier@gmail.com</TableData>
+                  <TableData>(99) 99999-9999</TableData>
+                </TableRowBody>
+                <TableRowBody>
+                  <TableData>João Pedro Xavier</TableData>
+                  <TableData>joao.xavier@gmail.com</TableData>
+                  <TableData>(99) 99999-9999</TableData>
+                </TableRowBody>
+                <TableRowBody>
+                  <TableData>João Pedro Xavier</TableData>
+                  <TableData>joao.xavier@gmail.com</TableData>
+                  <TableData>(99) 99999-9999</TableData>
+                </TableRowBody>
+                <TableRowBody>
+                  <TableData>João Pedro Xavier</TableData>
+                  <TableData>joao.xavier@gmail.com</TableData>
+                  <TableData>(99) 99999-9999</TableData>
+                </TableRowBody>
+                <TableRowBody>
+                  <TableData>João Pedro Xavier</TableData>
+                  <TableData>joao.xavier@gmail.com</TableData>
+                  <TableData>(99) 99999-9999</TableData>
+                </TableRowBody>
+              </TableBody>
+            </Table>
+          </div>
 
           <PaginationTable />
         </div>
