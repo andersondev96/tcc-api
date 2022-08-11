@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { PaginationTable } from '../../../components/PaginationTable';
-import { Search } from '../../../components/Search';
-import { SideBar } from '../../../components/Sidebar';
-import { ServiceCard } from '../components/ServiceCard';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { ModalContainer } from "../../../components/ModalContainer";
+import { PaginationTable } from "../../../components/PaginationTable";
+import { Search } from "../../../components/Search";
+import { SideBar } from "../../../components/Sidebar";
+import { DeleteModal } from "../components/DeleteModal";
+import { ServiceCard } from "../components/ServiceCard";
 
 export const ServicesEntrepreneur: React.FC = () => {
   return (
@@ -11,7 +13,9 @@ export const ServicesEntrepreneur: React.FC = () => {
       <SideBar />
       <div className="flex flex-col w-full sm:ml-64 p-4">
         <div className="flex items-center justify-center py-20">
-          <h1 className="font-montserrat font-medium text-2xl">Serviços oferecidos</h1>
+          <h1 className="font-montserrat font-medium text-2xl">
+            Serviços oferecidos
+          </h1>
         </div>
         <div className="px-20">
           <div className="flex flex-row items-center justify-between">
@@ -37,6 +41,6 @@ export const ServicesEntrepreneur: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default ServicesEntrepreneur;
