@@ -63,7 +63,7 @@ export const SideBar: React.FC = () => {
               <MdOutlinePeopleAlt size={24} />
             </ItemLink>
 
-            <ItemLink link="#" title="Orçamentos">
+            <ItemLink link="/dashboard/budget" title="Orçamentos">
               <BsCalculator size={24} />
             </ItemLink>
 

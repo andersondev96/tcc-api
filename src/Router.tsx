@@ -16,6 +16,8 @@ import ServicesEntrepreneur from "./pages/entrepreneur/ServicesEntrepreneur";
 import { CreateServicesEntrepreneur } from "./pages/entrepreneur/ServicesEntrepreneur/create";
 import { ShowServicesEntrepreneur } from "./pages/entrepreneur/ServicesEntrepreneur/show";
 import { ClientsEntrepreneur } from "./pages/entrepreneur/ClientsEntrepreneur";
+import { BudgetEntrepreneur } from "./pages/entrepreneur/BudgetEntrepreneur";
+import { DetailsBudgetEntrepreneur } from "./pages/entrepreneur/BudgetEntrepreneur/DetailsBudgetEntrepreneur";
 
 export const Router: React.FC = () => {
   return (
@@ -44,6 +46,11 @@ export const Router: React.FC = () => {
         element={<ShowServicesEntrepreneur />}
       />
       <Route path="/dashboard/clients" element={<ClientsEntrepreneur />} />
+      <Route path="/dashboard/budget" element={<BudgetEntrepreneur />} />
+      <Route
+        path="/dashboard/budget/details"
+        element={<DetailsBudgetEntrepreneur />}
+      />
     </Routes>
   );
 };
