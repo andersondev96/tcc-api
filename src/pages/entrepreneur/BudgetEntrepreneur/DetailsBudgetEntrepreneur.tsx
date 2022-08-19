@@ -1,7 +1,7 @@
 import React from "react";
-import { AiOutlinePaperClip } from "react-icons/ai";
 import { SideBar } from "../../../components/Sidebar";
 import Coffee from "../../../assets/coffee-img1.jpg";
+import { Link } from "react-router-dom";
 
 export const DetailsBudgetEntrepreneur: React.FC = () => {
   return (
@@ -110,9 +110,11 @@ export const DetailsBudgetEntrepreneur: React.FC = () => {
           </div>
 
           <div className="mt-2 flex flex-row gap-12 mobile:flex-col mobile:gap-2">
-            <button className="flex flex-row items-center justify-center gap-5 w-[9.25rem] h-12 rounded bg-blue-600 font-montserrat font-semibold text-white hover:brightness-90  transition-opacity duration-300">
-              <span>Criar proposta</span>
-            </button>
+            <Link to="/dashboard/budget/create-proposal">
+              <button className="flex flex-row items-center justify-center gap-5 w-[9.25rem] h-12 rounded bg-blue-600 font-montserrat font-semibold text-white hover:brightness-90  transition-opacity duration-300">
+                <span>Criar proposta</span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>
