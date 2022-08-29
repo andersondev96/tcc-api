@@ -48,7 +48,9 @@ export const BudgetEntrepreneur: React.FC = () => {
                       <Link to="/dashboard/budget/details">
                         <AiOutlineEye size={24} color="#547DE5" />
                       </Link>
-                      <IoDocumentTextOutline size={24} color="#1EBF1B" />
+                      <Link to="/dashboard/budget/create">
+                        <IoDocumentTextOutline size={24} color="#1EBF1B" />
+                      </Link>
                       <TbSend size={24} color="#EEB522" />
                     </div>
                   </TableData>
@@ -65,7 +67,9 @@ export const BudgetEntrepreneur: React.FC = () => {
                       <Link to="/dashboard/budget/details">
                         <AiOutlineEye size={24} color="#547DE5" />
                       </Link>
-                      <IoDocumentTextOutline size={24} color="#1EBF1B" />
+                      <Link to="/dashboard/budget/create">
+                        <IoDocumentTextOutline size={24} color="#1EBF1B" />
+                      </Link>
                       <TbSend size={24} color="#EEB522" />
                     </div>
                   </TableData>
@@ -82,7 +86,9 @@ export const BudgetEntrepreneur: React.FC = () => {
                       <Link to="/dashboard/budget/details">
                         <AiOutlineEye size={24} color="#547DE5" />
                       </Link>
-                      <IoDocumentTextOutline size={24} color="#1EBF1B" />
+                      <Link to="/dashboard/budget/create">
+                        <IoDocumentTextOutline size={24} color="#1EBF1B" />
+                      </Link>
                       <TbSend size={24} color="#EEB522" />
                     </div>
                   </TableData>
@@ -99,7 +105,9 @@ export const BudgetEntrepreneur: React.FC = () => {
                       <Link to="/dashboard/budget/details">
                         <AiOutlineEye size={24} color="#547DE5" />
                       </Link>
-                      <IoDocumentTextOutline size={24} color="#1EBF1B" />
+                      <Link to="/dashboard/budget/create">
+                        <IoDocumentTextOutline size={24} color="#1EBF1B" />
+                      </Link>
                       <TbSend size={24} color="#EEB522" />
                     </div>
                   </TableData>

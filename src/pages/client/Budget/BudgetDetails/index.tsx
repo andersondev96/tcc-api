@@ -1,4 +1,9 @@
-import { AiOutlineArrowLeft, AiOutlineCheck, AiOutlineClose, AiOutlinePaperClip } from "react-icons/ai";
+import {
+  AiOutlineArrowLeft,
+  AiOutlineCheck,
+  AiOutlineClose,
+  AiOutlinePaperClip,
+} from "react-icons/ai";
 import { Header } from "../../../../components/Header";
 
 import Coffee from "../../../../assets/coffee-img1.jpg";
@@ -37,7 +42,11 @@ export const BudgetDetails: React.FC = () => {
                   <tbody className="font-montserrat font-light text-sm text-center">
                     <tr>
                       <td className="py-2 px-6">
-                        <img src={Coffee} alt="" className="h-16 w-16 rounded mobile:h-8 mobile:w-8" />
+                        <img
+                          src={Coffee}
+                          alt=""
+                          className="h-16 w-16 rounded mobile:h-8 mobile:w-8"
+                        />
                       </td>
                       <td className="py-2 px-6">Cappuccino cremoso</td>
                       <td className="py-2 px-6">100</td>
@@ -45,7 +54,11 @@ export const BudgetDetails: React.FC = () => {
 
                     <tr className="font-montserrat font-light text-sm">
                       <td className="py-2 px-6">
-                        <img src={Coffee} alt="" className="h-16 w-16 rounded" />
+                        <img
+                          src={Coffee}
+                          alt=""
+                          className="h-16 w-16 rounded"
+                        />
                       </td>
                       <td className="py-2 px-6">Cappuccino cremoso</td>
                       <td className="py-2 px-6">100</td>
@@ -53,7 +66,11 @@ export const BudgetDetails: React.FC = () => {
 
                     <tr className="font-montserrat font-light text-sm">
                       <td className="py-2 px-6">
-                        <img src={Coffee} alt="" className="h-16 w-16 rounded" />
+                        <img
+                          src={Coffee}
+                          alt=""
+                          className="h-16 w-16 rounded"
+                        />
                       </td>
                       <td className="py-2 px-6">Cappuccino cremoso</td>
                       <td className="py-2 px-6">100</td>
@@ -67,15 +84,20 @@ export const BudgetDetails: React.FC = () => {
                 Descrição
               </span>
               <p className="font-montserrat font-light text-sm text-justify">
-                Caro cliente, estamos dispostos a te atender, elaboramos esse documento com uma proposta detalhada,
-                qualquer dúvida entre em contato pelo nosso chat ou redes sociais. Será um prazer trabalhar para você.
+                Caro cliente, estamos dispostos a te atender, elaboramos esse
+                documento com uma proposta detalhada, qualquer dúvida entre em
+                contato pelo nosso chat ou redes sociais. Será um prazer
+                trabalhar para você.
               </p>
             </div>
             <div className="flex flex-col gap-2">
               <span className="font-montserrat font-semibold text-lg">
                 Arquivos
               </span>
-              <a href="#" className="flex flex-row gap-2 items-center text-indigo-400 text-sm hover:underline">
+              <a
+                href="#"
+                className="flex flex-row gap-2 items-center text-indigo-400 text-sm hover:underline"
+              >
                 <AiOutlinePaperClip />
                 <p>Proposta.pdf</p>
               </a>
@@ -84,9 +106,7 @@ export const BudgetDetails: React.FC = () => {
               <span className="font-montserrat font-semibold text-lg">
                 Data de entrega
               </span>
-              <p className="font-montserrat font-light text-sm">
-                11/04/2022
-              </p>
+              <p className="font-montserrat font-light text-sm">11/04/2022</p>
             </div>
             <div className="flex flex-col gap-2 w-[45.25rem]">
               <span className="font-montserrat font-semibold text-lg">
@@ -98,16 +118,12 @@ export const BudgetDetails: React.FC = () => {
             </div>
 
             <div className="mt-2 flex flex-row gap-12 mobile:flex-col mobile:gap-2">
-              <button
-                className="flex flex-row items-center justify-center gap-5 w-[9.25rem] h-12 rounded bg-green-600 font-montserrat font-semibold text-white hover:brightness-90  transition-opacity duration-300"
-              >
+              <button className="flex flex-row items-center justify-center gap-5 w-[9.25rem] h-12 rounded bg-green-600 font-montserrat font-semibold text-white hover:brightness-90  transition-opacity duration-300">
                 <AiOutlineCheck />
                 <span>Aceitar</span>
               </button>
 
-              <button
-                className="flex flex-row items-center justify-center gap-5 w-[9.25rem] h-12 rounded bg-red-200 font-montserrat font-semibold text-white hover:brightness-90  transition-opacity duration-300"
-              >
+              <button className="flex flex-row items-center justify-center gap-5 w-[9.25rem] h-12 rounded bg-red-200 font-montserrat font-semibold text-white hover:brightness-90  transition-opacity duration-300">
                 <AiOutlineClose />
                 <span>Recusar</span>
               </button>
@@ -117,4 +133,4 @@ export const BudgetDetails: React.FC = () => {
       </div>
     </div>
   );
-} 
+};

@@ -2,12 +2,14 @@ import React from "react";
 import { SideBar } from "../../../components/Sidebar";
 import Coffee from "../../../assets/coffee-img1.jpg";
 import { Link } from "react-router-dom";
+import { PreviousPageButton } from "../../client/components/PreviousPageButton";
 
 export const DetailsBudgetEntrepreneur: React.FC = () => {
   return (
     <div className="flex flex-row">
       <SideBar />
       <div className="flex flex-col w-full sm:ml-64  p-12">
+        <PreviousPageButton />
         <div className="flex flex-col items-center py-[3.375rem] mobile:py-[1.75rem] mobile:items-start">
           <h1 className="font-montserrat font-medium text-2xl">Orçamentos</h1>
         </div>

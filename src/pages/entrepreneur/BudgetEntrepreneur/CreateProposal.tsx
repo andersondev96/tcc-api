@@ -2,12 +2,14 @@ import React from "react";
 import { AiOutlinePaperClip } from "react-icons/ai";
 import { FiSave } from "react-icons/fi";
 import { SideBar } from "../../../components/Sidebar";
+import { PreviousPageButton } from "../../client/components/PreviousPageButton";
 
 export const CreateProposal: React.FC = () => {
   return (
     <div className="flex flex-row">
       <SideBar />
       <div className="flex flex-col w-full sm:ml-64  p-12">
+        <PreviousPageButton />
         <div className="flex flex-col items-center py-[3.375rem] mobile:py-[1.75rem] mobile:items-start">
           <h1 className="font-montserrat font-medium text-2xl">
             Criar proposta
