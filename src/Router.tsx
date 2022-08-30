@@ -19,6 +19,7 @@ import { ClientsEntrepreneur } from "./pages/entrepreneur/ClientsEntrepreneur";
 import { BudgetEntrepreneur } from "./pages/entrepreneur/BudgetEntrepreneur";
 import { DetailsBudgetEntrepreneur } from "./pages/entrepreneur/BudgetEntrepreneur/DetailsBudgetEntrepreneur";
 import { CreateProposal } from "./pages/entrepreneur/BudgetEntrepreneur/CreateProposal";
+import { ChatEntrepreneur } from "./pages/entrepreneur/ChatEntrepreneur";
 
 export const Router: React.FC = () => {
   return (
@@ -56,6 +57,7 @@ export const Router: React.FC = () => {
         path="/dashboard/budget/create-proposal"
         element={<CreateProposal />}
       />
+      <Route path="/dashboard/chat" element={<ChatEntrepreneur />} />
     </Routes>
   );
 };

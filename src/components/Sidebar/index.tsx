@@ -67,7 +67,7 @@ export const SideBar: React.FC = () => {
               <BsCalculator size={24} />
             </ItemLink>
 
-            <ItemLink link="#" title="Chat">
+            <ItemLink link="/dashboard/chat" title="Chat">
               <IoChatbubblesOutline size={24} />
             </ItemLink>
 
