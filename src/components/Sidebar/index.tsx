@@ -71,7 +71,7 @@ export const SideBar: React.FC = () => {
               <IoChatbubblesOutline size={24} />
             </ItemLink>
 
-            <ItemLink link="#" title="Configurações">
+            <ItemLink link="/dashboard/settings" title="Configurações">
               <FiSettings size={24} />
             </ItemLink>
           </ul>
