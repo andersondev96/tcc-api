@@ -8,13 +8,13 @@ export const ChatEntrepreneur: React.FC = () => {
     <div className="flex flex-row">
       <SideBar />
       <div className="flex flex-col w-full sm:ml-64">
-        <div className="flex flex-col items-center py-[3.375rem] mobile:py-[1.75rem] mobile:items-center">
+        <div className="flex flex-col items-center py-[1.5rem] mobile:py-[1.75rem] mobile:items-center">
           <h1 className="font-montserrat font-medium text-2xl mobile:text-center">
             Chat
           </h1>
         </div>
         <div className="flex flex-col px-12">
-          <div className="flex flex-col mt-12">
+          <div className="flex flex-col mt-2">
             <span className="font-montserrat font-semibold text-lg">
               Mensagens recentes
             </span>
