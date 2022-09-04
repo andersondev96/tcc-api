@@ -14,7 +14,7 @@ export const ClientsEntrepreneur: React.FC = () => {
     <div className="flex flex-row">
       <SideBar />
       <div className="flex flex-col w-full sm:ml-64">
-        <div className="flex flex-col items-center py-[3.375rem] mobile:py-[1.75rem] mobile:items-start">
+        <div className="flex flex-col items-center py-[2.5rem] mobile:py-[1.75rem]">
           <h1 className="font-montserrat font-medium text-2xl">Clientes</h1>
         </div>
         <div className="flex flex-col px-12">
