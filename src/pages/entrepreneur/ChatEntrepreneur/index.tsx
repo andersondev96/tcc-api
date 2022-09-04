@@ -13,7 +13,7 @@ export const ChatEntrepreneur: React.FC = () => {
             Chat
           </h1>
         </div>
-        <div className="flex flex-col px-12">
+        <div className="flex flex-col items-center">
           <div className="flex flex-col mt-2">
             <span className="font-montserrat font-semibold text-lg">
               Mensagens recentes

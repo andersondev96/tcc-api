@@ -16,7 +16,7 @@ export const ChatMessageEntrepreneur: React.FC = () => {
             Chat
           </h1>
         </div>
-        <div className="flex flex-col items-center gap-4 py-6">
+        <div className="flex flex-col items-center gap-4 py-6 mobile:py-2">
           <div className="flex flex-col mt-2">
             <div className="flex flex-col w-[60.25rem] mobile:w-80  border border-gray-400 rounded">
               <div className="flex items-center justify-center h-12 bg-blue-200">

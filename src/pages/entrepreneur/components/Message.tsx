@@ -29,11 +29,11 @@ export const Message: React.FC<MessageProps> = ({
       }`}
       onClick={() => (isActive ? navigate("/dashboard/chat/message") : "")}
     >
-      <div className="flex flex-row gap-16 mobile:gap-8">
+      <div className="flex flex-row items-center gap-16 mobile:gap-8">
         <img
           src={img}
           alt={img}
-          className={`w-14 h-14 mobile:w-12 mobile:h-12 rounded-full object-fill ${
+          className={`w-14 h-14 mobile:w-12 mobile:h-9 rounded-full object-fill ${
             !isActive ? "grayscale" : ""
           }`}
         />
