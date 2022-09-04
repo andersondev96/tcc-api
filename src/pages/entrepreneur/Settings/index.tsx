@@ -16,7 +16,7 @@ export const Settings: React.FC = () => {
             <span className="font-montserrat font-semibold text-lg">
               Card do serviço
             </span>
-            <div className="flex flex-row gap-9 mt-6">
+            <div className="flex flex-row gap-9 mt-6 mobile:flex-col mobile:gap-6">
               <div className="flex flex-col gap-3">
                 <label
                   htmlFor="NameServiceColor"
@@ -24,7 +24,12 @@ export const Settings: React.FC = () => {
                 >
                   Cor do nome do serviço
                 </label>
-                <input type="color" value="#A0185A" name="NameServiceColor" />
+                <input
+                  type="color"
+                  value="#A0185A"
+                  name="NameServiceColor"
+                  className="appearance-none w-20 h-8 border-none rounded bg-transparent cursor-pointer"
+                />
               </div>
 
               <div className="flex flex-col gap-3">
@@ -34,7 +39,12 @@ export const Settings: React.FC = () => {
                 >
                   Cor do preço do serviço
                 </label>
-                <input type="color" value="#B6B2B2" name="NameServiceColor" />
+                <input
+                  type="color"
+                  value="#B6B2B2"
+                  name="NameServiceColor"
+                  className="appearance-none w-20 h-8 border-none rounded bg-transparent cursor-pointer"
+                />
               </div>
 
               <div className="flex flex-col gap-3">
@@ -44,7 +54,12 @@ export const Settings: React.FC = () => {
                 >
                   Cor do card
                 </label>
-                <input type="color" value="#E7E999" name="NameServiceColor" />
+                <input
+                  type="color"
+                  value="#E7E999"
+                  name="NameServiceColor"
+                  className="appearance-none w-20 h-8 border-none rounded bg-transparent cursor-pointer"
+                />
               </div>
             </div>
           </div>
@@ -77,7 +92,7 @@ export const Settings: React.FC = () => {
               className="w-14 h-7 rounded bg-gray-200 border-none font-montserrat font-medium text-sm text-gray-100"
             />
           </div>
-          <div className="flex flex-col gap-2 mt-9">
+          <div className="flex flex-col gap-2 mt-9 mobile:mt-6">
             <span className="font-montserrat font-semibold text-lg text-blue-400">
               Preferências
             </span>
@@ -110,12 +125,12 @@ export const Settings: React.FC = () => {
           </div>
 
           <div className="flex flex-col">
-            <button className="flex items-center justify-center mt-12 w-48 h-12 bg-blue-200 rounded hover:brightness-90 duration-300 transition-opacity">
+            <button className="flex items-center justify-center mt-12 w-48 h-12 bg-blue-200 rounded hover:brightness-90 duration-300 transition-opacity mobile:mt-8">
               <span className="font-montserrat font-medium text-white">
                 Salvar alterações
               </span>
             </button>
-            <span className="flex flex-row justify-end">
+            <span className="flex flex-row justify-end mobile:justify-start mobile:py-4">
               <a href="" className="font-montserrat text-sm text-red-500">
                 Excluir conta
               </a>
