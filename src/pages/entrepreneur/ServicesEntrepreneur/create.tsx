@@ -8,7 +8,7 @@ export const CreateServicesEntrepreneur: React.FC = () => {
     <div className="flex flex-row">
       <SideBar />
       <div className="flex flex-col w-full sm:ml-64">
-        <div className="flex items-center justify-center pt-20 mobile:pt-12">
+        <div className="flex flex-col items-center py-[1.5rem] mobile:py-[1.75rem]">
           <h1 className="font-montserrat font-medium text-2xl mobile:text-lg">
             Adicionar serviços e produtos
           </h1>
