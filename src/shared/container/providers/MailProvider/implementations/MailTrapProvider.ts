@@ -4,11 +4,11 @@ import { injectable } from "tsyringe";
 import { IMailProvider } from "../models/IMailProvider";
 
 const transport = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
   auth: {
-    user: "5d23024ff67ba1",
-    pass: "3fc31a62ffacdb",
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
   },
 });
 
