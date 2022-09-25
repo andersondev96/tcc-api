@@ -27,9 +27,9 @@ export const BusinessCreate: React.FC = () => {
             Singhtglass Coffee
           </span>
         </div>
-        <div className="flex flex-col pt-52 pb-12 px-8 gap-6">
-          <div className="flex flex-row w-full gap-16 mobile:flex-col mobile:gap-4">
-            <div className="flex flex-col w-1/2 gap-1 mobile:w-full">
+        <div className="flex flex-col w-[64rem] pt-52 pb-12 px-8 gap-6">
+          <div className="flex flex-row gap-16 mobile:flex-col mobile:gap-4">
+            <div className="flex flex-col w-1/2 gap-1 mobile:w-72">
               <label
                 htmlFor="business-name"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -42,7 +42,7 @@ export const BusinessCreate: React.FC = () => {
                 name="business-name"
               />
             </div>
-            <div className="flex flex-col w-1/2 gap-1 mobile:w-full">
+            <div className="flex flex-col w-1/2 gap-1 mobile:w-72">
               <label
                 htmlFor="cnpj"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -53,8 +53,8 @@ export const BusinessCreate: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-row w-full gap-16 mobile:flex-col mobile:gap-4">
-            <div className="flex flex-col gap-1 w-1/2 mobile:w-full">
+          <div className="flex flex-row gap-16 mobile:flex-col mobile:gap-4">
+            <div className="flex flex-col gap-1 w-1/2 mobile:w-72">
               <label
                 htmlFor="category"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -65,7 +65,7 @@ export const BusinessCreate: React.FC = () => {
                 <option value="">Opção 1</option>
               </select>
             </div>
-            <div className="flex flex-col gap-1 w-1/2 mobile:w-full">
+            <div className="flex flex-col gap-1 w-1/2 mobile:w-72">
               <label
                 htmlFor="services"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -76,7 +76,7 @@ export const BusinessCreate: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-col w-full gap-1">
+          <div className="flex flex-col gap-1">
             <label
               htmlFor="description"
               className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -84,14 +84,14 @@ export const BusinessCreate: React.FC = () => {
               Descrição
             </label>
             <textarea
-              className="rounded resize-none"
+              className="rounded resize-none mobile:w-72"
               name="description"
               id="description"
             />
           </div>
 
-          <div className="flex flex-row w-full gap-16 mobile:flex-col mobile:gap-4">
-            <div className="flex flex-col gap-1 w-1/2 mobile:w-full">
+          <div className="flex flex-row gap-16 mobile:flex-col mobile:gap-4">
+            <div className="flex flex-col gap-1 w-1/2 mobile:w-72">
               <label
                 htmlFor="telephone"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -100,7 +100,7 @@ export const BusinessCreate: React.FC = () => {
               </label>
               <input className="h-12 rounded" type="text" name="telephone" />
             </div>
-            <div className="flex flex-col gap-1 w-1/2 mobile:w-full">
+            <div className="flex flex-col gap-1 w-1/2 mobile:w-72">
               <label
                 htmlFor="whatsapp"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -111,8 +111,8 @@ export const BusinessCreate: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-row w-full gap-16 mobile:flex-col mobile:gap-4">
-            <div className="flex flex-col gap-1 w-1/2 mobile:w-full">
+          <div className="flex flex-row gap-16 mobile:flex-col mobile:gap-4">
+            <div className="flex flex-col gap-1 w-1/2 mobile:w-72">
               <label
                 htmlFor="email"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -121,7 +121,7 @@ export const BusinessCreate: React.FC = () => {
               </label>
               <input className="h-12 rounded" type="text" name="email" />
             </div>
-            <div className="flex flex-col gap-1 w-1/2 mobile:w-full">
+            <div className="flex flex-col gap-1 w-1/2 mobile:w-72">
               <label
                 htmlFor="website"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -132,7 +132,7 @@ export const BusinessCreate: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-col w-full gap-1">
+          <div className="flex flex-col gap-1">
             <label
               htmlFor="category"
               className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -141,12 +141,12 @@ export const BusinessCreate: React.FC = () => {
             </label>
             <div className="flex flex-row w-full gap-16 mobile:flex-col mobile:gap-2">
               <select
-                className="h-12 rounded w-1/2 mobile:w-full"
+                className="h-12 rounded w-1/2 mobile:w-72"
                 name="category"
               >
                 <option value="">Opção 1</option>
               </select>
-              <div className="flex flex-row items-center w-1/2 gap-4 mobile:w-full">
+              <div className="flex flex-row items-center w-1/2 gap-4 mobile:w-72">
                 <input type="time" name="time" className="h-12 rounded w-1/2" />
                 <span>às</span>
                 <input type="time" name="time" className="h-12 rounded w-1/2" />
@@ -154,7 +154,7 @@ export const BusinessCreate: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row items-center w-full gap-2">
+          <div className="flex flex-row items-center gap-2">
             <input type="checkbox" name="hasLocation" />
             <label
               htmlFor="hasLocation"
@@ -163,8 +163,8 @@ export const BusinessCreate: React.FC = () => {
               Possui localização física
             </label>
           </div>
-          <div className="flex flex-row w-full gap-16 mobile:flex-col mobile:gap-4">
-            <div className="flex flex-col gap-1 w-1/2 mobile:w-full">
+          <div className="flex flex-row gap-16 mobile:flex-col mobile:gap-4">
+            <div className="flex flex-col gap-1 w-1/2 mobile:w-72">
               <label
                 htmlFor="address"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -173,7 +173,7 @@ export const BusinessCreate: React.FC = () => {
               </label>
               <input className="h-12 rounded" type="text" name="address" />
             </div>
-            <div className="flex flex-col gap-1 w-1/2 mobile:w-full">
+            <div className="flex flex-col gap-1 w-1/2 mobile:w-72">
               <label
                 htmlFor="district"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -183,8 +183,8 @@ export const BusinessCreate: React.FC = () => {
               <input className="h-12 rounded" type="text" name="district" />
             </div>
           </div>
-          <div className="flex flex-row w-full gap-16 mobile:flex-col mobile:gap-4">
-            <div className="flex flex-col gap-1 w-48 mobile:w-full">
+          <div className="flex flex-row gap-16 mobile:flex-col mobile:gap-4">
+            <div className="flex flex-col gap-1 w-48 mobile:w-72">
               <label
                 htmlFor="address"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -193,7 +193,7 @@ export const BusinessCreate: React.FC = () => {
               </label>
               <input className="h-12 rounded" type="text" name="address" />
             </div>
-            <div className="flex flex-col gap-1 w-56 mobile:w-full">
+            <div className="flex flex-col gap-1 w-48 mobile:w-72">
               <label
                 htmlFor="district"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -202,7 +202,7 @@ export const BusinessCreate: React.FC = () => {
               </label>
               <input className="h-12 rounded" type="text" name="district" />
             </div>
-            <div className="flex flex-col gap-1 w-48 mobile:w-full">
+            <div className="flex flex-col gap-1 w-36 mobile:w-72">
               <label
                 htmlFor="state"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
@@ -211,7 +211,7 @@ export const BusinessCreate: React.FC = () => {
               </label>
               <input className="h-12 rounded" type="text" name="state" />
             </div>
-            <div className="flex flex-col gap-1 w-56 mobile:w-full">
+            <div className="flex flex-col gap-1 w-60 mobile:w-72">
               <label
                 htmlFor="district"
                 className="font-montserrat font-semibold text-sm text-indigo-200"
