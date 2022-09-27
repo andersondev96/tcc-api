@@ -26,8 +26,6 @@ export class UsersTokenRepository implements IUsersTokenRepository {
       },
     });
 
-    console.log(usersToken);
-
     return usersToken;
   }
 

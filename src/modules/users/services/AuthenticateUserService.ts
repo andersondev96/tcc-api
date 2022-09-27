@@ -34,7 +34,7 @@ export class AuthenticateUserService {
     private hashProvider: IHashProvider,
     @inject("DayjsDateProvider")
     private dateProvider: IDateProvider
-  ) {}
+  ) { }
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByMail(email);
 
