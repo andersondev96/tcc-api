@@ -11,16 +11,16 @@ import { MailTrapProvider } from "./providers/MailProvider/implementations/MailT
 import { IMailProvider } from "./providers/MailProvider/models/IMailProvider";
 
 container.registerSingleton<IUsersRepository>(
-  "UsersRepository",
-  UsersRepository
+    "UsersRepository",
+    UsersRepository
 );
 
 container.registerSingleton<IUsersTokenRepository>(
-  "UsersTokenRepository",
-  UsersTokenRepository
+    "UsersTokenRepository",
+    UsersTokenRepository
 );
 
 container.registerInstance<IMailProvider>(
-  "MailTrapProvider",
-  new MailTrapProvider()
+    "MailTrapProvider",
+    new MailTrapProvider()
 );
