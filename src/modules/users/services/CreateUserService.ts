@@ -4,7 +4,7 @@ import AppError from "@shared/errors/AppError";
 
 import { User } from "../infra/prisma/entities/User";
 import { UsersRepository } from "../infra/prisma/repositories/UsersRepository";
-import IHashProvider from "../providers/HashProvider/models/IHashProvider";
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
 interface IRequest {
     name: string;
