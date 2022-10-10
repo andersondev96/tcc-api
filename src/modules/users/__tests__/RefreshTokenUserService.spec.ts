@@ -67,6 +67,13 @@ describe('RefreshTokenUserService', () => {
     })
 
     it('should be able to user token does not exists', async () => {
-        //
+
+        const authentication = await authenticateUserService.execute({
+            email: 'user@example.com',
+            password: '12345678',
+        });
+
+        expect(refreshTokenUserService.execute(authentication.refresh_token))
+            .rejects.toBeInstanceOf(AppError);
     })
 });
