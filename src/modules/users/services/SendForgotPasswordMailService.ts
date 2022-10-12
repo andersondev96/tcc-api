@@ -17,7 +17,7 @@ export class SendForgotPasswordMailService {
         private usersTokenRepository: IUsersTokenRepository,
         @inject("DayjsDateProvider")
         private dateProvider: IDateProvider,
-        @inject("MailTrapProvider")
+        @inject("EtherealMailProvider")
         private mailProvider: IMailProvider
     ) { }
 
@@ -41,7 +41,8 @@ export class SendForgotPasswordMailService {
         await this.mailProvider.sendMail(
             email,
             "Recuperação de senha",
-            `O link par o reset é ${token}`
+            `O link par o reset é ${token}}`
         );
     }
 }
+

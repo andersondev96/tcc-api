@@ -7,7 +7,7 @@ import { UsersTokenRepository } from "@modules/users/infra/prisma/repositories/U
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokenRepository } from "@modules/users/repositories/IUsersTokenRepository";
 
-import { MailTrapProvider } from "./providers/MailProvider/implementations/MailTrapProvider";
+import { EtherealMailProvider } from "./providers/MailProvider/implementations/EtherealMailProvider";
 import { IMailProvider } from "./providers/MailProvider/models/IMailProvider";
 
 container.registerSingleton<IUsersRepository>(
@@ -21,6 +21,6 @@ container.registerSingleton<IUsersTokenRepository>(
 );
 
 container.registerInstance<IMailProvider>(
-    "MailTrapProvider",
-    new MailTrapProvider()
+    "EtherealMailProvider",
+    new EtherealMailProvider()
 );
