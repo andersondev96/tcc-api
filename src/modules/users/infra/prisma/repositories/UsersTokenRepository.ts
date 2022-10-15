@@ -5,9 +5,9 @@ import { IUsersTokenRepository } from "@modules/users/repositories/IUsersTokenRe
 import { UserToken } from "../entities/UserToken";
 
 export class UsersTokenRepository implements IUsersTokenRepository {
-    async create(userTokenData: ICreateUserTokenDTO): Promise<UserToken> {
+    async create({ expires_date, refresh_token, user_id }: ICreateUserTokenDTO): Promise<UserToken> {
         const token = await prisma.userToken.create({
-            data: userTokenData,
+            data: { expires_date, refresh_token, user_id },
         });
 
         return token;

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for RefreshTokenUserService.ts</title>
+    <title>Code coverage report for UpdateUserService.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> RefreshTokenUserService.ts</h1>
+        <h1><a href="index.html">All files</a> UpdateUserService.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/70</span>
+                <span class='fraction'>0/52</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/70</span>
+                <span class='fraction'>0/52</span>
             </div>
         
             
@@ -115,25 +115,7 @@
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -185,92 +167,56 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { verify, sign } from "jsonwebtoken";</span></span></span>
-<span class="cstat-no" title="statement not covered" >import { inject, injectable } from "tsyringe";</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { injectable, inject } from "tsyringe";</span></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >import auth from "@config/auth";</span>
 <span class="cstat-no" title="statement not covered" >import AppError from "@shared/errors/AppError";</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >import { IDateProvider } from "../providers/DateProvider/models/IDateProvider";</span>
-<span class="cstat-no" title="statement not covered" >import { IUsersTokenRepository } from "../repositories/IUsersTokenRepository";</span>
+<span class="cstat-no" title="statement not covered" >import { User } from "../infra/prisma/entities/User";</span>
+<span class="cstat-no" title="statement not covered" >import { UsersRepository } from "../infra/prisma/repositories/UsersRepository";</span>
+<span class="cstat-no" title="statement not covered" >import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >interface IPayload {</span>
-<span class="cstat-no" title="statement not covered" >    sub: string;</span>
+<span class="cstat-no" title="statement not covered" >interface IRequest {</span>
+<span class="cstat-no" title="statement not covered" >    id?: string;</span>
+<span class="cstat-no" title="statement not covered" >    name: string;</span>
 <span class="cstat-no" title="statement not covered" >    email: string;</span>
-<span class="cstat-no" title="statement not covered" >}</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >interface ITokenResponse {</span>
-<span class="cstat-no" title="statement not covered" >    token: string;</span>
-<span class="cstat-no" title="statement not covered" >    refresh_token: string;</span>
+<span class="cstat-no" title="statement not covered" >    password: string;</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >@injectable()</span>
-<span class="cstat-no" title="statement not covered" >export class RefreshTokenUserService {</span>
+<span class="cstat-no" title="statement not covered" >export class UpdateUserService {</span>
 <span class="cstat-no" title="statement not covered" >    constructor(</span>
-<span class="cstat-no" title="statement not covered" >        @inject("UsersTokenRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private usersTokenRepository: IUsersTokenRepository,</span>
-<span class="cstat-no" title="statement not covered" >        @inject("DayjsDateProvider")</span>
-<span class="cstat-no" title="statement not covered" >        private dateProvider: IDateProvider</span>
+<span class="cstat-no" title="statement not covered" >        @inject("UsersRepository")</span>
+<span class="cstat-no" title="statement not covered" >        private userRepository: UsersRepository,</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        @inject("HashProvider")</span>
+<span class="cstat-no" title="statement not covered" >        private hashProvider: IHashProvider</span>
 <span class="cstat-no" title="statement not covered" >    ) { }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    async execute(token: string): Promise&lt;ITokenResponse&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        const { email, sub } = verify(token, auth.secret_refresh_token) as IPayload;</span>
+<span class="cstat-no" title="statement not covered" >    public async execute(user_id: string, { id, name, email, password }: IRequest): Promise&lt;User&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        const userExists = await this.userRepository.findById(user_id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const user_id = sub;</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const userToken = await this.usersTokenRepository.findByUserAndRefreshToken(</span>
-<span class="cstat-no" title="statement not covered" >            user_id,</span>
-<span class="cstat-no" title="statement not covered" >            token</span>
-<span class="cstat-no" title="statement not covered" >        );</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (!userToken) {</span>
-<span class="cstat-no" title="statement not covered" >            throw new AppError("Refresh token does not exists!");</span>
+<span class="cstat-no" title="statement not covered" >        if (!userExists) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new AppError("User does not exits");</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        await this.usersTokenRepository.deleteById(userToken.id);</span>
+<span class="cstat-no" title="statement not covered" >        const emailExists = await this.userRepository.findByMail(email);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const refresh_token = sign({ email }, auth.secret_refresh_token, {</span>
-<span class="cstat-no" title="statement not covered" >            subject: sub,</span>
-<span class="cstat-no" title="statement not covered" >            expiresIn: auth.expires_in_refresh_token,</span>
+<span class="cstat-no" title="statement not covered" >        if (emailExists) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new AppError("Email address already used");</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        const hashedPassword = await this.hashProvider.generateHash(password);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        const user = await this.userRepository.update({</span>
+<span class="cstat-no" title="statement not covered" >            id,</span>
+<span class="cstat-no" title="statement not covered" >            name,</span>
+<span class="cstat-no" title="statement not covered" >            email,</span>
+<span class="cstat-no" title="statement not covered" >            password: hashedPassword,</span>
 <span class="cstat-no" title="statement not covered" >        });</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const expires_date = this.dateProvider.addDays(</span>
-<span class="cstat-no" title="statement not covered" >            auth.expires_refresh_token_days</span>
-<span class="cstat-no" title="statement not covered" >        );</span>
+<span class="cstat-no" title="statement not covered" >        delete user.password;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        await this.usersTokenRepository.create({</span>
-<span class="cstat-no" title="statement not covered" >            expires_date,</span>
-<span class="cstat-no" title="statement not covered" >            refresh_token,</span>
-<span class="cstat-no" title="statement not covered" >            user_id,</span>
-<span class="cstat-no" title="statement not covered" >        });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const newToken = sign({}, auth.secret_token, {</span>
-<span class="cstat-no" title="statement not covered" >            subject: user_id,</span>
-<span class="cstat-no" title="statement not covered" >            expiresIn: auth.expires_in_token,</span>
-<span class="cstat-no" title="statement not covered" >        });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        return {</span>
-<span class="cstat-no" title="statement not covered" >            refresh_token,</span>
-<span class="cstat-no" title="statement not covered" >            token: newToken</span>
-<span class="cstat-no" title="statement not covered" >        };</span>
+<span class="cstat-no" title="statement not covered" >        return user;</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
