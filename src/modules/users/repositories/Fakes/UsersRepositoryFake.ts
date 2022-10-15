@@ -28,4 +28,20 @@ export class UsersRepositoryFake implements IUsersRepository {
 
         return findUser;
     }
+
+    public async update(user: ICreateUserDTO): Promise<User> {
+        const index = this.users.findIndex(findUser => findUser.id === user.id);
+
+        this.users[index] = user;
+
+        return user;
+    }
+
+    public async delete(id: string): Promise<void> {
+        const index = this.users.findIndex(
+            user => user.id === id
+        );
+
+        this.users.splice(index, 1);
+    }
 }
