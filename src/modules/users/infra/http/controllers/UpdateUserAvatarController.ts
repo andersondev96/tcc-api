@@ -7,7 +7,7 @@ export class UpdateUserAvatarController {
 
     async handle(request: Request, response: Response): Promise<Response> {
 
-        const { id } = request.params;
+        const { id } = request.user;
 
         const avatar_url = request.file.filename;
 
@@ -15,6 +15,6 @@ export class UpdateUserAvatarController {
 
         await updateUserAvatarService.execute({ user_id: id, avatar_url });
 
-        return response.json(204).send();
+        return response.status(204).send();
     }
 }

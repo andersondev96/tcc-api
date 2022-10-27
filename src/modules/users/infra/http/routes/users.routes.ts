@@ -12,8 +12,6 @@ import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthen
 const usersRouter = Router();
 const uploadAvatar = multer(uploadConfig);
 
-usersRouter.use(ensureAuthenticated);
-
 const createUserController = new CreateUsersController();
 const findByUserIdController = new FindByUserIdController();
 const updateUserController = new UpdateUserController();
@@ -21,12 +19,13 @@ const deleteUserController = new DeleteUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
 
 usersRouter.post("/", createUserController.handle);
-usersRouter.get("/:user_id", findByUserIdController.handle);
-usersRouter.delete("/remove/:user_id", deleteUserController.handle);
-usersRouter.put("/:id", updateUserController.handle);
+usersRouter.get("/:user_id", ensureAuthenticated, findByUserIdController.handle);
+usersRouter.delete("/remove/:user_id", ensureAuthenticated, deleteUserController.handle);
+usersRouter.put("/:id", ensureAuthenticated, updateUserController.handle);
 
 usersRouter.patch(
-    "/:user_id/avatar",
+    "/avatar",
+    ensureAuthenticated,
     uploadAvatar.single("avatar"),
     updateUserAvatarController.handle
 );
