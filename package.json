@@ -6,7 +6,7 @@
     "author": "Anderson Fernandes Ferreira",
     "license": "MIT",
     "scripts": {
-        "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+        "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
         "test": "jest"
     },
     "devDependencies": {
