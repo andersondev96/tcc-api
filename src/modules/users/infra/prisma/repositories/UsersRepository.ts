@@ -16,13 +16,14 @@ export class UsersRepository implements IUsersRepository {
         return user;
     }
 
-    async create({ name, email, password, id }: ICreateUserDTO): Promise<User> {
+    async create({ name, email, password, id, avatar }: ICreateUserDTO): Promise<User> {
         const user = await prisma.user.create({
             data: {
                 name,
                 email,
                 password,
                 id,
+                avatar,
             },
         });
 

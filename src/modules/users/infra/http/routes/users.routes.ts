@@ -1,11 +1,16 @@
 import { Router } from "express";
+import multer from "multer";
 
+import uploadConfig from "@config/upload";
 import { CreateUsersController } from "../controllers/CreateUsersController";
 import { DeleteUserController } from "../controllers/DeleteUserController";
 import { FindByUserIdController } from "../controllers/FindByUserIdController";
 import { UpdateUserController } from "../controllers/UpdateUserController";
+import { UpdateUserAvatarController } from "../controllers/UpdateUserAvatarController";
 
 const usersRouter = Router();
+const uploadAvatar = multer(uploadConfig);
+
 const createUserController = new CreateUsersController();
 const findByUserIdController = new FindByUserIdController();
 const updateUserController = new UpdateUserController();
@@ -15,5 +20,11 @@ usersRouter.post("/", createUserController.handle);
 usersRouter.get("/:user_id", findByUserIdController.handle);
 usersRouter.delete("/remove/:user_id", deleteUserController.handle);
 usersRouter.put("/:id", updateUserController.handle);
+
+usersRouter.patch(
+    "/:user_id/avatar",
+    uploadAvatar.single("avatar"),
+    updateUserController.handle
+);
 
 export default usersRouter;

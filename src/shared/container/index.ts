@@ -9,6 +9,8 @@ import { IUsersTokenRepository } from "@modules/users/repositories/IUsersTokenRe
 
 import { EtherealMailProvider } from "./providers/MailProvider/implementations/EtherealMailProvider";
 import { IMailProvider } from "./providers/MailProvider/models/IMailProvider";
+import { IStorageProvider } from "./providers/StorageProvider/models/IStorageProvider";
+import { LocalStorageProvider } from "./providers/StorageProvider/implementations/LocalStorageProvider";
 
 container.registerSingleton<IUsersRepository>(
     "UsersRepository",
@@ -24,3 +26,10 @@ container.registerInstance<IMailProvider>(
     "EtherealMailProvider",
     new EtherealMailProvider()
 );
+
+container.registerInstance<IStorageProvider>(
+    "StorageProvider",
+    new LocalStorageProvider()
+);
+
+
