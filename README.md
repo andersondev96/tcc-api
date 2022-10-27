@@ -6,15 +6,15 @@ Desenvolvimento de um sistema para auxiliar os pequenos comerciantes em suas ven
 
 ### Usuários
 
-✅ Criar novo usuário
-✅ Autenticar usuário
-✅ Criar refresh token
-✅ Mostrar usuário
-✅ Editar usuário
-✅ Excluir usuário
-✅ Adicionar avatar
-✅ Mandar e-mail para redefinir senha
-✅ Redefinir senha
+✅ Criar novo usuário <br/>
+✅ Autenticar usuário <br/>
+✅ Criar refresh token <br/>
+✅ Mostrar usuário <br/>
+✅ Editar usuário <br/>
+✅ Excluir usuário <br/>
+✅ Adicionar avatar <br/>
+✅ Mandar e-mail para redefinir senha <br/>
+✅ Redefinir senha <br/>
 ### Clientes
 
 ### Vendedores
