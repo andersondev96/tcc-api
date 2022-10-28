@@ -32,7 +32,7 @@ export class UpdateUserService {
 
         const emailExists = await this.userRepository.findByMail(email);
 
-        if (emailExists) {
+        if (emailExists && emailExists.id !== id) {
             throw new AppError("Email address already used");
         }
 
