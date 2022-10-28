@@ -1,0 +1,11 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Start Business Documentation",
+        "description": "This is a api start business",
+        "version": "1.0.0",
+        "contact": {
+            "email": "anderson.ferreira@aluno.ufop.br"
+        }
+    }
+}

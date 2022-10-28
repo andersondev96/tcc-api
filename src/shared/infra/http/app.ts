@@ -5,9 +5,15 @@ import AppError from "@shared/errors/AppError";
 
 import routes from "./routes";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "@shared/utils/swagger.json";
+
 const app = express();
 
 app.use(express.json());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
