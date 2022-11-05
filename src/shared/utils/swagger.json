@@ -20,27 +20,37 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": "string",
-                                    "email": "string",
-                                    "password": "string"
-                                }
+                                "$ref": "#/components/schemas/User"
                             },
-                            "example": {
-                                "name": "John Doe",
-                                "email": "john@example.com",
-                                "password": "12345678"
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "name": "John Doe",
+                                        "email": "john@example.com",
+                                        "password": "12345678"
+                                    }
+                                }
                             }
                         }
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Created"
+                    "401": {
+                        "description": "Unauthorized"
                     },
                     "400": {
                         "description": "Email address already used"
+                    },
+                    "200": {
+                        "description": "User created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
                     },
                     "500": {
                         "description": "Internal Server Error"
@@ -60,18 +70,76 @@
                         "bearerAuth": []
                     }
                 ],
-                "parameters": {
-                    "id": "id",
-                    "in": "path",
-                    "description": "User id",
-                    "require": true,
-                    "schema": {
-                        "type": "string"
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "User id is required"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update a user",
+                "description": "Update a user by id",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "User id is required"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "name": "Josy Doe",
+                                        "email": "josy@example.com",
+                                        "password": "123456"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Created"
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -108,6 +176,31 @@
                         "description": "Email or password invalid!"
                     }
                 }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }
