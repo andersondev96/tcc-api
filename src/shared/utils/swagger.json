@@ -142,6 +142,37 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete a user",
+                "description": "Delete a user by id",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "User id is required"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User removed successfully"
+                    },
+                    "400": {
+                        "description": "Invalid id"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
             }
         },
         "/sessions": {
