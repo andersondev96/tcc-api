@@ -20,7 +20,7 @@ const updateUserAvatarController = new UpdateUserAvatarController();
 
 usersRouter.post("/", createUserController.handle);
 usersRouter.get("/:user_id", ensureAuthenticated, findByUserIdController.handle);
-usersRouter.delete("/remove/:user_id", ensureAuthenticated, deleteUserController.handle);
+usersRouter.delete("/:id", ensureAuthenticated, deleteUserController.handle);
 usersRouter.put("/:id", ensureAuthenticated, updateUserController.handle);
 
 usersRouter.patch(
