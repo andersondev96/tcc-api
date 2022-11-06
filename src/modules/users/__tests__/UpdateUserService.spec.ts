@@ -1,24 +1,17 @@
-import { UsersRepositoryFake } from "../repositories/Fakes/UsersRepositoryFake";
-import { CreateUserService } from "../services/CreateUserService";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { UpdateUserService } from "../services/UpdateUserService";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
 import AppError from "@shared/errors/AppError";
 
-let fakeUsersRepository: UsersRepositoryFake;
-let createUserService: CreateUserService;
+let fakeUsersRepository: FakeUsersRepository;
 let updateUserService: UpdateUserService;
 let fakeHashProvider: FakeHashProvider;
 
 describe("Update User Service", () => {
     beforeEach(() => {
-        fakeUsersRepository = new UsersRepositoryFake();
+        fakeUsersRepository = new FakeUsersRepository();
         fakeHashProvider = new FakeHashProvider();
-        createUserService = new CreateUserService(
-            fakeUsersRepository,
-            fakeHashProvider
-        );
-
         updateUserService = new UpdateUserService(
             fakeUsersRepository,
             fakeHashProvider
