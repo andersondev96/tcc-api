@@ -175,6 +175,45 @@
                 }
             }
         },
+        "/users/avatar": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update a user avatar",
+                "description": "Update a user avatar image",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "avatar": {
+                                        "type": "file"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Image avatar updated"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
         "/sessions": {
             "post": {
                 "tags": [
