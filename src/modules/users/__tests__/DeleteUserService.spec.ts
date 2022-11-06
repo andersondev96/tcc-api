@@ -1,23 +1,20 @@
 import AppError from "@shared/errors/AppError";
 
 import { User } from "../infra/prisma/entities/User";
-import { CreateUserService } from "../services/CreateUserService";
 import { DeleteUserService } from "../services/DeleteUserService";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
-import { UsersRepositoryFake } from "../repositories/Fakes/UsersRepositoryFake";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 
 
-let createUserService: CreateUserService;
-let usersRepository: UsersRepositoryFake;
+let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 let deleteUserService: DeleteUserService;
 
 describe("DeleteUserService", () => {
     beforeEach(() => {
-        usersRepository = new UsersRepositoryFake();
+        fakeUsersRepository = new FakeUsersRepository();
         fakeHashProvider = new FakeHashProvider();
-        createUserService = new CreateUserService(usersRepository, fakeHashProvider);
-        deleteUserService = new DeleteUserService(usersRepository);
+        deleteUserService = new DeleteUserService(fakeUsersRepository);
     });
 
     it("Should be able delete to user", async () => {
@@ -27,11 +24,11 @@ describe("DeleteUserService", () => {
             password: "123456",
         };
 
-        const user = await createUserService.execute(userData);
+        const user = await fakeUsersRepository.create(userData);
 
         await deleteUserService.execute(user.id);
 
-        const findUser = await usersRepository.findById(user.id);
+        const findUser = await fakeUsersRepository.findById(user.id);
 
         expect(findUser).toBe(undefined);
     });
