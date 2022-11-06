@@ -1,13 +1,13 @@
-import { UsersRepositoryFake } from "../repositories/Fakes/UsersRepositoryFake";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRepository";
 import { SendForgotPasswordMailService } from "../services/SendForgotPasswordMailService";
 import { IDateProvider } from "../providers/DateProvider/models/IDateProvider";
-import { DayjsDateProvider } from "../providers/DateProvider/implementations/DayjsDateProvider";
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
+import { FakeDateProvider } from "../providers/DateProvider/Fakes/FakeDateProvider";
 import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes/FakeMailProvider";
 import AppError from "@shared/errors/AppError";
 
-let usersRepositoryFake: UsersRepositoryFake;
+let fakeUsersRepository: FakeUsersRepository;
 let fakeUsersTokenRepository: FakeUsersTokenRepository;
 let sendForgotPasswordMailService: SendForgotPasswordMailService;
 let fakeDateProvider: IDateProvider;
@@ -15,13 +15,13 @@ let fakeMailProvider: IMailProvider;
 
 describe("Send Forgot Password Mail Service", () => {
     beforeEach(() => {
-        usersRepositoryFake = new UsersRepositoryFake();
+        fakeUsersRepository = new FakeUsersRepository();
         fakeUsersTokenRepository = new FakeUsersTokenRepository();
-        fakeDateProvider = new DayjsDateProvider();
+        fakeDateProvider = new FakeDateProvider();
         fakeMailProvider = new FakeMailProvider();
 
         sendForgotPasswordMailService = new SendForgotPasswordMailService(
-            usersRepositoryFake,
+            fakeUsersRepository,
             fakeUsersTokenRepository,
             fakeDateProvider,
             fakeMailProvider
@@ -31,7 +31,7 @@ describe("Send Forgot Password Mail Service", () => {
     it("Should be able to send a forgot password mail to user", async () => {
         const sendMail = jest.spyOn(fakeMailProvider, "sendMail");
 
-        const user = await usersRepositoryFake.create({
+        const user = await fakeUsersRepository.create({
             name: "John doe",
             email: "john@example.com",
             password: "123456",
@@ -51,7 +51,7 @@ describe("Send Forgot Password Mail Service", () => {
     it("Should be able to create an users token", async () => {
         const generateTokenMail = jest.spyOn(fakeUsersTokenRepository, "create");
 
-        const user = await usersRepositoryFake.create({
+        const user = await fakeUsersRepository.create({
             name: "John doe",
             email: "john@example.com",
             password: "123456",
