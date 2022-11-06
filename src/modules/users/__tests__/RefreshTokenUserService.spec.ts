@@ -1,7 +1,6 @@
 import AppError from "@shared/errors/AppError";
 import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
 
-import { User } from "../infra/prisma/entities/User";
 import { IDateProvider } from '../providers/DateProvider/models/IDateProvider';
 import { DayjsDateProvider } from "../providers/DateProvider/implementations/DayjsDateProvider";
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
@@ -66,14 +65,28 @@ describe('RefreshTokenUserService', () => {
         expect(response).toHaveProperty('refresh_token');
     })
 
-    it('should be able to user token does not exists', async () => {
+    it('should be able to user token is invalid', async () => {
+
+        const user: ICreateUserDTO = {
+            name: 'John Doe',
+            email: 'john.doe@example.com',
+            password: '123456',
+        };
+        await fakeUsersRepository.create(user);
 
         const authentication = await authenticateUserService.execute({
-            email: 'user@example.com',
-            password: '12345678',
+            email: user.email,
+            password: user.password,
         });
 
-        expect(refreshTokenUserService.execute(authentication.refresh_token))
-            .rejects.toBeInstanceOf(AppError);
+        const refresh_token = await fakeUsersTokenRepository.findByUserAndRefreshToken(
+            user.id,
+            authentication.refresh_token
+        );
+
+        await fakeUsersTokenRepository.deleteById(refresh_token.id);
+
+        await expect(refreshTokenUserService.execute(
+            authentication.refresh_token)).rejects.toBeInstanceOf(AppError);
     })
 });
