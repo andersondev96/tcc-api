@@ -3,38 +3,31 @@ import { ICreateUserDTO } from '../dtos/ICreateUserDTO';
 
 import { IDateProvider } from '../providers/DateProvider/models/IDateProvider';
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
-import { DayjsDateProvider } from "../providers/DateProvider/implementations/DayjsDateProvider";
+import { FakeDateProvider } from "../providers/DateProvider/Fakes/FakeDateProvider";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRepository";
-import { UsersRepositoryFake } from "../repositories/Fakes/UsersRepositoryFake";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { AuthenticateUserService } from "../services/AuthenticateUserService";
-import { CreateUserService } from '../services/CreateUserService';
 
-let fakeUsersRepository: UsersRepositoryFake;
+let fakeUsersRepository: FakeUsersRepository;
 let fakeTokenUserRepository: FakeUsersTokenRepository;
 let fakeHashProvider: IHashProvider;
-let dateProvider: IDateProvider;
+let fakeDateProvider: IDateProvider;
 let authenticateUser: AuthenticateUserService;
-let createUserService: CreateUserService;
 
 
 describe("AuthenticateUser", () => {
     beforeEach(() => {
-        fakeUsersRepository = new UsersRepositoryFake();
+        fakeUsersRepository = new FakeUsersRepository();
         fakeTokenUserRepository = new FakeUsersTokenRepository();
         fakeHashProvider = new FakeHashProvider();
-        dateProvider = new DayjsDateProvider();
-
-        createUserService = new CreateUserService(
-            fakeUsersRepository,
-            fakeHashProvider,
-        );
+        fakeDateProvider = new FakeDateProvider();
 
         authenticateUser = new AuthenticateUserService(
             fakeUsersRepository,
             fakeTokenUserRepository,
             fakeHashProvider,
-            dateProvider
+            fakeDateProvider
         );
 
     })

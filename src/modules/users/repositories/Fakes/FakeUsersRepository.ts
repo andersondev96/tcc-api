@@ -5,7 +5,7 @@ import { User } from "@modules/users/infra/prisma/entities/User";
 
 import { IUsersRepository } from "../IUsersRepository";
 
-export class UsersRepositoryFake implements IUsersRepository {
+export class FakeUsersRepository implements IUsersRepository {
     public async findById(id: string): Promise<User> {
         const findUserById = this.users.find((user) => user.id === id);
 
