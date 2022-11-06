@@ -247,6 +247,111 @@
                     }
                 }
             }
+        },
+        "/sessions/refresh-token": {
+            "post": {
+                "tags": [
+                    "Sessions"
+                ],
+                "summary": "Refresh token",
+                "description": "Generate a new refresh token to the user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Refresh token generated successfully",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/UserTokens"
+                        }
+                    },
+                    "400": {
+                        "description": "Refresh token does not exists"
+                    }
+                }
+            }
+        },
+        "/password/forgot": {
+            "post": {
+                "tags": [
+                    "Password"
+                ],
+                "summary": "Forgot password",
+                "description": "Forgot password",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "User does not exists"
+                    }
+                }
+            }
+        },
+        "/password/reset": {
+            "post": {
+                "tags": [
+                    "Password"
+                ],
+                "summary": "Reset password",
+                "description": "Reset password",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Token password",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Token does not exists"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -261,6 +366,17 @@
                         "type": "string"
                     },
                     "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UserTokens": {
+                "type": "object",
+                "properties": {
+                    "refresh_token": {
+                        "type": "string"
+                    },
+                    "token": {
                         "type": "string"
                     }
                 }
