@@ -1,13 +1,12 @@
-import AppError from "@shared/errors/AppError";
-
-import { User } from "../infra/prisma/entities/User";
-import { DeleteUserService } from "../services/DeleteUserService";
+import { AppError } from "@shared/errors/AppError";
+import { IUsersRepository } from "../repositories/IUsersRepository";
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
+import { DeleteUserService } from "../services/DeleteUserService";
 
-
-let fakeUsersRepository: FakeUsersRepository;
-let fakeHashProvider: FakeHashProvider;
+let fakeUsersRepository: IUsersRepository;
+let fakeHashProvider: IHashProvider;
 let deleteUserService: DeleteUserService;
 
 describe("DeleteUserService", () => {
@@ -18,13 +17,11 @@ describe("DeleteUserService", () => {
     });
 
     it("Should be able delete to user", async () => {
-        const userData: User = {
+        const user = await fakeUsersRepository.create({
             name: "John doe",
             email: "john@example.com",
             password: "123456",
-        };
-
-        const user = await fakeUsersRepository.create(userData);
+        });
 
         await deleteUserService.execute(user.id);
 

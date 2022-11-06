@@ -1,21 +1,21 @@
-import AppError from "@shared/errors/AppError";
-import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
-
+import { AppError } from "@shared/errors/AppError";
 import { IDateProvider } from '../providers/DateProvider/models/IDateProvider';
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
+import { IUsersRepository } from "../repositories/IUsersRepository";
+import { IUsersTokenRepository } from "../repositories/IUsersTokenRepository";
 import { FakeDateProvider } from "../providers/DateProvider/Fakes/FakeDateProvider";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRepository";
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
-import { RefreshTokenUserService } from "../services/RefreshTokenUserService";
 import { AuthenticateUserService } from "../services/AuthenticateUserService";
+import { RefreshTokenUserService } from "../services/RefreshTokenUserService";
 
-let refreshTokenUserService: RefreshTokenUserService;
-let authenticateUserService: AuthenticateUserService
-let fakeUsersRepository: FakeUsersRepository;
+let fakeUsersRepository: IUsersRepository;
 let fakeHashProvider: IHashProvider;
 let fakeDateProvider: IDateProvider;
-let fakeUsersTokenRepository: FakeUsersTokenRepository;
+let fakeUsersTokenRepository: IUsersTokenRepository;
+let refreshTokenUserService: RefreshTokenUserService;
+let authenticateUserService: AuthenticateUserService;
 
 describe('RefreshTokenUserService', () => {
     beforeEach(() => {
@@ -38,13 +38,11 @@ describe('RefreshTokenUserService', () => {
     });
 
     it("should be able generate a new token", async () => {
-
-        const user: ICreateUserDTO = {
+        const user = await fakeUsersRepository.create({
             name: 'John Doe',
             email: 'john.doe@example.com',
-            password: '123456',
-        };
-        await fakeUsersRepository.create(user);
+            password: '123456'
+        });
 
         const authentication = await authenticateUserService.execute({
             email: user.email,
@@ -59,13 +57,11 @@ describe('RefreshTokenUserService', () => {
     })
 
     it('should be able to user token is invalid', async () => {
-
-        const user: ICreateUserDTO = {
+        const user = await fakeUsersRepository.create({
             name: 'John Doe',
             email: 'john.doe@example.com',
             password: '123456',
-        };
-        await fakeUsersRepository.create(user);
+        });
 
         const authentication = await authenticateUserService.execute({
             email: user.email,

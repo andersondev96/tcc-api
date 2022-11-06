@@ -1,7 +1,7 @@
 import "@shared/container";
 import express, { NextFunction, Request, Response } from "express";
 
-import AppError from "@shared/errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 
 import routes from "./routes";
 

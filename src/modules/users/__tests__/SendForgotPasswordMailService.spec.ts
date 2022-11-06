@@ -1,17 +1,19 @@
-import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
-import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRepository";
-import { SendForgotPasswordMailService } from "../services/SendForgotPasswordMailService";
+import { AppError } from "@shared/errors/AppError";
 import { IDateProvider } from "../providers/DateProvider/models/IDateProvider";
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
+import { IUsersRepository } from "../repositories/IUsersRepository";
+import { IUsersTokenRepository } from "../repositories/IUsersTokenRepository";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
+import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRepository";
 import { FakeDateProvider } from "../providers/DateProvider/Fakes/FakeDateProvider";
 import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes/FakeMailProvider";
-import AppError from "@shared/errors/AppError";
+import { SendForgotPasswordMailService } from "../services/SendForgotPasswordMailService";
 
-let fakeUsersRepository: FakeUsersRepository;
-let fakeUsersTokenRepository: FakeUsersTokenRepository;
-let sendForgotPasswordMailService: SendForgotPasswordMailService;
+let fakeUsersRepository: IUsersRepository;
+let fakeUsersTokenRepository: IUsersTokenRepository;
 let fakeDateProvider: IDateProvider;
 let fakeMailProvider: IMailProvider;
+let sendForgotPasswordMailService: SendForgotPasswordMailService;
 
 describe("Send Forgot Password Mail Service", () => {
     beforeEach(() => {

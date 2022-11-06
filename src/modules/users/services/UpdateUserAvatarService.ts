@@ -1,5 +1,4 @@
 import { inject, injectable } from "tsyringe";
-
 import { IUsersRepository } from "../repositories/IUsersRepository";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 

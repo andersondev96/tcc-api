@@ -1,5 +1,5 @@
-import AppError from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
+import { AppError } from "@shared/errors/AppError";
 import { UsersRepository } from "../infra/prisma/repositories/UsersRepository";
 
 @injectable()

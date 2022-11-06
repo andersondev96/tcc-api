@@ -1,9 +1,9 @@
-import AppError from "@shared/errors/AppError";
-import { hash } from "bcryptjs";
 import { inject, injectable } from "tsyringe";
+import { AppError } from "@shared/errors/AppError";
 import { IDateProvider } from "../providers/DateProvider/models/IDateProvider";
 import { IUsersRepository } from "../repositories/IUsersRepository";
 import { IUsersTokenRepository } from "../repositories/IUsersTokenRepository";
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 
 interface IRequest {
     token: string;
@@ -20,6 +20,8 @@ export class ResetUserPasswordService {
         private usersRepository: IUsersRepository,
         @inject("DayjsDateProvider")
         private dateProvider: IDateProvider,
+        @inject("HashProvider")
+        private hashProvider: IHashProvider
     ) { }
 
     async execute({ token, password }: IRequest): Promise<void> {
@@ -30,13 +32,17 @@ export class ResetUserPasswordService {
             throw new AppError("Token invalid!");
         }
 
+        const user = await this.usersRepository.findById(userToken.user_id);
+
+        if (!user) {
+            throw new AppError("User does not exists!");
+        }
+
         if (this.dateProvider.compareIsBefore(userToken.expires_date, this.dateProvider.dateNow())) {
             throw new AppError("Token expired!");
         }
 
-        const user = await this.usersRepository.findById(userToken.user_id);
-
-        user.password = await hash(password, 8);
+        user.password = await this.hashProvider.generateHash(password);
 
         await this.usersRepository.update(user);
 

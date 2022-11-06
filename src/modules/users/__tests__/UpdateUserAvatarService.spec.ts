@@ -1,4 +1,4 @@
-import { UsersRepositoryFake } from "../repositories/Fakes/UsersRepositoryFake";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { CreateUserService } from "../services/CreateUserService";
 import { UpdateUserAvatarService } from "../services/UpdateUserAvatarService";
@@ -6,7 +6,7 @@ import { IStorageProvider } from "@shared/container/providers/StorageProvider/mo
 import { LocalStorageProvider } from "@shared/container/providers/StorageProvider/implementations/LocalStorageProvider";
 import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
 
-let usersRepositoryFake: UsersRepositoryFake;
+let usersRepositoryFake: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 let storageProvider: IStorageProvider;
 let createUserService: CreateUserService;
@@ -14,7 +14,7 @@ let updateUserAvatarService: UpdateUserAvatarService;
 
 describe("Update User Avatar Service", () => {
     beforeEach(() => {
-        usersRepositoryFake = new UsersRepositoryFake();
+        usersRepositoryFake = new FakeUsersRepository();
         fakeHashProvider = new FakeHashProvider();
         storageProvider = new LocalStorageProvider();
         createUserService = new CreateUserService(

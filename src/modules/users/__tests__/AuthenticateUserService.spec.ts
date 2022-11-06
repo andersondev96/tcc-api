@@ -1,7 +1,7 @@
-import AppError from '@shared/errors/AppError';
-import { ICreateUserDTO } from '../dtos/ICreateUserDTO';
-
+import { AppError } from '@shared/errors/AppError';
 import { IDateProvider } from '../providers/DateProvider/models/IDateProvider';
+import { IUsersRepository } from '../repositories/IUsersRepository';
+import { IUsersTokenRepository } from '../repositories/IUsersTokenRepository';
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
 import { FakeDateProvider } from "../providers/DateProvider/Fakes/FakeDateProvider";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
@@ -9,12 +9,11 @@ import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRe
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { AuthenticateUserService } from "../services/AuthenticateUserService";
 
-let fakeUsersRepository: FakeUsersRepository;
-let fakeTokenUserRepository: FakeUsersTokenRepository;
+let fakeUsersRepository: IUsersRepository;
+let fakeTokenUserRepository: IUsersTokenRepository;
 let fakeHashProvider: IHashProvider;
 let fakeDateProvider: IDateProvider;
 let authenticateUser: AuthenticateUserService;
-
 
 describe("AuthenticateUser", () => {
     beforeEach(() => {
@@ -33,12 +32,11 @@ describe("AuthenticateUser", () => {
     })
 
     it("should be able authenticate", async () => {
-        const user: ICreateUserDTO = {
+        const user = await fakeUsersRepository.create({
             name: 'John Doe',
             email: 'john.doe@example.com',
             password: '123456',
-        };
-        await fakeUsersRepository.create(user);
+        });
 
         const response = await authenticateUser.execute({
             email: user.email,
@@ -66,7 +64,7 @@ describe("AuthenticateUser", () => {
 
         await expect(
             authenticateUser.execute({
-                email: 'john.doe@example.com',
+                email: user.email,
                 password: 'wrong-password',
             }),
         ).rejects.toBeInstanceOf(AppError);

@@ -1,22 +1,18 @@
-import AppError from "@shared/errors/AppError";
-
-import { User } from "../infra/prisma/entities/User";
-import { CreateUserService } from "../services/CreateUserService";
+import { AppError } from "@shared/errors/AppError";
+import { IUsersRepository } from "../repositories/IUsersRepository";
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { FindByUserIdService } from "../services/FindByUserIdService";
 
-
-let createUserService: CreateUserService;
-let fakeUsersRepository: FakeUsersRepository;
-let fakeHashProvider: FakeHashProvider;
+let fakeUsersRepository: IUsersRepository;
+let fakeHashProvider: IHashProvider;
 let findByUserIdService: FindByUserIdService;
 
 describe("DeleteUserService", () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
         fakeHashProvider = new FakeHashProvider();
-        createUserService = new CreateUserService(fakeUsersRepository, fakeHashProvider);
         findByUserIdService = new FindByUserIdService(fakeUsersRepository);
     });
 

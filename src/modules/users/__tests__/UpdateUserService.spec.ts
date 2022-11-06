@@ -1,12 +1,14 @@
+import { AppError } from "@shared/errors/AppError";
+import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
+import { IUsersRepository } from "../repositories/IUsersRepository";
+import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { UpdateUserService } from "../services/UpdateUserService";
-import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
-import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
-import AppError from "@shared/errors/AppError";
 
-let fakeUsersRepository: FakeUsersRepository;
+let fakeUsersRepository: IUsersRepository;
+let fakeHashProvider: IHashProvider;
 let updateUserService: UpdateUserService;
-let fakeHashProvider: FakeHashProvider;
 
 describe("Update User Service", () => {
     beforeEach(() => {
