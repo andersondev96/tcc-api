@@ -2,19 +2,19 @@ import AppError from "@shared/errors/AppError";
 
 import { User } from "../infra/prisma/entities/User";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
-import { UsersRepositoryFake } from "../repositories/Fakes/UsersRepositoryFake";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { CreateUserService } from "../services/CreateUserService";
 
 let createUserService: CreateUserService;
-let usersRepository: UsersRepositoryFake;
+let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 
 describe("CreateUserService", () => {
     beforeEach(() => {
-        usersRepository = new UsersRepositoryFake();
+        fakeUsersRepository = new FakeUsersRepository();
         fakeHashProvider = new FakeHashProvider();
         createUserService = new CreateUserService(
-            usersRepository,
+            fakeUsersRepository,
             fakeHashProvider
         );
     });
