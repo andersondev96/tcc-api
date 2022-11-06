@@ -3,35 +3,40 @@ import AppError from "@shared/errors/AppError";
 import { User } from "../infra/prisma/entities/User";
 import { CreateUserService } from "../services/CreateUserService";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
-import { UsersRepositoryFake } from "../repositories/Fakes/UsersRepositoryFake";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { FindByUserIdService } from "../services/FindByUserIdService";
 
 
 let createUserService: CreateUserService;
-let usersRepository: UsersRepositoryFake;
+let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 let findByUserIdService: FindByUserIdService;
 
 describe("DeleteUserService", () => {
     beforeEach(() => {
-        usersRepository = new UsersRepositoryFake();
+        fakeUsersRepository = new FakeUsersRepository();
         fakeHashProvider = new FakeHashProvider();
-        createUserService = new CreateUserService(usersRepository, fakeHashProvider);
-        findByUserIdService = new FindByUserIdService(usersRepository);
+        createUserService = new CreateUserService(fakeUsersRepository, fakeHashProvider);
+        findByUserIdService = new FindByUserIdService(fakeUsersRepository);
     });
 
     it("Should be able find to user", async () => {
-        const userData: User = {
-            name: "John doe",
+        const user = await fakeUsersRepository.create({
+            name: "John Doe",
             email: "john@example.com",
             password: "123456",
-        };
-
-        const user = await createUserService.execute(userData);
+        });
 
         const findUser = await findByUserIdService.execute(user.id);
 
-        expect(findUser).toEqual(user);
+        expect(findUser).toEqual(
+            {
+                avatar: undefined,
+                avatar_url: undefined,
+                email: "john@example.com",
+                name: "John Doe", id: findUser.id
+            }
+        )
     });
 
     it("Should not be able find to invalid user", async () => {
