@@ -2,34 +2,27 @@ import AppError from "@shared/errors/AppError";
 import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
 
 import { IDateProvider } from '../providers/DateProvider/models/IDateProvider';
-import { DayjsDateProvider } from "../providers/DateProvider/implementations/DayjsDateProvider";
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
+import { FakeDateProvider } from "../providers/DateProvider/Fakes/FakeDateProvider";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRepository";
-import { UsersRepositoryFake } from "../repositories/Fakes/UsersRepositoryFake";
-import { CreateUserService } from "../services/CreateUserService";
+import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { RefreshTokenUserService } from "../services/RefreshTokenUserService";
 import { AuthenticateUserService } from "../services/AuthenticateUserService";
 
-let createUserService: CreateUserService;
 let refreshTokenUserService: RefreshTokenUserService;
 let authenticateUserService: AuthenticateUserService
-let fakeUsersRepository: UsersRepositoryFake;
+let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: IHashProvider;
 let fakeDateProvider: IDateProvider;
 let fakeUsersTokenRepository: FakeUsersTokenRepository;
 
 describe('RefreshTokenUserService', () => {
     beforeEach(() => {
-        fakeUsersRepository = new UsersRepositoryFake();
+        fakeUsersRepository = new FakeUsersRepository();
         fakeUsersTokenRepository = new FakeUsersTokenRepository();
         fakeHashProvider = new FakeHashProvider();
-        fakeDateProvider = new DayjsDateProvider();
-
-        createUserService = new CreateUserService(
-            fakeUsersRepository,
-            fakeHashProvider
-        );
+        fakeDateProvider = new FakeDateProvider();
 
         refreshTokenUserService = new RefreshTokenUserService(
             fakeUsersTokenRepository,
