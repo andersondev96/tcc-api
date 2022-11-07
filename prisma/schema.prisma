@@ -17,6 +17,7 @@ model User {
     avatar    String?
 
     userToken UserToken[]
+    Company   Company[]
 
     @@map("users")
 }
@@ -31,4 +32,113 @@ model UserToken {
     user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     @@map("userTokens")
+}
+
+model Company {
+    id                    String               @id @default(uuid())
+    name                  String
+    cnpj                  String
+    category              String
+    description           String?
+    physical_localization Boolean
+    user_id               String
+    user                  User                 @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    DescriptionService    DescriptionService[]
+    Contact               Contact[]
+    CompanyOnSchedule     CompanyOnSchedule[]
+    imageOnCompany        imageOnCompany[]
+    Service               Service[]
+
+    @@map("companies")
+}
+
+model DescriptionService {
+    id          String  @id @default(uuid())
+    description String
+    company_id  String
+    company     Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    @@map("descriptionServices")
+}
+
+model Contact {
+    id         String   @id @default(uuid())
+    telephone  String
+    whatsapp   String?
+    email      String
+    website    String?
+    company_id String
+    company    Company  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    @@map("contacts")
+}
+
+model Schedule {
+    id                String              @id @default(uuid())
+    day_of_week       String
+    time_open         String
+    time_close        String
+    createdAt         DateTime            @default(now())
+    updatedAt         DateTime            @updatedAt
+    CompanyOnSchedule CompanyOnSchedule[]
+
+    @@map("schedules")
+}
+
+model CompanyOnSchedule {
+    company_id  String
+    company     Company  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    schedule_id String
+    schedule    Schedule @relation(fields: [schedule_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@id([company_id, schedule_id])
+    @@map("companiesOnSchedules")
+}
+
+model Service {
+    id                String   @id @default(uuid())
+    name              String
+    description       String
+    price             Float
+    category          String
+    image_url         String
+    highlight_service Boolean
+    favorites         Int      @default(0)
+    starts            Int      @default(0)
+    assessments       Int      @default(0)
+    company_id        String
+    company           Company  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+
+    @@map("services")
+}
+
+model Image {
+    id        String @id @default(uuid())
+    image_url String
+    type      String
+
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+    imageOnCompany imageOnCompany[]
+
+    @@map("images")
+}
+
+model imageOnCompany {
+    company_id String
+    company    Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    image_id   String
+    image      Image   @relation(fields: [image_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@id([company_id, image_id])
+    @@map("imagesOnCompanies")
 }
