@@ -12,6 +12,9 @@ import { IMailProvider } from "./providers/MailProvider/models/IMailProvider";
 import { IStorageProvider } from "./providers/StorageProvider/models/IStorageProvider";
 import { LocalStorageProvider } from "./providers/StorageProvider/implementations/LocalStorageProvider";
 
+import { CompaniesRepository } from "@modules/companies/infra/prisma/repositories/CompaniesRepository";
+import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
+
 container.registerSingleton<IUsersRepository>(
     "UsersRepository",
     UsersRepository
@@ -30,6 +33,11 @@ container.registerInstance<IMailProvider>(
 container.registerInstance<IStorageProvider>(
     "StorageProvider",
     new LocalStorageProvider()
+);
+
+container.registerInstance<ICompaniesRepository>(
+    "CompaniesRepository",
+    new CompaniesRepository()
 );
 
 
