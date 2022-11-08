@@ -21,7 +21,7 @@ export interface ICompaniesRepository {
      * @param latitude number Latitude que está localizado o estabelecimento
      * @param longitude number Longitude que está localizado o estabelecimento
      */
-    listByLocalization(latitude: number, longitude: number): Promise<Company[]>;
+    listByLocalization(latitude: number, longitude: number): Promise<Company[] | undefined>;
 
     /**
      * @description Lista as empresas segundo os atributos que são filtrados
@@ -30,19 +30,19 @@ export interface ICompaniesRepository {
      * @param city string Cidade onde a empresa está localizada
      * @param price number Preço médio dos produtos/serviços ofertados pela empresa
      */
-    listByFilter(category?: string, state?: string, city?: StringMap, price?: number): Promise<Company[]>;
+    listByFilter(category?: string, state?: string, city?: StringMap, price?: number): Promise<Company[] | undefined>;
 
     /**
      * @description Lista a empresa que tem um determinado nome
      * @param name string Nome da empresa
      */
-    findByName(name: string): Promise<Company>;
+    findByName(name: string): Promise<Company | undefined>;
 
     /**
      * @description Lista a empresa que tem determinado id
      * @param id string Id da empresa
      */
-    findById(id: string): Promise<Company>;
+    findById(id: string): Promise<Company | undefined>;
 
     /**
      * @description Recebe os atributos da tabela company e a atualiza

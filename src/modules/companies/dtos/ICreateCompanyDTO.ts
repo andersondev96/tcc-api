@@ -4,4 +4,6 @@ export interface ICreateCompanyDTO {
     category: string;
     description: string;
     physical_localization: boolean;
+    user_id: string;
+    id?: string;
 }
