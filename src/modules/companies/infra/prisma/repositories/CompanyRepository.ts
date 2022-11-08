@@ -1,12 +1,11 @@
 import { prisma } from "@database/prisma";
 import { ICreateCompanyDTO } from "@modules/companies/dtos/ICreateCompanyDTO";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
-import { StringMap } from "ts-jest";
 import { Company } from "../entities/Company";
 
 export class CompanyRepository implements ICompaniesRepository {
 
-    async create({
+    public async create({
         id,
         name,
         cnpj,
@@ -30,21 +29,21 @@ export class CompanyRepository implements ICompaniesRepository {
         return company;
     }
 
-    async listAll(): Promise<Company[]> {
+    public async listAll(): Promise<Company[]> {
         const listAllCompanies = await prisma.company.findMany();
 
         return listAllCompanies;
     }
 
-    async listByLocalization(latitude: number, longitude: number): Promise<Company[] | undefined> {
+    public async listByLocalization(latitude: number, longitude: number): Promise<Company[] | undefined> {
         throw new Error("Method not implemented.");
     }
 
-    async listByFilter(category?: string, state?: string, city?: StringMap, price?: number): Promise<Company[] | undefined> {
+    public async listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[] | undefined> {
         throw new Error("Method not implemented.");
     }
 
-    async findByName(name: string): Promise<Company | undefined> {
+    public async findByName(name: string): Promise<Company | undefined> {
         const listCompanyByName = await prisma.company.findFirst({
             where: { name },
         });
@@ -52,7 +51,7 @@ export class CompanyRepository implements ICompaniesRepository {
         return listCompanyByName;
     }
 
-    async findById(id: string): Promise<Company | undefined> {
+    public async findById(id: string): Promise<Company | undefined> {
         const listCompanyById = await prisma.company.findUnique({
             where: { id },
         });
@@ -60,7 +59,7 @@ export class CompanyRepository implements ICompaniesRepository {
         return listCompanyById;
     }
 
-    async update(company: ICreateCompanyDTO): Promise<Company> {
+    public async update(company: ICreateCompanyDTO): Promise<Company> {
         const updateCompany = await prisma.company.update({
             where: { id: company.id },
             data: { ...company },
@@ -69,7 +68,7 @@ export class CompanyRepository implements ICompaniesRepository {
         return updateCompany;
     }
 
-    async delete(id: string): Promise<void> {
+    public async delete(id: string): Promise<void> {
         await prisma.company.delete({
             where: { id },
         });

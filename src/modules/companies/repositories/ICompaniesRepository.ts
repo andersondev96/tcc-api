@@ -1,4 +1,3 @@
-import { StringMap } from "ts-jest";
 import { ICreateCompanyDTO } from "../dtos/ICreateCompanyDTO";
 import { Company } from "../infra/prisma/entities/Company";
 
@@ -30,7 +29,7 @@ export interface ICompaniesRepository {
      * @param city string Cidade onde a empresa está localizada
      * @param price number Preço médio dos produtos/serviços ofertados pela empresa
      */
-    listByFilter(category?: string, state?: string, city?: StringMap, price?: number): Promise<Company[] | undefined>;
+    listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[] | undefined>;
 
     /**
      * @description Lista a empresa que tem um determinado nome
