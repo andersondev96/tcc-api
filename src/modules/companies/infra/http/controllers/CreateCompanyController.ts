@@ -13,13 +13,22 @@ export class CreateCompanyController {
             category,
             description,
             physical_localization,
+            contact: {
+                telephone,
+                whatsapp,
+                email,
+                website
+            }
+        } = request.body;
+
+        const createCompanyService = container.resolve(CreateCompanyService);
+
+        const contact = {
             telephone,
             whatsapp,
             email,
             website
-        } = request.body;
-
-        const createCompanyService = container.resolve(CreateCompanyService);
+        };
 
         const company = await createCompanyService.execute({
             name,
@@ -27,12 +36,7 @@ export class CreateCompanyController {
             category,
             description,
             physical_localization,
-            contact: {
-                telephone,
-                whatsapp,
-                email,
-                website
-            },
+            contact,
             user_id
         });
 

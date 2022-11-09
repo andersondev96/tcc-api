@@ -9,7 +9,7 @@ interface IContact {
     telephone: string;
     whatsapp: string;
     email: string;
-    website: string;
+    website: string
 }
 interface IRequest {
     name: string;
@@ -17,7 +17,7 @@ interface IRequest {
     category: string;
     description: string;
     physical_localization: boolean,
-    contact: IContact;
+    contact: IContact,
     user_id: string;
 }
 
@@ -51,18 +51,18 @@ export class CreateCompanyService {
             throw new AppError("This user does not exist");
         }
 
+        const checkCompanyExists = await this.companyRepository.findByName(name);
+
+        if (checkCompanyExists) {
+            throw new AppError("Company already exists");
+        }
+
         const contactCompany = await this.contactRepository.create({
             telephone: contact.telephone,
             whatsapp: contact.whatsapp,
             email: contact.email,
             website: contact.website
         });
-
-        const checkCompanyExists = await this.companyRepository.findByName(name);
-
-        if (checkCompanyExists) {
-            throw new AppError("Company already exists");
-        }
 
         const company = await this.companyRepository.create({
             name,
