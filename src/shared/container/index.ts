@@ -15,6 +15,9 @@ import { LocalStorageProvider } from "./providers/StorageProvider/implementation
 import { CompaniesRepository } from "@modules/companies/infra/prisma/repositories/CompaniesRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 
+import { ContactsRepository } from "@modules/companies/infra/prisma/repositories/ContactsRepository";
+import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
+
 container.registerSingleton<IUsersRepository>(
     "UsersRepository",
     UsersRepository
@@ -38,6 +41,11 @@ container.registerInstance<IStorageProvider>(
 container.registerInstance<ICompaniesRepository>(
     "CompaniesRepository",
     new CompaniesRepository()
+);
+
+container.registerInstance<IContactsRepository>(
+    "ContactsRepository",
+    new ContactsRepository()
 );
 
 
