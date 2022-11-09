@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">95% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>56/60</span>
+                <span class='fraction'>76/80</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">95% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>56/60</span>
+                <span class='fraction'>76/80</span>
             </div>
         
             
@@ -122,7 +122,39 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -166,8 +198,16 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -186,13 +226,21 @@ import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
+import { IContactsRepository } from "../repositories/IContactsRepository";
 &nbsp;
+interface IContact {
+    telephone: string;
+    whatsapp: string;
+    email: string;
+    website: string;
+}
 interface IRequest {
     name: string;
     cnpj: string;
     category: string;
     description: string;
     physical_localization: boolean,
+    contact: IContact;
     user_id: string;
 }
 &nbsp;
@@ -205,6 +253,9 @@ export class CreateCompanyService {
 &nbsp;
         @inject("UsersRepository")
         private userRepository: IUsersRepository,
+&nbsp;
+        @inject("ContactsRepository")
+        private contactRepository: IContactsRepository
     ) { }
 &nbsp;
     public async execute({
@@ -213,6 +264,7 @@ export class CreateCompanyService {
         category,
         description,
         physical_localization,
+        contact,
         user_id,
     }: IRequest): Promise&lt;Company&gt; {
 &nbsp;
@@ -221,6 +273,13 @@ export class CreateCompanyService {
         if (!user) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >            throw new AppError("This user does not exist");</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
+&nbsp;
+        const contactCompany = await this.contactRepository.create({
+            telephone: contact.telephone,
+            whatsapp: contact.whatsapp,
+            email: contact.email,
+            website: contact.website
+        });
 &nbsp;
         const checkCompanyExists = await this.companyRepository.findByName(name);
 &nbsp;
@@ -234,6 +293,7 @@ export class CreateCompanyService {
             category,
             description,
             physical_localization,
+            contact_id: contactCompany.id,
             user_id
         });
 &nbsp;
@@ -247,7 +307,7 @@ export class CreateCompanyService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-08T01:58:18.647Z
+                at 2022-11-09T00:50:22.373Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

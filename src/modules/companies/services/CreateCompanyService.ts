@@ -3,13 +3,21 @@ import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
+import { IContactsRepository } from "../repositories/IContactsRepository";
 
+interface IContact {
+    telephone: string;
+    whatsapp: string;
+    email: string;
+    website: string;
+}
 interface IRequest {
     name: string;
     cnpj: string;
     category: string;
     description: string;
     physical_localization: boolean,
+    contact: IContact;
     user_id: string;
 }
 
@@ -22,6 +30,9 @@ export class CreateCompanyService {
 
         @inject("UsersRepository")
         private userRepository: IUsersRepository,
+
+        @inject("ContactsRepository")
+        private contactRepository: IContactsRepository
     ) { }
 
     public async execute({
@@ -30,6 +41,7 @@ export class CreateCompanyService {
         category,
         description,
         physical_localization,
+        contact,
         user_id,
     }: IRequest): Promise<Company> {
 
@@ -38,6 +50,13 @@ export class CreateCompanyService {
         if (!user) {
             throw new AppError("This user does not exist");
         }
+
+        const contactCompany = await this.contactRepository.create({
+            telephone: contact.telephone,
+            whatsapp: contact.whatsapp,
+            email: contact.email,
+            website: contact.website
+        });
 
         const checkCompanyExists = await this.companyRepository.findByName(name);
 
@@ -51,6 +70,7 @@ export class CreateCompanyService {
             category,
             description,
             physical_localization,
+            contact_id: contactCompany.id,
             user_id
         });
 
