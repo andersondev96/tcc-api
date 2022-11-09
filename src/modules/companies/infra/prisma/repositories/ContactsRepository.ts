@@ -10,8 +10,7 @@ export class ContactsRepository implements IContactsRepository {
         email,
         whatsapp,
         website,
-        id,
-        company_id
+        id
     }: ICreateContactDTO): Promise<Contact> {
         const contact = await prisma.contact.create({
             data: {
@@ -20,7 +19,6 @@ export class ContactsRepository implements IContactsRepository {
                 email,
                 whatsapp,
                 website,
-                company_id
             },
         });
 

@@ -13,6 +13,7 @@ export class CompaniesRepository implements ICompaniesRepository {
         description,
         physical_localization,
         user_id,
+        contact_id,
     }: ICreateCompanyDTO): Promise<Company> {
         const company = await prisma.company.create({
             data: {
@@ -22,7 +23,8 @@ export class CompaniesRepository implements ICompaniesRepository {
                 category,
                 description,
                 physical_localization,
-                user_id
+                user_id,
+                contact_id,
             },
         });
 

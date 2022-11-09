@@ -6,6 +6,7 @@ export class Company {
     description: string;
     physical_localization: boolean;
     user_id: string;
+    contact_id: string;
 
     constructor(
         {
@@ -14,7 +15,8 @@ export class Company {
             category,
             description,
             physical_localization,
-            user_id
+            contact_id,
+            user_id,
         }: Company) {
         return Object.assign(this, {
             name,
@@ -22,6 +24,7 @@ export class Company {
             category,
             description,
             physical_localization,
+            contact_id,
             user_id
         });
     }

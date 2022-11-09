@@ -12,7 +12,11 @@ export class CreateCompanyController {
             cnpj,
             category,
             description,
-            physical_localization
+            physical_localization,
+            telephone,
+            whatsapp,
+            email,
+            website
         } = request.body;
 
         const createCompanyService = container.resolve(CreateCompanyService);
@@ -23,6 +27,12 @@ export class CreateCompanyController {
             category,
             description,
             physical_localization,
+            contact: {
+                telephone,
+                whatsapp,
+                email,
+                website
+            },
             user_id
         });
 

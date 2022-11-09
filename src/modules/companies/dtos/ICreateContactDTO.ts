@@ -4,5 +4,4 @@ export interface ICreateContactDTO {
     email: string;
     website?: string;
     id?: string;
-    company_id: string;
 }
