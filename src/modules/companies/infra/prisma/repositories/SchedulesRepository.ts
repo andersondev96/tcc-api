@@ -3,7 +3,7 @@ import { ICreateScheduleDTO } from "@modules/companies/dtos/ICreateScheduleDTO";
 import { ISchedulesRepository } from "@modules/companies/repositories/ISchedulesRepository";
 import { Schedule } from "../entities/Schedule";
 
-export class ScheduleRepository implements ISchedulesRepository {
+export class SchedulesRepository implements ISchedulesRepository {
 
     public async create({
         id,

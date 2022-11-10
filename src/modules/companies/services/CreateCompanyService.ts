@@ -4,20 +4,15 @@ import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
+import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 
-interface IContact {
-    telephone: string;
-    whatsapp: string;
-    email: string;
-    website: string
-}
 interface IRequest {
     name: string;
     cnpj: string;
     category: string;
     description: string;
     physical_localization: boolean,
-    contact: IContact,
+    contact_id: string,
     user_id: string;
 }
 
@@ -32,7 +27,8 @@ export class CreateCompanyService {
         private userRepository: IUsersRepository,
 
         @inject("ContactsRepository")
-        private contactRepository: IContactsRepository
+        private contactRepository: IContactsRepository,
+
     ) { }
 
     public async execute({
@@ -41,7 +37,7 @@ export class CreateCompanyService {
         category,
         description,
         physical_localization,
-        contact,
+        contact_id,
         user_id,
     }: IRequest): Promise<Company> {
 
@@ -57,12 +53,11 @@ export class CreateCompanyService {
             throw new AppError("Company already exists");
         }
 
-        const contactCompany = await this.contactRepository.create({
-            telephone: contact.telephone,
-            whatsapp: contact.whatsapp,
-            email: contact.email,
-            website: contact.website
-        });
+        const contact = await this.contactRepository.findById(contact_id);
+
+        if (!contact) {
+            throw new AppError("Contact not found");
+        }
 
         const company = await this.companyRepository.create({
             name,
@@ -70,7 +65,7 @@ export class CreateCompanyService {
             category,
             description,
             physical_localization,
-            contact_id: contactCompany.id,
+            contact_id,
             user_id
         });
 
