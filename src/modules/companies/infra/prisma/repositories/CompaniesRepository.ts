@@ -53,6 +53,14 @@ export class CompaniesRepository implements ICompaniesRepository {
         return listCompanyByName;
     }
 
+    public async findByContactId(contact_id: string): Promise<Company> {
+        const findCompanyByContact = await prisma.company.findUnique({
+            where: { contact_id },
+        });
+
+        return findCompanyByContact;
+    }
+
     public async findById(id: string): Promise<Company | undefined> {
         const listCompanyById = await prisma.company.findUnique({
             where: { id },

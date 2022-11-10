@@ -59,6 +59,12 @@ export class CreateCompanyService {
             throw new AppError("Contact not found");
         }
 
+        const contactAlreadyExists = await this.companyRepository.findByContactId(contact_id);
+
+        if (contactAlreadyExists) {
+            throw new AppError("Contact is unique");
+        }
+
         const company = await this.companyRepository.create({
             name,
             cnpj,

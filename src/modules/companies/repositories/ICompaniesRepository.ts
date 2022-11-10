@@ -38,6 +38,12 @@ export interface ICompaniesRepository {
     findByName(name: string): Promise<Company | undefined>;
 
     /**
+     * @description Busca e lista a empresa que tem um determinado contact_id
+     * @param contact_id string id da tabela de contatos
+     */
+    findByContactId(contact_id: string): Promise<Company | undefined>
+
+    /**
      * @description Lista a empresa que tem determinado id
      * @param id string Id da empresa
      */
