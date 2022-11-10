@@ -35,18 +35,19 @@ model UserToken {
 }
 
 model Company {
-    id                    String     @id @default(uuid())
-    name                  String
-    cnpj                  String
-    category              String
-    description           String?
-    physical_localization Boolean
-    user_id               String
-    user                  User       @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    Service               Service[]
-    contact               Contact    @relation(fields: [contact_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    contact_id            String     @unique
-    Schedule              Schedule[]
+    id                        String                      @id @default(uuid())
+    name                      String
+    cnpj                      String
+    category                  String
+    description               String?
+    physical_localization     Boolean
+    user_id                   String
+    user                      User                        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    Service                   Service[]
+    contact                   Contact                     @relation(fields: [contact_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    contact_id                String                      @unique
+    Schedule                  Schedule[]
+    PrincipalServiceOnCompany PrincipalServiceOnCompany[]
 
     @@map("companies")
 }
@@ -75,6 +76,28 @@ model Schedule {
     updatedAt    DateTime @updatedAt
 
     @@map("schedules")
+}
+
+model PrincipalService {
+    id                        String                      @id @default(uuid())
+    description               String                      @unique
+    createdAt                 DateTime                    @default(now())
+    updatedAt                 DateTime                    @updatedAt
+    PrincipalServiceOnCompany PrincipalServiceOnCompany[]
+
+    @@map("principalsServices")
+}
+
+model PrincipalServiceOnCompany {
+    company              Company          @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    company_id           String
+    principalService     PrincipalService @relation(fields: [principal_service_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    principal_service_id String
+    createdAt            DateTime         @default(now())
+    updatedAt            DateTime         @updatedAt
+
+    @@id([company_id, principal_service_id])
+    @@map("PrincipalsServicesOnCompanies")
 }
 
 model Service {
