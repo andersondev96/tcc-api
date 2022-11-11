@@ -1,4 +1,4 @@
-export class ICreateServiceOfferedDTO {
+export interface ICreateServiceOfferedDTO {
     id?: string;
     description: string;
 }
