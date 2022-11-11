@@ -35,6 +35,7 @@ describe('CreateCompanyService', () => {
             cnpj: "123456",
             category: "Supermarket",
             description: "Supermarket description",
+            services: ["Supermarket", "Shopping"],
             physical_localization: true,
             telephone: "1234567",
             email: "business@example.com",

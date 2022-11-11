@@ -12,6 +12,7 @@ interface IRequest {
     cnpj: string;
     category: string;
     description: string;
+    services: string[];
     physical_localization: boolean,
     telephone: string,
     whatsapp: string,
@@ -40,6 +41,7 @@ export class CreateCompanyService {
         cnpj,
         category,
         description,
+        services,
         physical_localization,
         telephone,
         whatsapp,
@@ -72,6 +74,7 @@ export class CreateCompanyService {
             cnpj,
             category,
             description,
+            services,
             physical_localization,
             contact_id: contact.id,
             user_id

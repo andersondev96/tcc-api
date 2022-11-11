@@ -4,6 +4,7 @@ export class Company {
     cnpj: string;
     category: string;
     description: string;
+    services: string[];
     physical_localization: boolean;
     user_id: string;
     contact_id: string;
@@ -14,6 +15,7 @@ export class Company {
             cnpj,
             category,
             description,
+            services,
             physical_localization,
             contact_id,
             user_id,
@@ -23,6 +25,7 @@ export class Company {
             cnpj,
             category,
             description,
+            services,
             physical_localization,
             contact_id,
             user_id
