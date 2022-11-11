@@ -85,7 +85,7 @@ model ServiceOffered {
     updatedAt               DateTime                  @updatedAt
     ServiceOfferedOnCompany ServiceOfferedOnCompany[]
 
-    @@map("ServicesOffered")
+    @@map("servicesOffered")
 }
 
 model ServiceOfferedOnCompany {
@@ -97,7 +97,7 @@ model ServiceOfferedOnCompany {
     updatedAt          DateTime       @updatedAt
 
     @@id([company_id, service_offered_id])
-    @@map("ServicesOfferedonCompany")
+    @@map("servicesOfferedonCompany")
 }
 
 model Service {
