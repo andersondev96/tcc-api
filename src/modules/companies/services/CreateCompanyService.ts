@@ -2,6 +2,7 @@ import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
+import { ServicesOfferedRepository } from "../infra/prisma/repositories/ServicesOfferedRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
@@ -12,7 +13,10 @@ interface IRequest {
     category: string;
     description: string;
     physical_localization: boolean,
-    contact_id: string,
+    telephone: string,
+    whatsapp: string,
+    email: string,
+    website: string,
     user_id: string;
 }
 
@@ -37,7 +41,10 @@ export class CreateCompanyService {
         category,
         description,
         physical_localization,
-        contact_id,
+        telephone,
+        whatsapp,
+        email,
+        website,
         user_id,
     }: IRequest): Promise<Company> {
 
@@ -53,17 +60,12 @@ export class CreateCompanyService {
             throw new AppError("Company already exists");
         }
 
-        const contact = await this.contactRepository.findById(contact_id);
-
-        if (!contact) {
-            throw new AppError("Contact not found");
-        }
-
-        const contactAlreadyExists = await this.companyRepository.findByContactId(contact_id);
-
-        if (contactAlreadyExists) {
-            throw new AppError("Contact is unique");
-        }
+        const contact = await this.contactRepository.create({
+            telephone,
+            whatsapp,
+            email,
+            website
+        });
 
         const company = await this.companyRepository.create({
             name,
@@ -71,7 +73,7 @@ export class CreateCompanyService {
             category,
             description,
             physical_localization,
-            contact_id,
+            contact_id: contact.id,
             user_id
         });
 

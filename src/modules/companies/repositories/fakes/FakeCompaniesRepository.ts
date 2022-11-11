@@ -48,6 +48,10 @@ export class FakeCompaniesRepository implements ICompaniesRepository {
         return findCompanyById;
     }
 
+    public async contCompany(company_id: string): Promise<number> {
+        throw new Error("Method not implemented.");
+    }
+
     public async update(company: ICreateCompanyDTO): Promise<Company> {
         const index = this.companies.findIndex(findUser => findUser.id === company.id);
 

@@ -1,3 +1,4 @@
+import { ServiceOfferedOnCompany } from "@prisma/client";
 import { ICreateCompanyDTO } from "../dtos/ICreateCompanyDTO";
 import { Company } from "../infra/prisma/entities/Company";
 
@@ -60,4 +61,5 @@ export interface ICompaniesRepository {
      * @param id string Id da empresa
      */
     delete(id: string): Promise<void>;
+
 }

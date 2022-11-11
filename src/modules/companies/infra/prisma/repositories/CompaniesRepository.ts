@@ -1,6 +1,7 @@
 import { prisma } from "@database/prisma";
 import { ICreateCompanyDTO } from "@modules/companies/dtos/ICreateCompanyDTO";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
+import { ServiceOfferedOnCompany } from "@prisma/client";
 import { Company } from "../entities/Company";
 
 export class CompaniesRepository implements ICompaniesRepository {
