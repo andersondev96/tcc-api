@@ -13,12 +13,7 @@ export class CreateCompanyController {
             category,
             description,
             services,
-            schedule_time: {
-                day_of_week,
-                opening_time,
-                closing_time,
-                lunch_time,
-            },
+            schedules,
             physical_localization,
             telephone,
             whatsapp,
@@ -34,12 +29,7 @@ export class CreateCompanyController {
             category,
             description,
             services,
-            schedule_time: {
-                day_of_week,
-                opening_time,
-                closing_time,
-                lunch_time
-            },
+            schedules,
             physical_localization,
             telephone,
             whatsapp,

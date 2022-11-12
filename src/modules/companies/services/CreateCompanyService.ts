@@ -9,18 +9,19 @@ import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 
+interface ISchedule {
+    day_of_week: string,
+    opening_time: string,
+    closing_time: string,
+    lunch_time: string,
+}
 interface IRequest {
     name: string;
     cnpj: string;
     category: string;
     description: string;
     services: string[];
-    schedule_time: {
-        day_of_week: string,
-        opening_time: string,
-        closing_time: string,
-        lunch_time: string,
-    };
+    schedules: ISchedule[];
     physical_localization: boolean,
     telephone: string,
     whatsapp: string,
@@ -53,14 +54,14 @@ export class CreateCompanyService {
         category,
         description,
         services,
-        schedule_time,
+        schedules,
         physical_localization,
         telephone,
         whatsapp,
         email,
         website,
         user_id,
-    }: IRequest): Promise<[Company, Schedule]> {
+    }: IRequest): Promise<Company> {
 
         const user = await this.userRepository.findById(user_id);
 
@@ -92,18 +93,21 @@ export class CreateCompanyService {
             user_id
         });
 
-        const schedule = await this.scheduleRepository.create({
-            day_of_week: schedule_time.day_of_week,
-            opening_time: schedule_time.opening_time,
-            closing_time: schedule_time.closing_time,
-            lunch_time: schedule_time.lunch_time,
-            company_id: company.id,
+        console.log(schedules);
+
+        schedules.map(async (schedule) => {
+            const { day_of_week, opening_time, closing_time, lunch_time } = schedule;
+
+            this.scheduleRepository.create({
+                day_of_week,
+                opening_time,
+                closing_time,
+                lunch_time,
+                company_id: company.id,
+            });
         });
 
-        return [
-            company,
-            schedule
-        ];
+        return company;
     }
 
 }
