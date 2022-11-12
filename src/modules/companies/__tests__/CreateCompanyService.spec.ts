@@ -5,10 +5,13 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
+import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
+import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
 
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
+let fakeScheduleRepository: ISchedulesRepository;
 let createCompanyService: CreateCompanyService;
 
 describe('CreateCompanyService', () => {
@@ -16,10 +19,12 @@ describe('CreateCompanyService', () => {
         fakeUserRepository = new FakeUsersRepository();
         fakeContactRepository = new FakeContactsRepository();
         fakeCompanyRepository = new FakeCompaniesRepository();
+        fakeScheduleRepository = new FakeSchedulesRepository();
         createCompanyService = new CreateCompanyService(
             fakeCompanyRepository,
             fakeUserRepository,
-            fakeContactRepository
+            fakeContactRepository,
+            fakeScheduleRepository
         );
     })
 
@@ -36,6 +41,12 @@ describe('CreateCompanyService', () => {
             category: "Supermarket",
             description: "Supermarket description",
             services: ["Supermarket", "Shopping"],
+            schedule_time: {
+                day_of_week: "Monday",
+                opening_time: "08:00",
+                closing_time: "18:00",
+                lunch_time: "12:00-13:00",
+            },
             physical_localization: true,
             telephone: "1234567",
             email: "business@example.com",
@@ -44,6 +55,6 @@ describe('CreateCompanyService', () => {
             user_id: user.id,
         });
 
-        expect(company).toHaveProperty("id");
+        expect(company[0]).toHaveProperty(["id"]);
     })
 })

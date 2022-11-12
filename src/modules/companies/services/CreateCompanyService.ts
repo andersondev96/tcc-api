@@ -2,6 +2,8 @@ import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
+import { Schedule } from "../infra/prisma/entities/Schedule";
+import { SchedulesRepository } from "../infra/prisma/repositories/SchedulesRepository";
 import { ServicesOfferedRepository } from "../infra/prisma/repositories/ServicesOfferedRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
@@ -13,6 +15,12 @@ interface IRequest {
     category: string;
     description: string;
     services: string[];
+    schedule_time: {
+        day_of_week: string,
+        opening_time: string,
+        closing_time: string,
+        lunch_time: string,
+    };
     physical_localization: boolean,
     telephone: string,
     whatsapp: string,
@@ -34,6 +42,9 @@ export class CreateCompanyService {
         @inject("ContactsRepository")
         private contactRepository: IContactsRepository,
 
+        @inject("SchedulesRepository")
+        private scheduleRepository: SchedulesRepository,
+
     ) { }
 
     public async execute({
@@ -42,13 +53,14 @@ export class CreateCompanyService {
         category,
         description,
         services,
+        schedule_time,
         physical_localization,
         telephone,
         whatsapp,
         email,
         website,
         user_id,
-    }: IRequest): Promise<Company> {
+    }: IRequest): Promise<[Company, Schedule]> {
 
         const user = await this.userRepository.findById(user_id);
 
@@ -80,7 +92,18 @@ export class CreateCompanyService {
             user_id
         });
 
-        return company;
+        const schedule = await this.scheduleRepository.create({
+            day_of_week: schedule_time.day_of_week,
+            opening_time: schedule_time.opening_time,
+            closing_time: schedule_time.closing_time,
+            lunch_time: schedule_time.lunch_time,
+            company_id: company.id,
+        });
+
+        return [
+            company,
+            schedule
+        ];
     }
 
 }

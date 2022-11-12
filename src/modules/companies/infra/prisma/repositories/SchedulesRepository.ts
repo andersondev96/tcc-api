@@ -10,7 +10,8 @@ export class SchedulesRepository implements ISchedulesRepository {
         day_of_week,
         opening_time,
         closing_time,
-        company_id
+        company_id,
+        lunch_time
     }: ICreateScheduleDTO): Promise<Schedule> {
         const schedule = await prisma.schedule.create({
             data: {
@@ -18,7 +19,8 @@ export class SchedulesRepository implements ISchedulesRepository {
                 day_of_week,
                 opening_time,
                 closing_time,
-                company_id
+                lunch_time,
+                company_id,
             }
         });
 

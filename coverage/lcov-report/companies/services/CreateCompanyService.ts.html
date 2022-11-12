@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.34% </span>
+                <span class="strong">96.39% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>82/86</span>
+                <span class='fraction'>107/111</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.34% </span>
+                <span class="strong">96.39% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>82/86</span>
+                <span class='fraction'>107/111</span>
             </div>
         
             
@@ -148,7 +148,46 @@
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
 <a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -211,6 +250,17 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -237,6 +287,8 @@
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
+import { Schedule } from "../infra/prisma/entities/Schedule";
+import { SchedulesRepository } from "../infra/prisma/repositories/SchedulesRepository";
 import { ServicesOfferedRepository } from "../infra/prisma/repositories/ServicesOfferedRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
@@ -248,6 +300,14 @@ interface IRequest {
     category: string;
     description: string;
     services: string[];
+    schedule_time: [
+        {
+            day_of_week: string,
+            opening_time: string,
+            closing_time: string,
+            lunch_time: string,
+        }
+    ];
     physical_localization: boolean,
     telephone: string,
     whatsapp: string,
@@ -269,6 +329,9 @@ export class CreateCompanyService {
         @inject("ContactsRepository")
         private contactRepository: IContactsRepository,
 &nbsp;
+        @inject("SchedulesRepository")
+        private scheduleRepository: SchedulesRepository,
+&nbsp;
     ) { }
 &nbsp;
     public async execute({
@@ -277,6 +340,7 @@ export class CreateCompanyService {
         category,
         description,
         services,
+        schedule_time,
         physical_localization,
         telephone,
         whatsapp,
@@ -315,8 +379,19 @@ export class CreateCompanyService {
             user_id
         });
 &nbsp;
+        const schedule = schedule_time.map(async (scheduleItem) =&gt; {
+            await this.scheduleRepository.create({
+                day_of_week: scheduleItem.day_of_week,
+                opening_time: scheduleItem.opening_time,
+                closing_time: scheduleItem.closing_time,
+                lunch_time: scheduleItem.lunch_time,
+                company_id: company.id
+            });
+        });
+&nbsp;
         return company;
     }
+&nbsp;
 &nbsp;
 }</pre></td></tr></table></pre>
 
@@ -325,7 +400,7 @@ export class CreateCompanyService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-11T23:42:55.313Z
+                at 2022-11-12T01:14:52.810Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
