@@ -1,4 +1,5 @@
 export interface ICreateCompanyDTO {
+    id?: string;
     name: string;
     cnpj: string;
     category: string;
@@ -7,6 +8,5 @@ export interface ICreateCompanyDTO {
     physical_localization: boolean;
     user_id: string;
     contact_id: string;
-    id?: string;
 
 }
