@@ -5,7 +5,16 @@ import { Company } from "../infra/prisma/entities/Company";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
+import { IAddressesRepository } from "../repositories/IAddressesRepository";
 
+interface IAddress {
+    cep: string;
+    street: string;
+    district: string;
+    number: number;
+    state: string;
+    city: string;
+}
 interface ISchedule {
     day_of_week: string,
     opening_time: string,
@@ -20,6 +29,7 @@ interface IRequest {
     services: string[];
     schedules: ISchedule[];
     physical_localization: boolean,
+    address?: IAddress,
     telephone: string,
     whatsapp: string,
     email: string,
@@ -43,6 +53,9 @@ export class CreateCompanyService {
         @inject("SchedulesRepository")
         private scheduleRepository: ISchedulesRepository,
 
+        @inject("AddressesRepository")
+        private addressRepository: IAddressesRepository,
+
     ) { }
 
     public async execute({
@@ -53,6 +66,7 @@ export class CreateCompanyService {
         services,
         schedules,
         physical_localization,
+        address,
         telephone,
         whatsapp,
         email,
@@ -70,6 +84,22 @@ export class CreateCompanyService {
 
         if (checkCompanyExists) {
             throw new AppError("Company already exists");
+        }
+
+        if (services === undefined) {
+            throw new AppError("Services is required");
+        }
+
+        if (services.length > 3) {
+            throw new AppError("The number of services must not exceed 3");
+        }
+
+        if (schedules === undefined) {
+            throw new AppError("Schedules is required");
+        }
+
+        if (physical_localization && address === undefined) {
+            throw new AppError("Address is required");
         }
 
         const contact = await this.contactRepository.create({
@@ -90,7 +120,19 @@ export class CreateCompanyService {
             user_id
         });
 
-        const schedule = await schedules.map(async (schedule) => {
+        if (company.physical_localization) {
+            await this.addressRepository.create({
+                cep: address.cep,
+                street: address.street,
+                district: address.district,
+                number: address.number,
+                state: address.state,
+                city: address.city,
+                company_id: company.id,
+            });
+        }
+
+        schedules.map(async (schedule) => {
             const { day_of_week, opening_time, closing_time, lunch_time } = schedule;
 
             await this.scheduleRepository.create({
