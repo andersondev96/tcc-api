@@ -3,7 +3,7 @@ export interface ICreateAddressDTO {
     cep: string;
     street: string;
     district: string;
-    number: string;
+    number: number;
     state: string;
     city: string;
     company_id: string;
