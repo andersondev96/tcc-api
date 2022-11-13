@@ -1,10 +1,7 @@
+import { inject, injectable } from "tsyringe";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
-import { Schedule } from "../infra/prisma/entities/Schedule";
-import { SchedulesRepository } from "../infra/prisma/repositories/SchedulesRepository";
-import { ServicesOfferedRepository } from "../infra/prisma/repositories/ServicesOfferedRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
@@ -44,7 +41,7 @@ export class CreateCompanyService {
         private contactRepository: IContactsRepository,
 
         @inject("SchedulesRepository")
-        private scheduleRepository: SchedulesRepository,
+        private scheduleRepository: ISchedulesRepository,
 
     ) { }
 
@@ -93,12 +90,10 @@ export class CreateCompanyService {
             user_id
         });
 
-        console.log(schedules);
-
-        schedules.map(async (schedule) => {
+        const schedule = await schedules.map(async (schedule) => {
             const { day_of_week, opening_time, closing_time, lunch_time } = schedule;
 
-            this.scheduleRepository.create({
+            await this.scheduleRepository.create({
                 day_of_week,
                 opening_time,
                 closing_time,

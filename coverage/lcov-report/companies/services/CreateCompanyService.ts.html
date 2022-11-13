@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.39% </span>
+                <span class="strong">96.29% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>107/111</span>
+                <span class='fraction'>104/108</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.39% </span>
+                <span class="strong">96.29% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>107/111</span>
+                <span class='fraction'>104/108</span>
             </div>
         
             
@@ -170,14 +170,7 @@
 <a name='L105'></a><a href='#L105'>105</a>
 <a name='L106'></a><a href='#L106'>106</a>
 <a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L108'></a><a href='#L108'>108</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -283,31 +276,28 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { inject, injectable } from "tsyringe";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
-import { Schedule } from "../infra/prisma/entities/Schedule";
-import { SchedulesRepository } from "../infra/prisma/repositories/SchedulesRepository";
-import { ServicesOfferedRepository } from "../infra/prisma/repositories/ServicesOfferedRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 &nbsp;
+interface ISchedule {
+    day_of_week: string,
+    opening_time: string,
+    closing_time: string,
+    lunch_time: string,
+}
 interface IRequest {
     name: string;
     cnpj: string;
     category: string;
     description: string;
     services: string[];
-    schedule_time: [
-        {
-            day_of_week: string,
-            opening_time: string,
-            closing_time: string,
-            lunch_time: string,
-        }
-    ];
+    schedules: ISchedule[];
     physical_localization: boolean,
     telephone: string,
     whatsapp: string,
@@ -330,7 +320,7 @@ export class CreateCompanyService {
         private contactRepository: IContactsRepository,
 &nbsp;
         @inject("SchedulesRepository")
-        private scheduleRepository: SchedulesRepository,
+        private scheduleRepository: ISchedulesRepository,
 &nbsp;
     ) { }
 &nbsp;
@@ -340,7 +330,7 @@ export class CreateCompanyService {
         category,
         description,
         services,
-        schedule_time,
+        schedules,
         physical_localization,
         telephone,
         whatsapp,
@@ -379,19 +369,20 @@ export class CreateCompanyService {
             user_id
         });
 &nbsp;
-        const schedule = schedule_time.map(async (scheduleItem) =&gt; {
+        const schedule = await schedules.map(async (schedule) =&gt; {
+            const { day_of_week, opening_time, closing_time, lunch_time } = schedule;
+&nbsp;
             await this.scheduleRepository.create({
-                day_of_week: scheduleItem.day_of_week,
-                opening_time: scheduleItem.opening_time,
-                closing_time: scheduleItem.closing_time,
-                lunch_time: scheduleItem.lunch_time,
-                company_id: company.id
+                day_of_week,
+                opening_time,
+                closing_time,
+                lunch_time,
+                company_id: company.id,
             });
         });
 &nbsp;
         return company;
     }
-&nbsp;
 &nbsp;
 }</pre></td></tr></table></pre>
 
@@ -400,7 +391,7 @@ export class CreateCompanyService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-12T01:14:52.810Z
+                at 2022-11-13T14:32:04.726Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -1,4 +1,3 @@
-import { ServiceOfferedOnCompany } from "@prisma/client";
 import { ICreateCompanyDTO } from "../dtos/ICreateCompanyDTO";
 import { Company } from "../infra/prisma/entities/Company";
 
@@ -37,12 +36,6 @@ export interface ICompaniesRepository {
      * @param name string Nome da empresa
      */
     findByName(name: string): Promise<Company | undefined>;
-
-    /**
-     * @description Busca e lista a empresa que tem um determinado contact_id
-     * @param contact_id string id da tabela de contatos
-     */
-    findByContactId(contact_id: string): Promise<Company | undefined>
 
     /**
      * @description Lista a empresa que tem determinado id

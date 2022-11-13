@@ -41,12 +41,14 @@ describe('CreateCompanyService', () => {
             category: "Supermarket",
             description: "Supermarket description",
             services: ["Supermarket", "Shopping"],
-            schedule_time: {
-                day_of_week: "Monday",
-                opening_time: "08:00",
-                closing_time: "18:00",
-                lunch_time: "12:00-13:00",
-            },
+            schedules: [
+                {
+                    "day_of_week": "Monday",
+                    "opening_time": "08:00",
+                    "closing_time": "18:00",
+                    "lunch_time": "12:00-13:00"
+                },
+            ],
             physical_localization: true,
             telephone: "1234567",
             email: "business@example.com",
@@ -55,6 +57,8 @@ describe('CreateCompanyService', () => {
             user_id: user.id,
         });
 
-        expect(company[0]).toHaveProperty(["id"]);
+        console.log(company);
+
+        expect(company).toHaveProperty("id");
     })
 })
