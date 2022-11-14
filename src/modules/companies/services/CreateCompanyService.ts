@@ -86,16 +86,8 @@ export class CreateCompanyService {
             throw new AppError("Company already exists");
         }
 
-        if (services === undefined) {
-            throw new AppError("Services is required");
-        }
-
-        if (services.length > 3) {
-            throw new AppError("The number of services must not exceed 3");
-        }
-
-        if (schedules === undefined) {
-            throw new AppError("Schedules is required");
+        if (services.length === 0 || services.length > 3) {
+            throw new AppError("The number of services must not equal a 0 or exceed 3");
         }
 
         if (physical_localization && address === undefined) {
