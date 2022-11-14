@@ -24,6 +24,9 @@ import { ISchedulesRepository } from "@modules/companies/repositories/ISchedules
 import { AddressesRepository } from "@modules/companies/infra/prisma/repositories/AddressesRepository";
 import { IAddressesRepository } from "@modules/companies/repositories/IAddressesRepository";
 
+import { ImagesCompanyRepository } from "@modules/companies/infra/prisma/repositories/ImagesCompanyRepository";
+import { IImagesCompanyRepository } from "@modules/companies/repositories/IImagesCompanyRepository";
+
 container.registerSingleton<IUsersRepository>(
     "UsersRepository",
     UsersRepository
@@ -62,4 +65,9 @@ container.registerInstance<ISchedulesRepository>(
 container.registerInstance<IAddressesRepository>(
     "AddressesRepository",
     new AddressesRepository()
+);
+
+container.registerInstance<IImagesCompanyRepository>(
+    "ImagesCompanyRepository",
+    new ImagesCompanyRepository()
 );
