@@ -29,6 +29,4 @@ export interface ICompanyResponseDTO {
     address: IAddress;
     schedules: Schedule[],
     images: ImageCompany[],
-
-
 }

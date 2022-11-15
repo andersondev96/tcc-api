@@ -73,34 +73,6 @@ export class FindByCompanyService {
             images,
         }
 
-        const result = {
-            id: company.id,
-            name: 'Business Company',
-            cnpj: '123456',
-            category: 'Supermarket',
-            description: 'Supermarket description',
-            services: ['Supermarket', 'Shopping'],
-            contact: {
-                telephone: contact.telephone,
-                whatsapp: contact.whatsapp,
-                email: contact.email,
-                website: contact.website,
-            },
-            physical_localization: false,
-            address: {
-                id: address.id,
-                cep: '123456',
-                street: 'Street Test',
-                district: 'District Test',
-                number: 123,
-                state: 'ST',
-                city: 'City Test',
-            },
-            schedules,
-            images,
-
-        }
-
         return CompanyMap.toDTO(response);
     }
 }

@@ -9,6 +9,7 @@ import { CreateCompanyController } from "../controllers/CreateCompanyController"
 import { CreateImageCompanyController } from "../controllers/CreateImageCompanyController";
 import { FindByCompanyController } from "@modules/companies/infra/http/controllers/FindByCompanyController";
 import { ListAllCompaniesController } from "../controllers/ListAllCompaniesController";
+import { UpdateCompanyController } from "../controllers/UpdateCompanyController";
 
 const companiesRouter = Router();
 
@@ -17,7 +18,8 @@ const upload = multer(uploadConfig);
 const createCompanyController = new CreateCompanyController();
 const createImageCompanyController = new CreateImageCompanyController();
 const findByCompanyController = new FindByCompanyController();
-const listAllCompanies = new ListAllCompaniesController();
+const listAllCompaniesController = new ListAllCompaniesController();
+const updateCompanyController = new UpdateCompanyController();
 
 companiesRouter.use(ensureAuthenticated);
 
@@ -28,6 +30,8 @@ companiesRouter.post(
     createImageCompanyController.handle
 );
 companiesRouter.get('/:id', findByCompanyController.handle);
-companiesRouter.get('/', listAllCompanies.handle);
+companiesRouter.get('/', listAllCompaniesController.handle);
+companiesRouter.put('/:id', updateCompanyController.handle);
+
 
 export default companiesRouter;
