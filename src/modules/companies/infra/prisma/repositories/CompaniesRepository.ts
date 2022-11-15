@@ -47,7 +47,7 @@ export class CompaniesRepository implements ICompaniesRepository {
         throw new Error("Method not implemented.");
     }
 
-    public async findByName(name: string): Promise<Company | undefined> {
+    public async findByName(name: string): Promise<Company> {
         const listCompanyByName = await prisma.company.findFirst({
             where: { name },
         });
@@ -63,8 +63,8 @@ export class CompaniesRepository implements ICompaniesRepository {
         return findCompanyByContact;
     }
 
-    public async findById(id: string): Promise<Company | undefined> {
-        const listCompanyById = await prisma.company.findUnique({
+    public async findById(id: string): Promise<Company> {
+        const listCompanyById = await prisma.company.findFirst({
             where: { id },
         });
 

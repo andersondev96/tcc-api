@@ -35,13 +35,13 @@ export interface ICompaniesRepository {
      * @description Lista a empresa que tem um determinado nome
      * @param name string Nome da empresa
      */
-    findByName(name: string): Promise<Company | undefined>;
+    findByName(name: string): Promise<Company>;
 
     /**
      * @description Lista a empresa que tem determinado id
      * @param id string Id da empresa
      */
-    findById(id: string): Promise<Company | undefined>;
+    findById(id: string): Promise<Company>;
 
     /**
      * @description Recebe os atributos da tabela company e a atualiza
