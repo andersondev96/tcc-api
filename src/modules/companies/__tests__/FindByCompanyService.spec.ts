@@ -4,6 +4,7 @@ import { AppError } from "@shared/errors/AppError";
 import { FakeAddressesRepository } from "../repositories/fakes/FakeAddressesRepository";
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
+import { FakeImagesCompanyRepository } from "../repositories/fakes/FakeImagesCompanyRepository";
 import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository"
@@ -27,11 +28,13 @@ describe("FindByCompanyService", () => {
         fakeContactRepository = new FakeContactsRepository();
         fakeScheduleRepository = new FakeSchedulesRepository();
         fakeAddressRepository = new FakeAddressesRepository();
+        fakeImagesCompanyRepository = new FakeImagesCompanyRepository();
         findByCompanyService = new FindByCompanyService(
             fakeCompanyRepository,
             fakeContactRepository,
             fakeScheduleRepository,
-            fakeAddressRepository
+            fakeAddressRepository,
+            fakeImagesCompanyRepository
         );
     });
 
@@ -77,24 +80,33 @@ describe("FindByCompanyService", () => {
             company_id: company.id,
         });
 
+        const image = await fakeImagesCompanyRepository.create({
+            image_name: "image.png",
+            image_url: "http://localhost:3333/companies/image.png",
+            company_id: company.id,
+        });
+
         const result = {
-            company: {
-                name: 'Business Company',
-                cnpj: '123456',
-                category: 'Supermarket',
-                description: 'Supermarket description',
-                services: ['Supermarket', 'Shopping'],
-                physical_localization: false,
-                contact_id: contact.id,
-                user_id: user.id,
-                id: company.id
-            },
+            id: company.id,
+            name: 'Business Company',
+            cnpj: '123456',
+            category: 'Supermarket',
+            description: 'Supermarket description',
+            services: ['Supermarket', 'Shopping'],
             contact: {
                 telephone: contact.telephone,
+                whatsapp: contact.whatsapp,
                 email: contact.email,
                 website: contact.website,
-                whatsapp: contact.whatsapp,
-                id: contact.id
+            },
+            physical_localization: false,
+            address: {
+                cep: '123456',
+                street: 'Street Test',
+                district: 'District Test',
+                number: 123,
+                state: 'ST',
+                city: 'City Test',
             },
             schedules: [
                 {
@@ -105,16 +117,14 @@ describe("FindByCompanyService", () => {
                     id: schedule.id,
                 }
             ],
-            address: {
-                cep: '123456',
-                street: 'Street Test',
-                district: 'District Test',
-                number: 123,
-                state: 'ST',
-                city: 'City Test',
-                company_id: company.id,
-                id: address.id,
-            }
+            images: [
+                {
+                    image_name: "image.png",
+                    image_url: "http://localhost:3333/companies/image.png",
+                    company_id: company.id,
+                    id: image.id,
+                }
+            ]
 
         }
 

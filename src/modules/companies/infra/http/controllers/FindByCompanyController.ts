@@ -12,8 +12,6 @@ export class FindByCompanyController {
 
         const company = await findByCompanyService.execute(id);
 
-        console.log(company);
-
         return response.json(company);
     }
 }

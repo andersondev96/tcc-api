@@ -1,7 +1,7 @@
 import { prisma } from "@database/prisma";
 import { ICreateAddressDTO } from "@modules/companies/dtos/ICreateAddressDTO";
 import { IAddressesRepository } from "@modules/companies/repositories/IAddressesRepository";
-import { Address } from "../entities/Addreess";
+import { Address } from "../entities/Address";
 
 export class AddressesRepository implements IAddressesRepository {
 
@@ -40,7 +40,7 @@ export class AddressesRepository implements IAddressesRepository {
     }
 
     public async findAddressByCompany(company_id: string): Promise<Address> {
-        const findAddress = await prisma.address.findFirst({
+        const findAddress = await prisma.address.findUnique({
             where: { company_id },
         });
 

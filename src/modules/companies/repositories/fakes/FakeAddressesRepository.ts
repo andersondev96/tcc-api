@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { ICreateAddressDTO } from "@modules/companies/dtos/ICreateAddressDTO";
-import { Address } from "@modules/companies/infra/prisma/entities/Addreess";
+import { Address } from "@modules/companies/infra/prisma/entities/Address";
 import { IAddressesRepository } from "../IAddressesRepository";
 
 export class FakeAddressesRepository implements IAddressesRepository {
@@ -22,8 +22,6 @@ export class FakeAddressesRepository implements IAddressesRepository {
 
         return findAddress;
     }
-
-
 
     public async findAddressByCoords(lat: number, long: number): Promise<Address> {
         throw new Error("Method not implemented.");

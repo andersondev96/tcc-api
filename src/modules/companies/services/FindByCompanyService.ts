@@ -1,21 +1,19 @@
 
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
-import { Address } from "../infra/prisma/entities/Addreess";
+import { ICompanyResponseDTO } from "../dtos/ICompanyResponseDTO";
+import { Address } from "../infra/prisma/entities/Address";
 import { Company } from "../infra/prisma/entities/Company";
 import { Contact } from "../infra/prisma/entities/Contact";
+import { ImageCompany } from "../infra/prisma/entities/ImageCompany";
 import { Schedule } from "../infra/prisma/entities/Schedule";
+import { CompanyMap } from "../mapper/CompanyMap";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
+import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 
-interface IResponse {
-    company: Company;
-    contact: Contact;
-    schedules: Schedule[];
-    address: Address;
-}
 
 @injectable()
 export class FindByCompanyService {
@@ -30,10 +28,14 @@ export class FindByCompanyService {
         private scheduleRepository: ISchedulesRepository,
 
         @inject("AddressesRepository")
-        private addressRepository: IAddressesRepository
+        private addressRepository: IAddressesRepository,
+
+        @inject("ImagesCompanyRepository")
+        private imageCompanyRepository: IImagesCompanyRepository
+
     ) { }
 
-    public async execute(id: string): Promise<IResponse> {
+    public async execute(id: string): Promise<ICompanyResponseDTO> {
 
         const company = await this.companyRepository.findById(id);
 
@@ -47,11 +49,58 @@ export class FindByCompanyService {
 
         const address = await this.addressRepository.findAddressByCompany(company.id);
 
-        return {
-            company,
-            contact,
+        const images = await this.imageCompanyRepository.findImagesByCompany(company.id);
+
+        const response = {
+            id: company.id,
+            name: company.name,
+            cnpj: company.cnpj,
+            category: company.category,
+            description: company.description,
+            services: company.services,
+            telephone: contact.telephone,
+            whatsapp: contact.whatsapp,
+            email: contact.email,
+            website: contact.website,
+            physical_localization: company.physical_localization,
+            cep: address.cep,
+            street: address.street,
+            district: address.district,
+            number: address.number,
+            state: address.state,
+            city: address.city,
             schedules,
-            address
-        };
+            images,
+        }
+
+        const result = {
+            id: company.id,
+            name: 'Business Company',
+            cnpj: '123456',
+            category: 'Supermarket',
+            description: 'Supermarket description',
+            services: ['Supermarket', 'Shopping'],
+            contact: {
+                telephone: contact.telephone,
+                whatsapp: contact.whatsapp,
+                email: contact.email,
+                website: contact.website,
+            },
+            physical_localization: false,
+            address: {
+                id: address.id,
+                cep: '123456',
+                street: 'Street Test',
+                district: 'District Test',
+                number: 123,
+                state: 'ST',
+                city: 'City Test',
+            },
+            schedules,
+            images,
+
+        }
+
+        return CompanyMap.toDTO(response);
     }
 }

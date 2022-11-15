@@ -1,5 +1,5 @@
 import { ICreateAddressDTO } from "../dtos/ICreateAddressDTO";
-import { Address } from "../infra/prisma/entities/Addreess";
+import { Address } from "../infra/prisma/entities/Address";
 
 export interface IAddressesRepository {
 
