@@ -9,6 +9,7 @@ import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepo
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { FakeAddressesRepository } from "../repositories/fakes/FakeAddressesRepository";
+import { ICreateCompanyDTO } from "../dtos/ICreateCompanyDTO";
 
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;

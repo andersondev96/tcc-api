@@ -17,7 +17,7 @@ interface IRequest {
     whatsapp: string,
     email: string,
     website: string,
-    address: Address,
+    address?: Address,
 }
 
 interface IAddress {
