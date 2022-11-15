@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>40/40</span>
+                <span class='fraction'>57/57</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>40/40</span>
+                <span class='fraction'>57/57</span>
             </div>
         
             
@@ -102,7 +102,29 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -125,6 +147,12 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -141,11 +169,20 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { Schedule } from "@prisma/client";
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
+import { Address } from "../infra/prisma/entities/Addreess";
 import { Company } from "../infra/prisma/entities/Company";
 import { Contact } from "../infra/prisma/entities/Contact";
+import { Schedule } from "../infra/prisma/entities/Schedule";
+import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
@@ -153,6 +190,8 @@ import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 interface IResponse {
     company: Company;
     contact: Contact;
+    schedules: Schedule[];
+    address: Address;
 }
 &nbsp;
 @injectable()
@@ -163,6 +202,12 @@ export class FindByCompanyService {
 &nbsp;
         @inject("ContactsRepository")
         private contactRepository: IContactsRepository,
+&nbsp;
+        @inject("SchedulesRepository")
+        private scheduleRepository: ISchedulesRepository,
+&nbsp;
+        @inject("AddressesRepository")
+        private addressRepository: IAddressesRepository
     ) { }
 &nbsp;
     public async execute(id: string): Promise&lt;IResponse&gt; {
@@ -175,9 +220,15 @@ export class FindByCompanyService {
 &nbsp;
         const contact = await this.contactRepository.findById(company.contact_id);
 &nbsp;
+        const schedules = await this.scheduleRepository.findSchedulesByCompany(company.id);
+&nbsp;
+        const address = await this.addressRepository.findAddressByCompany(company.id);
+&nbsp;
         return {
             company,
             contact,
+            schedules,
+            address
         };
     }
 }</pre></td></tr></table></pre>
@@ -187,7 +238,7 @@ export class FindByCompanyService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-15T00:47:06.992Z
+                at 2022-11-15T01:28:54.484Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

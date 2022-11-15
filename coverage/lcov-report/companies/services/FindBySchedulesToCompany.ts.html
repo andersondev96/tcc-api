@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for users/services/UpdateUserAvatarService.ts</title>
+    <title>Code coverage report for companies/services/FindBySchedulesToCompany.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">users/services</a> UpdateUserAvatarService.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">companies/services</a> FindBySchedulesToCompany.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/34</span>
+                <span class='fraction'>0/31</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/34</span>
+                <span class='fraction'>0/31</span>
             </div>
         
             
@@ -93,10 +93,7 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -126,42 +123,36 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { inject, injectable } from "tsyringe";</span></span></span>
-<span class="cstat-no" title="statement not covered" >import { IUsersRepository } from "../repositories/IUsersRepository";</span>
-<span class="cstat-no" title="statement not covered" >import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >interface IRequest {</span>
-<span class="cstat-no" title="statement not covered" >    user_id: string;</span>
-<span class="cstat-no" title="statement not covered" >    avatar_url: string;</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" >import { AppError } from "@shared/errors/AppError";</span>
+<span class="cstat-no" title="statement not covered" >import { inject, injectable } from "tsyringe";</span>
+<span class="cstat-no" title="statement not covered" >import { Schedule } from "../infra/prisma/entities/Schedule";</span>
+<span class="cstat-no" title="statement not covered" >import { ICompaniesRepository } from "../repositories/ICompaniesRepository";</span>
+<span class="cstat-no" title="statement not covered" >import { ISchedulesRepository } from "../repositories/ISchedulesRepository";</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >@injectable()</span>
-<span class="cstat-no" title="statement not covered" >export class UpdateUserAvatarService {</span>
-<span class="cstat-no" title="statement not covered" >    constructor(</span>
-<span class="cstat-no" title="statement not covered" >        @inject("UsersRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private usersRepository: IUsersRepository,</span>
+<span class="cstat-no" title="statement not covered" >export class FindBySchedulesToCompany {</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        @inject("StorageProvider")</span>
-<span class="cstat-no" title="statement not covered" >        private storageProvider: IStorageProvider</span>
+<span class="cstat-no" title="statement not covered" >    constructor(</span>
+<span class="cstat-no" title="statement not covered" >        @inject("CompaniesRepository")</span>
+<span class="cstat-no" title="statement not covered" >        private companyRepository: ICompaniesRepository,</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        @inject("SchedulesRepository")</span>
+<span class="cstat-no" title="statement not covered" >        private scheduleRepository: ISchedulesRepository,</span>
 <span class="cstat-no" title="statement not covered" >    ) { }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    public async execute({ user_id, avatar_url }: IRequest): Promise&lt;void&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    public async execute(company_id: string): Promise&lt;Schedule[]&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        const company = await this.companyRepository.findById(company_id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const user = await this.usersRepository.findById(user_id);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (user.avatar) {</span>
-<span class="cstat-no" title="statement not covered" >            await this.storageProvider.delete(user.avatar, "avatar");</span>
+<span class="cstat-no" title="statement not covered" >        if (!company) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new AppError("Company does not exist");</span>
 <span class="cstat-no" title="statement not covered" >        }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        await this.storageProvider.save(avatar_url, "avatar");</span>
+<span class="cstat-no" title="statement not covered" >        const schedules = await this.scheduleRepository.findSchedulesByCompany(company_id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        user.avatar = avatar_url;</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        await this.usersRepository.update(user);</span>
+<span class="cstat-no" title="statement not covered" >        return schedules;</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -169,7 +160,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-15T01:28:54.484Z
+                at 2022-11-15T01:10:54.465Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -39,6 +39,14 @@ export class AddressesRepository implements IAddressesRepository {
         return address;
     }
 
+    public async findAddressByCompany(company_id: string): Promise<Address> {
+        const findAddress = await prisma.address.findFirst({
+            where: { company_id },
+        });
+
+        return findAddress;
+    }
+
     public async findAddressByCoords(lat: number, long: number): Promise<Address> {
         throw new Error("Method not implemented.");
     }

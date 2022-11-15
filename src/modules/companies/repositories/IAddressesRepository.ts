@@ -18,6 +18,13 @@ export interface IAddressesRepository {
     findByAddress(id: string): Promise<Address>;
 
     /**
+     * @description Função responsável por buscar e retornar o endereço de determinada empresa
+     * @param company_id string - id da empresa
+     * @return Address - Retorna o endereço procurado
+     */
+    findAddressByCompany(company_id: string): Promise<Address>;
+
+    /**
      * @description Dado as coordenadas retorna um endereço
      * @param lat number - Latitude 
      * @param long number - Longitude

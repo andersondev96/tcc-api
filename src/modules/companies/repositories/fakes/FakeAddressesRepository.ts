@@ -48,4 +48,10 @@ export class FakeAddressesRepository implements IAddressesRepository {
 
     }
 
+    public async findAddressByCompany(company_id: string): Promise<Address> {
+        const address = this.addresses.find((address) => address.company_id === company_id);
+
+        return address;
+    }
+
 }
