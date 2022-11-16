@@ -14,6 +14,7 @@ export class DeleteUserService {
 
         const user = await this.usersRepository.findById(user_id);
 
+
         if (!user) {
             throw new AppError("User not exists");
         }
