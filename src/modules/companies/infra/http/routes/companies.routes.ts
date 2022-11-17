@@ -11,6 +11,7 @@ import { FindByCompanyController } from "@modules/companies/infra/http/controlle
 import { ListAllCompaniesController } from "../controllers/ListAllCompaniesController";
 import { UpdateCompanyController } from "../controllers/UpdateCompanyController";
 import { DeleteCompanyController } from "../controllers/DeleteCompanyController";
+import { UpdateScheduleController } from "../controllers/UpdateScheduleController";
 
 const companiesRouter = Router();
 
@@ -21,6 +22,7 @@ const createImageCompanyController = new CreateImageCompanyController();
 const findByCompanyController = new FindByCompanyController();
 const listAllCompaniesController = new ListAllCompaniesController();
 const updateCompanyController = new UpdateCompanyController();
+const updateScheduleController = new UpdateScheduleController();
 const deleteCompanyController = new DeleteCompanyController();
 
 companiesRouter.use(ensureAuthenticated);
@@ -34,7 +36,9 @@ companiesRouter.post(
 companiesRouter.get('/:id', findByCompanyController.handle);
 companiesRouter.get('/', listAllCompaniesController.handle);
 companiesRouter.put('/:id', updateCompanyController.handle);
+companiesRouter.put('/schedules/:id', updateScheduleController.handle);
 companiesRouter.delete('/:id', deleteCompanyController.handle);
+
 
 
 export default companiesRouter;
