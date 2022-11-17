@@ -14,12 +14,7 @@ export class CompanyMap {
         email,
         website,
         physical_localization,
-        cep,
-        street,
-        district,
-        number,
-        state,
-        city,
+        address,
         schedules,
         images,
     }): ICompanyResponseDTO {
@@ -38,14 +33,7 @@ export class CompanyMap {
                 website,
             },
             physical_localization,
-            address: {
-                cep,
-                street,
-                district,
-                number,
-                state,
-                city,
-            },
+            address,
             schedules,
             images
         }

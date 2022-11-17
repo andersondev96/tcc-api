@@ -63,12 +63,7 @@ export class FindByCompanyService {
             email: contact.email,
             website: contact.website,
             physical_localization: company.physical_localization,
-            cep: address.cep,
-            street: address.street,
-            district: address.district,
-            number: address.number,
-            state: address.state,
-            city: address.city,
+            address,
             schedules,
             images,
         }

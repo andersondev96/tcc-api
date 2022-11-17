@@ -100,14 +100,7 @@ describe("FindByCompanyService", () => {
                 website: contact.website,
             },
             physical_localization: false,
-            address: {
-                cep: '123456',
-                street: 'Street Test',
-                district: 'District Test',
-                number: 123,
-                state: 'ST',
-                city: 'City Test',
-            },
+            address,
             schedules: [
                 {
                     day_of_week: 'Monday',
