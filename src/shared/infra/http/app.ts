@@ -6,7 +6,7 @@ import { AppError } from "@shared/errors/AppError";
 import routes from "./routes";
 
 import swaggerUi from "swagger-ui-express";
-import swaggerFile from "@shared/utils/swagger.json";
+import swaggerFile from "../../../swagger.json";
 import upload from "@config/upload";
 
 const app = express();

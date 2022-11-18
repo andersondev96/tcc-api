@@ -346,6 +346,92 @@
                     }
                 }
             }
+        },
+        "/companies": {
+            "post": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Create a company",
+                "description": "Create a new company",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Company"
+                            },
+                            "example": {
+                                "company": {
+                                    "value": {
+                                        "name": "Business Example",
+                                        "cnpj": "123456",
+                                        "category": "Category Example",
+                                        "description": "Description Example",
+                                        "services": [
+                                            "Service 1",
+                                            "Service 2"
+                                        ],
+                                        "schedules": [
+                                            {
+                                                "day_of_week": "Saturday",
+                                                "opening_time": "08:00",
+                                                "closing_time": "18:00",
+                                                "lunch_time": "12:00-13:00"
+                                            },
+                                            {
+                                                "day_of_week": "Tuesday",
+                                                "opening_time": "08:00",
+                                                "closing_time": "18:00",
+                                                "lunch_time": "12:00-13:00"
+                                            }
+                                        ],
+                                        "physical_localization": true,
+                                        "telephone": "123456",
+                                        "whatsapp": "123456",
+                                        "email": "email@example.com",
+                                        "website": "http://www.example.com",
+                                        "address": {
+                                            "cep": "123456",
+                                            "street": "Street Test",
+                                            "district": "District Test",
+                                            "number": 123,
+                                            "state": "MG",
+                                            "city": "City Test"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Company already exists"
+                    },
+                    "200": {
+                        "description": "Company created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Company"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -372,6 +458,127 @@
                     },
                     "token": {
                         "type": "string"
+                    }
+                }
+            },
+            "Company": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "cnpj": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "services": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "services": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "physical_localization": {
+                        "type": "boolean"
+                    },
+                    "contact": {
+                        "$ref": "#/components/schemas/Contact"
+                    },
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Schedule"
+                        }
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/Address"
+                    }
+                }
+            },
+            "Schedule": {
+                "type": "object",
+                "properties": {
+                    "day_of_week": {
+                        "type": "string"
+                    },
+                    "opening_type": {
+                        "type": "string"
+                    },
+                    "closing_time": {
+                        "type": "string"
+                    },
+                    "lunch_time": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Contact": {
+                "type": "object",
+                "properties": {
+                    "telephone": {
+                        "type": "string"
+                    },
+                    "whatsapp": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "website": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Address": {
+                "type": "object",
+                "properties": {
+                    "cep": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "district": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "integer"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ImageCompany": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "image_name": {
+                        "type": "string"
+                    },
+                    "image_url": {
+                        "type": "string"
+                    },
+                    "company": {
+                        "$ref": "#/components/schemas/Company"
                     }
                 }
             }
