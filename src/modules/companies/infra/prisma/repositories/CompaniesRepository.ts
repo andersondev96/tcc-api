@@ -34,7 +34,16 @@ export class CompaniesRepository implements ICompaniesRepository {
     }
 
     public async listAll(): Promise<Company[]> {
-        const listAllCompanies = await prisma.company.findMany();
+        const listAllCompanies = await prisma.company.findMany({
+            include: {
+                contact: true,
+                Address: true,
+                ImageCompany: true,
+                Schedule: true,
+            }
+        });
+
+        console.log(listAllCompanies);
 
         return listAllCompanies;
     }
