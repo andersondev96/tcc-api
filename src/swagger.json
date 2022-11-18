@@ -365,7 +365,7 @@
                             "schema": {
                                 "$ref": "#/components/schemas/Company"
                             },
-                            "example": {
+                            "examples": {
                                 "company": {
                                     "value": {
                                         "name": "Business Example",
