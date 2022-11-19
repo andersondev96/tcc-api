@@ -552,6 +552,37 @@
                         "description": "Internal Server Error"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Delete a image company",
+                "description": "Delete a image company by image id",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Image id is required"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Image deleted successfully"
+                    },
+                    "400": {
+                        "description": "Image not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         },
         "/companies/{id}": {
