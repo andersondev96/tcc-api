@@ -1,15 +1,15 @@
-import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
-import { CreateCompanyService } from "../services/CreateCompanyService";
-import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
-import { IContactsRepository } from "../repositories/IContactsRepository";
-import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
-import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
-import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
-import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
-import { IAddressesRepository } from "../repositories/IAddressesRepository";
-import { FakeAddressesRepository } from "../repositories/fakes/FakeAddressesRepository";
 import { AppError } from "@shared/errors/AppError";
+import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { IContactsRepository } from "../repositories/IContactsRepository";
+import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
+import { IAddressesRepository } from "../repositories/IAddressesRepository";
+import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
+import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
+import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
+import { FakeAddressesRepository } from "../repositories/fakes/FakeAddressesRepository";
+import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
+import { CreateCompanyService } from "../services/CreateCompanyService";
 
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;
@@ -20,9 +20,9 @@ let createCompanyService: CreateCompanyService;
 
 describe('CreateCompanyService', () => {
     beforeEach(() => {
+        fakeCompanyRepository = new FakeCompaniesRepository();
         fakeUserRepository = new FakeUsersRepository();
         fakeContactRepository = new FakeContactsRepository();
-        fakeCompanyRepository = new FakeCompaniesRepository();
         fakeScheduleRepository = new FakeSchedulesRepository();
         fakeAddressRepository = new FakeAddressesRepository();
         createCompanyService = new CreateCompanyService(
@@ -108,7 +108,7 @@ describe('CreateCompanyService', () => {
             password: "123456"
         });
 
-        const company1 = await createCompanyService.execute({
+        await createCompanyService.execute({
             name: "Business Company",
             cnpj: "123456",
             category: "Supermarket",
@@ -168,7 +168,7 @@ describe('CreateCompanyService', () => {
                 cnpj: "123456",
                 category: "Supermarket",
                 description: "Supermarket description",
-                services: [],
+                services: ["Service 1", "Service 2", "Service 3", "Service 4"],
                 schedules: [
                     {
                         "day_of_week": "Monday",

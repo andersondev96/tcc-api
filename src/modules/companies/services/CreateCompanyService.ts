@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import { Company } from "../infra/prisma/entities/Company";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
+import { Company } from "../infra/prisma/entities/Company";
 
 interface IAddress {
     cep: string;
