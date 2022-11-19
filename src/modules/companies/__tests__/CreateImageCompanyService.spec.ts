@@ -1,10 +1,10 @@
-import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
-import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 import { AppError } from "@shared/errors/AppError";
-import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
-import { FakeImagesCompanyRepository } from "../repositories/fakes/FakeImagesCompanyRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository"
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
+import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
+import { FakeImagesCompanyRepository } from "../repositories/fakes/FakeImagesCompanyRepository";
+import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
 import { CreateImageCompanyService } from "../services/CreateImageCompanyService";
 
 let fakeCompanyRepository: ICompaniesRepository;
@@ -44,7 +44,6 @@ describe("CreateImageCompanyService", () => {
         expect(images).toBeUndefined();
     });
 
-
     it("Should not be able to create a new image if company not exists", async () => {
         await expect(
             createImageCompanyService.execute({
@@ -54,5 +53,4 @@ describe("CreateImageCompanyService", () => {
 
         ).rejects.toBeInstanceOf(AppError);
     })
-
 })

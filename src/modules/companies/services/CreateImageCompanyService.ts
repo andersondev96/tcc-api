@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "@shared/errors/AppError";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository";
-import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
     company_id: string;
