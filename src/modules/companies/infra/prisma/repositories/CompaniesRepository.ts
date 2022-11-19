@@ -73,11 +73,17 @@ export class CompaniesRepository implements ICompaniesRepository {
     }
 
     public async findById(id: string): Promise<Company> {
-        const listCompanyById = await prisma.company.findFirst({
+        const company = await prisma.company.findUnique({
             where: { id },
+            include: {
+                contact: true,
+                Address: true,
+                ImageCompany: true,
+                Schedule: true,
+            }
         });
 
-        return listCompanyById;
+        return company;
     }
 
     public async update(company: ICreateCompanyDTO): Promise<Company> {
