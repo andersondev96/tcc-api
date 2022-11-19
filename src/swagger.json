@@ -792,6 +792,37 @@
                         "description": "Internal Server Error"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Delete a schedule",
+                "description": "Delete a company schedule by schedule id",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Schedule id is required"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Schedule deleted successfully"
+                    },
+                    "400": {
+                        "description": "Schedule not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         }
     },
