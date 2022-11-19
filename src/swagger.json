@@ -432,6 +432,29 @@
                         "description": "Internal Server Error"
                     }
                 }
+            },
+            "get": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "List companies",
+                "description": "List all companies",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Companies found successfully",
+                        "schema": {
+                            "$ref": "#/components/schemas/Company"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         },
         "/companies/images/{id}": {
