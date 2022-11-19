@@ -86,6 +86,7 @@ export class CreateCompanyService {
             throw new AppError("Company already exists");
         }
 
+
         if (services.length === 0 || services.length > 3) {
             throw new AppError("The number of services must not equal a 0 or exceed 3");
         }

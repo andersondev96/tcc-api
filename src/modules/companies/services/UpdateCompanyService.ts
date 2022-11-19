@@ -1,4 +1,5 @@
 import { AppError } from "@shared/errors/AppError";
+import { check } from "prettier";
 import { inject, injectable } from "tsyringe";
 import { Address } from "../infra/prisma/entities/Address";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
@@ -78,6 +79,12 @@ export class UpdateCompanyService {
 
         if (!findCompanyById) {
             throw new AppError("Company does not exist!");
+        }
+
+        const checkCompanyExists = await this.companyRepository.findByName(name);
+
+        if (checkCompanyExists && checkCompanyExists.id !== id) {
+            throw new AppError("Company name already used!")
         }
 
         if (services.length === 0 || services.length > 3) {
