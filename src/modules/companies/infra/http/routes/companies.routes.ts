@@ -13,6 +13,7 @@ import { UpdateCompanyController } from "../controllers/UpdateCompanyController"
 import { DeleteCompanyController } from "../controllers/DeleteCompanyController";
 import { UpdateScheduleController } from "../controllers/UpdateScheduleController";
 import { UpdateImagesCompanyController } from "../controllers/UpdateImagesCompanyController";
+import { DeleteScheduleController } from "../controllers/DeleteScheduleController";
 
 const companiesRouter = Router();
 
@@ -26,6 +27,7 @@ const updateCompanyController = new UpdateCompanyController();
 const updateScheduleController = new UpdateScheduleController();
 const updateImagesCompanyController = new UpdateImagesCompanyController();
 const deleteCompanyController = new DeleteCompanyController();
+const deleteScheduleController = new DeleteScheduleController();
 
 companiesRouter.use(ensureAuthenticated);
 
@@ -39,6 +41,7 @@ companiesRouter.get('/:id', findByCompanyController.handle);
 companiesRouter.get('/', listAllCompaniesController.handle);
 companiesRouter.put('/:id', updateCompanyController.handle);
 companiesRouter.put('/schedules/:id', updateScheduleController.handle);
+companiesRouter.delete('/schedules/:id', deleteScheduleController.handle);
 companiesRouter.put(
     '/images/:id',
     upload.single("company"),

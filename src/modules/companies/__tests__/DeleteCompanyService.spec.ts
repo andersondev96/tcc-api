@@ -96,5 +96,5 @@ describe("DeleteCompanyService", () => {
         await expect(
             deleteCompanyService.execute('not-existing-company')
         ).rejects.toBeInstanceOf(AppError);
-    })
+    });
 })
