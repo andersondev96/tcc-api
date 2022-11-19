@@ -90,4 +90,282 @@ describe("UpdateCompanyService", () => {
         expect(update).toHaveProperty("email", "newemail@example.com");
         expect(update).toHaveProperty("address.street", "Street update");
     });
+
+    it("Should not be able to invalid update company", async () => {
+        const user = await fakeUserRepository.create({
+            name: "John Doe",
+            email: "john.doe@example.com",
+            password: "123456"
+        });
+
+        const contact = await fakeContactRepository.create({
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        });
+
+        const company = {
+            id: 'not-existing-id',
+            name: "Company Test",
+            cnpj: "123456",
+            category: "Category Test",
+            description: "Description Test",
+            services: ["Service 1", "Service 2"],
+            physical_localization: false,
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        }
+
+        await expect(updateCompanyService.execute(company)).rejects.toBeInstanceOf(AppError);
+    });
+
+    it("Should not be able to update if company name already exists", async () => {
+        const user = await fakeUserRepository.create({
+            name: "John Doe",
+            email: "john.doe@example.com",
+            password: "123456"
+        });
+
+        const contact = await fakeContactRepository.create({
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        });
+
+        const company = await fakeCompanyRepository.create({
+            name: "Business Company",
+            cnpj: "123456",
+            category: "Supermarket",
+            description: "Supermarket description",
+            services: ["Supermarket", "Shopping"],
+            physical_localization: false,
+            contact_id: contact.id,
+            user_id: user.id
+        });
+
+        const company2 = await fakeCompanyRepository.create({
+            name: "Business",
+            cnpj: "123456",
+            category: "Supermarket",
+            description: "Supermarket description",
+            services: ["Supermarket", "Shopping"],
+            physical_localization: false,
+            contact_id: contact.id,
+            user_id: user.id
+        });
+
+        const update = {
+            id: company2.id,
+            name: company.name,
+            cnpj: "123456",
+            category: "Category Test",
+            description: "Description Test",
+            services: ["Service Test"],
+            physical_localization: false,
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        }
+
+        await expect(updateCompanyService.execute(update)).rejects.toBeInstanceOf(AppError);
+
+    });
+
+    it("Should not be able to update company if services equal to zero", async () => {
+        const user = await fakeUserRepository.create({
+            name: "John Doe",
+            email: "john.doe@example.com",
+            password: "123456"
+        });
+
+        const contact = await fakeContactRepository.create({
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        });
+
+        const company = await fakeCompanyRepository.create({
+            name: "Business Company",
+            cnpj: "123456",
+            category: "Supermarket",
+            description: "Supermarket description",
+            services: ["Supermarket", "Shopping"],
+            physical_localization: false,
+            contact_id: contact.id,
+            user_id: user.id
+        });
+
+        const update = {
+            id: company.id,
+            name: "Company Test",
+            cnpj: "123456",
+            category: "Category Test",
+            description: "Description Test",
+            services: [],
+            physical_localization: false,
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        }
+
+        await expect(updateCompanyService.execute(update)).rejects.toBeInstanceOf(AppError);
+
+    });
+
+    it("Should not be able to update when physical localization is true and address is undefined", async () => {
+        const user = await fakeUserRepository.create({
+            name: "John Doe",
+            email: "john.doe@example.com",
+            password: "123456"
+        });
+
+        const contact = await fakeContactRepository.create({
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        });
+
+        const company = await fakeCompanyRepository.create({
+            name: "Business Company",
+            cnpj: "123456",
+            category: "Supermarket",
+            description: "Supermarket description",
+            services: ["Supermarket", "Shopping"],
+            physical_localization: true,
+            contact_id: contact.id,
+            user_id: user.id
+        });
+
+        const update = {
+            id: company.id,
+            name: "Company Test",
+            cnpj: "123456",
+            category: "Category Test",
+            description: "Description Test",
+            services: ["Service 1", "Service 2"],
+            physical_localization: true,
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        }
+
+        await expect(updateCompanyService.execute(update)).rejects.toBeInstanceOf(AppError);
+    });
+
+    it("Should be able to update when physical localization is true and don't has address to company", async () => {
+        const user = await fakeUserRepository.create({
+            name: "John Doe",
+            email: "john.doe@example.com",
+            password: "123456"
+        });
+
+        const contact = await fakeContactRepository.create({
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        });
+
+        const company = await fakeCompanyRepository.create({
+            name: "Business Company",
+            cnpj: "123456",
+            category: "Supermarket",
+            description: "Supermarket description",
+            services: ["Supermarket", "Shopping"],
+            physical_localization: false,
+            contact_id: contact.id,
+            user_id: user.id
+        });
+
+        company.physical_localization = true;
+
+        const updatedCompany = await updateCompanyService.execute({
+            id: company.id,
+            name: "Company Update",
+            cnpj: "123456",
+            category: "New Category",
+            services: ["New Service"],
+            description: "New Description",
+            physical_localization: company.physical_localization,
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+            address: {
+                cep: "123456",
+                street: "Street Test",
+                district: "District Test",
+                number: 123,
+                state: "ST",
+                city: "City Test",
+                company_id: company.id,
+            }
+        });
+
+        expect(company.physical_localization).toEqual(true);
+        expect(updatedCompany).toHaveProperty("address");
+    })
+
+    it("Should be able to update when physical localization is true and has address to company", async () => {
+        const user = await fakeUserRepository.create({
+            name: "John Doe",
+            email: "john.doe@example.com",
+            password: "123456"
+        });
+
+        const contact = await fakeContactRepository.create({
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+        });
+
+        const company = await fakeCompanyRepository.create({
+            name: "Business Company",
+            cnpj: "123456",
+            category: "Supermarket",
+            description: "Supermarket description",
+            services: ["Supermarket", "Shopping"],
+            physical_localization: true,
+            contact_id: contact.id,
+            user_id: user.id
+        });
+
+        const address = await fakeAddressRepository.create({
+            cep: "123456",
+            street: "Street Test",
+            district: "District Test",
+            number: 123,
+            state: "ST",
+            city: "City Test",
+            company_id: company.id,
+        });
+
+        const updatedCompany = await updateCompanyService.execute({
+            id: company.id,
+            name: "Company Update",
+            cnpj: "123456",
+            category: "New Category",
+            services: ["New Service"],
+            description: "New Description",
+            physical_localization: company.physical_localization,
+            telephone: "1234567",
+            email: "business@example.com",
+            website: "www.example.com",
+            whatsapp: "12345685",
+            address
+        });
+
+        expect(company.physical_localization).toEqual(true);
+        expect(updatedCompany).toHaveProperty("address");
+    })
 })
