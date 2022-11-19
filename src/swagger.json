@@ -542,6 +542,179 @@
                         "description": "Internal Server Error"
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Update company",
+                "description": "Update a company by id",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Company id is required"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "cnpj": {
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "services": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "physical_localization": {
+                                        "type": "boolean"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "whatsapp": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "website": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "$ref": "#/components/schemas/Address"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "company": {
+                                    "value": {
+                                        "name": "Company Update",
+                                        "cnpj": "1234567890",
+                                        "category": "Category Update",
+                                        "description": "Description Update",
+                                        "services": [
+                                            "Service 1 Update",
+                                            "Service2 Update"
+                                        ],
+                                        "physical_localization": true,
+                                        "telephone": "12345678",
+                                        "whatsapp": "123456858",
+                                        "email": "business@update.com",
+                                        "website": "www.update.com",
+                                        "address": {
+                                            "cep": "123456",
+                                            "street": "Street Update",
+                                            "district": "District Update",
+                                            "number": 123,
+                                            "state": "MG",
+                                            "city": "City Update"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Company update successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Company"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Company not exists"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/companies/schedules/{id}": {
+            "put": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Update a schedule",
+                "description": "update a schedule by schedule id",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Schedule id is required"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Schedule"
+                            },
+                            "examples": {
+                                "schedule": {
+                                    "value": {
+                                        "day_of_week": "Friday",
+                                        "opening_time": "09:00",
+                                        "closing_time": "19:00",
+                                        "company_id": "Your Company ID"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Schedule update successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Schedule"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Schedule does not exists"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         }
     },
