@@ -1,17 +1,15 @@
-import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
-import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
-import { AppError } from "@shared/errors/AppError";
-import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
-import { FakeImagesCompanyRepository } from "../repositories/fakes/FakeImagesCompanyRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository"
-import { CreateImageCompanyService } from "../services/CreateImageCompanyService";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
+import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
+import { FakeImagesCompanyRepository } from "../repositories/fakes/FakeImagesCompanyRepository";
+import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
 import { UpdateImagesCompanyService } from "../services/UpdateImagesCompanyService";
+import { AppError } from "@shared/errors/AppError";
 
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeImagesCompanyRepository: IImagesCompanyRepository;
 let fakeStorageProvider: IStorageProvider;
-let createImageCompanyService: CreateImageCompanyService;
 let updateImageCompanyService: UpdateImagesCompanyService;
 
 describe("UpdateImagesCompanyService", () => {
@@ -19,11 +17,6 @@ describe("UpdateImagesCompanyService", () => {
         fakeCompanyRepository = new FakeCompaniesRepository();
         fakeImagesCompanyRepository = new FakeImagesCompanyRepository();
         fakeStorageProvider = new FakeStorageProvider();
-        createImageCompanyService = new CreateImageCompanyService(
-            fakeCompanyRepository,
-            fakeImagesCompanyRepository,
-            fakeStorageProvider,
-        );
         updateImageCompanyService = new UpdateImagesCompanyService(
             fakeImagesCompanyRepository,
             fakeStorageProvider
@@ -53,5 +46,11 @@ describe("UpdateImagesCompanyService", () => {
         await updateImageCompanyService.execute(image.id, "image2.jpg");
 
         expect(image.image_name).toEqual("image2.jpg");
+    });
+
+    it("Should not be able to update a non existing image", async () => {
+        await expect(
+            updateImageCompanyService.execute('non-existing-image', 'image-name'))
+            .rejects.toBeInstanceOf(AppError);
     })
 })

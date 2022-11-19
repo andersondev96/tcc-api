@@ -1,4 +1,5 @@
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
+import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository";
 
@@ -17,9 +18,11 @@ export class UpdateImagesCompanyService {
 
         const image = await this.imageCompanyRepository.findImageById(id);
 
-        if (image.image_name) {
-            await this.storageProvider.delete(image.image_name, "companies");
+        if (!image) {
+            throw new AppError("Image not found");
         }
+
+        await this.storageProvider.delete(image.image_name, "companies");
 
         await this.storageProvider.save(image_name, "companies");
 

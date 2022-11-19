@@ -6,15 +6,12 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
-import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { FakeAddressesRepository } from "../repositories/fakes/FakeAddressesRepository";
-import { ICreateCompanyDTO } from "../dtos/ICreateCompanyDTO";
 
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
-let fakeScheduleRepository: ISchedulesRepository;
 let fakeAddressRepository: IAddressesRepository;
 let updateCompanyService: UpdateCompanyService;
 

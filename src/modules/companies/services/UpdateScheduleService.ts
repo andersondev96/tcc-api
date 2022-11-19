@@ -6,11 +6,11 @@ import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 
 interface IRequest {
     id?: string;
-    day_of_week: string,
-    opening_time: string,
-    closing_time: string,
-    lunch_time?: string,
-    company_id: string,
+    day_of_week: string;
+    opening_time: string;
+    closing_time: string;
+    lunch_time?: string;
+    company_id: string;
 }
 
 @injectable()
@@ -27,6 +27,10 @@ export class UpdateScheduleService {
 
         if (!schedule) {
             throw new AppError("Schedule not exist!");
+        }
+
+        if (data.company_id !== schedule.company_id) {
+            throw new AppError("Company invalid!");
         }
 
         const update = await this.scheduleRepository.update({
