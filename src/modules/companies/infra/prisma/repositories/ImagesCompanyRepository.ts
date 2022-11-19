@@ -55,5 +55,4 @@ export class ImagesCompanyRepository implements IImagesCompanyRepository {
             where: { id },
         });
     }
-
 }

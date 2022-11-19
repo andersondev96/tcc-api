@@ -46,5 +46,4 @@ export class FakeImagesCompanyRepository implements IImagesCompanyRepository {
 
         this.imagesCompany.splice(index, 1);
     }
-
 }
