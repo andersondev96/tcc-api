@@ -7,26 +7,36 @@ import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepo
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
-import { DeleteScheduleService } from "../services/DeleteScheduleService";
+import { DeleteImagesCompanyService } from "../services/DeleteImagesCompanyService";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
+import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository";
+import { FakeImagesCompanyRepository } from "../repositories/fakes/FakeImagesCompanyRepository";
+import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
 
 let fakeScheduleRepository: ISchedulesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
-let deleteScheduleService: DeleteScheduleService;
+let fakeImagesCompanyRepository: IImagesCompanyRepository;
+let fakeStorageProvider: IStorageProvider;
+let deleteImagesCompanyService: DeleteImagesCompanyService;
 
-describe("DeleteScheduleService", () => {
+
+describe("DeleteImagesCompanyService", () => {
     beforeEach(() => {
         fakeScheduleRepository = new FakeSchedulesRepository();
         fakeCompanyRepository = new FakeCompaniesRepository();
         fakeUserRepository = new FakeUsersRepository();
         fakeContactRepository = new FakeContactsRepository();
-        deleteScheduleService = new DeleteScheduleService(
-            fakeScheduleRepository
+        fakeImagesCompanyRepository = new FakeImagesCompanyRepository();
+        fakeStorageProvider = new FakeStorageProvider();
+        deleteImagesCompanyService = new DeleteImagesCompanyService(
+            fakeImagesCompanyRepository,
+            fakeStorageProvider
         );
     });
 
-    it("Should be able to delete a schedule", async () => {
+    it("Should be able to delete a image company", async () => {
         const user = await fakeUserRepository.create({
             name: "John Doe",
             email: "john@example.com",
@@ -59,16 +69,22 @@ describe("DeleteScheduleService", () => {
             company_id: company.id,
         });
 
-        await deleteScheduleService.execute(schedule.id);
+        const image = await fakeImagesCompanyRepository.create({
+            image_name: "image_test.jpg",
+            image_url: "http://localhost:3333/companies/image_test.jpg",
+            company_id: company.id,
+        });
 
-        const findSchedule = await fakeScheduleRepository.findById(schedule.id);
+        await deleteImagesCompanyService.execute(image.id);
 
-        expect(findSchedule).toBe(undefined);
+        const findImage = await fakeImagesCompanyRepository.findImageById(image.id);
+
+        expect(findImage).toBe(undefined);
     });
 
-    it("Should not be able to delete a non existing schedule", async () => {
+    it("Should not be able to delete a not existing image", async () => {
         await expect(
-            deleteScheduleService.execute('not-existing-schedule')
+            deleteImagesCompanyService.execute('not-existing-image')
         ).rejects.toBeInstanceOf(AppError);
-    });
+    })
 })

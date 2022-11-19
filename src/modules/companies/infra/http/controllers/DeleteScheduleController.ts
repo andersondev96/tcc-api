@@ -12,6 +12,6 @@ export class DeleteScheduleController {
 
         await deleteScheduleService.execute(id);
 
-        return response.send().status(201);
+        return response.send().status(200);
     }
 }
