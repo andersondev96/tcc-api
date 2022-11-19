@@ -484,6 +484,42 @@
                     }
                 }
             }
+        },
+        "/companies/{id}": {
+            "get": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Find a company",
+                "description": "Find a company by id",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Company id is required"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Company found successfully",
+                        "schema": {
+                            "$ref": "#/components/schemas/Company"
+                        }
+                    },
+                    "400": {
+                        "description": "Company does not exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -523,12 +559,6 @@
                         "type": "string"
                     },
                     "cnpj": {
-                        "type": "string"
-                    },
-                    "category": {
-                        "type": "string"
-                    },
-                    "services": {
                         "type": "string"
                     },
                     "category": {
