@@ -4,7 +4,6 @@ import { inject, injectable } from "tsyringe";
 import { Company } from "../infra/prisma/entities/Company";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 
-
 @injectable()
 export class FindByCompanyService {
     constructor(
