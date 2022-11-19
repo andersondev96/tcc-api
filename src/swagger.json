@@ -497,13 +497,59 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Company image updated"
+                        "description": "Company image created successfully"
                     },
                     "400": {
                         "description": "Company does not exist"
                     },
                     "500": {
                         "description": "Server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Update image company",
+                "description": "Update image company by image id",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Image id is required"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "company": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Image has updated successfully"
+                    },
+                    "400": {
+                        "description": "Image id does not exist"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }
