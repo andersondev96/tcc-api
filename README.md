@@ -19,7 +19,14 @@ Desenvolvimento de um sistema para auxiliar os pequenos comerciantes em suas ven
 
 ### Vendedores
 
-### Produtos
+### Serviços
+- Listar todos os serviços de uma empresa
+- Pesquisar serviços por nome ou parte do nome (usar o LIKE)
+- Pesquisar serviço pelo id
+- Listar serviços por categoria
+- Cadastrar serviços
+- Editar serviços
+- Remover serviços
 
 ### Compras
 
