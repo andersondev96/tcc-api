@@ -117,11 +117,11 @@ model Service {
     description       String
     price             Float
     category          String
-    image_url         String
-    highlight_service Boolean
-    favorites         Int      @default(0)
-    starts            Int      @default(0)
-    assessments       Int      @default(0)
+    image_url         String?
+    highlight_service Boolean? @default(false)
+    favorites         Int?     @default(0)
+    starts            Int?     @default(0)
+    assessments       Int?     @default(0)
     company_id        String
     company           Company  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     createdAt         DateTime @default(now())
