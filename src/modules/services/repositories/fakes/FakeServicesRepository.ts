@@ -10,7 +10,7 @@ export class FakeServicesRepository implements IServicesRepository {
 
     public async create(data: ICreateServiceDTO): Promise<Service> {
         Object.assign(data, {
-            id: uuid,
+            id: uuid(),
         });
 
         this.services.push(data);
