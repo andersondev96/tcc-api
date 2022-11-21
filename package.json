@@ -1,5 +1,5 @@
 {
-    "name": "start_business_api",
+    "name": "tcc-api",
     "version": "1.0.0",
     "description": "Application server to sales by small entrepreneurs",
     "main": "index.js",
