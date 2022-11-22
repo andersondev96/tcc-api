@@ -11,9 +11,7 @@
     "paths": {
         "/users": {
             "post": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "Create a user",
                 "description": "Create a new user",
                 "requestBody": {
@@ -60,9 +58,7 @@
         },
         "/users/{id}": {
             "put": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "Update a user",
                 "description": "Update a user by id",
                 "security": [
@@ -111,9 +107,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "Delete a user",
                 "description": "Delete a user by id",
                 "security": [
@@ -144,9 +138,7 @@
         },
         "/users/profile": {
             "get": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "Get profile",
                 "description": "Get profile to user",
                 "security": [
@@ -171,9 +163,7 @@
         },
         "/users/avatar": {
             "patch": {
-                "tags": [
-                    "Users"
-                ],
+                "tags": ["Users"],
                 "summary": "Update a user avatar",
                 "description": "Update a user avatar image",
                 "security": [
@@ -211,9 +201,7 @@
         },
         "/sessions": {
             "post": {
-                "tags": [
-                    "Sessions"
-                ],
+                "tags": ["Sessions"],
                 "summary": "Authentication User",
                 "description": "Authentication user",
                 "requestBody": {
@@ -245,9 +233,7 @@
         },
         "/sessions/refresh-token": {
             "post": {
-                "tags": [
-                    "Sessions"
-                ],
+                "tags": ["Sessions"],
                 "summary": "Refresh token",
                 "description": "Generate a new refresh token to the user",
                 "requestBody": {
@@ -280,9 +266,7 @@
         },
         "/password/forgot": {
             "post": {
-                "tags": [
-                    "Password"
-                ],
+                "tags": ["Password"],
                 "summary": "Forgot password",
                 "description": "Forgot password",
                 "requestBody": {
@@ -311,9 +295,7 @@
         },
         "/password/reset": {
             "post": {
-                "tags": [
-                    "Password"
-                ],
+                "tags": ["Password"],
                 "summary": "Reset password",
                 "description": "Reset password",
                 "parameters": [
@@ -350,9 +332,7 @@
         },
         "/companies": {
             "post": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Create a company",
                 "description": "Create a new company",
                 "security": [
@@ -373,10 +353,7 @@
                                         "cnpj": "123456",
                                         "category": "Category Example",
                                         "description": "Description Example",
-                                        "services": [
-                                            "Service 1",
-                                            "Service 2"
-                                        ],
+                                        "services": ["Service 1", "Service 2"],
                                         "schedules": [
                                             {
                                                 "day_of_week": "Saturday",
@@ -434,9 +411,7 @@
                 }
             },
             "get": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "List companies",
                 "description": "List all companies",
                 "security": [
@@ -459,9 +434,7 @@
         },
         "/companies/images/{id}": {
             "post": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Upload a company image",
                 "description": "Upload a image to company",
                 "security": [
@@ -508,9 +481,7 @@
                 }
             },
             "put": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Update image company",
                 "description": "Update image company by image id",
                 "security": [
@@ -554,9 +525,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Delete a image company",
                 "description": "Delete a image company by image id",
                 "security": [
@@ -587,9 +556,7 @@
         },
         "/companies/{id}": {
             "get": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Find a company",
                 "description": "Find a company by id",
                 "security": [
@@ -621,9 +588,7 @@
                 }
             },
             "put": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Update company",
                 "description": "Update a company by id",
                 "security": [
@@ -734,9 +699,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Delete a company",
                 "description": "Delete a company by id company",
                 "security": [
@@ -767,9 +730,7 @@
         },
         "/companies/schedules/{id}": {
             "put": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Update a schedule",
                 "description": "update a schedule by schedule id",
                 "security": [
@@ -825,9 +786,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Companies"
-                ],
+                "tags": ["Companies"],
                 "summary": "Delete a schedule",
                 "description": "Delete a company schedule by schedule id",
                 "security": [
@@ -849,6 +808,67 @@
                     },
                     "400": {
                         "description": "Schedule not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/services/{id}": {
+            "post": {
+                "tags": ["Services"],
+                "summary": "Create a new service",
+                "description": "Create a new service to company",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Company id is required"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Service"
+                            },
+                            "examples": {
+                                "service": {
+                                    "value": {
+                                        "name": "Manutenção de computadores",
+                                        "description": "Concerto e reparo de peças de computadores e notebooks",
+                                        "price": 100.0,
+                                        "category": "Informática"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Company id does not exist"
+                    },
+                    "201": {
+                        "description": "Service created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
                     },
                     "500": {
                         "description": "Internal Server Error"
@@ -996,6 +1016,26 @@
                     },
                     "company": {
                         "$ref": "#/components/schemas/Company"
+                    }
+                }
+            },
+            "Service": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "company_id": {
+                        "type": "string"
                     }
                 }
             }
