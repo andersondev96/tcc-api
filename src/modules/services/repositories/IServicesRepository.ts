@@ -19,17 +19,19 @@ export interface IServicesRepository {
 
     /**
      * @description Lista os serviços que fazem parte da categoria pesquisada
+     * @param company_id: id da company
      * @param category string - category pesquisada
      * @return Service[] - Retorna o array dos serviços encontrados
      */
-    listServicesByCategory(category: string): Promise<Service[]>;
+    listServicesByCategory(company_id: string, category: string): Promise<Service[]>;
 
     /**
      * @description Lista os serviços que possuem o nome pesquisado ou parte dele  
      * @param name string - nome pesquisado
+     * @param company_id string - id da company
      * @return Service[] - Retorna o array dos serviços encontrados
      */
-    findServicesByName(name: string): Promise<Service[]>;
+    findServicesByName(company_id: string, name: string): Promise<Service[]>;
 
     /**
      * @description Busca e lista o serviço pelo seu id

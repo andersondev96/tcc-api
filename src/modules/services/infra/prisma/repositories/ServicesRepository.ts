@@ -45,9 +45,10 @@ export class ServicesRepository implements IServicesRepository {
         return services;
     }
 
-    public async listServicesByCategory(category: string): Promise<Service[]> {
+    public async listServicesByCategory(company_id: string, category: string): Promise<Service[]> {
         const services = await prisma.service.findMany({
             where: {
+                company_id,
                 category: {
                     contains: category,
                 }
@@ -57,9 +58,10 @@ export class ServicesRepository implements IServicesRepository {
         return services;
     }
 
-    public async findServicesByName(name: string): Promise<Service[]> {
+    public async findServicesByName(company_id: string, name: string): Promise<Service[]> {
         const services = await prisma.service.findMany({
             where: {
+                company_id,
                 name: {
                     contains: name,
                 }

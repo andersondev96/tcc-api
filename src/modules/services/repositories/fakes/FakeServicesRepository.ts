@@ -24,15 +24,15 @@ export class FakeServicesRepository implements IServicesRepository {
         return services;
     }
 
-    public async listServicesByCategory(category: string): Promise<Service[]> {
+    public async listServicesByCategory(company_id: string, category: string): Promise<Service[]> {
 
-        const services = this.services.filter((service) => service.category.indexOf(category));
+        const services = this.services.filter((service) => service.company_id === company_id && service.category.includes(category));
 
         return services;
     }
 
-    public async findServicesByName(name: string): Promise<Service[]> {
-        const services = this.services.filter((service) => service.name.indexOf(name));
+    public async findServicesByName(company_id: string, name: string): Promise<Service[]> {
+        const services = this.services.filter((service) => service.company_id === company_id && service.name.includes(name));
 
         return services;
     }
