@@ -8,11 +8,14 @@ export class FindServiceByNameController {
 
         const { company_id } = request.params;
 
-        const { name } = request.body;
+        const { name } = request.query;
 
         const findServiceByNameService = container.resolve(FindServiceByNameService);
 
-        const services = await findServiceByNameService.execute(company_id, name);
+        const services = await findServiceByNameService.execute({
+            company_id,
+            name: String(name),
+        });
 
         return response.status(201).json(services);
 

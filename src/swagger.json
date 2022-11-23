@@ -875,6 +875,49 @@
                     }
                 }
             }
+        },
+        "/services/{company_id}": {
+            "get": {
+                "tags": ["Services"],
+                "summary": "Find service by company",
+                "description": "Find service by company and by name",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Company id is required"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Service name"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Company not found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
         }
     },
     "components": {
