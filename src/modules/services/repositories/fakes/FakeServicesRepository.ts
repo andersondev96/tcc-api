@@ -26,7 +26,7 @@ export class FakeServicesRepository implements IServicesRepository {
 
     public async listServicesByCategory(company_id: string, category: string): Promise<Service[]> {
 
-        const services = this.services.filter((service) => service.company_id === company_id && service.category.includes(category));
+        const services = this.services.filter((service) => service.company_id === company_id && service.category === category);
 
         return services;
     }
