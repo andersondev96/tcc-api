@@ -6,18 +6,29 @@ import { CreateServiceController } from "../controllers/CreateServiceController"
 import { FindServiceByCategoryController } from "../controllers/FindServiceByCategoryController";
 import { FindServiceByNameController } from "../controllers/FindServiceByNameController";
 
+import uploadConfig from "@config/upload";
+import multer from "multer";
+import { UpdateServiceImageController } from "../controllers/UpdateServiceImageController";
+
 const servicesRouter = Router();
+const uploadImage = multer(uploadConfig);
 
 servicesRouter.use(ensureAuthenticated);
 
 const createServiceController = new CreateServiceController();
 const findServiceByNameController = new FindServiceByNameController();
 const findServiceByCategoryController = new FindServiceByCategoryController();
+const updateServiceImageController = new UpdateServiceImageController();
 
 
 servicesRouter.post('/:company_id', celebrate(createServiceValidator), createServiceController.handle);
 servicesRouter.get('/:company_id', findServiceByNameController.handle);
 servicesRouter.get('/category/:company_id', findServiceByCategoryController.handle);
+servicesRouter.patch(
+    '/image/:service_id',
+    uploadImage.single("service"),
+    updateServiceImageController.handle
+);
 
 
 export default servicesRouter;
