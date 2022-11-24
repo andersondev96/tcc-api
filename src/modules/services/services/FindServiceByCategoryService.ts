@@ -4,6 +4,10 @@ import { inject, injectable } from "tsyringe";
 import { Service } from "../infra/prisma/entities/Service";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
+interface IRequest {
+    company_id: string;
+    category: string;
+}
 @injectable()
 export class FindServiceByCategoryService {
 
@@ -15,7 +19,7 @@ export class FindServiceByCategoryService {
         private companyRepository: ICompaniesRepository,
     ) { }
 
-    public async execute(company_id: string, category: string): Promise<Service[]> {
+    public async execute({ company_id, category }: IRequest): Promise<Service[]> {
 
         const company = await this.companyRepository.findById(company_id);
 

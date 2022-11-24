@@ -8,11 +8,14 @@ export class FindServiceByCategoryController {
 
         const { company_id } = request.params;
 
-        const { category } = request.body;
+        const { category } = request.query;
 
         const findServiceByCategoryService = container.resolve(FindServiceByCategoryService);
 
-        const services = await findServiceByCategoryService.execute(company_id, category);
+        const services = await findServiceByCategoryService.execute({
+            company_id,
+            category: String(category),
+        });
 
         return response.status(201).json(services);
     }

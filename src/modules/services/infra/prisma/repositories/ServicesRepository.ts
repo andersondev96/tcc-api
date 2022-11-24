@@ -49,7 +49,9 @@ export class ServicesRepository implements IServicesRepository {
         const services = await prisma.service.findMany({
             where: {
                 company_id,
-                category
+                category: {
+                    equals: category,
+                }
             }
         });
 
