@@ -9,6 +9,7 @@ import { FindServiceByNameController } from "../controllers/FindServiceByNameCon
 import uploadConfig from "@config/upload";
 import multer from "multer";
 import { UpdateServiceImageController } from "../controllers/UpdateServiceImageController";
+import { UpdateServiceController } from "../controllers/UpdateServiceController";
 
 const servicesRouter = Router();
 const uploadImage = multer(uploadConfig);
@@ -19,6 +20,7 @@ const createServiceController = new CreateServiceController();
 const findServiceByNameController = new FindServiceByNameController();
 const findServiceByCategoryController = new FindServiceByCategoryController();
 const updateServiceImageController = new UpdateServiceImageController();
+const updateServiceController = new UpdateServiceController();
 
 
 servicesRouter.post('/:company_id', celebrate(createServiceValidator), createServiceController.handle);
@@ -29,6 +31,7 @@ servicesRouter.patch(
     uploadImage.single("service"),
     updateServiceImageController.handle
 );
+servicesRouter.put("/:service_id", updateServiceController.handle);
 
 
 export default servicesRouter;
