@@ -1,12 +1,12 @@
-import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
-import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
+import { AppError } from "@shared/errors/AppError";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
-import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
-import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";
+import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
+import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
+import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
+import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { GetFavoritesService } from "../services/GetFavoritesService";
 
 let fakeCompanyRepository: ICompaniesRepository;

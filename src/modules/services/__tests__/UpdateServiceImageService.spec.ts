@@ -1,13 +1,13 @@
-import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
-import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
-import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
-import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";
+import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
+import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
+import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
+import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
+import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { UpdateServiceImageService } from "../services/UpdateServiceImageService";
 
 let fakeServiceRepository: IServicesRepository;
@@ -59,7 +59,8 @@ describe("UpdateServiceImageService", () => {
             description: "Service Description",
             price: 20.0,
             category: "Service Category",
-            company_id: company.id
+            company_id: company.id,
+            image_url: "image_example.jpg",
         });
 
         await updateServiceImageService.execute({
