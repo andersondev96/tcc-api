@@ -1,14 +1,15 @@
-import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
-import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
+import { AppError } from "@shared/errors/AppError";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 import { IServicesRepository } from "../repositories/IServicesRepository";
+import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
+import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
-import { DeleteServiceService } from "../services/DeleteServiceService";
 import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
+import { DeleteServiceService } from "../services/DeleteServiceService";
 
 let fakeServiceRepository: IServicesRepository;
 let fakeCompanyRepository: ICompaniesRepository;
@@ -58,7 +59,8 @@ describe("DeleteServiceService", () => {
             description: "Service Description",
             price: 20.0,
             category: "Service Category",
-            company_id: company.id
+            company_id: company.id,
+            image_url: "image_example.jpg"
         });
 
         await deleteServiceService.execute(service.id);
@@ -68,4 +70,10 @@ describe("DeleteServiceService", () => {
         expect(findService).toBe(undefined);
 
     });
+
+    it("Should not be able to delete a not existing service", async () => {
+        await expect(
+            deleteServiceService.execute("not-existing-service")
+        ).rejects.toBeInstanceOf(AppError);
+    })
 })
