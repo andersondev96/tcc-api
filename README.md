@@ -15,18 +15,22 @@ Desenvolvimento de um sistema para auxiliar os pequenos comerciantes em suas ven
 ✅ Adicionar avatar <br/>
 ✅ 🧪 Mandar e-mail para redefinir senha <br/>
 ✅ Redefinir senha <br/>
+
 ### Clientes
 
 ### Vendedores
 
 ### Serviços
-- Listar todos os serviços de uma empresa
-- Pesquisar serviços por nome ou parte do nome (usar o LIKE)
-- Pesquisar serviço pelo id
-- Listar serviços por categoria
-- Cadastrar serviços
-- Editar serviços
-- Remover serviços
+
+-   ✅ Listar todos os serviços de uma empresa
+-   ✅ Pesquisar serviços por nome ou parte do nome (usar o LIKE)
+-   ✅ Pesquisar serviço pelo id
+-   ✅ Listar serviços por categoria
+-   ✅ Cadastrar serviços
+-   ✅ Editar serviços
+-   ✅ Remover serviços
+-   ✅ Marcar produto ou serviço em destaque
+-   ✅ Favoritar produto ou serviço
 
 ### Compras
 
