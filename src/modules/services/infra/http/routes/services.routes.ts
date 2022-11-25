@@ -11,6 +11,7 @@ import multer from "multer";
 import { UpdateServiceImageController } from "../controllers/UpdateServiceImageController";
 import { UpdateServiceController } from "../controllers/UpdateServiceController";
 import { DeleteServiceController } from "../controllers/DeleteServiceController";
+import { GetServiceHighlightController } from "../controllers/GetServiceHighlightController";
 
 const servicesRouter = Router();
 const uploadImage = multer(uploadConfig);
@@ -23,6 +24,7 @@ const findServiceByCategoryController = new FindServiceByCategoryController();
 const updateServiceImageController = new UpdateServiceImageController();
 const updateServiceController = new UpdateServiceController();
 const deleteServiceController = new DeleteServiceController();
+const getServiceHighlightController = new GetServiceHighlightController();
 
 
 servicesRouter.post('/:company_id', celebrate(createServiceValidator), createServiceController.handle);
@@ -33,6 +35,7 @@ servicesRouter.patch(
     uploadImage.single("service"),
     updateServiceImageController.handle
 );
+servicesRouter.patch('/:service_id', getServiceHighlightController.handle);
 servicesRouter.put("/:service_id", updateServiceController.handle);
 servicesRouter.delete("/:service_id", deleteServiceController.handle);
 
