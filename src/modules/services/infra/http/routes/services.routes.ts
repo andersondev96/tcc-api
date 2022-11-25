@@ -12,6 +12,7 @@ import { UpdateServiceImageController } from "../controllers/UpdateServiceImageC
 import { UpdateServiceController } from "../controllers/UpdateServiceController";
 import { DeleteServiceController } from "../controllers/DeleteServiceController";
 import { GetServiceHighlightController } from "../controllers/GetServiceHighlightController";
+import { GetFavoritesController } from "../controllers/GetFavoritesController";
 
 const servicesRouter = Router();
 const uploadImage = multer(uploadConfig);
@@ -25,6 +26,7 @@ const updateServiceImageController = new UpdateServiceImageController();
 const updateServiceController = new UpdateServiceController();
 const deleteServiceController = new DeleteServiceController();
 const getServiceHighlightController = new GetServiceHighlightController();
+const getFavoritesController = new GetFavoritesController();
 
 
 servicesRouter.post('/:company_id', celebrate(createServiceValidator), createServiceController.handle);
@@ -36,6 +38,7 @@ servicesRouter.patch(
     updateServiceImageController.handle
 );
 servicesRouter.patch('/:service_id', getServiceHighlightController.handle);
+servicesRouter.patch('/favorites/:service_id', getFavoritesController.handle);
 servicesRouter.put("/:service_id", updateServiceController.handle);
 servicesRouter.delete("/:service_id", deleteServiceController.handle);
 
