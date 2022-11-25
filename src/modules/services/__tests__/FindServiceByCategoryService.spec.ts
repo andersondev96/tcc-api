@@ -1,11 +1,12 @@
-import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
-import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
+import { AppError } from "@shared/errors/AppError";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
-import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";
+import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
+import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
+import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
+import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { FindServiceByCategoryService } from "../services/FindServiceByCategoryService";
 
 let fakeCompanyRepository: ICompaniesRepository;
@@ -78,10 +79,25 @@ describe("FindServiceByNameService", () => {
             company_id: company2.id
         });
 
-        const findService = await findServiceByCategoryService.execute(company.id, "Service Category");
-        const findService2 = await findServiceByCategoryService.execute(company2.id, "2 Category Service");
+        const findService = await findServiceByCategoryService.execute({
+            company_id: company.id,
+            category: "Service Category"
+        });
+        const findService2 = await findServiceByCategoryService.execute({
+            company_id: company2.id,
+            category: "2 Category Service"
+        });
 
         expect(findService).toEqual([service1]);
         expect(findService2).toEqual([]);
-    })
+    });
+
+    it("Should not be able to find a non existing company", async () => {
+        await expect(
+            findServiceByCategoryService.execute({
+                company_id: "non-existing-company",
+                category: "Computation"
+            })
+        ).rejects.toBeInstanceOf(AppError);
+    });
 })
