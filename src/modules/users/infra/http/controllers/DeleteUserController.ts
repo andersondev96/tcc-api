@@ -5,7 +5,7 @@ import { DeleteUserService } from "@modules/users/services/DeleteUserService";
 
 export class DeleteUserController {
     async handle(request: Request, response: Response): Promise<Response> {
-        const { id } = request.params;
+        const { id } = request.user;
 
         const deleteUserService = container.resolve(
             DeleteUserService

@@ -6,7 +6,7 @@ import { UpdateUserService } from "@modules/users/services/UpdateUserService";
 export class UpdateUserController {
     async handle(request: Request, response: Response): Promise<Response> {
 
-        const { id } = request.params;
+        const { id } = request.user;
 
         const { name, email, password } = request.body;
 
