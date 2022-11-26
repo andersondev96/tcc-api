@@ -6,6 +6,7 @@ import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { Company } from "../infra/prisma/entities/Company";
+import { IEntrepreneursRepository } from "../repositories/IEntrepreneursRepository";
 
 interface IAddress {
     cep: string;
@@ -55,6 +56,9 @@ export class CreateCompanyService {
 
         @inject("AddressesRepository")
         private addressRepository: IAddressesRepository,
+
+        @inject("EntrepreneursRepository")
+        private entrepreneurRepository: IEntrepreneursRepository
 
     ) { }
 
@@ -112,6 +116,16 @@ export class CreateCompanyService {
             contact_id: contact.id,
             user_id
         });
+
+        const entrepreneur = await this.entrepreneurRepository.findByUser(user.id);
+
+        if (entrepreneur) {
+            await this.entrepreneurRepository.update({
+                id: entrepreneur.id,
+                user_id: user.id,
+                company_id: company.id
+            });
+        }
 
         if (company.physical_localization) {
             await this.addressRepository.create({

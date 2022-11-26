@@ -1,5 +1,5 @@
-import { ICreateEntrepreneurDTO } from "@modules/entrepreneurs/dtos/ICreateEntrepreneurDTO";
-import { Entrepreneur } from "@modules/entrepreneurs/infra/prisma/entities/Entrepreneur";
+import { ICreateEntrepreneurDTO } from "@modules/companies/dtos/ICreateEntrepreneurDTO";
+import { Entrepreneur } from "@modules/companies/infra/prisma/entities/Entrepreneur";
 import { v4 as uuid } from "uuid";
 import { IEntrepreneursRepository } from "../IEntrepreneursRepository";
 
@@ -21,6 +21,20 @@ export class FakeEntrepreneursRepository implements IEntrepreneursRepository {
         const findEntrepreneurById = this.entrepreneurs.find((entrepreneur) => entrepreneur.id === id);
 
         return findEntrepreneurById;
+    }
+
+    public async findByUser(user_id: string): Promise<Entrepreneur> {
+        const findEntrepreneurByUser = this.entrepreneurs.find((entrepreneur) => entrepreneur.user_id === user_id);
+
+        return findEntrepreneurByUser;
+    }
+
+    public async update(data: ICreateEntrepreneurDTO): Promise<Entrepreneur> {
+        const index = this.entrepreneurs.findIndex((entrepreneur) => entrepreneur.id === data.id);
+
+        this.entrepreneurs[index] = data;
+
+        return data;
     }
 
     public async delete(id: string): Promise<void> {

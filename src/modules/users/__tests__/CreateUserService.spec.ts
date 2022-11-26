@@ -4,17 +4,23 @@ import { IUsersRepository } from "../repositories/IUsersRepository";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { CreateUserService } from "../services/CreateUserService";
+import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { FakeEntrepreneursRepository } from "@modules/companies/repositories/fakes/FakeEntrepreneursRepository";
 
 let fakeUsersRepository: IUsersRepository;
+let fakeEntrepreneurRepository: IEntrepreneursRepository;
 let fakeHashProvider: IHashProvider;
 let createUserService: CreateUserService;
+
 
 describe("CreateUserService", () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
         fakeHashProvider = new FakeHashProvider();
+        fakeEntrepreneurRepository = new FakeEntrepreneursRepository();
         createUserService = new CreateUserService(
             fakeUsersRepository,
+            fakeEntrepreneurRepository,
             fakeHashProvider
         );
     });
@@ -24,6 +30,7 @@ describe("CreateUserService", () => {
             name: "John doe",
             email: "john@example.com",
             password: "123456",
+            isEntrepreneur: true,
         });
 
         expect(user).toHaveProperty("id");

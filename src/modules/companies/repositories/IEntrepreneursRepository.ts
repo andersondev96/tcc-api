@@ -18,6 +18,20 @@ export interface IEntrepreneursRepository {
     findById(id: string): Promise<Entrepreneur>;
 
     /**
+     * @description Busca um empreendedor pelo seu usuário
+     * @param user_id  - id do usuário
+     * @return Entrepreneur - Retorna o model do empreendedor
+     */
+    findByUser(user_id: string): Promise<Entrepreneur>;
+
+    /**
+     * @description Atualiza um empreendedor
+     * @param data id string - id do empreendedor
+     * @return Entrepreneur - Retorna o model do empreendedor
+     */
+    update(data: ICreateEntrepreneurDTO): Promise<Entrepreneur>;
+
+    /**
      * @description Exclui o empreendedor
      * @param id string - id do empreendedor
      */
