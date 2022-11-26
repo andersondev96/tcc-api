@@ -1,14 +1,14 @@
-import { inject, injectable } from 'tsyringe'
+import { inject, injectable } from "tsyringe";
 
-import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
-import { AppError } from '@shared/errors/AppError'
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
 
-import { Company } from '../infra/prisma/entities/Company'
-import { IAddressesRepository } from '../repositories/IAddressesRepository'
-import { ICompaniesRepository } from '../repositories/ICompaniesRepository'
-import { IContactsRepository } from '../repositories/IContactsRepository'
-import { IEntrepreneursRepository } from '../repositories/IEntrepreneursRepository'
-import { ISchedulesRepository } from '../repositories/ISchedulesRepository'
+import { Company } from "../infra/prisma/entities/Company";
+import { IAddressesRepository } from "../repositories/IAddressesRepository";
+import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
+import { IContactsRepository } from "../repositories/IContactsRepository";
+import { IEntrepreneursRepository } from "../repositories/IEntrepreneursRepository";
+import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 interface IAddress {
   cep: string
   street: string
@@ -17,6 +17,7 @@ interface IAddress {
   state: string
   city: string
 }
+
 interface ISchedule {
   day_of_week: string
   opening_time: string
@@ -42,22 +43,22 @@ interface IRequest {
 @injectable()
 export class CreateCompanyService {
   constructor(
-    @inject('CompaniesRepository')
+    @inject("CompaniesRepository")
     private readonly companyRepository: ICompaniesRepository,
 
-    @inject('UsersRepository')
+    @inject("UsersRepository")
     private readonly userRepository: IUsersRepository,
 
-    @inject('ContactsRepository')
+    @inject("ContactsRepository")
     private readonly contactRepository: IContactsRepository,
 
-    @inject('SchedulesRepository')
+    @inject("SchedulesRepository")
     private readonly scheduleRepository: ISchedulesRepository,
 
-    @inject('AddressesRepository')
+    @inject("AddressesRepository")
     private readonly addressRepository: IAddressesRepository,
 
-    @inject('EntrepreneursRepository')
+    @inject("EntrepreneursRepository")
     private readonly entrepreneurRepository: IEntrepreneursRepository
 
   ) { }
@@ -77,30 +78,30 @@ export class CreateCompanyService {
     website,
     user_id
   }: IRequest): Promise<Company> {
-    const user = await this.userRepository.findById(user_id)
+    const user = await this.userRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('This user does not exist')
+      throw new AppError("This user does not exist");
     }
 
-    const userHasCompany = await this.companyRepository.findByUser(user_id)
+    const userHasCompany = await this.companyRepository.findByUser(user_id);
 
     if (userHasCompany) {
-      throw new AppError('User has a company')
+      throw new AppError("User has a company");
     }
 
-    const checkCompanyExists = await this.companyRepository.findByName(name)
+    const checkCompanyExists = await this.companyRepository.findByName(name);
 
     if (checkCompanyExists) {
-      throw new AppError('Company already exists')
+      throw new AppError("Company already exists");
     }
 
     if (services.length === 0 || services.length > 3) {
-      throw new AppError('The number of services must not equal a 0 or exceed 3')
+      throw new AppError("The number of services must not equal a 0 or exceed 3");
     }
 
     if (physical_localization && address === undefined) {
-      throw new AppError('Address is required')
+      throw new AppError("Address is required");
     }
 
     const contact = await this.contactRepository.create({
@@ -108,7 +109,7 @@ export class CreateCompanyService {
       whatsapp,
       email,
       website
-    })
+    });
 
     const company = await this.companyRepository.create({
       name,
@@ -119,19 +120,19 @@ export class CreateCompanyService {
       physical_localization,
       contact_id: contact.id,
       user_id
-    })
+    });
 
-    const entrepreneur = await this.entrepreneurRepository.findByUser(user_id)
+    const entrepreneur = await this.entrepreneurRepository.findByUser(user_id);
 
-    console.log(user.id)
-    console.log(entrepreneur)
+    console.log(user.id);
+    console.log(entrepreneur);
 
     if (entrepreneur) {
       await this.entrepreneurRepository.update({
         id: entrepreneur.id,
         user_id: user.id,
         company_id: company.id
-      })
+      });
     }
 
     if (company.physical_localization) {
@@ -143,11 +144,11 @@ export class CreateCompanyService {
         state: address.state,
         city: address.city,
         company_id: company.id
-      })
+      });
     }
 
     schedules.map(async (schedule) => {
-      const { day_of_week, opening_time, closing_time, lunch_time } = schedule
+      const { day_of_week, opening_time, closing_time, lunch_time } = schedule;
 
       await this.scheduleRepository.create({
         day_of_week,
@@ -155,9 +156,9 @@ export class CreateCompanyService {
         closing_time,
         lunch_time,
         company_id: company.id
-      })
-    })
+      });
+    });
 
-    return company
+    return company;
   }
 }

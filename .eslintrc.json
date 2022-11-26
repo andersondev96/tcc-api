@@ -23,6 +23,30 @@
     "eslint-plugin-import-helpers"
   ],
   "rules": {
+    "camelcase": "off",
+    "quotes": [
+      1,
+      "double"
+    ],
+    "semi": "warn",
+    "space-before-blocks": "warn",
+    "space-in-parens": "warn",
+    "no-multiple-empty-lines": "warn",
+    "no-multi-spaces": "warn",
+    "comma-dangle": "warn",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": [
+          "PascalCase"
+        ],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
     "import-helpers/order-imports": [
       "warn",
       {
@@ -42,5 +66,10 @@
         }
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
   }
 }
