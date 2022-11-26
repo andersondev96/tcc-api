@@ -8,7 +8,6 @@ import { FindByUserIdController } from "../controllers/FindByUserIdController";
 import { UpdateUserController } from "../controllers/UpdateUserController";
 import { UpdateUserAvatarController } from "../controllers/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
-
 const usersRouter = Router();
 const uploadAvatar = multer(uploadConfig);
 

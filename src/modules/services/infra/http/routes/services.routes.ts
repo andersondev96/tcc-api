@@ -1,13 +1,15 @@
-import { createServiceValidator } from "@modules/services/validators/CreateServiceValidator";
-import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
-import { celebrate } from "celebrate";
 import { Router } from "express";
+import { celebrate } from "celebrate";
+import multer from "multer";
+import uploadConfig from "@config/upload";
+import { createServiceValidator } from "@modules/services/validators/CreateServiceValidator";
+
+import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
+import { ensureEntrepreneur } from "@shared/infra/http/middlewares/ensureEntrepreneur";
+
 import { CreateServiceController } from "../controllers/CreateServiceController";
 import { FindServiceByCategoryController } from "../controllers/FindServiceByCategoryController";
 import { FindServiceByNameController } from "../controllers/FindServiceByNameController";
-
-import uploadConfig from "@config/upload";
-import multer from "multer";
 import { UpdateServiceImageController } from "../controllers/UpdateServiceImageController";
 import { UpdateServiceController } from "../controllers/UpdateServiceController";
 import { DeleteServiceController } from "../controllers/DeleteServiceController";
@@ -16,8 +18,6 @@ import { GetFavoritesController } from "../controllers/GetFavoritesController";
 
 const servicesRouter = Router();
 const uploadImage = multer(uploadConfig);
-
-servicesRouter.use(ensureAuthenticated);
 
 const createServiceController = new CreateServiceController();
 const findServiceByNameController = new FindServiceByNameController();
@@ -29,17 +29,19 @@ const getServiceHighlightController = new GetServiceHighlightController();
 const getFavoritesController = new GetFavoritesController();
 
 
-servicesRouter.post('/:company_id', celebrate(createServiceValidator), createServiceController.handle);
+servicesRouter.post('/:company_id', ensureAuthenticated, ensureEntrepreneur, celebrate(createServiceValidator), createServiceController.handle);
 servicesRouter.get('/:company_id', findServiceByNameController.handle);
 servicesRouter.get('/category/:company_id', findServiceByCategoryController.handle);
 servicesRouter.patch(
     '/image/:service_id',
+    ensureAuthenticated,
+    ensureEntrepreneur,
     uploadImage.single("service"),
     updateServiceImageController.handle
 );
-servicesRouter.patch('/:service_id', getServiceHighlightController.handle);
-servicesRouter.patch('/favorites/:service_id', getFavoritesController.handle);
-servicesRouter.put("/:service_id", updateServiceController.handle);
-servicesRouter.delete("/:service_id", deleteServiceController.handle);
+servicesRouter.patch('/:service_id', ensureAuthenticated, ensureEntrepreneur, getServiceHighlightController.handle);
+servicesRouter.patch('/favorites/:service_id', ensureAuthenticated, getFavoritesController.handle);
+servicesRouter.put("/:service_id", ensureAuthenticated, ensureEntrepreneur, updateServiceController.handle);
+servicesRouter.delete("/:service_id", ensureAuthenticated, ensureEntrepreneur, deleteServiceController.handle);
 
 export default servicesRouter;

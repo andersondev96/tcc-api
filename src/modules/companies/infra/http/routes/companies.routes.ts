@@ -4,6 +4,7 @@ import multer from "multer";
 import uploadConfig from "@config/upload";
 
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
+import { ensureEntrepreneur } from "@shared/infra/http/middlewares/ensureEntrepreneur";
 
 import { CreateCompanyController } from "../controllers/CreateCompanyController";
 import { CreateImageCompanyController } from "../controllers/CreateImageCompanyController";
@@ -31,25 +32,27 @@ const deleteCompanyController = new DeleteCompanyController();
 const deleteScheduleController = new DeleteScheduleController();
 const deleteImagesCompanyController = new DeleteImagesCompanyController();
 
-companiesRouter.use(ensureAuthenticated);
-
-companiesRouter.post('/', createCompanyController.handle);
+companiesRouter.post('/', ensureAuthenticated, ensureEntrepreneur, createCompanyController.handle);
 companiesRouter.post(
     '/images/:id',
+    ensureAuthenticated,
+    ensureEntrepreneur,
     upload.array("company"),
     createImageCompanyController.handle
 );
 companiesRouter.get('/:id', findByCompanyController.handle);
 companiesRouter.get('/', listAllCompaniesController.handle);
 companiesRouter.put('/:id', updateCompanyController.handle);
-companiesRouter.put('/schedules/:id', updateScheduleController.handle);
-companiesRouter.delete('/schedules/:id', deleteScheduleController.handle);
+companiesRouter.put('/schedules/:id', ensureAuthenticated, ensureEntrepreneur, updateScheduleController.handle);
+companiesRouter.delete('/schedules/:id', ensureAuthenticated, ensureEntrepreneur, deleteScheduleController.handle);
 companiesRouter.put(
     '/images/:id',
+    ensureAuthenticated,
+    ensureEntrepreneur,
     upload.single("company"),
     updateImagesCompanyController.handle
 );
-companiesRouter.delete('/images/:id', deleteImagesCompanyController.handle);
-companiesRouter.delete('/:id', deleteCompanyController.handle);
+companiesRouter.delete('/images/:id', ensureAuthenticated, ensureEntrepreneur, deleteImagesCompanyController.handle);
+companiesRouter.delete('/:id', ensureAuthenticated, ensureEntrepreneur, deleteCompanyController.handle);
 
 export default companiesRouter;
