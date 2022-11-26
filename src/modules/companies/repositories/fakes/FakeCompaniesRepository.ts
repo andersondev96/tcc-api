@@ -42,6 +42,12 @@ export class FakeCompaniesRepository implements ICompaniesRepository {
         return findCompanyByContact;
     }
 
+    public async findByUser(user_id: string): Promise<Company> {
+        const findCompanyByUser = this.companies.find((company) => company.user_id === user_id);
+
+        return findCompanyByUser;
+    }
+
     public async findById(id: string): Promise<Company> {
         const findCompanyById = this.companies.find((company) => company.id === id);
 

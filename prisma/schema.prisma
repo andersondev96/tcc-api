@@ -17,7 +17,7 @@ model User {
     avatar    String?
 
     userToken    UserToken[]
-    Company      Company[]
+    Company      Company?
     Entrepreneur Entrepreneur[]
 
     @@map("users")
@@ -55,7 +55,7 @@ model Company {
     description           String?
     services              String[]
     physical_localization Boolean
-    user_id               String
+    user_id               String         @unique
     user                  User           @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     Service               Service[]
     contact               Contact        @relation(fields: [contact_id], references: [id], onDelete: Cascade, onUpdate: Cascade)

@@ -38,6 +38,13 @@ export interface ICompaniesRepository {
     findByName(name: string): Promise<Company>;
 
     /**
+     * @description Função que busca a company cadastrada pelo user
+     * @param user_id string - id do usuário
+     * @return Company - Retorna o model da company
+     */
+    findByUser(user_id: string): Promise<Company>;
+
+    /**
      * @description Lista a empresa que tem determinado id
      * @param id string Id da empresa
      */

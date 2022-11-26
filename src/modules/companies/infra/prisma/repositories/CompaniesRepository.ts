@@ -72,6 +72,14 @@ export class CompaniesRepository implements ICompaniesRepository {
         return findCompanyByContact;
     }
 
+    public async findByUser(user_id: string): Promise<Company> {
+        const findCompanyByUser = await prisma.company.findUnique({
+            where: { user_id },
+        });
+
+        return findCompanyByUser;
+    }
+
     public async findById(id: string): Promise<Company> {
         const company = await prisma.company.findUnique({
             where: { id },

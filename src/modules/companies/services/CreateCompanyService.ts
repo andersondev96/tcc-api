@@ -84,6 +84,12 @@ export class CreateCompanyService {
             throw new AppError("This user does not exist");
         }
 
+        const userHasCompany = await this.companyRepository.findByUser(user_id);
+
+        if (userHasCompany) {
+            throw new AppError("User has a company");
+        }
+
         const checkCompanyExists = await this.companyRepository.findByName(name);
 
         if (checkCompanyExists) {
