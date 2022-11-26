@@ -57,7 +57,7 @@ export class UpdateCompanyService {
     private contactRepository: IContactsRepository,
 
     @inject("AddressesRepository")
-    private addressRepository: IAddressesRepository,
+    private addressRepository: IAddressesRepository
 
   ) { }
 
@@ -73,7 +73,7 @@ export class UpdateCompanyService {
     whatsapp,
     email,
     website,
-    address,
+    address
   }: IRequest): Promise<IResponse> {
 
     const findCompanyById = await this.companyRepository.findById(id);
@@ -85,11 +85,7 @@ export class UpdateCompanyService {
     const checkCompanyExists = await this.companyRepository.findByName(name);
 
     if (checkCompanyExists && checkCompanyExists.id !== id) {
-      throw new AppError("Company name already used!")
-    }
-
-    if (services.length === 0 || services.length > 3) {
-      throw new AppError("The number of services must not equal a 0 or exceed 3");
+      throw new AppError("Company name already used!");
     }
 
     if (physical_localization && address === undefined) {
@@ -101,7 +97,7 @@ export class UpdateCompanyService {
       telephone,
       email,
       website,
-      whatsapp,
+      whatsapp
     });
 
     const company = await this.companyRepository.update({
@@ -126,7 +122,7 @@ export class UpdateCompanyService {
         number: address.number,
         state: address.state,
         city: address.city,
-        company_id: company.id,
+        company_id: company.id
       });
     } else if (company.physical_localization && addressId) {
       await this.addressRepository.update({
@@ -137,7 +133,7 @@ export class UpdateCompanyService {
         number: address.number,
         state: address.state,
         city: address.city,
-        company_id: company.id,
+        company_id: company.id
       });
     } else if (!company.physical_localization && addressId) {
       await this.addressRepository.delete(addressId.id);
@@ -155,8 +151,8 @@ export class UpdateCompanyService {
       email: contact.email,
       website: contact.website,
       physical_localization: company.physical_localization,
-      address,
-    }
+      address
+    };
 
     return response;
   }

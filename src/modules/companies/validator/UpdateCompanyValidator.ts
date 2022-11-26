@@ -21,7 +21,6 @@ const updateCompanyValidator = {
       number: Joi.number().required().messages(customMessage("number")),
       state: Joi.string().required().messages(customMessage("state")),
       city: Joi.string().required().messages(customMessage("city"))
-
     }
   })
 };

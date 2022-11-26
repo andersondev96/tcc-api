@@ -23,7 +23,7 @@ export class CreateServiceService {
     private serviceRepository: IServicesRepository,
 
     @inject("CompaniesRepository")
-    private companiesRepository: ICompaniesRepository,
+    private companiesRepository: ICompaniesRepository
 
   ) { }
 

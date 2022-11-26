@@ -7,6 +7,8 @@ export class UpdateCompanyController {
 
   public async handle(request: Request, response: Response): Promise<Response> {
 
+    const { id } = request.params;
+
     const {
       name,
       cnpj,
@@ -20,9 +22,6 @@ export class UpdateCompanyController {
       website,
       address
     } = request.body;
-
-    const { id } = request.params;
-
 
     const updateCompanyService = container.resolve(UpdateCompanyService);
 

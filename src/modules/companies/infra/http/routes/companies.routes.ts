@@ -41,7 +41,6 @@ companiesRouter.post(
   ensureEntrepreneur,
   createCompanyController.handle
 );
-
 companiesRouter.post(
   "/images/:id",
   ensureAuthenticated,
@@ -49,26 +48,22 @@ companiesRouter.post(
   upload.array("company"),
   createImageCompanyController.handle
 );
-
 companiesRouter.get("/:id", findByCompanyController.handle);
 companiesRouter.get("/", listAllCompaniesController.handle);
 companiesRouter.put("/:id", updateCompanyController.handle);
-
 companiesRouter.put(
   "/schedules/:id",
-  celebrate(updateCompanyValidator),
   ensureAuthenticated,
   ensureEntrepreneur,
+  celebrate(updateCompanyValidator),
   updateScheduleController.handle
 );
-
 companiesRouter.delete(
   "/schedules/:id",
   ensureAuthenticated,
   ensureEntrepreneur,
   deleteScheduleController.handle
 );
-
 companiesRouter.put(
   "/images/:id",
   ensureAuthenticated,
@@ -76,14 +71,12 @@ companiesRouter.put(
   upload.single("company"),
   updateImagesCompanyController.handle
 );
-
 companiesRouter.delete(
   "/images/:id",
   ensureAuthenticated,
   ensureEntrepreneur,
   deleteImagesCompanyController.handle
 );
-
 companiesRouter.delete(
   "/:id",
   ensureAuthenticated,

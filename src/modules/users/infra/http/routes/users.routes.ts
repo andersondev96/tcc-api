@@ -1,7 +1,9 @@
+import { celebrate } from "celebrate";
 import { Router } from "express";
 import multer from "multer";
 
 import uploadConfig from "@config/upload";
+import { userValidator } from "@modules/users/validator/UserValidator";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
 import { CreateUsersController } from "../controllers/CreateUsersController";
@@ -18,11 +20,10 @@ const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
 
-usersRouter.post("/", createUserController.handle);
+usersRouter.post("/", celebrate(userValidator), createUserController.handle);
 usersRouter.get("/profile", ensureAuthenticated, findByUserIdController.handle);
 usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);
-usersRouter.put("/", ensureAuthenticated, updateUserController.handle);
-
+usersRouter.put("/", ensureAuthenticated, celebrate(userValidator), updateUserController.handle);
 usersRouter.patch(
   "/avatar",
   ensureAuthenticated,

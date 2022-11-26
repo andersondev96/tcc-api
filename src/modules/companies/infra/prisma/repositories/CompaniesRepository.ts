@@ -15,7 +15,7 @@ export class CompaniesRepository implements ICompaniesRepository {
     services,
     physical_localization,
     user_id,
-    contact_id,
+    contact_id
   }: ICreateCompanyDTO): Promise<Company> {
     const company = await prisma.company.create({
       data: {
@@ -27,8 +27,8 @@ export class CompaniesRepository implements ICompaniesRepository {
         description,
         physical_localization,
         user_id,
-        contact_id,
-      },
+        contact_id
+      }
     });
 
     return company;
@@ -40,7 +40,7 @@ export class CompaniesRepository implements ICompaniesRepository {
         contact: true,
         Address: true,
         ImageCompany: true,
-        Schedule: true,
+        Schedule: true
       }
     });
 
@@ -59,7 +59,7 @@ export class CompaniesRepository implements ICompaniesRepository {
 
   public async findByName(name: string): Promise<Company> {
     const company = await prisma.company.findUnique({
-      where: { name },
+      where: { name }
     });
 
     return company;
@@ -67,7 +67,7 @@ export class CompaniesRepository implements ICompaniesRepository {
 
   public async findByContactId(contact_id: string): Promise<Company> {
     const findCompanyByContact = await prisma.company.findUnique({
-      where: { contact_id },
+      where: { contact_id }
     });
 
     return findCompanyByContact;
@@ -75,7 +75,7 @@ export class CompaniesRepository implements ICompaniesRepository {
 
   public async findByUser(user_id: string): Promise<Company> {
     const findCompanyByUser = await prisma.company.findUnique({
-      where: { user_id },
+      where: { user_id }
     });
 
     return findCompanyByUser;
@@ -88,7 +88,7 @@ export class CompaniesRepository implements ICompaniesRepository {
         contact: true,
         Address: true,
         ImageCompany: true,
-        Schedule: true,
+        Schedule: true
       }
     });
 
@@ -98,7 +98,7 @@ export class CompaniesRepository implements ICompaniesRepository {
   public async update(company: ICreateCompanyDTO): Promise<Company> {
     const updateCompany = await prisma.company.update({
       where: { id: company.id },
-      data: { ...company },
+      data: { ...company }
     });
 
     return updateCompany;
@@ -106,7 +106,7 @@ export class CompaniesRepository implements ICompaniesRepository {
 
   public async delete(id: string): Promise<void> {
     await prisma.company.delete({
-      where: { id },
+      where: { id }
     });
   }
 

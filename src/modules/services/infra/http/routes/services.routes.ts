@@ -29,19 +29,31 @@ const getServiceHighlightController = new GetServiceHighlightController();
 const getFavoritesController = new GetFavoritesController();
 
 
-servicesRouter.post('/:company_id', ensureAuthenticated, ensureEntrepreneur, celebrate(createServiceValidator), createServiceController.handle);
-servicesRouter.get('/:company_id', findServiceByNameController.handle);
-servicesRouter.get('/category/:company_id', findServiceByCategoryController.handle);
+servicesRouter.post(
+  "/:company_id",
+  ensureAuthenticated,
+  ensureEntrepreneur,
+  celebrate(createServiceValidator),
+  createServiceController.handle
+);
+servicesRouter.get("/:company_id", findServiceByNameController.handle);
+servicesRouter.get("/category/:company_id", findServiceByCategoryController.handle);
 servicesRouter.patch(
-  '/image/:service_id',
+  "/image/:service_id",
   ensureAuthenticated,
   ensureEntrepreneur,
   uploadImage.single("service"),
   updateServiceImageController.handle
 );
-servicesRouter.patch('/:service_id', ensureAuthenticated, ensureEntrepreneur, getServiceHighlightController.handle);
-servicesRouter.patch('/favorites/:service_id', ensureAuthenticated, getFavoritesController.handle);
-servicesRouter.put("/:service_id", ensureAuthenticated, ensureEntrepreneur, updateServiceController.handle);
+servicesRouter.patch("/:service_id", ensureAuthenticated, ensureEntrepreneur, getServiceHighlightController.handle);
+servicesRouter.patch("/favorites/:service_id", ensureAuthenticated, getFavoritesController.handle);
+servicesRouter.put(
+  "/:service_id",
+  ensureAuthenticated,
+  ensureEntrepreneur,
+  celebrate(createServiceValidator),
+  updateServiceController.handle
+);
 servicesRouter.delete("/:service_id", ensureAuthenticated, ensureEntrepreneur, deleteServiceController.handle);
 
 export default servicesRouter;

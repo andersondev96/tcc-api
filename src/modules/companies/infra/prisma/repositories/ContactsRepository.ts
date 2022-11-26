@@ -19,8 +19,8 @@ export class ContactsRepository implements IContactsRepository {
         telephone,
         email,
         whatsapp,
-        website,
-      },
+        website
+      }
     });
 
     return contact;
@@ -30,7 +30,7 @@ export class ContactsRepository implements IContactsRepository {
     const findByContact = await prisma.contact.findUnique({
       where: {
         id
-      },
+      }
     });
 
     return findByContact;
@@ -39,7 +39,7 @@ export class ContactsRepository implements IContactsRepository {
   public async update(data: ICreateContactDTO): Promise<Contact> {
     const updateContact = await prisma.contact.update({
       where: { id: data.id },
-      data: { ...data },
+      data: { ...data }
     });
 
     return updateContact;
