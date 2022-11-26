@@ -25,9 +25,9 @@ model User {
 
 model Entrepreneur {
     id         String   @id @default(uuid())
-    user_id    String
+    user_id    String   @unique
     user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    company_id String?
+    company_id String?  @unique
     company    Company? @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     createdAt  DateTime @default(now())
     updatedAt  DateTime @default(now())

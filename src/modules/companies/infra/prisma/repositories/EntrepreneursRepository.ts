@@ -30,8 +30,10 @@ export class EntrepreneursRepository implements IEntrepreneursRepository {
 
     public async findByUser(user_id: string): Promise<Entrepreneur> {
         const entrepreneur = await prisma.entrepreneur.findUnique({
-            where: { id: user_id },
+            where: { user_id },
         });
+
+        console.log(entrepreneur);
 
         return entrepreneur;
     }
