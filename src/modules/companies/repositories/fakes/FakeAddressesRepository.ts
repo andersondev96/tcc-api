@@ -1,55 +1,57 @@
 import { v4 as uuid } from "uuid";
+
 import { ICreateAddressDTO } from "@modules/companies/dtos/ICreateAddressDTO";
 import { Address } from "@modules/companies/infra/prisma/entities/Address";
+
 import { IAddressesRepository } from "../IAddressesRepository";
 
 export class FakeAddressesRepository implements IAddressesRepository {
 
-    addresses: Address[] = [];
+  addresses: Address[] = [];
 
-    public async create(data: ICreateAddressDTO): Promise<Address> {
-        Object.assign(data, {
-            id: uuid(),
-        });
+  public async create(data: ICreateAddressDTO): Promise<Address> {
+    Object.assign(data, {
+      id: uuid(),
+    });
 
-        this.addresses.push(data);
+    this.addresses.push(data);
 
-        return data;
-    }
+    return data;
+  }
 
-    public async findByAddress(id: string): Promise<Address> {
-        const findAddress = this.addresses.find((address) => address.id === id);
+  public async findByAddress(id: string): Promise<Address> {
+    const findAddress = this.addresses.find((address) => address.id === id);
 
-        return findAddress;
-    }
+    return findAddress;
+  }
 
-    public async findAddressByCoords(lat: number, long: number): Promise<Address> {
-        throw new Error("Method not implemented.");
-    }
+  public async findAddressByCoords(lat: number, long: number): Promise<Address> {
+    throw new Error("Method not implemented.");
+  }
 
-    public async findCoordsByAddress(cep: string): Promise<number[]> {
-        throw new Error("Method not implemented.");
-    }
+  public async findCoordsByAddress(cep: string): Promise<number[]> {
+    throw new Error("Method not implemented.");
+  }
 
-    public async update(data: ICreateAddressDTO): Promise<Address> {
-        const index = this.addresses.findIndex((address) => address.id === data.id);
+  public async update(data: ICreateAddressDTO): Promise<Address> {
+    const index = this.addresses.findIndex((address) => address.id === data.id);
 
-        this.addresses[index] = data;
+    this.addresses[index] = data;
 
-        return data;
-    }
+    return data;
+  }
 
-    public async delete(id: string): Promise<void> {
-        const index = this.addresses.findIndex((address) => address.id === id);
+  public async delete(id: string): Promise<void> {
+    const index = this.addresses.findIndex((address) => address.id === id);
 
-        this.addresses.splice(index, 1);
+    this.addresses.splice(index, 1);
 
-    }
+  }
 
-    public async findAddressByCompany(company_id: string): Promise<Address> {
-        const address = this.addresses.find((address) => address.company_id === company_id);
+  public async findAddressByCompany(company_id: string): Promise<Address> {
+    const address = this.addresses.find((address) => address.company_id === company_id);
 
-        return address;
-    }
+    return address;
+  }
 
 }

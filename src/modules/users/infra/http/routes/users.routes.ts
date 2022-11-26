@@ -2,12 +2,13 @@ import { Router } from "express";
 import multer from "multer";
 
 import uploadConfig from "@config/upload";
+import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
+
 import { CreateUsersController } from "../controllers/CreateUsersController";
 import { DeleteUserController } from "../controllers/DeleteUserController";
 import { FindByUserIdController } from "../controllers/FindByUserIdController";
-import { UpdateUserController } from "../controllers/UpdateUserController";
 import { UpdateUserAvatarController } from "../controllers/UpdateUserAvatarController";
-import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
+import { UpdateUserController } from "../controllers/UpdateUserController";
 const usersRouter = Router();
 const uploadAvatar = multer(uploadConfig);
 
@@ -23,10 +24,10 @@ usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);
 usersRouter.put("/", ensureAuthenticated, updateUserController.handle);
 
 usersRouter.patch(
-    "/avatar",
-    ensureAuthenticated,
-    uploadAvatar.single("avatar"),
-    updateUserAvatarController.handle
+  "/avatar",
+  ensureAuthenticated,
+  uploadAvatar.single("avatar"),
+  updateUserAvatarController.handle
 );
 
 export default usersRouter;

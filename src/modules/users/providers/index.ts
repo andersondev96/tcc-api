@@ -8,6 +8,6 @@ import { IHashProvider } from "./HashProvider/models/IHashProvider";
 container.registerSingleton<IHashProvider>("HashProvider", BCryptProvider);
 
 container.registerSingleton<IDateProvider>(
-    "DayjsDateProvider",
-    DayjsDateProvider
+  "DayjsDateProvider",
+  DayjsDateProvider
 );

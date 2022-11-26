@@ -1,23 +1,24 @@
-import { CreateServiceService } from "@modules/services/services/CreateServiceService";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { CreateServiceService } from "@modules/services/services/CreateServiceService";
+
 export class CreateServiceController {
-    public async handle(request: Request, response: Response): Promise<Response> {
-        const { company_id } = request.params;
+  public async handle(request: Request, response: Response): Promise<Response> {
+    const { company_id } = request.params;
 
-        const { name, description, price, category } = request.body;
+    const { name, description, price, category } = request.body;
 
-        const createServiceService = container.resolve(CreateServiceService);
+    const createServiceService = container.resolve(CreateServiceService);
 
-        const service = await createServiceService.execute({
-            name,
-            description,
-            price,
-            category,
-            company_id
-        });
+    const service = await createServiceService.execute({
+      name,
+      description,
+      price,
+      category,
+      company_id
+    });
 
-        return response.status(201).json(service);
-    }
+    return response.status(201).json(service);
+  }
 }

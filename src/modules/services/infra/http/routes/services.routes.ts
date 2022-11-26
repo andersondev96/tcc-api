@@ -1,20 +1,20 @@
-import { Router } from "express";
 import { celebrate } from "celebrate";
+import { Router } from "express";
 import multer from "multer";
+
 import uploadConfig from "@config/upload";
 import { createServiceValidator } from "@modules/services/validators/CreateServiceValidator";
-
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 import { ensureEntrepreneur } from "@shared/infra/http/middlewares/ensureEntrepreneur";
 
 import { CreateServiceController } from "../controllers/CreateServiceController";
+import { DeleteServiceController } from "../controllers/DeleteServiceController";
 import { FindServiceByCategoryController } from "../controllers/FindServiceByCategoryController";
 import { FindServiceByNameController } from "../controllers/FindServiceByNameController";
-import { UpdateServiceImageController } from "../controllers/UpdateServiceImageController";
-import { UpdateServiceController } from "../controllers/UpdateServiceController";
-import { DeleteServiceController } from "../controllers/DeleteServiceController";
-import { GetServiceHighlightController } from "../controllers/GetServiceHighlightController";
 import { GetFavoritesController } from "../controllers/GetFavoritesController";
+import { GetServiceHighlightController } from "../controllers/GetServiceHighlightController";
+import { UpdateServiceController } from "../controllers/UpdateServiceController";
+import { UpdateServiceImageController } from "../controllers/UpdateServiceImageController";
 
 const servicesRouter = Router();
 const uploadImage = multer(uploadConfig);
@@ -33,11 +33,11 @@ servicesRouter.post('/:company_id', ensureAuthenticated, ensureEntrepreneur, cel
 servicesRouter.get('/:company_id', findServiceByNameController.handle);
 servicesRouter.get('/category/:company_id', findServiceByCategoryController.handle);
 servicesRouter.patch(
-    '/image/:service_id',
-    ensureAuthenticated,
-    ensureEntrepreneur,
-    uploadImage.single("service"),
-    updateServiceImageController.handle
+  '/image/:service_id',
+  ensureAuthenticated,
+  ensureEntrepreneur,
+  uploadImage.single("service"),
+  updateServiceImageController.handle
 );
 servicesRouter.patch('/:service_id', ensureAuthenticated, ensureEntrepreneur, getServiceHighlightController.handle);
 servicesRouter.patch('/favorites/:service_id', ensureAuthenticated, getFavoritesController.handle);

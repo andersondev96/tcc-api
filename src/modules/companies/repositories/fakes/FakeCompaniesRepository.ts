@@ -2,76 +2,77 @@ import { v4 as uuid } from "uuid";
 
 import { ICreateCompanyDTO } from "@modules/companies/dtos/ICreateCompanyDTO";
 import { Company } from "@modules/companies/infra/prisma/entities/Company";
+
 import { ICompaniesRepository } from "../ICompaniesRepository";
 
 export class FakeCompaniesRepository implements ICompaniesRepository {
 
-    private companies: Company[] = [];
+  private companies: Company[] = [];
 
-    public async create(data: ICreateCompanyDTO): Promise<Company> {
-        Object.assign(data, {
-            id: uuid(),
-        });
+  public async create(data: ICreateCompanyDTO): Promise<Company> {
+    Object.assign(data, {
+      id: uuid(),
+    });
 
-        this.companies.push(data);
+    this.companies.push(data);
 
-        return data;
-    }
+    return data;
+  }
 
-    public async listAll(): Promise<Company[]> {
-        return this.companies;
-    }
+  public async listAll(): Promise<Company[]> {
+    return this.companies;
+  }
 
-    public async listByLocalization(latitude: number, longitude: number): Promise<Company[]> {
-        throw new Error("Method not implemented.");
-    }
+  public async listByLocalization(latitude: number, longitude: number): Promise<Company[]> {
+    throw new Error("Method not implemented.");
+  }
 
-    public async listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[]> {
-        throw new Error("Method not implemented.");
-    }
+  public async listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[]> {
+    throw new Error("Method not implemented.");
+  }
 
-    public async findByName(name: string): Promise<Company> {
-        const findCompanyByName = this.companies.find((company) => company.name === name);
+  public async findByName(name: string): Promise<Company> {
+    const findCompanyByName = this.companies.find((company) => company.name === name);
 
-        return findCompanyByName;
-    }
+    return findCompanyByName;
+  }
 
-    public async findByContactId(contact_id: string): Promise<Company> {
-        const findCompanyByContact = this.companies.find((company) => company.contact_id === contact_id);
+  public async findByContactId(contact_id: string): Promise<Company> {
+    const findCompanyByContact = this.companies.find((company) => company.contact_id === contact_id);
 
-        return findCompanyByContact;
-    }
+    return findCompanyByContact;
+  }
 
-    public async findByUser(user_id: string): Promise<Company> {
-        const findCompanyByUser = this.companies.find((company) => company.user_id === user_id);
+  public async findByUser(user_id: string): Promise<Company> {
+    const findCompanyByUser = this.companies.find((company) => company.user_id === user_id);
 
-        return findCompanyByUser;
-    }
+    return findCompanyByUser;
+  }
 
-    public async findById(id: string): Promise<Company> {
-        const findCompanyById = this.companies.find((company) => company.id === id);
+  public async findById(id: string): Promise<Company> {
+    const findCompanyById = this.companies.find((company) => company.id === id);
 
-        return findCompanyById;
-    }
+    return findCompanyById;
+  }
 
-    public async contCompany(company_id: string): Promise<number> {
-        throw new Error("Method not implemented.");
-    }
+  public async contCompany(company_id: string): Promise<number> {
+    throw new Error("Method not implemented.");
+  }
 
-    public async update(company: ICreateCompanyDTO): Promise<Company> {
-        const index = this.companies.findIndex(findUser => findUser.id === company.id);
+  public async update(company: ICreateCompanyDTO): Promise<Company> {
+    const index = this.companies.findIndex(findUser => findUser.id === company.id);
 
-        this.companies[index] = company;
+    this.companies[index] = company;
 
-        return company;
-    }
+    return company;
+  }
 
-    public async delete(id: string): Promise<void> {
-        const index = this.companies.findIndex(
-            company => company.id === id
-        );
+  public async delete(id: string): Promise<void> {
+    const index = this.companies.findIndex(
+      company => company.id === id
+    );
 
-        this.companies.splice(index, 1);
-    }
+    this.companies.splice(index, 1);
+  }
 
 }

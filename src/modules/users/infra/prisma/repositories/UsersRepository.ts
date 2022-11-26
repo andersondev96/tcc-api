@@ -6,54 +6,54 @@ import { User } from "../entities/User";
 
 export class UsersRepository implements IUsersRepository {
 
-    async findById(id: string): Promise<User> {
-        const user = await prisma.user.findUnique({
-            where: {
-                id,
-            },
-        });
+  async findById(id: string): Promise<User> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
 
-        return user;
-    }
+    return user;
+  }
 
-    async create({ name, email, password, id, avatar }: ICreateUserDTO): Promise<User> {
-        const user = await prisma.user.create({
-            data: {
-                name,
-                email,
-                password,
-                id,
-                avatar,
-            },
-        });
+  async create({ name, email, password, id, avatar }: ICreateUserDTO): Promise<User> {
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password,
+        id,
+        avatar,
+      },
+    });
 
-        return user;
-    }
+    return user;
+  }
 
-    async findByMail(email: string): Promise<User | undefined> {
-        const user = await prisma.user.findUnique({
-            where: {
-                email,
-            },
-        });
+  async findByMail(email: string): Promise<User | undefined> {
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
 
-        return user;
-    }
+    return user;
+  }
 
-    async update(user: ICreateUserDTO): Promise<User> {
-        const updateUser = await prisma.user.update({
-            where: { id: user.id },
-            data: {
-                ...user
-            },
-        });
+  async update(user: ICreateUserDTO): Promise<User> {
+    const updateUser = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        ...user
+      },
+    });
 
-        return updateUser;
-    }
+    return updateUser;
+  }
 
-    async delete(id: string): Promise<void> {
-        await prisma.user.delete({
-            where: { id }
-        });
-    }
+  async delete(id: string): Promise<void> {
+    await prisma.user.delete({
+      where: { id }
+    });
+  }
 }

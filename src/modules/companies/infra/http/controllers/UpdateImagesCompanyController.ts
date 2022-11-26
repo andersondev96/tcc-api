@@ -1,19 +1,20 @@
-import { UpdateImagesCompanyService } from "@modules/companies/services/UpdateImagesCompanyService";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { UpdateImagesCompanyService } from "@modules/companies/services/UpdateImagesCompanyService";
+
 export class UpdateImagesCompanyController {
 
-    public async handle(request: Request, response: Response): Promise<Response> {
+  public async handle(request: Request, response: Response): Promise<Response> {
 
-        const { id } = request.params;
+    const { id } = request.params;
 
-        const company = request.file.filename;
+    const company = request.file.filename;
 
-        const updateImagesCompanyService = container.resolve(UpdateImagesCompanyService);
+    const updateImagesCompanyService = container.resolve(UpdateImagesCompanyService);
 
-        await updateImagesCompanyService.execute(id, company);
+    await updateImagesCompanyService.execute(id, company);
 
-        return response.status(204).send();
-    }
+    return response.status(204).send();
+  }
 }

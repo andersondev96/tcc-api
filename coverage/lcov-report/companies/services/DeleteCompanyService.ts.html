@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/66</span>
+                <span class='fraction'>0/68</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/66</span>
+                <span class='fraction'>0/68</span>
             </div>
         
             
@@ -128,7 +128,9 @@
 <a name='L63'></a><a href='#L63'>63</a>
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -193,9 +195,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";</span></span></span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { inject, injectable } from "tsyringe";</span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";</span>
 <span class="cstat-no" title="statement not covered" >import { AppError } from "@shared/errors/AppError";</span>
-<span class="cstat-no" title="statement not covered" >import { inject, injectable } from "tsyringe";</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >import { IAddressesRepository } from "../repositories/IAddressesRepository";</span>
 <span class="cstat-no" title="statement not covered" >import { ICompaniesRepository } from "../repositories/ICompaniesRepository";</span>
 <span class="cstat-no" title="statement not covered" >import { IContactsRepository } from "../repositories/IContactsRepository";</span>
@@ -205,59 +211,59 @@
 <span class="cstat-no" title="statement not covered" >@injectable()</span>
 <span class="cstat-no" title="statement not covered" >export class DeleteCompanyService {</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    constructor(</span>
-<span class="cstat-no" title="statement not covered" >        @inject("CompaniesRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private companyRepository: ICompaniesRepository,</span>
+<span class="cstat-no" title="statement not covered" >  constructor(</span>
+<span class="cstat-no" title="statement not covered" >    @inject("CompaniesRepository")</span>
+<span class="cstat-no" title="statement not covered" >    private companyRepository: ICompaniesRepository,</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        @inject("ContactsRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private contactRepository: IContactsRepository,</span>
+<span class="cstat-no" title="statement not covered" >    @inject("ContactsRepository")</span>
+<span class="cstat-no" title="statement not covered" >    private contactRepository: IContactsRepository,</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        @inject("SchedulesRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private scheduleRepository: ISchedulesRepository,</span>
+<span class="cstat-no" title="statement not covered" >    @inject("SchedulesRepository")</span>
+<span class="cstat-no" title="statement not covered" >    private scheduleRepository: ISchedulesRepository,</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        @inject("AddressesRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private addressRepository: IAddressesRepository,</span>
+<span class="cstat-no" title="statement not covered" >    @inject("AddressesRepository")</span>
+<span class="cstat-no" title="statement not covered" >    private addressRepository: IAddressesRepository,</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        @inject("ImagesCompanyRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private imagesCompanyRepository: IImagesCompanyRepository,</span>
+<span class="cstat-no" title="statement not covered" >    @inject("ImagesCompanyRepository")</span>
+<span class="cstat-no" title="statement not covered" >    private imagesCompanyRepository: IImagesCompanyRepository,</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        @inject("StorageProvider")</span>
-<span class="cstat-no" title="statement not covered" >        private storageProvider: IStorageProvider</span>
-<span class="cstat-no" title="statement not covered" >    ) { }</span>
+<span class="cstat-no" title="statement not covered" >    @inject("StorageProvider")</span>
+<span class="cstat-no" title="statement not covered" >    private storageProvider: IStorageProvider</span>
+<span class="cstat-no" title="statement not covered" >  ) { }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    public async execute(company_id: string): Promise&lt;void&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  public async execute(company_id: string): Promise&lt;void&gt; {</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const company = await this.companyRepository.findById(company_id);</span>
+<span class="cstat-no" title="statement not covered" >    const company = await this.companyRepository.findById(company_id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (!company) {</span>
-<span class="cstat-no" title="statement not covered" >            throw new AppError("Company does not exist");</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const schedules = await this.scheduleRepository.findSchedulesByCompany(company_id);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (schedules) {</span>
-<span class="cstat-no" title="statement not covered" >            await this.scheduleRepository.deleteAllSchedules(company_id);</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const address = await this.addressRepository.findAddressByCompany(company_id);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (address) {</span>
-<span class="cstat-no" title="statement not covered" >            await this.addressRepository.delete(address.id);</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const images = await this.imagesCompanyRepository.findImagesByCompany(company_id);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        images.map((image) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            this.storageProvider.delete(image.image_name, "companies");</span>
-<span class="cstat-no" title="statement not covered" >            this.imagesCompanyRepository.delete(image.id);</span>
-<span class="cstat-no" title="statement not covered" >        });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const contact = company.contact_id;</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        await this.companyRepository.delete(company_id);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        await this.contactRepository.delete(contact);</span>
+<span class="cstat-no" title="statement not covered" >    if (!company) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new AppError("Company does not exist");</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const schedules = await this.scheduleRepository.findSchedulesByCompany(company_id);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    if (schedules) {</span>
+<span class="cstat-no" title="statement not covered" >      await this.scheduleRepository.deleteAllSchedules(company_id);</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const address = await this.addressRepository.findAddressByCompany(company_id);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    if (address) {</span>
+<span class="cstat-no" title="statement not covered" >      await this.addressRepository.delete(address.id);</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const images = await this.imagesCompanyRepository.findImagesByCompany(company_id);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    images.map((image) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.storageProvider.delete(image.image_name, "companies");</span>
+<span class="cstat-no" title="statement not covered" >      this.imagesCompanyRepository.delete(image.id);</span>
+<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const contact = company.contact_id;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    await this.companyRepository.delete(company_id);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    await this.contactRepository.delete(contact);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -265,7 +271,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-26T01:09:10.532Z
+                at 2022-11-26T16:18:56.597Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

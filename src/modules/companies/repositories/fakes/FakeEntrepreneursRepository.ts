@@ -1,46 +1,48 @@
+import { v4 as uuid } from "uuid";
+
 import { ICreateEntrepreneurDTO } from "@modules/companies/dtos/ICreateEntrepreneurDTO";
 import { Entrepreneur } from "@modules/companies/infra/prisma/entities/Entrepreneur";
-import { v4 as uuid } from "uuid";
+
 import { IEntrepreneursRepository } from "../IEntrepreneursRepository";
 
 export class FakeEntrepreneursRepository implements IEntrepreneursRepository {
 
-    entrepreneurs: Entrepreneur[] = [];
+  entrepreneurs: Entrepreneur[] = [];
 
-    public async create(data: ICreateEntrepreneurDTO): Promise<Entrepreneur> {
-        Object.assign(data, {
-            id: uuid(),
-        });
+  public async create(data: ICreateEntrepreneurDTO): Promise<Entrepreneur> {
+    Object.assign(data, {
+      id: uuid(),
+    });
 
-        this.entrepreneurs.push(data);
+    this.entrepreneurs.push(data);
 
-        return data;
-    }
+    return data;
+  }
 
-    public async findById(id: string): Promise<Entrepreneur> {
-        const findEntrepreneurById = this.entrepreneurs.find((entrepreneur) => entrepreneur.id === id);
+  public async findById(id: string): Promise<Entrepreneur> {
+    const findEntrepreneurById = this.entrepreneurs.find((entrepreneur) => entrepreneur.id === id);
 
-        return findEntrepreneurById;
-    }
+    return findEntrepreneurById;
+  }
 
-    public async findByUser(user_id: string): Promise<Entrepreneur> {
-        const findEntrepreneurByUser = this.entrepreneurs.find((entrepreneur) => entrepreneur.user_id === user_id);
+  public async findByUser(user_id: string): Promise<Entrepreneur> {
+    const findEntrepreneurByUser = this.entrepreneurs.find((entrepreneur) => entrepreneur.user_id === user_id);
 
-        return findEntrepreneurByUser;
-    }
+    return findEntrepreneurByUser;
+  }
 
-    public async update(data: ICreateEntrepreneurDTO): Promise<Entrepreneur> {
-        const index = this.entrepreneurs.findIndex((entrepreneur) => entrepreneur.id === data.id);
+  public async update(data: ICreateEntrepreneurDTO): Promise<Entrepreneur> {
+    const index = this.entrepreneurs.findIndex((entrepreneur) => entrepreneur.id === data.id);
 
-        this.entrepreneurs[index] = data;
+    this.entrepreneurs[index] = data;
 
-        return data;
-    }
+    return data;
+  }
 
-    public async delete(id: string): Promise<void> {
-        const index = this.entrepreneurs.findIndex((entrepreneur) => entrepreneur.id === id);
+  public async delete(id: string): Promise<void> {
+    const index = this.entrepreneurs.findIndex((entrepreneur) => entrepreneur.id === id);
 
-        this.entrepreneurs.splice(index, 1);
-    }
+    this.entrepreneurs.splice(index, 1);
+  }
 
 }

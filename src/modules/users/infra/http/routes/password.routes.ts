@@ -1,10 +1,11 @@
-import { Router } from "express";
 import { celebrate } from "celebrate";
-import { ResetUserPasswordController } from "../controllers/ResetUserPasswordController";
+import { Router } from "express";
 
-import { SendForgotPasswordMailController } from "../controllers/SendForgotPasswordMailController";
 import { forgotPasswordValidator } from "@modules/users/validator/ForgotPasswordValidator";
 import { resetPasswordValidator } from "@modules/users/validator/ResetPasswordValidator";
+
+import { ResetUserPasswordController } from "../controllers/ResetUserPasswordController";
+import { SendForgotPasswordMailController } from "../controllers/SendForgotPasswordMailController";
 
 const passwordRoutes = Router();
 
@@ -14,4 +15,4 @@ const resetUserPasswordController = new ResetUserPasswordController();
 passwordRoutes.post("/forgot", celebrate(forgotPasswordValidator), sendForgotPasswordMailController.handle);
 passwordRoutes.post("/reset", celebrate(resetPasswordValidator), resetUserPasswordController.handle);
 
-export { passwordRoutes };
+export default passwordRoutes;

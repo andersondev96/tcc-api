@@ -1,112 +1,113 @@
 import { prisma } from "@database/prisma";
 import { ICreateCompanyDTO } from "@modules/companies/dtos/ICreateCompanyDTO";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
+
 import { Company } from "../entities/Company";
 
 export class CompaniesRepository implements ICompaniesRepository {
 
-    public async create({
+  public async create({
+    id,
+    name,
+    cnpj,
+    category,
+    description,
+    services,
+    physical_localization,
+    user_id,
+    contact_id,
+  }: ICreateCompanyDTO): Promise<Company> {
+    const company = await prisma.company.create({
+      data: {
         id,
         name,
         cnpj,
         category,
-        description,
         services,
+        description,
         physical_localization,
         user_id,
         contact_id,
-    }: ICreateCompanyDTO): Promise<Company> {
-        const company = await prisma.company.create({
-            data: {
-                id,
-                name,
-                cnpj,
-                category,
-                services,
-                description,
-                physical_localization,
-                user_id,
-                contact_id,
-            },
-        });
+      },
+    });
 
-        return company;
-    }
+    return company;
+  }
 
-    public async listAll(): Promise<Company[]> {
-        const listAllCompanies = await prisma.company.findMany({
-            include: {
-                contact: true,
-                Address: true,
-                ImageCompany: true,
-                Schedule: true,
-            }
-        });
+  public async listAll(): Promise<Company[]> {
+    const listAllCompanies = await prisma.company.findMany({
+      include: {
+        contact: true,
+        Address: true,
+        ImageCompany: true,
+        Schedule: true,
+      }
+    });
 
-        console.log(listAllCompanies);
+    console.log(listAllCompanies);
 
-        return listAllCompanies;
-    }
+    return listAllCompanies;
+  }
 
-    public async listByLocalization(latitude: number, longitude: number): Promise<Company[] | undefined> {
-        throw new Error("Method not implemented.");
-    }
+  public async listByLocalization(latitude: number, longitude: number): Promise<Company[] | undefined> {
+    throw new Error("Method not implemented.");
+  }
 
-    public async listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[] | undefined> {
-        throw new Error("Method not implemented.");
-    }
+  public async listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[] | undefined> {
+    throw new Error("Method not implemented.");
+  }
 
-    public async findByName(name: string): Promise<Company> {
-        const company = await prisma.company.findUnique({
-            where: { name },
-        });
+  public async findByName(name: string): Promise<Company> {
+    const company = await prisma.company.findUnique({
+      where: { name },
+    });
 
-        return company;
-    }
+    return company;
+  }
 
-    public async findByContactId(contact_id: string): Promise<Company> {
-        const findCompanyByContact = await prisma.company.findUnique({
-            where: { contact_id },
-        });
+  public async findByContactId(contact_id: string): Promise<Company> {
+    const findCompanyByContact = await prisma.company.findUnique({
+      where: { contact_id },
+    });
 
-        return findCompanyByContact;
-    }
+    return findCompanyByContact;
+  }
 
-    public async findByUser(user_id: string): Promise<Company> {
-        const findCompanyByUser = await prisma.company.findUnique({
-            where: { user_id },
-        });
+  public async findByUser(user_id: string): Promise<Company> {
+    const findCompanyByUser = await prisma.company.findUnique({
+      where: { user_id },
+    });
 
-        return findCompanyByUser;
-    }
+    return findCompanyByUser;
+  }
 
-    public async findById(id: string): Promise<Company> {
-        const company = await prisma.company.findUnique({
-            where: { id },
-            include: {
-                contact: true,
-                Address: true,
-                ImageCompany: true,
-                Schedule: true,
-            }
-        });
+  public async findById(id: string): Promise<Company> {
+    const company = await prisma.company.findUnique({
+      where: { id },
+      include: {
+        contact: true,
+        Address: true,
+        ImageCompany: true,
+        Schedule: true,
+      }
+    });
 
-        return company;
-    }
+    return company;
+  }
 
-    public async update(company: ICreateCompanyDTO): Promise<Company> {
-        const updateCompany = await prisma.company.update({
-            where: { id: company.id },
-            data: { ...company },
-        });
+  public async update(company: ICreateCompanyDTO): Promise<Company> {
+    const updateCompany = await prisma.company.update({
+      where: { id: company.id },
+      data: { ...company },
+    });
 
-        return updateCompany;
-    }
+    return updateCompany;
+  }
 
-    public async delete(id: string): Promise<void> {
-        await prisma.company.delete({
-            where: { id },
-        });
-    }
+  public async delete(id: string): Promise<void> {
+    await prisma.company.delete({
+      where: { id },
+    });
+  }
 
 }
