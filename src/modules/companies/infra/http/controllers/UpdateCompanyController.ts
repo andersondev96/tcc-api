@@ -18,7 +18,7 @@ export class UpdateCompanyController {
       whatsapp,
       email,
       website,
-      address,
+      address
     } = request.body;
 
     const { id } = request.params;
@@ -38,7 +38,7 @@ export class UpdateCompanyController {
       whatsapp,
       email,
       website,
-      address,
+      address
     });
 
     return response.json(updateCompany);

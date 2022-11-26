@@ -39,7 +39,7 @@ export class CreateUserService {
     const user = await this.userRepository.create({
       name,
       email,
-      password: hashedPassword,
+      password: hashedPassword
     });
 
     if (isEntrepreneur) {

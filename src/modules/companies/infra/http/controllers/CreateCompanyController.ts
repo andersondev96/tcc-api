@@ -20,7 +20,7 @@ export class CreateCompanyController {
       telephone,
       whatsapp,
       email,
-      website,
+      website
     } = request.body;
 
     const createCompanyService = container.resolve(CreateCompanyService);
