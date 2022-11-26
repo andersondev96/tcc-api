@@ -36,9 +36,9 @@ const deleteImagesCompanyController = new DeleteImagesCompanyController();
 
 companiesRouter.post(
   "/",
-  celebrate(companyValidator),
   ensureAuthenticated,
   ensureEntrepreneur,
+  celebrate(companyValidator),
   createCompanyController.handle
 );
 companiesRouter.post(
