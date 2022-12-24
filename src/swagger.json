@@ -338,13 +338,13 @@
                     "services": ["Service 1", "Service 2"],
                     "schedules": [
                       {
-                        "day_of_week": "Saturday",
+                        "weekday": "Saturday",
                         "opening_time": "08:00",
                         "closing_time": "18:00",
                         "lunch_time": "12:00-13:00"
                       },
                       {
-                        "day_of_week": "Tuesday",
+                        "weekday": "Tuesday",
                         "opening_time": "08:00",
                         "closing_time": "18:00",
                         "lunch_time": "12:00-13:00"
@@ -734,7 +734,7 @@
               "examples": {
                 "schedule": {
                   "value": {
-                    "day_of_week": "Friday",
+                    "weekday": "Friday",
                     "opening_time": "09:00",
                     "closing_time": "19:00",
                     "company_id": "Your Company ID"
@@ -1212,7 +1212,7 @@
       "Schedule": {
         "type": "object",
         "properties": {
-          "day_of_week": {
+          "weekday": {
             "type": "string"
           },
           "opening_type": {

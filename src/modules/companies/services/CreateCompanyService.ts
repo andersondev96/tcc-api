@@ -19,7 +19,7 @@ interface IAddress {
 }
 
 interface ISchedule {
-  day_of_week: string
+  weekday: string
   opening_time: string
   closing_time: string
   lunch_time: string
@@ -144,10 +144,10 @@ export class CreateCompanyService {
     }
 
     schedules.map(async (schedule) => {
-      const { day_of_week, opening_time, closing_time, lunch_time } = schedule;
+      const { weekday, opening_time, closing_time, lunch_time } = schedule;
 
       await this.scheduleRepository.create({
-        day_of_week,
+        weekday,
         opening_time,
         closing_time,
         lunch_time,

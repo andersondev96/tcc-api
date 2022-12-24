@@ -8,7 +8,7 @@ export class SchedulesRepository implements ISchedulesRepository {
 
   public async create({
     id,
-    day_of_week,
+    weekday,
     opening_time,
     closing_time,
     company_id,
@@ -17,11 +17,11 @@ export class SchedulesRepository implements ISchedulesRepository {
     const schedule = await prisma.schedule.create({
       data: {
         id,
-        day_of_week,
+        weekday,
         opening_time,
         closing_time,
         lunch_time,
-        company_id,
+        company_id
       }
     });
 
@@ -30,7 +30,7 @@ export class SchedulesRepository implements ISchedulesRepository {
 
   public async findSchedulesByCompany(company_id: string): Promise<Schedule[]> {
     const schedulesByCompany = await prisma.schedule.findMany({
-      where: { company_id },
+      where: { company_id }
     });
 
     return schedulesByCompany;
@@ -38,7 +38,7 @@ export class SchedulesRepository implements ISchedulesRepository {
 
   public async findById(id: string): Promise<Schedule> {
     const scheduleById = await prisma.schedule.findUnique({
-      where: { id },
+      where: { id }
     });
 
     return scheduleById;
@@ -47,7 +47,7 @@ export class SchedulesRepository implements ISchedulesRepository {
   public async update(data: ICreateScheduleDTO): Promise<Schedule> {
     const updateSchedule = await prisma.schedule.update({
       where: { id: data.id },
-      data: { ...data },
+      data: { ...data }
     });
 
     return updateSchedule;
@@ -55,13 +55,13 @@ export class SchedulesRepository implements ISchedulesRepository {
 
   public async deleteUniqueSchedule(id: string): Promise<void> {
     await prisma.schedule.delete({
-      where: { id },
+      where: { id }
     });
   }
 
   public async deleteAllSchedules(company_id: string): Promise<void> {
     await prisma.schedule.deleteMany({
-      where: { company_id },
+      where: { company_id }
     });
   }
 

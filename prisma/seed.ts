@@ -53,19 +53,19 @@ async function main() {
                   createMany: {
                     data: [
                       {
-                        day_of_week: faker.date.weekday(),
+                        weekday: faker.date.weekday(),
                         opening_time: faker.random.numeric(),
                         closing_time: faker.random.numeric(),
                         lunch_time: faker.random.numeric()
                       },
                       {
-                        day_of_week: faker.date.weekday(),
+                        weekday: faker.date.weekday(),
                         opening_time: faker.random.numeric(),
                         closing_time: faker.random.numeric(),
                         lunch_time: faker.random.numeric()
                       },
                       {
-                        day_of_week: faker.date.weekday(),
+                        weekday: faker.date.weekday(),
                         opening_time: faker.random.numeric(),
                         closing_time: faker.random.numeric(),
                         lunch_time: faker.random.numeric()

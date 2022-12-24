@@ -23,7 +23,7 @@ let fakeEntrepreneurRepository: IEntrepreneursRepository;
 let createCompanyService: CreateCompanyService;
 
 
-describe('CreateCompanyService', () => {
+describe("CreateCompanyService", () => {
   beforeEach(() => {
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeUserRepository = new FakeUsersRepository();
@@ -39,13 +39,13 @@ describe('CreateCompanyService', () => {
         fakeAddressRepository,
         fakeEntrepreneurRepository
       );
-  })
+  });
 
   it("Should be able to create a company", async () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",
       email: "john.doe@example.com",
-      password: "123456",
+      password: "123456"
     });
 
     const company = await createCompanyService.execute({
@@ -56,11 +56,11 @@ describe('CreateCompanyService', () => {
       services: ["Supermarket", "Shopping"],
       schedules: [
         {
-          "day_of_week": "Monday",
+          "weekday": "Monday",
           "opening_time": "08:00",
           "closing_time": "18:00",
           "lunch_time": "12:00-13:00"
-        },
+        }
       ],
       physical_localization: true,
       address:
@@ -76,7 +76,7 @@ describe('CreateCompanyService', () => {
       email: "business@example.com",
       website: "www.example.com",
       whatsapp: "12345685",
-      user_id: user.id,
+      user_id: user.id
     });
 
     expect(company).toHaveProperty("id");
@@ -92,18 +92,18 @@ describe('CreateCompanyService', () => {
         services: ["Supermarket", "Shopping"],
         schedules: [
           {
-            "day_of_week": "Monday",
+            "weekday": "Monday",
             "opening_time": "08:00",
             "closing_time": "18:00",
             "lunch_time": "12:00-13:00"
-          },
+          }
         ],
         physical_localization: false,
         telephone: "1234567",
         email: "business@example.com",
         website: "www.example.com",
         whatsapp: "12345685",
-        user_id: 'user-invalid',
+        user_id: "user-invalid"
       })
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -123,18 +123,18 @@ describe('CreateCompanyService', () => {
       services: ["Supermarket", "Shopping"],
       schedules: [
         {
-          "day_of_week": "Monday",
+          "weekday": "Monday",
           "opening_time": "08:00",
           "closing_time": "18:00",
           "lunch_time": "12:00-13:00"
-        },
+        }
       ],
       physical_localization: false,
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
       whatsapp: "12345685",
-      user_id: user.id,
+      user_id: user.id
     });
 
     await expect(
@@ -146,18 +146,18 @@ describe('CreateCompanyService', () => {
         services: ["Supermarket", "Shopping"],
         schedules: [
           {
-            "day_of_week": "Monday",
+            "weekday": "Monday",
             "opening_time": "08:00",
             "closing_time": "18:00",
             "lunch_time": "12:00-13:00"
-          },
+          }
         ],
         physical_localization: false,
         telephone: "1234567",
         email: "business@example.com",
         website: "www.example.com",
         whatsapp: "12345685",
-        user_id: user.id,
+        user_id: user.id
       })
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -178,18 +178,18 @@ describe('CreateCompanyService', () => {
         services: ["Service 1", "Service 2", "Service 3", "Service 4"],
         schedules: [
           {
-            "day_of_week": "Monday",
+            "weekday": "Monday",
             "opening_time": "08:00",
             "closing_time": "18:00",
             "lunch_time": "12:00-13:00"
-          },
+          }
         ],
         physical_localization: false,
         telephone: "1234567",
         email: "business@example.com",
         website: "www.example.com",
         whatsapp: "12345685",
-        user_id: user.id,
+        user_id: user.id
       })
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -210,21 +210,21 @@ describe('CreateCompanyService', () => {
         services: ["Service1", "Service2"],
         schedules: [
           {
-            "day_of_week": "Monday",
+            "weekday": "Monday",
             "opening_time": "08:00",
             "closing_time": "18:00",
             "lunch_time": "12:00-13:00"
-          },
+          }
         ],
         physical_localization: true,
         telephone: "1234567",
         email: "business@example.com",
         website: "www.example.com",
         whatsapp: "12345685",
-        user_id: user.id,
+        user_id: user.id
       })
     ).rejects.toBeInstanceOf(AppError);
   });
 
 
-})
+});

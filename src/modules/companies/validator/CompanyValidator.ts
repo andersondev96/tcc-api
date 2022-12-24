@@ -3,8 +3,8 @@ import { Joi, Segments } from "celebrate";
 import { customMessage } from "@shared/utils/errors";
 
 const schedule = Joi.object().keys({
-  day_of_week: Joi.string().required().messages(customMessage("day_of_week")),
-  opening_time: Joi.string().required().messages(customMessage("day_of_week")),
+  weekday: Joi.string().required().messages(customMessage("weekday")),
+  opening_time: Joi.string().required().messages(customMessage("weekday")),
   closing_time: Joi.string().required().messages(customMessage("closing_time")),
   lunch_time: Joi.string().messages(customMessage("lunch_time"))
 });

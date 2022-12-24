@@ -83,7 +83,7 @@ model Contact {
 
 model Schedule {
     id           String   @id @default(uuid())
-    day_of_week  String
+    weekday       String
     opening_time String
     closing_time String
     lunch_time   String?

@@ -11,7 +11,7 @@ import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepo
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository";
-import { ISchedulesRepository } from "../repositories/ISchedulesRepository"
+import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 import { DeleteImagesCompanyService } from "../services/DeleteImagesCompanyService";
 
 
@@ -49,7 +49,7 @@ describe("DeleteImagesCompanyService", () => {
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
-      whatsapp: "12345685",
+      whatsapp: "12345685"
     });
 
     const company = await fakeCompanyRepository.create({
@@ -60,21 +60,21 @@ describe("DeleteImagesCompanyService", () => {
       services: ["Supermarket", "Shopping"],
       physical_localization: false,
       contact_id: contact.id,
-      user_id: user.id,
+      user_id: user.id
     });
 
     const schedule = await fakeScheduleRepository.create({
-      day_of_week: "Monday",
+      weekday: "Monday",
       opening_time: "08:00",
       closing_time: "18:00",
       lunch_time: "12:00-13:00",
-      company_id: company.id,
+      company_id: company.id
     });
 
     const image = await fakeImagesCompanyRepository.create({
       image_name: "image_test.jpg",
       image_url: "http://localhost:3333/companies/image_test.jpg",
-      company_id: company.id,
+      company_id: company.id
     });
 
     await deleteImagesCompanyService.execute(image.id);
@@ -86,7 +86,7 @@ describe("DeleteImagesCompanyService", () => {
 
   it("Should not be able to delete a not existing image", async () => {
     await expect(
-      deleteImagesCompanyService.execute('not-existing-image')
+      deleteImagesCompanyService.execute("not-existing-image")
     ).rejects.toBeInstanceOf(AppError);
-  })
-})
+  });
+});

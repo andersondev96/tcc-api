@@ -7,7 +7,7 @@ import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 
 interface IRequest {
   id?: string;
-  day_of_week: string;
+  weekday: string;
   opening_time: string;
   closing_time: string;
   lunch_time?: string;
@@ -19,7 +19,7 @@ export class UpdateScheduleService {
 
   constructor(
     @inject("SchedulesRepository")
-    private scheduleRepository: ISchedulesRepository,
+    private scheduleRepository: ISchedulesRepository
   ) { }
 
   public async execute(data: IRequest): Promise<Schedule> {
@@ -36,11 +36,11 @@ export class UpdateScheduleService {
 
     const update = await this.scheduleRepository.update({
       id: data.id,
-      day_of_week: data.day_of_week,
+      weekday: data.weekday,
       opening_time: data.opening_time,
       closing_time: data.closing_time,
       lunch_time: data.lunch_time,
-      company_id: data.company_id,
+      company_id: data.company_id
     });
 
     return update;

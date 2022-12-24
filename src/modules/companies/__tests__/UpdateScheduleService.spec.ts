@@ -6,7 +6,7 @@ import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepo
 import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
-import { ISchedulesRepository } from "../repositories/ISchedulesRepository"
+import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 import { UpdateScheduleService } from "../services/UpdateScheduleService";
 
 let fakeUsersRepository = new FakeUsersRepository();
@@ -38,7 +38,7 @@ describe("UpdateSchedulesService", () => {
       email: "business@example.com",
       telephone: "1234567",
       whatsapp: "12345685",
-      website: "www.example.com",
+      website: "www.example.com"
     });
 
     const company = await fakeCompaniesRepository.create({
@@ -49,11 +49,11 @@ describe("UpdateSchedulesService", () => {
       services: ["Supermarket", "Shopping"],
       contact_id: contact.id,
       physical_localization: false,
-      user_id: user.id,
+      user_id: user.id
     });
 
     const schedule = {
-      day_of_week: "Sunday",
+      weekday: "Sunday",
       opening_time: "08:00",
       closing_time: "13:00",
       company_id: company.id
@@ -61,13 +61,13 @@ describe("UpdateSchedulesService", () => {
 
     const createSchedule = await fakeSchedulesRepository.create(schedule);
 
-    schedule.day_of_week = "Saturday";
+    schedule.weekday = "Saturday";
     schedule.closing_time = "16:00";
 
     const updateSchedule = await updateScheduleService.execute(schedule);
     const findSchedule = await fakeSchedulesRepository.findById(createSchedule.id);
 
-    expect(updateSchedule.day_of_week).toEqual(findSchedule.day_of_week);
+    expect(updateSchedule.weekday).toEqual(findSchedule.weekday);
     expect(updateSchedule.closing_time).toEqual(findSchedule.closing_time);
   });
 
@@ -82,7 +82,7 @@ describe("UpdateSchedulesService", () => {
       email: "business@example.com",
       telephone: "1234567",
       whatsapp: "12345685",
-      website: "www.example.com",
+      website: "www.example.com"
     });
 
     const company = await fakeCompaniesRepository.create({
@@ -93,21 +93,21 @@ describe("UpdateSchedulesService", () => {
       services: ["Supermarket", "Shopping"],
       contact_id: contact.id,
       physical_localization: false,
-      user_id: user.id,
+      user_id: user.id
     });
 
     const schedule = {
-      id: 'non-existing-id',
-      day_of_week: 'Wednesday',
-      opening_time: '08:00',
-      closing_time: '18:00',
-      lunch_time: '13:00-14:00',
-      company_id: company.id,
-    }
+      id: "non-existing-id",
+      weekday: "Wednesday",
+      opening_time: "08:00",
+      closing_time: "18:00",
+      lunch_time: "13:00-14:00",
+      company_id: company.id
+    };
 
     await expect(
       updateScheduleService.execute(schedule)
-    ).rejects.toBeInstanceOf(AppError)
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it("Should not be able to update a schedule with invalid company", async () => {
@@ -121,7 +121,7 @@ describe("UpdateSchedulesService", () => {
       email: "business@example.com",
       telephone: "1234567",
       whatsapp: "12345685",
-      website: "www.example.com",
+      website: "www.example.com"
     });
 
     const company = await fakeCompaniesRepository.create({
@@ -132,26 +132,26 @@ describe("UpdateSchedulesService", () => {
       services: ["Supermarket", "Shopping"],
       contact_id: contact.id,
       physical_localization: false,
-      user_id: user.id,
+      user_id: user.id
     });
 
     const schedule = await fakeSchedulesRepository.create({
-      day_of_week: 'Wednesday',
-      opening_time: '08:00',
-      closing_time: '18:00',
-      lunch_time: '13:00-14:00',
-      company_id: company.id,
+      weekday: "Wednesday",
+      opening_time: "08:00",
+      closing_time: "18:00",
+      lunch_time: "13:00-14:00",
+      company_id: company.id
     });
 
     await expect(
       updateScheduleService.execute({
         id: schedule.id,
-        day_of_week: 'Wednesday',
-        opening_time: '08:00',
-        closing_time: '18:00',
-        lunch_time: '13:00-14:00',
-        company_id: 'invalid-company',
+        weekday: "Wednesday",
+        opening_time: "08:00",
+        closing_time: "18:00",
+        lunch_time: "13:00-14:00",
+        company_id: "invalid-company"
       })
-    ).rejects.toBeInstanceOf(AppError)
+    ).rejects.toBeInstanceOf(AppError);
   });
-})
+});
