@@ -25,4 +25,12 @@ export class FakeAssessmentsCompanyRepository implements IAssessmentsCompanyRepo
     return findAssessments;
   }
 
+  public async takeAssessmentClassification(assessment: ICreateAssessmentDTO): Promise<AssessmentCompany> {
+    const index = this.assessmentsCompany.findIndex(findAssessment => findAssessment.id === assessment.id);
+
+    this.assessmentsCompany[index].stars = assessment.stars;
+
+    return assessment;
+  }
+
 }

@@ -1,6 +1,8 @@
 import "@modules/users/providers";
 import { container } from "tsyringe";
 
+import { AssessmentsCompanyRepository } from "@modules/assessments/infra/prisma/repositories/AssessmentsCompanyRepository";
+import { IAssessmentsCompanyRepository } from "@modules/assessments/repositories/IAssessmentsCompanyRepository";
 import { AddressesRepository } from "@modules/companies/infra/prisma/repositories/AddressesRepository";
 import { CompaniesRepository } from "@modules/companies/infra/prisma/repositories/CompaniesRepository";
 import { ContactsRepository } from "@modules/companies/infra/prisma/repositories/ContactsRepository";
@@ -79,4 +81,9 @@ container.registerInstance<IServicesRepository>(
 container.registerInstance<IEntrepreneursRepository>(
   "EntrepreneursRepository",
   new EntrepreneursRepository()
+);
+
+container.registerInstance<IAssessmentsCompanyRepository>(
+  "AssessmentsRepository",
+  new AssessmentsCompanyRepository()
 );

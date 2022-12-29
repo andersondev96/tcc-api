@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+import assessmentsRoute from "@modules/assessments/infra/http/routes/assessments.routes";
 import companiesRoutes from "@modules/companies/infra/http/routes/companies.routes";
 import servicesRouter from "@modules/services/infra/http/routes/services.routes";
 import passwordRoutes from "@modules/users/infra/http/routes/password.routes";
@@ -13,5 +14,6 @@ routes.use("/sessions", sessionsRouter);
 routes.use("/password", passwordRoutes);
 routes.use("/companies", companiesRoutes);
 routes.use("/services", servicesRouter);
+routes.use("/assessments", assessmentsRoute);
 
 export default routes;
