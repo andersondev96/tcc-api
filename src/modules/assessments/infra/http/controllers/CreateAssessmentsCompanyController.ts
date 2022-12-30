@@ -9,14 +9,15 @@ export class CreateAssessmentsCompanyController {
     const { id } = request.user;
 
     const { company_id } = request.params;
-    const { comment } = request.body;
+    const { comment, stars } = request.body;
 
     const createAssessmentsCompanyService = container.resolve(CreateAssessmentsCompanyService);
 
     const assessment = await createAssessmentsCompanyService.execute({
       user_id: id,
       company_id,
-      comment
+      comment,
+      stars
     });
 
     return response.status(201).json(assessment);

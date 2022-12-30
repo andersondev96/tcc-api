@@ -8,30 +8,28 @@ import { AppError } from "@shared/errors/AppError";
 
 import { FakeAssessmentsCompanyRepository } from "../repositories/fakes/FakeAssessmentsCompanyRepository";
 import { IAssessmentsCompanyRepository } from "../repositories/IAssessmentsCompanyRepository";
-import { CreateAssessmentsCompanyService } from "../services/CreateAssessmentsCompanyService";
+import { FindAssessmentsByCompanyService } from "../services/FindAssessmentsByCompanyService";
 
 
-let createAssessmentsCompanyService: CreateAssessmentsCompanyService;
-let fakeAssessmentCompanyRepository: IAssessmentsCompanyRepository;
-let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;
+let fakeCompanyRepository: ICompaniesRepository;
 let fakeContactRepository: IContactsRepository;
+let fakeAssessmentCompanyRepository: IAssessmentsCompanyRepository;
+let findAssessmentsByCompanyService: FindAssessmentsByCompanyService;
 
-describe("CreateAssessmentsCompanyService", () => {
+describe("FindAssessmentsByCompanyService", () => {
   beforeEach(() => {
-    fakeAssessmentCompanyRepository = new FakeAssessmentsCompanyRepository();
-    fakeCompanyRepository = new FakeCompaniesRepository();
     fakeUserRepository = new FakeUsersRepository();
+    fakeCompanyRepository = new FakeCompaniesRepository();
     fakeContactRepository = new FakeContactsRepository();
-    createAssessmentsCompanyService = new CreateAssessmentsCompanyService(
+    fakeAssessmentCompanyRepository = new FakeAssessmentsCompanyRepository();
+    findAssessmentsByCompanyService = new FindAssessmentsByCompanyService(
       fakeAssessmentCompanyRepository,
-      fakeCompanyRepository,
-      fakeUserRepository
+      fakeCompanyRepository
     );
-
   });
 
-  it("Should be able to create a new assessment company", async () => {
+  it("Should be able to find assessments to company", async () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",
       email: "john@example.com",
@@ -56,28 +54,22 @@ describe("CreateAssessmentsCompanyService", () => {
       user_id: user.id
     });
 
-    const assessment = await createAssessmentsCompanyService.execute({
+    const assessmentCompany = await fakeAssessmentCompanyRepository.create({
       user_id: user.id,
       company_id: company.id,
       comment: "This is a new comment",
       stars: 5
     });
 
-    expect(assessment).toHaveProperty("id");
+    const findAssessmentsByCompany = await findAssessmentsByCompanyService.execute(assessmentCompany.company_id);
 
+    expect(findAssessmentsByCompany).toEqual([assessmentCompany]);
   });
 
-  it("Should not be able to create a new assessment when company not found", async () => {
-    const user = await fakeUserRepository.create({
-      name: "John Doe",
-      email: "john@example.com",
-      password: "1234561"
-    });
-
-    await expect(createAssessmentsCompanyService.execute({
-      user_id: user.id,
-      company_id: "not-exist-company",
-      comment: "This is a new comment"
-    })).rejects.toBeInstanceOf(AppError);
+  it("Should not be able to find a assessment when company not found", async () => {
+    await
+      expect(findAssessmentsByCompanyService.execute("company-not-exists"))
+        .rejects
+        .toBeInstanceOf(AppError);
   });
 });

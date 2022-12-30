@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/53</span>
+                <span class='fraction'>0/55</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/53</span>
+                <span class='fraction'>0/55</span>
             </div>
         
             
@@ -115,7 +115,9 @@
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -167,58 +169,62 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";</span></span></span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { inject, injectable } from "tsyringe";</span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";</span>
 <span class="cstat-no" title="statement not covered" >import { AppError } from "@shared/errors/AppError";</span>
-<span class="cstat-no" title="statement not covered" >import { inject, injectable } from "tsyringe";</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >import { Service } from "../infra/prisma/entities/Service";</span>
 <span class="cstat-no" title="statement not covered" >import { IServicesRepository } from "../repositories/IServicesRepository";</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >interface IRequest {</span>
-<span class="cstat-no" title="statement not covered" >    name: string;</span>
-<span class="cstat-no" title="statement not covered" >    description: string;</span>
-<span class="cstat-no" title="statement not covered" >    price: number;</span>
-<span class="cstat-no" title="statement not covered" >    category: string;</span>
-<span class="cstat-no" title="statement not covered" >    company_id: string;</span>
+<span class="cstat-no" title="statement not covered" >  name: string;</span>
+<span class="cstat-no" title="statement not covered" >  description: string;</span>
+<span class="cstat-no" title="statement not covered" >  price: number;</span>
+<span class="cstat-no" title="statement not covered" >  category: string;</span>
+<span class="cstat-no" title="statement not covered" >  company_id: string;</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >@injectable()</span>
 <span class="cstat-no" title="statement not covered" >export class CreateServiceService {</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    constructor(</span>
-<span class="cstat-no" title="statement not covered" >        @inject("ServicesRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private serviceRepository: IServicesRepository,</span>
+<span class="cstat-no" title="statement not covered" >  constructor(</span>
+<span class="cstat-no" title="statement not covered" >    @inject("ServicesRepository")</span>
+<span class="cstat-no" title="statement not covered" >    private serviceRepository: IServicesRepository,</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        @inject("CompaniesRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private companiesRepository: ICompaniesRepository,</span>
+<span class="cstat-no" title="statement not covered" >    @inject("CompaniesRepository")</span>
+<span class="cstat-no" title="statement not covered" >    private companiesRepository: ICompaniesRepository</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    ) { }</span>
+<span class="cstat-no" title="statement not covered" >  ) { }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    public async execute({</span>
-<span class="cstat-no" title="statement not covered" >        name,</span>
-<span class="cstat-no" title="statement not covered" >        description,</span>
-<span class="cstat-no" title="statement not covered" >        price,</span>
-<span class="cstat-no" title="statement not covered" >        category,</span>
-<span class="cstat-no" title="statement not covered" >        company_id</span>
-<span class="cstat-no" title="statement not covered" >    }: IRequest): Promise&lt;Service&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  public async execute({</span>
+<span class="cstat-no" title="statement not covered" >    name,</span>
+<span class="cstat-no" title="statement not covered" >    description,</span>
+<span class="cstat-no" title="statement not covered" >    price,</span>
+<span class="cstat-no" title="statement not covered" >    category,</span>
+<span class="cstat-no" title="statement not covered" >    company_id</span>
+<span class="cstat-no" title="statement not covered" >  }: IRequest): Promise&lt;Service&gt; {</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const company = await this.companiesRepository.findById(company_id);</span>
+<span class="cstat-no" title="statement not covered" >    const company = await this.companiesRepository.findById(company_id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (!company) {</span>
-<span class="cstat-no" title="statement not covered" >            throw new AppError("Company not found");</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const service = await this.serviceRepository.create({</span>
-<span class="cstat-no" title="statement not covered" >            name,</span>
-<span class="cstat-no" title="statement not covered" >            description,</span>
-<span class="cstat-no" title="statement not covered" >            price,</span>
-<span class="cstat-no" title="statement not covered" >            category,</span>
-<span class="cstat-no" title="statement not covered" >            company_id</span>
-<span class="cstat-no" title="statement not covered" >        });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        return service;</span>
-<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    if (!company) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new AppError("Company not found");</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const service = await this.serviceRepository.create({</span>
+<span class="cstat-no" title="statement not covered" >      name,</span>
+<span class="cstat-no" title="statement not covered" >      description,</span>
+<span class="cstat-no" title="statement not covered" >      price,</span>
+<span class="cstat-no" title="statement not covered" >      category,</span>
+<span class="cstat-no" title="statement not covered" >      company_id</span>
+<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    return service;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -226,7 +232,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-26T16:18:56.597Z
+                at 2022-12-30T01:34:31.008Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

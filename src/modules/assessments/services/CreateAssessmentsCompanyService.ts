@@ -11,6 +11,7 @@ interface IRequest {
   user_id: string;
   company_id: string;
   comment: string;
+  stars?: number;
 }
 
 
@@ -25,7 +26,7 @@ export class CreateAssessmentsCompanyService {
     private userRepository: IUsersRepository
   ) { }
 
-  public async execute({ user_id, company_id, comment }: IRequest): Promise<AssessmentCompany> {
+  public async execute({ user_id, company_id, comment, stars }: IRequest): Promise<AssessmentCompany> {
 
     const user = await this.userRepository.findById(user_id);
 
@@ -39,7 +40,8 @@ export class CreateAssessmentsCompanyService {
       const assessment = await this.assessmentRepository.create({
         user_id,
         company_id,
-        comment
+        comment,
+        stars
       });
 
       return assessment;

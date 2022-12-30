@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/50</span>
+                <span class='fraction'>0/52</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/50</span>
+                <span class='fraction'>0/52</span>
             </div>
         
             
@@ -113,7 +113,11 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -164,54 +168,56 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { injectable, inject } from "tsyringe";</span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >import { AppError } from "@shared/errors/AppError";</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >import { User } from "../infra/prisma/entities/User";</span>
 <span class="cstat-no" title="statement not covered" >import { UsersRepository } from "../infra/prisma/repositories/UsersRepository";</span>
 <span class="cstat-no" title="statement not covered" >import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >interface IRequest {</span>
-<span class="cstat-no" title="statement not covered" >    id?: string;</span>
-<span class="cstat-no" title="statement not covered" >    name: string;</span>
-<span class="cstat-no" title="statement not covered" >    email: string;</span>
-<span class="cstat-no" title="statement not covered" >    password: string;</span>
+<span class="cstat-no" title="statement not covered" >  id?: string;</span>
+<span class="cstat-no" title="statement not covered" >  name: string;</span>
+<span class="cstat-no" title="statement not covered" >  email: string;</span>
+<span class="cstat-no" title="statement not covered" >  password: string;</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >@injectable()</span>
 <span class="cstat-no" title="statement not covered" >export class UpdateUserService {</span>
-<span class="cstat-no" title="statement not covered" >    constructor(</span>
-<span class="cstat-no" title="statement not covered" >        @inject("UsersRepository")</span>
-<span class="cstat-no" title="statement not covered" >        private userRepository: UsersRepository,</span>
+<span class="cstat-no" title="statement not covered" >  constructor(</span>
+<span class="cstat-no" title="statement not covered" >    @inject("UsersRepository")</span>
+<span class="cstat-no" title="statement not covered" >    private userRepository: UsersRepository,</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        @inject("HashProvider")</span>
-<span class="cstat-no" title="statement not covered" >        private hashProvider: IHashProvider</span>
-<span class="cstat-no" title="statement not covered" >    ) { }</span>
+<span class="cstat-no" title="statement not covered" >    @inject("HashProvider")</span>
+<span class="cstat-no" title="statement not covered" >    private hashProvider: IHashProvider</span>
+<span class="cstat-no" title="statement not covered" >  ) { }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    public async execute({ id, name, email, password }: IRequest): Promise&lt;User&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        const userExists = await this.userRepository.findById(id);</span>
+<span class="cstat-no" title="statement not covered" >  public async execute({ id, name, email, password }: IRequest): Promise&lt;User&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const userExists = await this.userRepository.findById(id);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (!userExists) {</span>
-<span class="cstat-no" title="statement not covered" >            throw new AppError("User does not exits");</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const emailExists = await this.userRepository.findByMail(email);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        if (emailExists &amp;&amp; emailExists.id !== id) {</span>
-<span class="cstat-no" title="statement not covered" >            throw new AppError("Email address already used");</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const hashedPassword = await this.hashProvider.generateHash(password);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const user = await this.userRepository.update({</span>
-<span class="cstat-no" title="statement not covered" >            id,</span>
-<span class="cstat-no" title="statement not covered" >            name,</span>
-<span class="cstat-no" title="statement not covered" >            email,</span>
-<span class="cstat-no" title="statement not covered" >            password: hashedPassword,</span>
-<span class="cstat-no" title="statement not covered" >        });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        delete user.password;</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        return user;</span>
+<span class="cstat-no" title="statement not covered" >    if (!userExists) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new AppError("User does not exits");</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const emailExists = await this.userRepository.findByMail(email);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    if (emailExists &amp;&amp; emailExists.id !== id) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new AppError("Email address already used");</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const hashedPassword = await this.hashProvider.generateHash(password);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    const user = await this.userRepository.update({</span>
+<span class="cstat-no" title="statement not covered" >      id,</span>
+<span class="cstat-no" title="statement not covered" >      name,</span>
+<span class="cstat-no" title="statement not covered" >      email,</span>
+<span class="cstat-no" title="statement not covered" >      password: hashedPassword,</span>
+<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    delete user.password;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    return user;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
 
@@ -220,7 +226,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-26T16:18:56.597Z
+                at 2022-12-30T01:34:31.008Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

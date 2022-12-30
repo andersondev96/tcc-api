@@ -9,13 +9,15 @@ export class AssessmentsCompanyRepository implements IAssessmentsCompanyReposito
   public async create({
     user_id,
     company_id,
-    comment
+    comment,
+    stars
   }: ICreateAssessmentDTO): Promise<AssessmentCompany> {
     const assessmentCompany = await prisma.assesmentCompany.create({
       data: {
         user_id,
         company_id,
-        comment
+        comment,
+        stars
       }
     });
 
