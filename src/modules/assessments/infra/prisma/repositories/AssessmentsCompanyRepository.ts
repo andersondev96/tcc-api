@@ -24,6 +24,14 @@ export class AssessmentsCompanyRepository implements IAssessmentsCompanyReposito
     return assessmentCompany;
   }
 
+  public async findAssessmentById(assessment_id: string): Promise<AssessmentCompany> {
+    const findAssessmentCompany = await prisma.assesmentCompany.findUnique({
+      where: { id: assessment_id }
+    });
+
+    return findAssessmentCompany;
+  }
+
   public async findAssessmentsByCompany(company_id: string): Promise<AssessmentCompany[]> {
     const assessmentsCompany = await prisma.assesmentCompany.findMany({
       where: { company_id }
@@ -35,7 +43,10 @@ export class AssessmentsCompanyRepository implements IAssessmentsCompanyReposito
   public async takeAssessmentClassification(assessment: ICreateAssessmentDTO): Promise<AssessmentCompany> {
     const takeAssessment = await prisma.assesmentCompany.update({
       where: { id: assessment.id },
-      data: { stars: assessment.stars }
+      data: {
+        comment: assessment.comment,
+        stars: assessment.stars
+      }
     });
 
     return takeAssessment;

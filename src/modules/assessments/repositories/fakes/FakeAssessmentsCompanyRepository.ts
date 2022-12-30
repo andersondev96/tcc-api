@@ -19,6 +19,12 @@ export class FakeAssessmentsCompanyRepository implements IAssessmentsCompanyRepo
     return data;
   }
 
+  public async findAssessmentById(assessment_id: string): Promise<AssessmentCompany> {
+    const findAssessment = this.assessmentsCompany.find((assessment) => assessment.id === assessment_id);
+
+    return findAssessment;
+  }
+
   public async findAssessmentsByCompany(company_id: string): Promise<AssessmentCompany[]> {
     const findAssessments = this.assessmentsCompany.filter((assessment) => assessment.company_id === company_id);
 
