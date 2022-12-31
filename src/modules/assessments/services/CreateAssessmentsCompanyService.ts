@@ -44,6 +44,13 @@ export class CreateAssessmentsCompanyService {
         stars
       });
 
+      const companiesAssessment = await this.assessmentRepository.findAssessmentsByCompany(company.id);
+      const totStars = companiesAssessment.reduce((sum, current) => sum + current.stars, 0);
+
+      company.stars = Math.trunc((totStars / (companiesAssessment.length)));
+
+      await this.companyRepository.updateStars(company.id, company.stars);
+
       return assessment;
     }
 

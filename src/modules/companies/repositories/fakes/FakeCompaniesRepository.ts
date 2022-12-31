@@ -11,7 +11,7 @@ export class FakeCompaniesRepository implements ICompaniesRepository {
 
   public async create(data: ICreateCompanyDTO): Promise<Company> {
     Object.assign(data, {
-      id: uuid(),
+      id: uuid()
     });
 
     this.companies.push(data);
@@ -66,6 +66,15 @@ export class FakeCompaniesRepository implements ICompaniesRepository {
 
     return company;
   }
+
+  public async updateStars(company_id: string, stars: number): Promise<Company> {
+    const index = this.companies.findIndex(findCompany => findCompany.id === company_id);
+
+    this.companies[index].stars = stars;
+
+    return this.companies[index];
+  }
+
 
   public async delete(id: string): Promise<void> {
     const index = this.companies.findIndex(

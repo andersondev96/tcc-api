@@ -105,6 +105,17 @@ export class CompaniesRepository implements ICompaniesRepository {
     return updateCompany;
   }
 
+  public async updateStars(company_id: string, stars: number): Promise<Company> {
+    const updateCompany = await prisma.company.update({
+      where: { id: company_id },
+      data: {
+        stars
+      }
+    });
+
+    return updateCompany;
+  }
+
   public async delete(id: string): Promise<void> {
     await prisma.company.delete({
       where: { id }
