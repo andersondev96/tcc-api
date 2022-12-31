@@ -27,7 +27,7 @@ export class UpdateAssessmentsByCompanyService {
       throw new AppError("Assessment not found");
     }
 
-    const assessment = await this.assessmentRepository.takeAssessmentClassification({
+    const assessment = await this.assessmentRepository.updateAssessmentsByCompany({
       id: assessment_id,
       user_id: findAssessment.user_id,
       company_id: findAssessment.company_id,

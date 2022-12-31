@@ -40,7 +40,7 @@ export class AssessmentsCompanyRepository implements IAssessmentsCompanyReposito
     return assessmentsCompany;
   }
 
-  public async takeAssessmentClassification(assessment: ICreateAssessmentDTO): Promise<AssessmentCompany> {
+  public async updateAssessmentsByCompany(assessment: ICreateAssessmentDTO): Promise<AssessmentCompany> {
     const takeAssessment = await prisma.assesmentCompany.update({
       where: { id: assessment.id },
       data: {

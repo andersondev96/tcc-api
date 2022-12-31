@@ -9,5 +9,5 @@ export interface IAssessmentsCompanyRepository {
 
   findAssessmentsByCompany(company_id: string): Promise<AssessmentCompany[]>;
 
-  takeAssessmentClassification(assessment: ICreateAssessmentDTO): Promise<AssessmentCompany>
+  updateAssessmentsByCompany(assessment: ICreateAssessmentDTO): Promise<AssessmentCompany>
 }
