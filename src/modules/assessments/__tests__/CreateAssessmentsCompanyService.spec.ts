@@ -6,25 +6,26 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
-import { FakeAssessmentsCompanyRepository } from "../repositories/fakes/FakeAssessmentsCompanyRepository";
-import { IAssessmentsCompanyRepository } from "../repositories/IAssessmentsCompanyRepository";
+
+import { FakeAssessmentsRepository } from "../repositories/fakes/FakeAssessmentsRepository";
+import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
 import { CreateAssessmentsCompanyService } from "../services/CreateAssessmentsCompanyService";
 
 
 let createAssessmentsCompanyService: CreateAssessmentsCompanyService;
-let fakeAssessmentCompanyRepository: IAssessmentsCompanyRepository;
+let fakeAssessmentRepository: IAssessmentsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 
 describe("CreateAssessmentsCompanyService", () => {
   beforeEach(() => {
-    fakeAssessmentCompanyRepository = new FakeAssessmentsCompanyRepository();
+    fakeAssessmentRepository = new FakeAssessmentsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     createAssessmentsCompanyService = new CreateAssessmentsCompanyService(
-      fakeAssessmentCompanyRepository,
+      fakeAssessmentRepository,
       fakeCompanyRepository,
       fakeUserRepository
     );

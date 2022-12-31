@@ -4,8 +4,8 @@ import { ICompaniesRepository } from "@modules/companies/repositories/ICompanies
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
-import { AssessmentCompany } from "../infra/prisma/entities/AssessmentCompany";
-import { IAssessmentsCompanyRepository } from "../repositories/IAssessmentsCompanyRepository";
+import { Assessment } from "../infra/prisma/entities/Assessment";
+import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
 
 interface IRequest {
   user_id: string;
@@ -19,14 +19,14 @@ interface IRequest {
 export class CreateAssessmentsCompanyService {
   constructor(
     @inject("AssessmentsRepository")
-    private assessmentRepository: IAssessmentsCompanyRepository,
+    private assessmentRepository: IAssessmentsRepository,
     @inject("CompaniesRepository")
     private companyRepository: ICompaniesRepository,
     @inject("UsersRepository")
     private userRepository: IUsersRepository
   ) { }
 
-  public async execute({ user_id, company_id, comment, stars }: IRequest): Promise<AssessmentCompany> {
+  public async execute({ user_id, company_id, comment, stars }: IRequest): Promise<Assessment> {
 
     const user = await this.userRepository.findById(user_id);
 
@@ -39,12 +39,12 @@ export class CreateAssessmentsCompanyService {
 
       const assessment = await this.assessmentRepository.create({
         user_id,
-        company_id,
+        table_id: company_id,
         comment,
         stars
       });
 
-      const companiesAssessment = await this.assessmentRepository.findAssessmentsByCompany(company.id);
+      const companiesAssessment = await this.assessmentRepository.findAssessments(company.id);
       const totStars = companiesAssessment.reduce((sum, current) => sum + current.stars, 0);
 
       company.stars = Math.trunc((totStars / (companiesAssessment.length)));

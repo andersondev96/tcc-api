@@ -6,25 +6,26 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
-import { FakeAssessmentsCompanyRepository } from "../repositories/fakes/FakeAssessmentsCompanyRepository";
-import { IAssessmentsCompanyRepository } from "../repositories/IAssessmentsCompanyRepository";
+import { FakeAssessmentsRepository } from "../repositories/fakes/FakeAssessmentsRepository";
+import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
 import { UpdateAssessmentsByCompanyService } from "../services/UpdateAssessmentsByCompanyService";
 
 
 let updateAssessmentsCompanyService: UpdateAssessmentsByCompanyService;
-let fakeAssessmentCompanyRepository: IAssessmentsCompanyRepository;
+let fakeAssessmentRepository: IAssessmentsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 
 describe("CreateAssessmentsCompanyService", () => {
   beforeEach(() => {
-    fakeAssessmentCompanyRepository = new FakeAssessmentsCompanyRepository();
+    fakeAssessmentRepository = new FakeAssessmentsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     updateAssessmentsCompanyService = new UpdateAssessmentsByCompanyService(
-      fakeAssessmentCompanyRepository
+      fakeAssessmentRepository,
+      fakeCompanyRepository
     );
 
   });
@@ -54,9 +55,9 @@ describe("CreateAssessmentsCompanyService", () => {
       user_id: user.id
     });
 
-    const assessment = await fakeAssessmentCompanyRepository.create({
+    const assessment = await fakeAssessmentRepository.create({
       user_id: user.id,
-      company_id: company.id,
+      table_id: company.id,
       comment: "This is a new comment",
       stars: 5
     });

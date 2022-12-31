@@ -20,7 +20,7 @@ model User {
     Company      Company?
     Customer Customer?
     Entrepreneur Entrepreneur[]
-    AssesmentCompany AssesmentCompany[]
+    Assessment Assessment[]
 
     @@map("users")
 }
@@ -67,25 +67,25 @@ model Company {
     Address               Address?
     ImageCompany          ImageCompany[]
     Entrepreneur          Entrepreneur[]
-    AssesmentCompany AssesmentCompany[]
+    Assessment Assessment[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@map("companies")
 }
 
-model AssesmentCompany {
+model Assessment {
   id String @id @default(uuid())
   user_id String
-  company_id String
+  table_id String
   comment String
   stars Int @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  company Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  company Company @relation(fields: [table_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-@@map("assesmentsCompany")
+@@map("assessments")
 }
 
 model Contact {

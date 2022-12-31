@@ -6,15 +6,15 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
-import { FakeAssessmentsCompanyRepository } from "../repositories/fakes/FakeAssessmentsCompanyRepository";
-import { IAssessmentsCompanyRepository } from "../repositories/IAssessmentsCompanyRepository";
-import { FindAssessmentsByCompanyService } from "../services/FindAssessmentsByCompanyService";
 
+import { FakeAssessmentsRepository } from "../repositories/fakes/FakeAssessmentsRepository";
+import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
+import { FindAssessmentsByCompanyService } from "../services/FindAssessmentsByCompanyService";
 
 let fakeUserRepository: IUsersRepository;
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeContactRepository: IContactsRepository;
-let fakeAssessmentCompanyRepository: IAssessmentsCompanyRepository;
+let fakeAssessmentRepository: IAssessmentsRepository;
 let findAssessmentsByCompanyService: FindAssessmentsByCompanyService;
 
 describe("FindAssessmentsByCompanyService", () => {
@@ -22,9 +22,9 @@ describe("FindAssessmentsByCompanyService", () => {
     fakeUserRepository = new FakeUsersRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeContactRepository = new FakeContactsRepository();
-    fakeAssessmentCompanyRepository = new FakeAssessmentsCompanyRepository();
+    fakeAssessmentRepository = new FakeAssessmentsRepository();
     findAssessmentsByCompanyService = new FindAssessmentsByCompanyService(
-      fakeAssessmentCompanyRepository,
+      fakeAssessmentRepository,
       fakeCompanyRepository
     );
   });
@@ -54,14 +54,14 @@ describe("FindAssessmentsByCompanyService", () => {
       user_id: user.id
     });
 
-    const assessmentCompany = await fakeAssessmentCompanyRepository.create({
+    const assessmentCompany = await fakeAssessmentRepository.create({
       user_id: user.id,
-      company_id: company.id,
+      table_id: company.id,
       comment: "This is a new comment",
       stars: 5
     });
 
-    const findAssessmentsByCompany = await findAssessmentsByCompanyService.execute(assessmentCompany.company_id);
+    const findAssessmentsByCompany = await findAssessmentsByCompanyService.execute(assessmentCompany.table_id);
 
     expect(findAssessmentsByCompany).toEqual([assessmentCompany]);
   });
