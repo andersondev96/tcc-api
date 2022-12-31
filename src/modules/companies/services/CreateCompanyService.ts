@@ -120,9 +120,6 @@ export class CreateCompanyService {
 
     const entrepreneur = await this.entrepreneurRepository.findByUser(user_id);
 
-    console.log(user.id);
-    console.log(entrepreneur);
-
     if (entrepreneur) {
       await this.entrepreneurRepository.update({
         id: entrepreneur.id,

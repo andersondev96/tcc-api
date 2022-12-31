@@ -115,6 +115,12 @@ describe("CreateCompanyService", () => {
       password: "123456"
     });
 
+    const user2 = await fakeUserRepository.create({
+      name: "Jan Doe",
+      email: "jan.doe@example.com",
+      password: "123456"
+    });
+
     await createCompanyService.execute({
       name: "Business Company",
       cnpj: "123456",
@@ -129,7 +135,16 @@ describe("CreateCompanyService", () => {
           "lunch_time": "12:00-13:00"
         }
       ],
-      physical_localization: false,
+      physical_localization: true,
+      address:
+      {
+        "cep": "123456",
+        "street": "Street Test",
+        "district": "District Test",
+        "number": 123,
+        "state": "MG",
+        "city": "City Test"
+      },
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
@@ -137,61 +152,106 @@ describe("CreateCompanyService", () => {
       user_id: user.id
     });
 
-    await expect(
-      createCompanyService.execute({
-        name: "Business Company",
-        cnpj: "123456",
-        category: "Supermarket",
-        description: "Supermarket description",
-        services: ["Supermarket", "Shopping"],
-        schedules: [
-          {
-            "weekday": "Monday",
-            "opening_time": "08:00",
-            "closing_time": "18:00",
-            "lunch_time": "12:00-13:00"
-          }
-        ],
-        physical_localization: false,
-        telephone: "1234567",
-        email: "business@example.com",
-        website: "www.example.com",
-        whatsapp: "12345685",
-        user_id: user.id
-      })
-    ).rejects.toBeInstanceOf(AppError);
+    await expect(createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category: "Supermarket",
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      address:
+      {
+        "cep": "123456",
+        "street": "Street Test",
+        "district": "District Test",
+        "number": 123,
+        "state": "MG",
+        "city": "City Test"
+      },
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user2.id
+    })).rejects.toBeInstanceOf(AppError);
   });
 
-  it("Should not be able to create a company if number of services exceeds 3", async () => {
+  it("Should not be able to create a company if user has a company", async () => {
     const user = await fakeUserRepository.create({
-      name: "John Doe",
-      email: "john.doe@example.com",
+      name: "Jan Doe",
+      email: "jan.doe@example.com",
       password: "123456"
     });
 
-    await expect(
-      createCompanyService.execute({
-        name: "Business Company",
-        cnpj: "123456",
-        category: "Supermarket",
-        description: "Supermarket description",
-        services: ["Service 1", "Service 2", "Service 3", "Service 4"],
-        schedules: [
-          {
-            "weekday": "Monday",
-            "opening_time": "08:00",
-            "closing_time": "18:00",
-            "lunch_time": "12:00-13:00"
-          }
-        ],
-        physical_localization: false,
-        telephone: "1234567",
-        email: "business@example.com",
-        website: "www.example.com",
-        whatsapp: "12345685",
-        user_id: user.id
-      })
-    ).rejects.toBeInstanceOf(AppError);
+    await createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category: "Supermarket",
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      address:
+      {
+        "cep": "123456",
+        "street": "Street Test",
+        "district": "District Test",
+        "number": 123,
+        "state": "MG",
+        "city": "City Test"
+      },
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    });
+
+    await expect(createCompanyService.execute({
+      name: "Business Company 2",
+      cnpj: "123456",
+      category: "Supermarket",
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      address:
+      {
+        "cep": "123456",
+        "street": "Street Test",
+        "district": "District Test",
+        "number": 123,
+        "state": "MG",
+        "city": "City Test"
+      },
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    })).rejects.toBeInstanceOf(AppError);
   });
 
   it("Should not be able to create a company if physical localization is true and address is undefined", async () => {
