@@ -88,8 +88,7 @@ export class CompaniesRepository implements ICompaniesRepository {
         contact: true,
         Address: true,
         ImageCompany: true,
-        Schedule: true,
-        Assessment: true
+        Schedule: true
       }
     });
 

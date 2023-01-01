@@ -40,7 +40,7 @@ export class ServicesRepository implements IServicesRepository {
 
   public async listServicesByCompany(company_id: string): Promise<Service[]> {
     const services = await prisma.service.findMany({
-      where: { company_id },
+      where: { company_id }
     });
 
     return services;
@@ -51,7 +51,7 @@ export class ServicesRepository implements IServicesRepository {
       where: {
         company_id,
         category: {
-          equals: category,
+          equals: category
         }
       }
     });
@@ -64,7 +64,7 @@ export class ServicesRepository implements IServicesRepository {
       where: {
         company_id,
         name: {
-          contains: name,
+          contains: name
         }
       }
     });
@@ -86,6 +86,17 @@ export class ServicesRepository implements IServicesRepository {
     const service = await prisma.service.update({
       where: { id: data.id },
       data: { ...data }
+    });
+
+    return service;
+  }
+
+  public async updateStars(service_id: string, stars: number): Promise<Service> {
+    const service = await prisma.service.update({
+      where: { id: service_id },
+      data: {
+        stars
+      }
     });
 
     return service;

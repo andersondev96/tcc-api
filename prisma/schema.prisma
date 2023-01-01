@@ -67,7 +67,6 @@ model Company {
     Address               Address?
     ImageCompany          ImageCompany[]
     Entrepreneur          Entrepreneur[]
-    Assessment Assessment[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
@@ -83,7 +82,6 @@ model Assessment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  company Company @relation(fields: [table_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
 @@map("assessments")
 }

@@ -11,7 +11,7 @@ export class FakeServicesRepository implements IServicesRepository {
 
   public async create(data: ICreateServiceDTO): Promise<Service> {
     Object.assign(data, {
-      id: uuid(),
+      id: uuid()
     });
 
     this.services.push(data);
@@ -50,6 +50,14 @@ export class FakeServicesRepository implements IServicesRepository {
     this.services[index] = data;
 
     return data;
+  }
+
+  public async updateStars(service_id: string, stars: number): Promise<Service> {
+    const index = this.services.findIndex(findService => findService.id === service_id);
+
+    this.services[index].stars = stars;
+
+    return this.services[index];
   }
 
   public async delete(id: string): Promise<void> {
