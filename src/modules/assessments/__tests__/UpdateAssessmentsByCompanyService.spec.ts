@@ -80,4 +80,25 @@ describe("CreateAssessmentsCompanyService", () => {
       comment: "This is a update comment"
     })).rejects.toBeInstanceOf(AppError);
   });
+
+  it("Should not be able to update a not existing company", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john@example.com",
+      password: "1234561"
+    });
+
+    const assessment = await fakeAssessmentRepository.create({
+      user_id: user.id,
+      table_id: "not-exist-company",
+      comment: "This is a new comment",
+      stars: 5
+    });
+
+    await expect(updateAssessmentsCompanyService.execute({
+      assessment_id: assessment.id,
+      comment: "Comment update",
+      stars: 5
+    })).rejects.toBeInstanceOf(AppError);
+  });
 });

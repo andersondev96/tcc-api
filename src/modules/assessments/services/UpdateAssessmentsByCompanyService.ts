@@ -31,6 +31,12 @@ export class UpdateAssessmentsByCompanyService {
       throw new AppError("Assessment not found");
     }
 
+    const company = await this.companyRepository.findById(findAssessment.table_id);
+
+    if (!company) {
+      throw new AppError("Company not found");
+    }
+
     const assessment = await this.assessmentRepository.updateAssessments({
       id: assessment_id,
       user_id: findAssessment.user_id,
@@ -42,13 +48,13 @@ export class UpdateAssessmentsByCompanyService {
     const companiesAssessment = await this.assessmentRepository.findAssessments(findAssessment.table_id);
     const totStars = companiesAssessment.reduce((sum, current) => sum + current.stars, 0);
 
-    const company = await this.companyRepository.findById(findAssessment.table_id);
 
     company.stars = Math.trunc((totStars / (companiesAssessment.length)));
 
     await this.companyRepository.updateStars(company.id, company.stars);
 
     return assessment;
+
   }
 
 }
