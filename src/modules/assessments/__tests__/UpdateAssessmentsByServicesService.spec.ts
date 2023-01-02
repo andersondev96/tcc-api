@@ -2,6 +2,8 @@ import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/F
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
+import { FakeServicesRepository } from "@modules/services/repositories/fakes/FakeServicesRepository";
+import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -9,11 +11,13 @@ import { AppError } from "@shared/errors/AppError";
 import { FakeAssessmentsRepository } from "../repositories/fakes/FakeAssessmentsRepository";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
 import { UpdateAssessmentsByCompanyService } from "../services/UpdateAssessmentsByCompanyService";
+import { UpdateAssessmentsByServicesService } from "../services/UpdateAssessmentsByServicesService";
 
 
-let updateAssessmentsCompanyService: UpdateAssessmentsByCompanyService;
+let updateAssessmentsServicesService: UpdateAssessmentsByServicesService;
 let fakeAssessmentRepository: IAssessmentsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeServiceRepository: IServicesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 
@@ -21,11 +25,12 @@ describe("CreateAssessmentsCompanyService", () => {
   beforeEach(() => {
     fakeAssessmentRepository = new FakeAssessmentsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeServiceRepository = new FakeServicesRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
-    updateAssessmentsCompanyService = new UpdateAssessmentsByCompanyService(
+    updateAssessmentsServicesService = new UpdateAssessmentsByServicesService(
       fakeAssessmentRepository,
-      fakeCompanyRepository
+      fakeServiceRepository
     );
 
   });
@@ -55,14 +60,22 @@ describe("CreateAssessmentsCompanyService", () => {
       user_id: user.id
     });
 
+    const service = await fakeServiceRepository.create({
+      name: "Service Test",
+      description: "Service Test Description",
+      price: 20.0,
+      category: "Service Category",
+      company_id: company.id
+    });
+
     const assessment = await fakeAssessmentRepository.create({
       user_id: user.id,
-      table_id: company.id,
+      table_id: service.id,
       comment: "This is a new comment",
       stars: 5
     });
 
-    const update = await updateAssessmentsCompanyService.execute({
+    const update = await updateAssessmentsServicesService.execute({
       assessment_id: assessment.id,
       comment: "This is a update comment",
       stars: 3
@@ -72,14 +85,15 @@ describe("CreateAssessmentsCompanyService", () => {
 
   });
 
-  it("Should not be able to update a not existing assessment company", async () => {
-    await expect(updateAssessmentsCompanyService.execute({
-      assessment_id: "not-exist-assessment",
-      comment: "This is a update comment"
+  it("Should not be able to update a not existing assessment", async () => {
+    await expect(updateAssessmentsServicesService.execute({
+      assessment_id: "non-existing-assessment",
+      comment: "Update Comment",
+      stars: 5
     })).rejects.toBeInstanceOf(AppError);
   });
 
-  it("Should not be able to update a not existing company", async () => {
+  it("Should not be able to be update a non existing service", async () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",
       email: "john@example.com",
@@ -88,12 +102,12 @@ describe("CreateAssessmentsCompanyService", () => {
 
     const assessment = await fakeAssessmentRepository.create({
       user_id: user.id,
-      table_id: "not-exist-company",
+      table_id: "not-exist-service",
       comment: "This is a new comment",
       stars: 5
     });
 
-    await expect(updateAssessmentsCompanyService.execute({
+    await expect(updateAssessmentsServicesService.execute({
       assessment_id: assessment.id,
       comment: "Comment update",
       stars: 5
