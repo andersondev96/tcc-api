@@ -14,6 +14,7 @@ import { CreateImageCompanyController } from "../controllers/CreateImageCompanyC
 import { DeleteCompanyController } from "../controllers/DeleteCompanyController";
 import { DeleteImagesCompanyController } from "../controllers/DeleteImagesCompanyController";
 import { DeleteScheduleController } from "../controllers/DeleteScheduleController";
+import { FindCompanyByUserController } from "../controllers/FindCompanyByUserController";
 import { ListAllCompaniesController } from "../controllers/ListAllCompaniesController";
 import { UpdateCompanyController } from "../controllers/UpdateCompanyController";
 import { UpdateImagesCompanyController } from "../controllers/UpdateImagesCompanyController";
@@ -26,6 +27,7 @@ const upload = multer(uploadConfig);
 const createCompanyController = new CreateCompanyController();
 const createImageCompanyController = new CreateImageCompanyController();
 const findByCompanyController = new FindByCompanyController();
+const findCompanyByUserController = new FindCompanyByUserController();
 const listAllCompaniesController = new ListAllCompaniesController();
 const updateCompanyController = new UpdateCompanyController();
 const updateScheduleController = new UpdateScheduleController();
@@ -48,6 +50,7 @@ companiesRouter.post(
   upload.array("company"),
   createImageCompanyController.handle
 );
+companiesRouter.get("/me", ensureAuthenticated, ensureEntrepreneur, findCompanyByUserController.handle);
 companiesRouter.get("/:id", findByCompanyController.handle);
 companiesRouter.get("/", listAllCompaniesController.handle);
 companiesRouter.put("/:id", updateCompanyController.handle);
