@@ -10,6 +10,7 @@ import { ensureEntrepreneur } from "@shared/infra/http/middlewares/ensureEntrepr
 import { CreateServiceController } from "../controllers/CreateServiceController";
 import { DeleteServiceController } from "../controllers/DeleteServiceController";
 import { FindServiceByCategoryController } from "../controllers/FindServiceByCategoryController";
+import { FindServiceByCompanyController } from "../controllers/FindServiceByCompanyController";
 import { FindServiceByNameController } from "../controllers/FindServiceByNameController";
 import { GetFavoritesController } from "../controllers/GetFavoritesController";
 import { GetServiceHighlightController } from "../controllers/GetServiceHighlightController";
@@ -20,6 +21,7 @@ const servicesRouter = Router();
 const uploadImage = multer(uploadConfig);
 
 const createServiceController = new CreateServiceController();
+const findServiceByCompanyController = new FindServiceByCompanyController();
 const findServiceByNameController = new FindServiceByNameController();
 const findServiceByCategoryController = new FindServiceByCategoryController();
 const updateServiceImageController = new UpdateServiceImageController();
@@ -36,6 +38,7 @@ servicesRouter.post(
   celebrate(createServiceValidator),
   createServiceController.handle
 );
+servicesRouter.get("/:company_id", findServiceByCompanyController.handle);
 servicesRouter.get("/:company_id", findServiceByNameController.handle);
 servicesRouter.get("/category/:company_id", findServiceByCategoryController.handle);
 servicesRouter.patch(

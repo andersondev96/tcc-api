@@ -8,29 +8,28 @@ import { AppError } from "@shared/errors/AppError";
 
 import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";
-import { FindServiceByCategoryService } from "../services/FindServiceByCategoryService";
+import { FindServiceByCompanyService } from "../services/FindServiceByCompanyService";
 
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeServiceRepository: IServicesRepository;
-let findServiceByCategoryService: FindServiceByCategoryService;
+let findServiceByCompanyService: FindServiceByCompanyService;
 
-describe("FindServiceByNameService", () => {
+describe("FindServiceByCompanyService", () => {
 
   beforeEach(() => {
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeServiceRepository = new FakeServicesRepository();
-    findServiceByCategoryService = new FindServiceByCategoryService(
+    findServiceByCompanyService = new FindServiceByCompanyService(
       fakeServiceRepository,
       fakeCompanyRepository
     );
-
   });
 
-  it("Should be able to find service by name", async () => {
+  it("Should be able to find services by company", async () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",
       email: "john@example.com",
@@ -53,17 +52,6 @@ describe("FindServiceByNameService", () => {
       user_id: user.id
     });
 
-    const company2 = await fakeCompanyRepository.create({
-      name: "Business name 2",
-      cnpj: "123456",
-      category: "Business Category 2",
-      description: "Business Description 2",
-      services: ["Service 1"],
-      physical_localization: false,
-      contact_id: contact.id,
-      user_id: user.id
-    });
-
     const service1 = await fakeServiceRepository.create({
       name: "Service One",
       description: "Service Description",
@@ -72,33 +60,23 @@ describe("FindServiceByNameService", () => {
       company_id: company.id
     });
 
-    await fakeServiceRepository.create({
+    const service2 = await fakeServiceRepository.create({
       name: "Service Two",
       description: "Service Description 2",
       price: 20.0,
       category: "Service Category 2",
-      company_id: company2.id
+      company_id: company.id
     });
 
-    const findService = await findServiceByCategoryService.execute({
-      company_id: company.id,
-      category: "Service Category"
-    });
-    const findService2 = await findServiceByCategoryService.execute({
-      company_id: company2.id,
-      category: "2 Category Service"
-    });
+    const findService = await findServiceByCompanyService.execute(company.id);
 
-    expect(findService).toEqual([service1]);
-    expect(findService2).toEqual([]);
+    expect(findService).toEqual([service1, service2]);
+
   });
 
-  it("Should not be able to find a non existing company", async () => {
+  it("Should not be able to find a service to non existent company", async () => {
     await expect(
-      findServiceByCategoryService.execute({
-        company_id: "non-existing-company",
-        category: "Computation"
-      })
-    ).rejects.toBeInstanceOf(AppError);
+      findServiceByCompanyService.execute("non-existent-company"
+      )).rejects.toBeInstanceOf(AppError);
   });
 });
