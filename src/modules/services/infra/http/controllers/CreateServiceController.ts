@@ -7,7 +7,7 @@ export class CreateServiceController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { company_id } = request.params;
 
-    const { name, description, price, category } = request.body;
+    const { name, description, price, category, highlight_service } = request.body;
 
     const createServiceService = container.resolve(CreateServiceService);
 
@@ -16,6 +16,7 @@ export class CreateServiceController {
       description,
       price,
       category,
+      highlight_service,
       company_id
     });
 

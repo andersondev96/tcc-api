@@ -9,7 +9,7 @@ export class UpdateServiceController {
 
     const { service_id } = request.params;
 
-    const { name, description, price, category } = request.body;
+    const { name, description, price, category, highlight_service } = request.body;
 
     const updateServiceService = container.resolve(UpdateServiceService);
 
@@ -18,7 +18,8 @@ export class UpdateServiceController {
       name,
       description,
       price,
-      category
+      category,
+      highlight_service
     });
 
     return response.status(201).json(service);

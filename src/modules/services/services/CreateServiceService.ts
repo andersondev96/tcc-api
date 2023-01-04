@@ -12,6 +12,7 @@ interface IRequest {
   description: string;
   price: number;
   category: string;
+  highlight_service?: boolean;
   company_id: string;
 }
 
@@ -32,6 +33,7 @@ export class CreateServiceService {
     description,
     price,
     category,
+    highlight_service,
     company_id
   }: IRequest): Promise<Service> {
 
@@ -46,7 +48,8 @@ export class CreateServiceService {
       description,
       price,
       category,
-      company_id
+      company_id,
+      highlight_service
     });
 
     return service;

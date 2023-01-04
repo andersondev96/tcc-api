@@ -11,6 +11,7 @@ interface IRequest {
   description: string;
   price: number;
   category: string;
+  highlight_service?: boolean;
 }
 
 @injectable()
@@ -26,7 +27,8 @@ export class UpdateServiceService {
     name,
     description,
     price,
-    category
+    category,
+    highlight_service
   }: IRequest): Promise<Service> {
 
     const service = await this.servicesRepository.findServiceById(id);
@@ -41,7 +43,8 @@ export class UpdateServiceService {
       description,
       price,
       category,
-      company_id: service.company_id,
+      highlight_service,
+      company_id: service.company_id
     });
 
     return serviceUpdate;
