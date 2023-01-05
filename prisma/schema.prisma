@@ -207,7 +207,7 @@ model Customer {
   user_id String @unique
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   telephone String?
-  status Boolean?
+  status String?
   proposal Proposal[]
   budget Budget[]
   createdAt DateTime @default(now())
