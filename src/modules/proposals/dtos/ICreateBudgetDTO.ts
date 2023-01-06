@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 
 export interface ICreateBudgetDTO {
   id?: string;
@@ -7,6 +8,6 @@ export interface ICreateBudgetDTO {
   description: string;
   files?: string;
   delivery_date: Date;
-  amount: number;
+  amount: Prisma.Decimal;
   installments: number;
 }
