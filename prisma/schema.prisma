@@ -168,7 +168,7 @@ model Service {
 model Proposal {
   id String @id @default(uuid())
   objective String
-  time DateTime
+  time DateTime? @default(now())
   description String?
   customer_id String 
   company_id String

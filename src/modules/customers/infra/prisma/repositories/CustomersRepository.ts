@@ -36,6 +36,14 @@ export class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
+  public async findCustomerByUser(user_id: string): Promise<Customer> {
+    const customer = await prisma.customer.findUnique({
+      where: { user_id }
+    });
+
+    return customer;
+  }
+
   public async deleteCustomer(customer_id: string): Promise<void> {
     await prisma.customer.delete({
       where: {

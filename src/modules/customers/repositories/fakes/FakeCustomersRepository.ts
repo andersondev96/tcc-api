@@ -7,6 +7,7 @@ import { User } from "@modules/users/infra/prisma/entities/User";
 import { ICustomersRepository } from "../ICustomersRepository";
 
 export class FakeCustomersRepository implements ICustomersRepository {
+
   customers: Customer[] = [];
   users: User[] = [];
 
@@ -24,6 +25,12 @@ export class FakeCustomersRepository implements ICustomersRepository {
     const user = this.users.find(user => user.name === name);
 
     const customer = this.customers.filter(customer => customer.user_id === user.name);
+
+    return customer;
+  }
+
+  public async findCustomerByUser(user_id: string): Promise<Customer> {
+    const customer = this.customers.find(customer => customer.user_id === user_id);
 
     return customer;
   }
