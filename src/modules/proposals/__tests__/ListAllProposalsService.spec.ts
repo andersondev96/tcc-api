@@ -75,7 +75,5 @@ describe("ListAllProposalsService", () => {
     const proposals = await listAllProposalsService.execute(user.id);
 
     expect(proposals).toEqual([proposal]);
-
-
   });
 });
