@@ -10,28 +10,28 @@ import { AppError } from "@shared/errors/AppError";
 
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
-import { FindProposalByIdService } from "../services/FindProposalByIdService";
+import { DeleteProposalService } from "../services/DeleteProposalService";
 
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeCustomerRepository: ICustomersRepository;
 let fakeProposalRepository: IProposalsRepository;
-let findProposalByIdService: FindProposalByIdService;
+let deleteProposalService: DeleteProposalService;
 
-describe("FindProposalByIdService", () => {
+describe("DeleteProposalService", () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeCustomerRepository = new FakeCustomersRepository();
     fakeProposalRepository = new FakeProposalsRepository();
-    findProposalByIdService = new FindProposalByIdService(
+    deleteProposalService = new DeleteProposalService(
       fakeProposalRepository
     );
   });
 
-  it("Should be able to find a proposal by id", async () => {
+  it("Should be able to delete a proposal", async () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",
       email: "john@example.com",
@@ -66,22 +66,16 @@ describe("FindProposalByIdService", () => {
       customer_id: customer.id
     });
 
-    const result = {
-      objective: "Objective Example",
-      time: new Date(),
-      description: "Description Example",
-      company_id: company.id,
-      customer_id: customer.id,
-      id: proposal.id
-    };
+    await deleteProposalService.execute(proposal.id);
 
-    expect(await findProposalByIdService.execute(proposal.id)).toEqual(result);
+    const findProposal = await fakeProposalRepository.findProposalById(proposal.id);
 
+    expect(findProposal).toBe(undefined);
   });
 
-  it("Should not be able to find a not existing proposal", async () => {
-    await expect(
-      findProposalByIdService.execute("not-existing-proposal")
-    ).rejects.toBeInstanceOf(AppError);
+  it("Should not be able to delete a non existing proposal", async () => {
+    await
+      expect(deleteProposalService.execute("not-existing-proposal")
+      ).rejects.toBeInstanceOf(AppError);
   });
 });
