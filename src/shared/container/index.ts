@@ -15,6 +15,12 @@ import { IContactsRepository } from "@modules/companies/repositories/IContactsRe
 import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
 import { IImagesCompanyRepository } from "@modules/companies/repositories/IImagesCompanyRepository";
 import { ISchedulesRepository } from "@modules/companies/repositories/ISchedulesRepository";
+import { CustomersRepository } from "@modules/customers/infra/prisma/repositories/CustomersRepository";
+import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
+import { BudgetsRepository } from "@modules/proposals/infra/prisma/repositories/BudgetsRepository";
+import { ProposalsRepository } from "@modules/proposals/infra/prisma/repositories/ProposalsRepository";
+import { IBudgetsRepository } from "@modules/proposals/repositories/IBudgetsRepository";
+import { IProposalsRepository } from "@modules/proposals/repositories/IProposalsRepository";
 import { ServicesRepository } from "@modules/services/infra/prisma/repositories/ServicesRepository";
 import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { UsersRepository } from "@modules/users/infra/prisma/repositories/UsersRepository";
@@ -86,4 +92,19 @@ container.registerInstance<IEntrepreneursRepository>(
 container.registerInstance<IAssessmentsRepository>(
   "AssessmentsRepository",
   new AssessmentsRepository()
+);
+
+container.registerInstance<ICustomersRepository>(
+  "CustomersRepository",
+  new CustomersRepository()
+);
+
+container.registerInstance<IProposalsRepository>(
+  "ProposalsRepository",
+  new ProposalsRepository()
+);
+
+container.registerInstance<IBudgetsRepository>(
+  "BudgetsRepository",
+  new BudgetsRepository()
 );
