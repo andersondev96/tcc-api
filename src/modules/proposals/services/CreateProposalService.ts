@@ -44,22 +44,35 @@ export class CreateProposalService {
       const customer = await this.customerRepository.findCustomerByUser(user.id);
 
       if (!customer) {
-        await this.customerRepository.create({
+        const newCustomer = await this.customerRepository.create({
           user_id,
           telephone,
           status: "negotiation"
         });
+
+        const proposal = await this.proposalRepository.create({
+          objective,
+          time,
+          description,
+          company_id,
+          customer_id: newCustomer.id
+        });
+
+        return proposal;
+
+      } else {
+
+        const proposal = await this.proposalRepository.create({
+          objective,
+          time,
+          description,
+          company_id,
+          customer_id: customer.id
+        });
+
+        return proposal;
+
       }
-
-      const proposal = await this.proposalRepository.create({
-        objective,
-        time,
-        description,
-        company_id,
-        customer_id: customer.id
-      });
-
-      return proposal;
     }
 
   }

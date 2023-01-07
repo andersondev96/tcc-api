@@ -38,7 +38,7 @@ describe("CreateProposalService", () => {
     );
   });
 
-  it("Should be able to create a proposal", async () => {
+  it("Should be able to create a proposal when customer already exists", async () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",
       email: "john@example.com",
@@ -65,6 +65,41 @@ describe("CreateProposalService", () => {
       user_id: user.id
     });
 
+
+    const proposal = await createProposalService.execute({
+      objective: "Objective Example",
+      time: new Date(),
+      description: "Description Example",
+      telephone: "(11) 11111111",
+      company_id: company.id,
+      user_id: user.id
+    });
+
+    expect(proposal).toHaveProperty("id");
+  });
+
+  it("Should be able to create a proposal when customer not exists", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john@example.com",
+      password: "123456"
+    });
+
+    const contact = await fakeContactRepository.create({
+      email: "business@example.com",
+      telephone: "123456"
+    });
+
+    const company = await fakeCompanyRepository.create({
+      name: "Business name",
+      cnpj: "123456",
+      category: "Business Category",
+      description: "Business Description",
+      services: ["Service 1"],
+      physical_localization: false,
+      contact_id: contact.id,
+      user_id: user.id
+    });
 
     const proposal = await createProposalService.execute({
       objective: "Objective Example",
