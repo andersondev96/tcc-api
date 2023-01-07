@@ -1,5 +1,7 @@
 node_modules
+.vscode
+tmp/*
+coverage
 .env
-*.png
-*.jpg
-*.jpeg
+!tmp/.gitkeep
+dist
