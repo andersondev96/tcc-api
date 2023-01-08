@@ -5,6 +5,8 @@ export interface ICustomersRepository {
 
   create(data: ICreateCustomerDTO): Promise<Customer>;
 
+  findCustomerById(id: string): Promise<Customer>;
+
   findCustomerByName(name: string): Promise<Customer[]>;
 
   findCustomerByUser(user_id: string): Promise<Customer>;

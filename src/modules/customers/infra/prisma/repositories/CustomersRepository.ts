@@ -24,6 +24,14 @@ export class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
+  public async findCustomerById(id: string): Promise<Customer> {
+    const customer = await prisma.customer.findUnique({
+      where: { id }
+    });
+
+    return customer;
+  }
+
   public async findCustomerByName(name: string): Promise<Customer[]> {
     const customer = await prisma.customer.findMany({
       where: {
