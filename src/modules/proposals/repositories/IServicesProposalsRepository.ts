@@ -7,6 +7,8 @@ export interface IServicesProposalsRepository {
 
   listServicesByProposal(proposal_id: string): Promise<ServiceProposal[]>;
 
+  listServicesProposalById(id: string): Promise<ServiceProposal>;
+
   update(data: ICreateServiceProposalDTO): Promise<ServiceProposal>;
 
   delete(id: string): Promise<void>;

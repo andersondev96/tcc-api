@@ -25,6 +25,12 @@ export class FakeServicesProposalsRepository implements IServicesProposalsReposi
     return listAll;
   }
 
+  public async listServicesProposalById(id: string): Promise<ServiceProposal> {
+    const listServiceProposal = this.servicesProposals.find((serviceProposal) => serviceProposal.id === id);
+
+    return listServiceProposal;
+  }
+
   public async update(data: ICreateServiceProposalDTO): Promise<ServiceProposal> {
     const index = this.servicesProposals.findIndex(serviceProposal => serviceProposal.id === data.id);
 

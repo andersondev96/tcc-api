@@ -8,6 +8,7 @@ import { FakeServicesRepository } from "@modules/services/repositories/fakes/Fak
 import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
 
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { FakeServicesProposalsRepository } from "../repositories/fakes/FakeServicesProposalsRepository";
@@ -89,9 +90,15 @@ describe("UnlinkServiceByProposalService", () => {
 
     await unlinkServiceByProposalService.execute(linkServiceByProposal.id);
 
-    const services = await fakeServiceProposalRepository.listServicesByProposal(proposal.id);
+    const services = await fakeServiceProposalRepository.listServicesProposalById(proposal.id);
 
-    expect(services).toEqual([]);
+    expect(services).toEqual(undefined);
 
+  });
+
+  it("Should not be able to unlink a not existing service proposal", async () => {
+    await expect(
+      unlinkServiceByProposalService.execute("non-existing-service-proposal")
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

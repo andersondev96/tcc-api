@@ -32,6 +32,14 @@ export class ServicesProposalsRepository implements IServicesProposalsRepository
     return listAll;
   }
 
+  public async listServicesProposalById(id: string): Promise<ServiceProposal> {
+    const listServiceProposal = await prisma.service_Proposal.findUnique({
+      where: { id }
+    });
+
+    return listServiceProposal;
+  }
+
   public async update(data: ICreateServiceProposalDTO): Promise<ServiceProposal> {
     const serviceProposal = await prisma.service_Proposal.update({
       where: { id: data.id },
