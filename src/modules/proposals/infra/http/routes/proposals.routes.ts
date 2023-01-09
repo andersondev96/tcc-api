@@ -8,6 +8,7 @@ import { DeleteProposalController } from "../controllers/DeleteProposalControlle
 import { FindProposalByIdController } from "../controllers/FindProposalByIdController";
 import { LinkServiceByProposalController } from "../controllers/LinkServiceByProposalController";
 import { ListAllProposalsController } from "../controllers/ListAllProposalsController";
+import { ListServicesByProposalController } from "../controllers/ListServicesByProposalController";
 import { UnlinkServiceByProposalController } from "../controllers/UnlinkServiceByProposalController";
 import { UpdateProposalController } from "../controllers/UpdateProposalController";
 import { UpdateServiceByProposalController } from "../controllers/UpdateServiceByProposalController";
@@ -18,6 +19,7 @@ const createProposalController = new CreateProposalController();
 const linkServiceByProposalController = new LinkServiceByProposalController();
 const unlinkServiceByProposalController = new UnlinkServiceByProposalController();
 const listAllProposalsController = new ListAllProposalsController();
+const listServiceByProposalController = new ListServicesByProposalController();
 const findProposalByIdController = new FindProposalByIdController();
 const updateProposalController = new UpdateProposalController();
 const updateServiceByProposalController = new UpdateServiceByProposalController();
@@ -27,6 +29,7 @@ proposalsRoutes.post("/:company_id", ensureAuthenticated, createProposalControll
 proposalsRoutes.post("/link_service/:proposal_id", ensureAuthenticated, linkServiceByProposalController.handle);
 proposalsRoutes.get("/", ensureAuthenticated, listAllProposalsController.handle);
 proposalsRoutes.get("/:proposal_id", ensureAuthenticated, findProposalByIdController.handle);
+proposalsRoutes.get("/services/:proposal_id", ensureAuthenticated, listServiceByProposalController.handle);
 proposalsRoutes.put("/:proposal_id", ensureAuthenticated, updateProposalController.handle);
 proposalsRoutes.put(
   "/update_service_proposal/:service_proposal_id",
