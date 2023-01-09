@@ -1,6 +1,8 @@
 
+import { celebrate } from "celebrate";
 import { Router } from "express";
 
+import { ProposalValidator } from "@modules/proposals/validator/ProposalValidator";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
 import { CreateProposalController } from "../controllers/CreateProposalController";
@@ -25,12 +27,12 @@ const updateProposalController = new UpdateProposalController();
 const updateServiceByProposalController = new UpdateServiceByProposalController();
 const deleteProposalController = new DeleteProposalController();
 
-proposalsRoutes.post("/:company_id", ensureAuthenticated, createProposalController.handle);
+proposalsRoutes.post("/:company_id", ensureAuthenticated, celebrate(ProposalValidator), createProposalController.handle);
 proposalsRoutes.post("/link_service/:proposal_id", ensureAuthenticated, linkServiceByProposalController.handle);
 proposalsRoutes.get("/", ensureAuthenticated, listAllProposalsController.handle);
 proposalsRoutes.get("/:proposal_id", ensureAuthenticated, findProposalByIdController.handle);
 proposalsRoutes.get("/services/:proposal_id", ensureAuthenticated, listServiceByProposalController.handle);
-proposalsRoutes.put("/:proposal_id", ensureAuthenticated, updateProposalController.handle);
+proposalsRoutes.put("/:proposal_id", ensureAuthenticated, celebrate(ProposalValidator), updateProposalController.handle);
 proposalsRoutes.put(
   "/update_service_proposal/:service_proposal_id",
   ensureAuthenticated,
