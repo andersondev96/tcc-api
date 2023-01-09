@@ -10,6 +10,7 @@ import { LinkServiceByProposalController } from "../controllers/LinkServiceByPro
 import { ListAllProposalsController } from "../controllers/ListAllProposalsController";
 import { UnlinkServiceByProposalController } from "../controllers/UnlinkServiceByProposalController";
 import { UpdateProposalController } from "../controllers/UpdateProposalController";
+import { UpdateServiceByProposalController } from "../controllers/UpdateServiceByProposalController";
 
 const proposalsRoutes = Router();
 
@@ -19,6 +20,7 @@ const unlinkServiceByProposalController = new UnlinkServiceByProposalController(
 const listAllProposalsController = new ListAllProposalsController();
 const findProposalByIdController = new FindProposalByIdController();
 const updateProposalController = new UpdateProposalController();
+const updateServiceByProposalController = new UpdateServiceByProposalController();
 const deleteProposalController = new DeleteProposalController();
 
 proposalsRoutes.post("/:company_id", ensureAuthenticated, createProposalController.handle);
@@ -26,9 +28,14 @@ proposalsRoutes.post("/link_service/:proposal_id", ensureAuthenticated, linkServ
 proposalsRoutes.get("/", ensureAuthenticated, listAllProposalsController.handle);
 proposalsRoutes.get("/:proposal_id", ensureAuthenticated, findProposalByIdController.handle);
 proposalsRoutes.put("/:proposal_id", ensureAuthenticated, updateProposalController.handle);
+proposalsRoutes.put(
+  "/update_service_proposal/:service_proposal_id",
+  ensureAuthenticated,
+  updateServiceByProposalController.handle
+);
 proposalsRoutes.delete("/:proposal_id", ensureAuthenticated, deleteProposalController.handle);
 proposalsRoutes.delete(
-  "/link_service/:service_proposal_id",
+  "/unlink_service/:service_proposal_id",
   ensureAuthenticated,
   unlinkServiceByProposalController.handle
 );
