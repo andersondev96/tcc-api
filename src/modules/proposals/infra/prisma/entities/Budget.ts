@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 
 export class Budget {
   id?: string;
@@ -8,7 +7,7 @@ export class Budget {
   description: string;
   files?: string;
   delivery_date: Date;
-  amount: Prisma.Decimal;
+  amount: number;
   installments: number;
 
   constructor({
