@@ -2,6 +2,7 @@
 import { celebrate } from "celebrate";
 import { Router } from "express";
 
+import { ListBudgetProposalController } from "@modules/proposals/infra/http/controllers/ListBudgetByProposalController";
 import { ProposalValidator } from "@modules/proposals/validator/ProposalValidator";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
@@ -22,6 +23,7 @@ const linkServiceByProposalController = new LinkServiceByProposalController();
 const unlinkServiceByProposalController = new UnlinkServiceByProposalController();
 const listAllProposalsController = new ListAllProposalsController();
 const listServiceByProposalController = new ListServicesByProposalController();
+const listBudgetByProposalController = new ListBudgetProposalController();
 const findProposalByIdController = new FindProposalByIdController();
 const updateProposalController = new UpdateProposalController();
 const updateServiceByProposalController = new UpdateServiceByProposalController();
@@ -32,6 +34,7 @@ proposalsRoutes.post("/link_service/:proposal_id", ensureAuthenticated, linkServ
 proposalsRoutes.get("/", ensureAuthenticated, listAllProposalsController.handle);
 proposalsRoutes.get("/:proposal_id", ensureAuthenticated, findProposalByIdController.handle);
 proposalsRoutes.get("/services/:proposal_id", ensureAuthenticated, listServiceByProposalController.handle);
+proposalsRoutes.get("/budget/:proposal_id", ensureAuthenticated, listBudgetByProposalController.handle);
 proposalsRoutes.put("/:proposal_id", ensureAuthenticated, celebrate(ProposalValidator), updateProposalController.handle);
 proposalsRoutes.put(
   "/update_service_proposal/:service_proposal_id",
