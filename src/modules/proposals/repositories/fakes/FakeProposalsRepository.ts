@@ -1,12 +1,18 @@
 import { v4 as uuid } from "uuid";
 
+import { Company } from "@modules/companies/infra/prisma/entities/Company";
+import { Customer } from "@modules/customers/infra/prisma/entities/Customer";
 import { ICreateProposalDTO } from "@modules/proposals/dtos/ICreateProposalDTO";
 import { Proposal } from "@modules/proposals/infra/prisma/entities/Proposal";
+import { User } from "@modules/users/infra/prisma/entities/User";
 
 import { IProposalsRepository } from "../IProposalsRepository";
 
 export class FakeProposalsRepository implements IProposalsRepository {
   proposals: Proposal[] = [];
+  users: User[] = [];
+  customer: Customer[] = [];
+  company: Company[] = [];
 
   public async create(data: ICreateProposalDTO): Promise<Proposal> {
     Object.assign(data, {
@@ -35,6 +41,16 @@ export class FakeProposalsRepository implements IProposalsRepository {
     const proposal = this.proposals.find(proposal => proposal.id === proposal_id);
 
     return proposal;
+  }
+
+  public async listProposalsByObjectiveOrName(company_id, objective?: string, name?: string): Promise<Proposal[]> {
+
+    const company = this.proposals.find(proposal => proposal.company_id === company_id);
+
+    const proposal = this.proposals.filter(proposal => proposal.company_id === company.id && proposal.objective === objective || proposal.customer.user.name === name);
+
+    return proposal;
+
   }
 
   public async update(data: ICreateProposalDTO): Promise<Proposal> {

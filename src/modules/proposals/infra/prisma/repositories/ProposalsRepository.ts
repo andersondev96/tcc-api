@@ -6,6 +6,22 @@ import { Proposal } from "../entities/Proposal";
 
 export class ProposalsRepository implements IProposalsRepository {
 
+  public async listProposalsByObjectiveOrName(company_id: string, objective?: string, name?: string): Promise<Proposal[]> {
+    const proposals = await prisma.proposal.findMany({
+      where: {
+        company_id,
+        objective,
+        customer: {
+          user: {
+            name
+          }
+        }
+      }
+    });
+
+    return proposals;
+  }
+
   public async create({
     id,
     objective,

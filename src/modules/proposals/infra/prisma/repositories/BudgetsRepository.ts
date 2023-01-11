@@ -41,22 +41,6 @@ export class BudgetsRepository implements IBudgetsRepository {
     return budget;
   }
 
-  public async listBudgetsByObjectiveOrName(objective?: string, name?: string): Promise<Budget[]> {
-    const budgets = await prisma.budget.findMany({
-      where: {
-        proposal: {
-          description: objective
-        },
-        customer: {
-          user: {
-            name
-          }
-        }
-      }
-    });
-
-    return budgets;
-  }
   public async findBudgetById(budget_id: string): Promise<Budget> {
     const budget = await prisma.budget.findUnique({
       where: { id: budget_id }

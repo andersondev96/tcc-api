@@ -10,6 +10,8 @@ export interface IProposalsRepository {
 
   findProposalById(proposal_id: string): Promise<Proposal>;
 
+  listProposalsByObjectiveOrName(company_id: string, objective?: string, name?: string): Promise<Proposal[]>;
+
   update(data: ICreateProposalDTO): Promise<Proposal>;
 
   delete(proposal_id: string): Promise<void>;

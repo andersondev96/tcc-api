@@ -7,8 +7,6 @@ export interface IBudgetsRepository {
 
   findBudgetByProposal(proposal_id: string): Promise<Budget>;
 
-  listBudgetsByObjectiveOrName(objective?: string, name?: string): Promise<Budget[]>;
-
   findBudgetById(budget_id: string): Promise<Budget>;
 
   update(data: ICreateBudgetDTO): Promise<Budget>;
