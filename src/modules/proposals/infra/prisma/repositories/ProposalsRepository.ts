@@ -28,9 +28,17 @@ export class ProposalsRepository implements IProposalsRepository {
     return proposal;
   }
 
-  public async listProposals(customer_id: string): Promise<Proposal[]> {
+  public async listProposalsByCustomer(customer_id: string): Promise<Proposal[]> {
     const proposals = await prisma.proposal.findMany({
       where: { customer_id }
+    });
+
+    return proposals;
+  }
+
+  public async listProposalsByCompany(company_id: string): Promise<Proposal[]> {
+    const proposals = await prisma.proposal.findMany({
+      where: { company_id }
     });
 
     return proposals;

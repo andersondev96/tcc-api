@@ -11,6 +11,7 @@ import { DeleteProposalController } from "../controllers/DeleteProposalControlle
 import { FindProposalByIdController } from "../controllers/FindProposalByIdController";
 import { LinkServiceByProposalController } from "../controllers/LinkServiceByProposalController";
 import { ListAllProposalsController } from "../controllers/ListAllProposalsController";
+import { ListProposalsByCompanyController } from "../controllers/ListProposalsByCompanyController";
 import { ListServicesByProposalController } from "../controllers/ListServicesByProposalController";
 import { UnlinkServiceByProposalController } from "../controllers/UnlinkServiceByProposalController";
 import { UpdateProposalController } from "../controllers/UpdateProposalController";
@@ -23,6 +24,7 @@ const linkServiceByProposalController = new LinkServiceByProposalController();
 const unlinkServiceByProposalController = new UnlinkServiceByProposalController();
 const listAllProposalsController = new ListAllProposalsController();
 const listServiceByProposalController = new ListServicesByProposalController();
+const listProposalsByCompany = new ListProposalsByCompanyController();
 const listBudgetByProposalController = new ListBudgetProposalController();
 const findProposalByIdController = new FindProposalByIdController();
 const updateProposalController = new UpdateProposalController();
@@ -34,6 +36,7 @@ proposalsRoutes.post("/link_service/:proposal_id", ensureAuthenticated, linkServ
 proposalsRoutes.get("/", ensureAuthenticated, listAllProposalsController.handle);
 proposalsRoutes.get("/:proposal_id", ensureAuthenticated, findProposalByIdController.handle);
 proposalsRoutes.get("/services/:proposal_id", ensureAuthenticated, listServiceByProposalController.handle);
+proposalsRoutes.get("/company/:company_id", ensureAuthenticated, listProposalsByCompany.handle);
 proposalsRoutes.get("/budget/:proposal_id", ensureAuthenticated, listBudgetByProposalController.handle);
 proposalsRoutes.put("/:proposal_id", ensureAuthenticated, celebrate(ProposalValidator), updateProposalController.handle);
 proposalsRoutes.put(

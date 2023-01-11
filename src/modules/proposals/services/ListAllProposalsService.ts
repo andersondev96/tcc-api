@@ -19,7 +19,7 @@ export class ListAllProposalsService {
 
     const customer = await this.customerRepository.findCustomerByUser(user_id);
 
-    const proposals = await this.proposalRepository.listProposals(customer.id);
+    const proposals = await this.proposalRepository.listProposalsByCustomer(customer.id);
 
     return proposals;
 

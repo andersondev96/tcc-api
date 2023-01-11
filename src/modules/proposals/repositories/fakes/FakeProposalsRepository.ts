@@ -6,7 +6,6 @@ import { Proposal } from "@modules/proposals/infra/prisma/entities/Proposal";
 import { IProposalsRepository } from "../IProposalsRepository";
 
 export class FakeProposalsRepository implements IProposalsRepository {
-
   proposals: Proposal[] = [];
 
   public async create(data: ICreateProposalDTO): Promise<Proposal> {
@@ -19,11 +18,18 @@ export class FakeProposalsRepository implements IProposalsRepository {
     return data;
   }
 
-  public async listProposals(customer_id: string): Promise<Proposal[]> {
+  public async listProposalsByCustomer(customer_id: string): Promise<Proposal[]> {
     const proposals = this.proposals.filter(proposal => proposal.customer_id === customer_id);
 
     return proposals;
   }
+
+  public async listProposalsByCompany(company_id: string): Promise<Proposal[]> {
+    const proposals = this.proposals.filter(proposal => proposal.company_id === company_id);
+
+    return proposals;
+  }
+
 
   public async findProposalById(proposal_id: string): Promise<Proposal> {
     const proposal = this.proposals.find(proposal => proposal.id === proposal_id);
