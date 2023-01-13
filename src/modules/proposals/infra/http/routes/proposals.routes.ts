@@ -8,6 +8,7 @@ import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthen
 
 import { CreateProposalController } from "../controllers/CreateProposalController";
 import { DeleteProposalController } from "../controllers/DeleteProposalController";
+import { FilterProposalsController } from "../controllers/FilterProposalsController";
 import { FindProposalByIdController } from "../controllers/FindProposalByIdController";
 import { LinkServiceByProposalController } from "../controllers/LinkServiceByProposalController";
 import { ListAllProposalsController } from "../controllers/ListAllProposalsController";
@@ -27,6 +28,7 @@ const listServiceByProposalController = new ListServicesByProposalController();
 const listProposalsByCompany = new ListProposalsByCompanyController();
 const listBudgetByProposalController = new ListBudgetProposalController();
 const findProposalByIdController = new FindProposalByIdController();
+const filterProposalsController = new FilterProposalsController();
 const updateProposalController = new UpdateProposalController();
 const updateServiceByProposalController = new UpdateServiceByProposalController();
 const deleteProposalController = new DeleteProposalController();
@@ -38,6 +40,7 @@ proposalsRoutes.get("/:proposal_id", ensureAuthenticated, findProposalByIdContro
 proposalsRoutes.get("/services/:proposal_id", ensureAuthenticated, listServiceByProposalController.handle);
 proposalsRoutes.get("/company/:company_id", ensureAuthenticated, listProposalsByCompany.handle);
 proposalsRoutes.get("/budget/:proposal_id", ensureAuthenticated, listBudgetByProposalController.handle);
+proposalsRoutes.get("/filter/:company_id", ensureAuthenticated, filterProposalsController.handle);
 proposalsRoutes.put("/:proposal_id", ensureAuthenticated, celebrate(ProposalValidator), updateProposalController.handle);
 proposalsRoutes.put(
   "/update_service_proposal/:service_proposal_id",

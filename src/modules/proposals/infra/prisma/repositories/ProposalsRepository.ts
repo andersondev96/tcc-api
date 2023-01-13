@@ -6,22 +6,6 @@ import { Proposal } from "../entities/Proposal";
 
 export class ProposalsRepository implements IProposalsRepository {
 
-  public async listProposalsByObjectiveOrName(company_id: string, objective?: string, name?: string): Promise<Proposal[]> {
-    const proposals = await prisma.proposal.findMany({
-      where: {
-        company_id,
-        objective,
-        customer: {
-          user: {
-            name
-          }
-        }
-      }
-    });
-
-    return proposals;
-  }
-
   public async create({
     id,
     objective,
@@ -55,6 +39,31 @@ export class ProposalsRepository implements IProposalsRepository {
   public async listProposalsByCompany(company_id: string): Promise<Proposal[]> {
     const proposals = await prisma.proposal.findMany({
       where: { company_id }
+    });
+
+    return proposals;
+  }
+
+  public async listProposalsByObjectiveOrName(company_id: string, objective?: string, name?: string): Promise<Proposal[]> {
+    const proposals = await prisma.proposal.findMany({
+      where: {
+        OR: [
+          {
+            objective: {
+              contains: objective
+            }
+          },
+          {
+            customer: {
+              user: {
+                name: {
+                  contains: name
+                }
+              }
+            }
+          }
+        ]
+      }
     });
 
     return proposals;

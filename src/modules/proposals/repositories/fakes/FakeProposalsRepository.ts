@@ -43,7 +43,7 @@ export class FakeProposalsRepository implements IProposalsRepository {
     return proposal;
   }
 
-  public async listProposalsByObjectiveOrName(company_id, objective?: string, name?: string): Promise<Proposal[]> {
+  public async listProposalsByObjectiveOrName(company_id: string, objective?: string, name?: string): Promise<Proposal[]> {
     const company = this.proposals.find(proposal => proposal.company_id === company_id);
 
     const user = this.users.find(user => user.name === name);
