@@ -64,6 +64,14 @@ export class FakeProposalsRepository implements IProposalsRepository {
     return data;
   }
 
+  public async updateStatus(id: string, status: string): Promise<Proposal> {
+    const index = this.proposals.findIndex(proposal => proposal.id === id);
+
+    this.proposals[index].status = status;
+
+    return this.proposals[index];
+  }
+
   public async delete(proposal_id: string): Promise<void> {
     const index = this.proposals.findIndex(proposal => proposal.id === proposal_id);
 

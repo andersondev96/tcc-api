@@ -6,15 +6,17 @@ export class Proposal {
   objective: string;
   time?: Date;
   description?: string;
+  status?: string;
   customer_id: string;
   company_id: string;
   company?: ICreateCompanyDTO;
   customer?: ICreateCustomerDTO;
 
-  constructor({ objective, description, customer_id, company_id, company, customer }: Proposal) {
+  constructor({ objective, description, status, customer_id, company_id, company, customer }: Proposal) {
     Object.assign({
       objective,
       description,
+      status,
       customer_id,
       company_id,
       company,

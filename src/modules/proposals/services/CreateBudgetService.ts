@@ -52,6 +52,8 @@ export class CreateBudgetService {
       installments
     });
 
+    await this.proposalRepository.updateStatus(budget.proposal_id, "Budget sent (Awaiting response)");
+
     return budget;
 
   }

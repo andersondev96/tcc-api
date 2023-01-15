@@ -6,6 +6,7 @@ import { ListBudgetProposalController } from "@modules/proposals/infra/http/cont
 import { ProposalValidator } from "@modules/proposals/validator/ProposalValidator";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
+import { AcceptOrRejectProposalController } from "../controllers/AcceptOrRejectProposalController";
 import { CreateProposalController } from "../controllers/CreateProposalController";
 import { DeleteProposalController } from "../controllers/DeleteProposalController";
 import { FilterProposalsController } from "../controllers/FilterProposalsController";
@@ -31,6 +32,7 @@ const findProposalByIdController = new FindProposalByIdController();
 const filterProposalsController = new FilterProposalsController();
 const updateProposalController = new UpdateProposalController();
 const updateServiceByProposalController = new UpdateServiceByProposalController();
+const acceptOrRejectProposalController = new AcceptOrRejectProposalController();
 const deleteProposalController = new DeleteProposalController();
 
 proposalsRoutes.post("/:company_id", ensureAuthenticated, celebrate(ProposalValidator), createProposalController.handle);
@@ -47,6 +49,7 @@ proposalsRoutes.put(
   ensureAuthenticated,
   updateServiceByProposalController.handle
 );
+proposalsRoutes.patch("/response/:proposal_id", ensureAuthenticated, acceptOrRejectProposalController.handle);
 proposalsRoutes.delete("/:proposal_id", ensureAuthenticated, deleteProposalController.handle);
 proposalsRoutes.delete(
   "/unlink_service/:service_proposal_id",

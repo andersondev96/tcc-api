@@ -86,6 +86,15 @@ export class ProposalsRepository implements IProposalsRepository {
     return proposal;
   }
 
+  public async updateStatus(id: string, status: string): Promise<Proposal> {
+    const proposal = await prisma.proposal.update({
+      where: { id },
+      data: { status }
+    });
+
+    return proposal;
+  }
+
   public async delete(proposal_id: string): Promise<void> {
     await prisma.proposal.delete({
       where: { id: proposal_id }

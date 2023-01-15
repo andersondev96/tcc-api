@@ -14,5 +14,7 @@ export interface IProposalsRepository {
 
   update(data: ICreateProposalDTO): Promise<Proposal>;
 
+  updateStatus(id: string, status: string): Promise<Proposal>;
+
   delete(proposal_id: string): Promise<void>;
 }

@@ -4,6 +4,7 @@ import { AppError } from "@shared/errors/AppError";
 
 import { Budget } from "../infra/prisma/entities/Budget";
 import { IBudgetsRepository } from "../repositories/IBudgetsRepository";
+import { IProposalsRepository } from "../repositories/IProposalsRepository";
 
 interface IRequest {
   budget_id: string;
@@ -18,7 +19,9 @@ export class UpdateBudgetService {
 
   constructor(
     @inject("BudgetsRepository")
-    private budgetRepository: IBudgetsRepository
+    private budgetRepository: IBudgetsRepository,
+    @inject("ProposalsRepository")
+    private proposalRepository: IProposalsRepository
   ) { }
 
   public async execute({
@@ -44,6 +47,8 @@ export class UpdateBudgetService {
       amount,
       installments
     });
+
+    await this.proposalRepository.updateStatus(budget.proposal_id, "Budget update (Awaiting response)");
 
     return budget;
 

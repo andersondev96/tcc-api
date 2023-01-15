@@ -32,7 +32,8 @@ describe("UpdateBudgetService", () => {
     fakeProposalRepository = new FakeProposalsRepository();
     fakeBudgetRepository = new FakeBudgetRepository();
     updateBudgetService = new UpdateBudgetService(
-      fakeBudgetRepository
+      fakeBudgetRepository,
+      fakeProposalRepository
     );
   });
 
