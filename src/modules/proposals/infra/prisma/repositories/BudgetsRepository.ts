@@ -49,6 +49,15 @@ export class BudgetsRepository implements IBudgetsRepository {
     return budget;
   }
 
+  public async uploadFiles(budget_id: string, files: string[]): Promise<Budget> {
+    const budget = await prisma.budget.update({
+      where: { id: budget_id },
+      data: { files }
+    });
+
+    return budget;
+  }
+
   public async update(data: ICreateBudgetDTO): Promise<Budget> {
     const budget = await prisma.budget.update({
       where: { id: data.id },

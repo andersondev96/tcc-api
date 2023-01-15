@@ -5,7 +5,7 @@ export interface ICreateBudgetDTO {
   company_id: string;
   proposal_id: string;
   description: string;
-  files?: string;
+  files?: string[];
   delivery_date: Date;
   amount: number;
   installments: number;

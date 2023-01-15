@@ -10,4 +10,6 @@ export interface IBudgetsRepository {
   findBudgetById(budget_id: string): Promise<Budget>;
 
   update(data: ICreateBudgetDTO): Promise<Budget>;
+
+  uploadFiles(budget_id: string, files: string[]): Promise<Budget>;
 }

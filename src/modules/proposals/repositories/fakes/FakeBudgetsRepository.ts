@@ -38,4 +38,12 @@ export class FakeBudgetRepository implements IBudgetsRepository {
 
     return data;
   }
+
+  public async uploadFiles(budget_id: string, files: string[]): Promise<Budget> {
+    const index = this.budgets.findIndex(budget => budget.id === budget_id);
+
+    this.budgets[index].files = files;
+
+    return this.budgets[index];
+  }
 }
