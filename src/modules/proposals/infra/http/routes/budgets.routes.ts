@@ -14,6 +14,6 @@ const createBudgetController = new CreateBudgetController();
 const updateBudgetController = new UpdateBudgetController();
 
 budgetsRoutes.post("/:proposal_id", ensureAuthenticated, celebrate(BudgetValidator), createBudgetController.handle);
-budgetsRoutes.put("/:proposed_id", ensureAuthenticated, celebrate(BudgetValidator), updateBudgetController.handle);
+budgetsRoutes.put("/:budget_id", ensureAuthenticated, celebrate(BudgetValidator), updateBudgetController.handle);
 
 export default budgetsRoutes;

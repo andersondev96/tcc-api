@@ -8,7 +8,7 @@ import { IBudgetsRepository } from "../repositories/IBudgetsRepository";
 interface IRequest {
   budget_id: string;
   description: string;
-  delivery_date: Date;
+  delivery_date?: Date;
   amount: number;
   installments: number;
 }
@@ -40,7 +40,7 @@ export class UpdateBudgetService {
       company_id: budgetAlreadyExists.company_id,
       proposal_id: budgetAlreadyExists.proposal_id,
       description,
-      delivery_date,
+      delivery_date: new Date(delivery_date),
       amount,
       installments
     });
