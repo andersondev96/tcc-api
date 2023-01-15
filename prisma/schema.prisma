@@ -170,6 +170,7 @@ model Proposal {
   objective String
   time DateTime? @default(now())
   description String?
+  status String? @default("Waiting for budget")
   customer_id String 
   company_id String
   customer Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -188,7 +189,7 @@ model Budget {
   company_id String
   proposal_id String @unique
   description String
-  files String?
+  files String[]
   delivery_date DateTime @db.Date
   amount Float
   installments Int 
