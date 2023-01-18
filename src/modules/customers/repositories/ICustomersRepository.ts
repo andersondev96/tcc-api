@@ -11,5 +11,7 @@ export interface ICustomersRepository {
 
   findCustomerByUser(user_id: string): Promise<Customer>;
 
+  findCustomerByCompany(company_id: string): Promise<Customer[]>;
+
   deleteCustomer(customer_id: string): Promise<void>;
 } 

@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import assessmentsRoute from "@modules/assessments/infra/http/routes/assessments.routes";
 import companiesRoutes from "@modules/companies/infra/http/routes/companies.routes";
+import customersRouter from "@modules/customers/infra/http/routes/customers.routes";
 import budgetsRoutes from "@modules/proposals/infra/http/routes/budgets.routes";
 import proposalsRouter from "@modules/proposals/infra/http/routes/proposals.routes";
 import servicesRouter from "@modules/services/infra/http/routes/services.routes";
@@ -19,5 +20,7 @@ routes.use("/services", servicesRouter);
 routes.use("/assessments", assessmentsRoute);
 routes.use("/proposals", proposalsRouter);
 routes.use("/budgets", budgetsRoutes);
+routes.use("/customers", customersRouter);
+
 
 export default routes;
