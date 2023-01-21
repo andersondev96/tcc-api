@@ -26,6 +26,8 @@ export class ListCustomersByCompanyService {
 
     const customers = await this.customerRepository.findCustomerByCompany(company_id);
 
+    console.log(customers);
+
     return customers;
   }
 }

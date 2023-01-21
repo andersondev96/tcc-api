@@ -6,7 +6,7 @@ import { ListCustomersByCompanyService } from "@modules/customers/services/ListC
 export class ListCustomersByCompanyController {
 
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { company_id } = request.body;
+    const { company_id } = request.params;
 
     const listCustomerByCompanyService = container.resolve(ListCustomersByCompanyService);
 
