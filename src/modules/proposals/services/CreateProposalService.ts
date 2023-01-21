@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
+import { ICustomersCompaniesRepository } from "@modules/customers/repositories/ICustomersCompaniesRepository";
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -27,6 +28,8 @@ export class CreateProposalService {
     private companyRepository: ICompaniesRepository,
     @inject("CustomersRepository")
     private customerRepository: ICustomersRepository,
+    @inject("CustomersCompaniesRepository")
+    private customerCompanyRepository: ICustomersCompaniesRepository,
     @inject("ProposalsRepository")
     private proposalRepository: IProposalsRepository
   ) { }
@@ -48,6 +51,11 @@ export class CreateProposalService {
           user_id,
           telephone,
           status: "negotiation"
+        });
+
+        await this.customerCompanyRepository.create({
+          company_id,
+          customer_id: newCustomer.id
         });
 
         const proposal = await this.proposalRepository.create({

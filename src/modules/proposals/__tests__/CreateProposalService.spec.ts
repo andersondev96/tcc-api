@@ -2,10 +2,10 @@ import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/F
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
+import { FakeCustomersCompaniesRepository } from "@modules/customers/repositories/fakes/FakeCustomersCompaniesRepository";
 import { FakeCustomersRepository } from "@modules/customers/repositories/fakes/FakeCustomersRepository";
+import { ICustomersCompaniesRepository } from "@modules/customers/repositories/ICustomersCompaniesRepository";
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
-import { FakeServicesRepository } from "@modules/services/repositories/fakes/FakeServicesRepository";
-import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -17,7 +17,7 @@ import { CreateProposalService } from "../services/CreateProposalService";
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
-let fakeServiceRepository: IServicesRepository;
+let fakeCustomerCompanyRepository: ICustomersCompaniesRepository;
 let fakeCustomerRepository: ICustomersRepository;
 let fakeProposalRepository: IProposalsRepository;
 let createProposalService: CreateProposalService;
@@ -27,13 +27,14 @@ describe("CreateProposalService", () => {
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
-    fakeServiceRepository = new FakeServicesRepository();
     fakeCustomerRepository = new FakeCustomersRepository();
+    fakeCustomerCompanyRepository = new FakeCustomersCompaniesRepository();
     fakeProposalRepository = new FakeProposalsRepository();
     createProposalService = new CreateProposalService(
       fakeUserRepository,
       fakeCompanyRepository,
       fakeCustomerRepository,
+      fakeCustomerCompanyRepository,
       fakeProposalRepository
     );
   });

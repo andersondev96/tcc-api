@@ -18,7 +18,7 @@ export class CreateProposalController {
       objective,
       time,
       description,
-      telephone,
+      telephone: String(telephone),
       company_id,
       user_id: id
     });
