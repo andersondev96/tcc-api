@@ -32,4 +32,13 @@ export class FakeCustomersCompaniesRepository implements ICustomersCompaniesRepo
     this.customersCompanies.splice(index, 1);
   }
 
+  public async findCompanyWithCustomer(company_id: string, customer_id: string): Promise<CustomerCompany> {
+    const customerCompany = this.customersCompanies.find(
+      customerCompany => customerCompany.company_id === company_id &&
+        customerCompany.customer_id === customer_id
+    );
+
+    return customerCompany;
+  }
+
 }

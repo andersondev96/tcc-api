@@ -32,13 +32,23 @@ export class CustomersCompaniesRepository implements ICustomersCompaniesReposito
     return customers;
   }
 
-
   public async delete(customer_company_id: string): Promise<void> {
     await prisma.customer_Company.delete({
       where: {
         id: customer_company_id
       }
     });
+  }
+
+  public async findCompanyWithCustomer(company_id: string, customer_id: string): Promise<CustomerCompany> {
+    const customerCompany = await prisma.customer_Company.findFirst({
+      where: {
+        company_id,
+        customer_id
+      }
+    });
+
+    return customerCompany;
   }
 
 }

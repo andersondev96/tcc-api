@@ -53,11 +53,6 @@ export class CreateProposalService {
           status: "negotiation"
         });
 
-        await this.customerCompanyRepository.create({
-          company_id,
-          customer_id: newCustomer.id
-        });
-
         const proposal = await this.proposalRepository.create({
           objective,
           time,
@@ -77,6 +72,20 @@ export class CreateProposalService {
           company_id,
           customer_id: customer.id
         });
+
+        const customerCompanyAlreadyExists = await this.customerCompanyRepository.findCompanyWithCustomer(
+          company_id,
+          customer.id
+        );
+
+        console.log(customerCompanyAlreadyExists);
+
+        if (!customerCompanyAlreadyExists) {
+          await this.customerCompanyRepository.create({
+            company_id,
+            customer_id: customer.id
+          });
+        }
 
         return proposal;
 

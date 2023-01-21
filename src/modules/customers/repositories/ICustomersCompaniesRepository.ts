@@ -7,5 +7,7 @@ export interface ICustomersCompaniesRepository {
 
   findCustomerByCompany(company_id: string): Promise<CustomerCompany[]>;
 
+  findCompanyWithCustomer(company_id: string, customer_id: string): Promise<CustomerCompany>;
+
   delete(customer_company_id: string): Promise<void>;
 }
