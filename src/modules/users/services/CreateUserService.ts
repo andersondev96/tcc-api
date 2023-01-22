@@ -1,6 +1,7 @@
 import { injectable, inject } from "tsyringe";
 
 import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
 import { AppError } from "@shared/errors/AppError";
 
 import { User } from "../infra/prisma/entities/User";
@@ -23,6 +24,9 @@ export class CreateUserService {
     @inject("EntrepreneursRepository")
     private entrepreneurRepository: IEntrepreneursRepository,
 
+    @inject("EntrepreneursSettingsRepository")
+    private entrepreneurSettingsRepository: IEntrepreneursSettingsRepository,
+
     @inject("HashProvider")
     private hashProvider: IHashProvider
   ) { }
@@ -43,8 +47,12 @@ export class CreateUserService {
     });
 
     if (isEntrepreneur) {
-      await this.entrepreneurRepository.create({
+      const entrepreneur = await this.entrepreneurRepository.create({
         user_id: user.id
+      });
+
+      await this.entrepreneurSettingsRepository.create({
+        entrepreneur_id: entrepreneur.id
       });
     }
 

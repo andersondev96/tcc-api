@@ -1,5 +1,7 @@
 import { FakeEntrepreneursRepository } from "@modules/companies/repositories/fakes/FakeEntrepreneursRepository";
 import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { FakeEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursSettingsRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
 import { AppError } from "@shared/errors/AppError";
 
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
@@ -10,6 +12,7 @@ import { CreateUserService } from "../services/CreateUserService";
 
 let fakeUsersRepository: IUsersRepository;
 let fakeEntrepreneurRepository: IEntrepreneursRepository;
+let fakeEntrepreneurSettingsRepository: IEntrepreneursSettingsRepository;
 let fakeHashProvider: IHashProvider;
 let createUserService: CreateUserService;
 
@@ -19,9 +22,11 @@ describe("CreateUserService", () => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeHashProvider = new FakeHashProvider();
     fakeEntrepreneurRepository = new FakeEntrepreneursRepository();
+    fakeEntrepreneurSettingsRepository = new FakeEntrepreneursSettingsRepository();
     createUserService = new CreateUserService(
       fakeUsersRepository,
       fakeEntrepreneurRepository,
+      fakeEntrepreneurSettingsRepository,
       fakeHashProvider
     );
   });
@@ -31,7 +36,7 @@ describe("CreateUserService", () => {
       name: "John doe",
       email: "john@example.com",
       password: "123456",
-      isEntrepreneur: true,
+      isEntrepreneur: true
     });
 
     expect(user).toHaveProperty("id");
@@ -41,7 +46,7 @@ describe("CreateUserService", () => {
     const user = await createUserService.execute({
       name: "John doe",
       email: "john@example.com",
-      password: "123456",
+      password: "123456"
     });
 
     await expect(createUserService.execute(user)).rejects.toBeInstanceOf(

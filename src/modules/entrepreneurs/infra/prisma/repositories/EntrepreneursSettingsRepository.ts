@@ -43,7 +43,7 @@ export class EntrepreneursSettingsRepository implements IEntrepreneursSettingsRe
 
   public async update(data: ICreateEntrepreneurSettingsDTO): Promise<EntrepreneurSettings> {
     const entrepreneurSettings = await prisma.entrepreneur_Settings.update({
-      where: { id: data.entrepreneur_id },
+      where: { entrepreneur_id: data.entrepreneur_id },
       data: { ...data }
     });
 
