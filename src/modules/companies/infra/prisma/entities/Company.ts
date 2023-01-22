@@ -3,9 +3,9 @@ export class Company {
   name: string;
   cnpj: string;
   category: string;
-  description: string;
+  description?: string;
   stars?: number;
-  services: string[];
+  services?: string[];
   physical_localization: boolean;
   user_id: string;
   contact_id: string;

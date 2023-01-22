@@ -12,13 +12,13 @@ interface IRequest {
   name: string,
   cnpj: string,
   category: string,
-  description: string,
-  services: string[],
+  description?: string,
+  services?: string[],
   physical_localization: boolean,
   telephone: string,
-  whatsapp: string,
+  whatsapp?: string,
   email: string,
-  website: string,
+  website?: string,
   address?: Address,
 }
 

@@ -28,15 +28,15 @@ interface IRequest {
   name: string
   cnpj: string
   category: string
-  description: string
-  services: string[]
-  schedules: ISchedule[]
+  description?: string
+  services?: string[]
+  schedules?: ISchedule[]
   physical_localization: boolean
   address?: IAddress
   telephone: string
-  whatsapp: string
+  whatsapp?: string
   email: string
-  website: string
+  website?: string
   user_id: string
 }
 
