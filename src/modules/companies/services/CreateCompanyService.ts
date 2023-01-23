@@ -140,17 +140,21 @@ export class CreateCompanyService {
       });
     }
 
-    schedules.map(async (schedule) => {
-      const { weekday, opening_time, closing_time, lunch_time } = schedule;
 
-      await this.scheduleRepository.create({
-        weekday,
-        opening_time,
-        closing_time,
-        lunch_time,
-        company_id: company.id
+    if (schedules) {
+      schedules.map(async (schedule) => {
+        const { weekday, opening_time, closing_time, lunch_time } = schedule;
+
+        await this.scheduleRepository.create({
+          weekday,
+          opening_time,
+          closing_time,
+          lunch_time,
+          company_id: company.id
+        });
       });
-    });
+    }
+
 
     return company;
   }
