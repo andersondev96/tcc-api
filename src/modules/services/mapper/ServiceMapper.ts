@@ -15,6 +15,7 @@ export class ServiceMapper {
     stars,
     assessments,
     company_id
+
   }: Service): ICreateServiceDTO {
 
     const service = {

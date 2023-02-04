@@ -26,6 +26,10 @@ export class FindServiceByCompanyService {
 
     const services = await this.serviceRepository.listServicesByCompany(company_id);
 
+    services.map(service => (
+      service.image_url = service.image_url && `${process.env.APP_API_URL}/service/${service.image_url}`
+    ));
+
     return services;
   }
 }
