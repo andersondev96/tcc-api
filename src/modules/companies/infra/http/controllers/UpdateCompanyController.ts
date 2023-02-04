@@ -20,7 +20,12 @@ export class UpdateCompanyController {
       whatsapp,
       email,
       website,
-      address
+      cep,
+      street,
+      district,
+      number,
+      state,
+      city
     } = request.body;
 
     const updateCompanyService = container.resolve(UpdateCompanyService);
@@ -37,7 +42,12 @@ export class UpdateCompanyController {
       whatsapp,
       email,
       website,
-      address
+      cep,
+      street,
+      district,
+      number,
+      state,
+      city
     });
 
     return response.json(updateCompany);

@@ -19,16 +19,12 @@ interface IRequest {
   whatsapp?: string,
   email: string,
   website?: string,
-  address?: Address,
-}
-
-interface IAddress {
-  cep: string;
-  street: string;
-  district: string;
-  number: number;
-  state: string;
-  city: string;
+  cep?: string;
+  street?: string;
+  district?: string;
+  number?: number;
+  state?: string;
+  city?: string;
 }
 
 interface IResponse {
@@ -43,7 +39,6 @@ interface IResponse {
   email: string;
   website: string
   physical_localization: boolean;
-  address: IAddress;
 }
 
 @injectable()
@@ -73,7 +68,12 @@ export class UpdateCompanyService {
     whatsapp,
     email,
     website,
-    address
+    cep,
+    street,
+    district,
+    number,
+    state,
+    city
   }: IRequest): Promise<IResponse> {
 
     const findCompanyById = await this.companyRepository.findById(id);
@@ -86,10 +86,6 @@ export class UpdateCompanyService {
 
     if (checkCompanyExists && checkCompanyExists.id !== id) {
       throw new AppError("Company name already used!");
-    }
-
-    if (physical_localization && address === undefined) {
-      throw new AppError("Address is required");
     }
 
     const contact = await this.contactRepository.update({
@@ -116,23 +112,23 @@ export class UpdateCompanyService {
 
     if (company.physical_localization && !addressId) {
       await this.addressRepository.create({
-        cep: address.cep,
-        street: address.street,
-        district: address.district,
-        number: address.number,
-        state: address.state,
-        city: address.city,
+        cep,
+        street,
+        district,
+        number,
+        state,
+        city,
         company_id: company.id
       });
     } else if (company.physical_localization && addressId) {
       await this.addressRepository.update({
         id: addressId.id,
-        cep: address.cep,
-        street: address.street,
-        district: address.district,
-        number: address.number,
-        state: address.state,
-        city: address.city,
+        cep,
+        street,
+        district,
+        number,
+        state,
+        city,
         company_id: company.id
       });
     } else if (!company.physical_localization && addressId) {
@@ -150,8 +146,8 @@ export class UpdateCompanyService {
       whatsapp: contact.whatsapp,
       email: contact.email,
       website: contact.website,
-      physical_localization: company.physical_localization,
-      address
+      physical_localization: company.physical_localization
+
     };
 
     return response;

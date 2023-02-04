@@ -9,15 +9,6 @@ import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { IEntrepreneursRepository } from "../repositories/IEntrepreneursRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
-interface IAddress {
-  cep: string
-  street: string
-  district: string
-  number: number
-  state: string
-  city: string
-}
-
 interface ISchedule {
   weekday: string
   opening_time: string
@@ -31,8 +22,13 @@ interface IRequest {
   description?: string
   services?: string[]
   schedules?: ISchedule[]
-  physical_localization: boolean
-  address?: IAddress
+  physical_localization: boolean,
+  cep?: string
+  street?: string
+  district?: string
+  number?: number
+  state?: string
+  city?: string
   telephone: string
   whatsapp?: string
   email: string
@@ -71,7 +67,12 @@ export class CreateCompanyService {
     services,
     schedules,
     physical_localization,
-    address,
+    cep,
+    street,
+    district,
+    number,
+    state,
+    city,
     telephone,
     whatsapp,
     email,
@@ -94,10 +95,6 @@ export class CreateCompanyService {
 
     if (checkCompanyExists) {
       throw new AppError("Company already exists");
-    }
-
-    if (physical_localization && address === undefined) {
-      throw new AppError("Address is required");
     }
 
     const contact = await this.contactRepository.create({
@@ -130,12 +127,12 @@ export class CreateCompanyService {
 
     if (company.physical_localization) {
       await this.addressRepository.create({
-        cep: address.cep,
-        street: address.street,
-        district: address.district,
-        number: address.number,
-        state: address.state,
-        city: address.city,
+        cep,
+        street,
+        district,
+        number,
+        state,
+        city,
         company_id: company.id
       });
     }
