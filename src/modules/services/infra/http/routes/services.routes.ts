@@ -41,8 +41,8 @@ servicesRouter.post(
   createServiceController.handle
 );
 servicesRouter.get("/:service_id", ensureAuthenticated, ensureEntrepreneur, showServiceController.handle);
-servicesRouter.get("/:company_id", findServiceByCompanyController.handle);
-servicesRouter.get("/:company_id", findServiceByNameController.handle);
+servicesRouter.get("/company/:company_id", findServiceByCompanyController.handle);
+servicesRouter.get("/name/:company_id", findServiceByNameController.handle);
 servicesRouter.get("/category/:company_id", findServiceByCategoryController.handle);
 servicesRouter.patch(
   "/service/:service_id",
@@ -52,7 +52,6 @@ servicesRouter.patch(
   updateServiceImageController.handle
 );
 
-servicesRouter.get("/image/");
 servicesRouter.patch("/:service_id", ensureAuthenticated, ensureEntrepreneur, getServiceHighlightController.handle);
 servicesRouter.patch("/favorites/:service_id", ensureAuthenticated, getFavoritesController.handle);
 servicesRouter.put(
