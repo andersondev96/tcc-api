@@ -28,7 +28,7 @@ export class CreateImageCompanyService {
 
   public async execute({
     company_id,
-    images_name,
+    images_name
   }: IRequest): Promise<void> {
 
     const companyExists = await this.companyRepository.findById(company_id);
@@ -40,12 +40,12 @@ export class CreateImageCompanyService {
     images_name.map(async (image) => {
       await this.imageCompanyRepository.create({
         image_name: image,
-        image_url: `http://localhost:3333/companies/${image}`,
-        company_id,
+        image_url: `http://localhost:3333/company/${image}`,
+        company_id
       });
 
-      await this.storageProvider.save(image, "companies");
-    })
+      await this.storageProvider.save(image, "company");
+    });
 
   }
 }

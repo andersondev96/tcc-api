@@ -21,6 +21,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use("/avatar", express.static(`${upload.tmpFolder}/avatar`));
 
+app.use("/company", express.static(`${upload.tmpFolder}/company`));
+
 app.use("/service", express.static(`${upload.tmpFolder}/service`));
 
 app.use(routes);
