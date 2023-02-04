@@ -14,6 +14,7 @@ import { FindServiceByCompanyController } from "../controllers/FindServiceByComp
 import { FindServiceByNameController } from "../controllers/FindServiceByNameController";
 import { GetFavoritesController } from "../controllers/GetFavoritesController";
 import { GetServiceHighlightController } from "../controllers/GetServiceHighlightController";
+import { ShowServiceController } from "../controllers/ShowServiceController";
 import { UpdateServiceController } from "../controllers/UpdateServiceController";
 import { UpdateServiceImageController } from "../controllers/UpdateServiceImageController";
 
@@ -21,6 +22,7 @@ const servicesRouter = Router();
 const uploadImage = multer(uploadConfig);
 
 const createServiceController = new CreateServiceController();
+const showServiceController = new ShowServiceController();
 const findServiceByCompanyController = new FindServiceByCompanyController();
 const findServiceByNameController = new FindServiceByNameController();
 const findServiceByCategoryController = new FindServiceByCategoryController();
@@ -38,16 +40,19 @@ servicesRouter.post(
   celebrate(createServiceValidator),
   createServiceController.handle
 );
+servicesRouter.get("/:service_id", ensureAuthenticated, ensureEntrepreneur, showServiceController.handle);
 servicesRouter.get("/:company_id", findServiceByCompanyController.handle);
 servicesRouter.get("/:company_id", findServiceByNameController.handle);
 servicesRouter.get("/category/:company_id", findServiceByCategoryController.handle);
 servicesRouter.patch(
-  "/image/:service_id",
+  "/service/:service_id",
   ensureAuthenticated,
   ensureEntrepreneur,
   uploadImage.single("service"),
   updateServiceImageController.handle
 );
+
+servicesRouter.get("/image/");
 servicesRouter.patch("/:service_id", ensureAuthenticated, ensureEntrepreneur, getServiceHighlightController.handle);
 servicesRouter.patch("/favorites/:service_id", ensureAuthenticated, getFavoritesController.handle);
 servicesRouter.put(

@@ -17,7 +17,7 @@ export class UpdateServiceImageService {
     private servicesRepository: IServicesRepository,
 
     @inject("StorageProvider")
-    private storageProvider: IStorageProvider,
+    private storageProvider: IStorageProvider
   ) { }
 
   public async execute({ service_id, image_url }: IRequest): Promise<void> {
@@ -25,10 +25,10 @@ export class UpdateServiceImageService {
     const service = await this.servicesRepository.findServiceById(service_id);
 
     if (service.image_url) {
-      await this.storageProvider.delete(service.image_url, "services");
+      await this.storageProvider.delete(service.image_url, "service");
     }
 
-    await this.storageProvider.save(image_url, "services");
+    await this.storageProvider.save(image_url, "service");
 
     service.image_url = image_url;
 

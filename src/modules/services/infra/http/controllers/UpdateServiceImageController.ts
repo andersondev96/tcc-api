@@ -15,7 +15,7 @@ export class UpdateServiceImageController {
 
     await updateServiceImageService.execute({
       service_id,
-      image_url,
+      image_url
     });
 
     return response.status(204).send();
