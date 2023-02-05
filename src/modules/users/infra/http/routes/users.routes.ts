@@ -3,6 +3,7 @@ import { Router } from "express";
 import multer from "multer";
 
 import uploadConfig from "@config/upload";
+import { FindUserByEntrepreneurController } from "@modules/entrepreneurs/infra/http/controllers/FindUserByEntrepreneurController";
 import { UpdateEntrepreneursSettingsController } from "@modules/entrepreneurs/infra/http/controllers/UpdateEntrepreneursSettingsController";
 import { userValidator } from "@modules/users/validator/UserValidator";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
@@ -21,9 +22,11 @@ const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
 const updateEntrepreneursSettingsController = new UpdateEntrepreneursSettingsController();
+const findUserByEntrepreneurController = new FindUserByEntrepreneurController();
 
 usersRouter.post("/", celebrate(userValidator), createUserController.handle);
 usersRouter.get("/profile", ensureAuthenticated, findByUserIdController.handle);
+usersRouter.get("/entrepreneur", ensureAuthenticated, findUserByEntrepreneurController.handle);
 usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);
 usersRouter.put("/", ensureAuthenticated, celebrate(userValidator), updateUserController.handle);
 usersRouter.patch(
