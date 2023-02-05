@@ -50,7 +50,7 @@ companiesRouter.post(
   upload.array("company"),
   createImageCompanyController.handle
 );
-companiesRouter.get("/me", ensureAuthenticated, ensureEntrepreneur, findCompanyByUserController.handle);
+companiesRouter.get("/me", ensureAuthenticated, findCompanyByUserController.handle);
 companiesRouter.get("/:id", findByCompanyController.handle);
 companiesRouter.get("/", ensureAuthenticated, ensureEntrepreneur, listAllCompaniesController.handle);
 companiesRouter.put("/:id", updateCompanyController.handle);
