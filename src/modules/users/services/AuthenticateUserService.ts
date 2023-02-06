@@ -18,6 +18,7 @@ interface IResponse {
   user: {
     name: string;
     email: string;
+    avatar: string;
   };
   token: string;
   refresh_token: string;
@@ -56,17 +57,17 @@ export class AuthenticateUserService {
       expires_in_token,
       secret_refresh_token,
       expires_in_refresh_token,
-      expires_refresh_token_days,
+      expires_refresh_token_days
     } = authConfig;
 
     const token = sign({}, secret_token, {
       subject: user.id,
-      expiresIn: expires_in_token,
+      expiresIn: expires_in_token
     });
 
     const refresh_token = sign({ email }, secret_refresh_token, {
       subject: user.id,
-      expiresIn: expires_in_refresh_token,
+      expiresIn: expires_in_refresh_token
     });
 
     const refresh_token_expires_date = this.dateProvider.addDays(
@@ -76,7 +77,7 @@ export class AuthenticateUserService {
     await this.usersTokenRepository.create({
       user_id: user.id,
       refresh_token,
-      expires_date: refresh_token_expires_date,
+      expires_date: refresh_token_expires_date
     });
 
     const tokenReturn: IResponse = {
@@ -84,8 +85,9 @@ export class AuthenticateUserService {
       user: {
         name: user.name,
         email: user.email,
+        avatar: user.avatar
       },
-      refresh_token,
+      refresh_token
     };
 
     return tokenReturn;

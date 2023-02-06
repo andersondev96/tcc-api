@@ -19,7 +19,7 @@ export class CreateImageCompanyController {
 
     await createImageCompanyService.execute({
       company_id: id,
-      images_name: imagesName,
+      images_name: imagesName
     });
 
     return response.status(201).send();
