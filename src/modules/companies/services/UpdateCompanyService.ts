@@ -1,11 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
+import { getCEP } from "@shared/utils/getCEP";
+import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
 
-import { Address } from "../infra/prisma/entities/Address";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
+
 
 interface IRequest {
   id: string,
@@ -71,9 +73,7 @@ export class UpdateCompanyService {
     cep,
     street,
     district,
-    number,
-    state,
-    city
+    number
   }: IRequest): Promise<IResponse> {
 
     const findCompanyById = await this.companyRepository.findById(id);
@@ -110,25 +110,38 @@ export class UpdateCompanyService {
 
     const addressId = await this.addressRepository.findAddressByCompany(findCompanyById.id);
 
+    const coords = await getCoordinatesFromCEP(cep);
+
+    if (!coords) {
+      throw new AppError("CEP not found");
+    }
+
+    const address = await getCEP(cep);
+
     if (company.physical_localization && !addressId) {
+
       await this.addressRepository.create({
         cep,
-        street,
-        district,
+        street: address.street || street,
+        district: address.district || district,
         number,
-        state,
-        city,
+        state: address.state,
+        city: address.city,
+        latitude: coords.lat,
+        longitude: coords.lng,
         company_id: company.id
       });
     } else if (company.physical_localization && addressId) {
       await this.addressRepository.update({
         id: addressId.id,
         cep,
-        street,
-        district,
+        street: address.street || street,
+        district: address.district || district,
         number,
-        state,
-        city,
+        state: address.state,
+        city: address.city,
+        latitude: coords.lat,
+        longitude: coords.lng,
         company_id: company.id
       });
     } else if (!company.physical_localization && addressId) {

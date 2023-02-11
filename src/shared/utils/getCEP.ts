@@ -1,6 +1,14 @@
 import axios from "axios";
 
-export async function getCEP(cep: string) {
+interface IAddress {
+  cep: string;
+  street: string;
+  district: string;
+  state: string;
+  city: string;
+}
+
+export async function getCEP(cep: string): Promise<IAddress | undefined> {
   const endpoint = `https://viacep.com.br/ws/${cep}/json`;
 
   const response = await axios.get(endpoint);
@@ -8,13 +16,13 @@ export async function getCEP(cep: string) {
 
   if (response.status === 200) {
     return {
-      "cep": data.cep,
-      "street": data.logradouro,
-      "district": data.bairro,
-      "state": data.uf,
-      "city": data.localidade
+      cep: data.cep,
+      street: data.logradouro,
+      district: data.bairro,
+      state: data.uf,
+      city: data.localidade
     };
   } else {
-    return {};
+    return undefined;
   }
 };

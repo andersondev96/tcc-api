@@ -55,18 +55,20 @@ describe("UpdateCompanyService", () => {
     });
 
     const address = await fakeAddressRepository.create({
-      cep: "123456",
-      street: "Street Test",
-      district: "District Test",
-      number: 123,
-      state: "ST",
-      city: "City Test",
+      cep: "35930021",
+      street: "Rua Francisco Teles",
+      district: "Alvorada",
+      number: 27,
+      state: "MG",
+      city: "João Monlevade",
+      latitude: -19.8368,
+      longitude: -43.1546,
       company_id: company.id
     });
 
     company.name = "New name company";
     contact.email = "newemail@example.com";
-    address.street = "Street update";
+    address.cep = "03005020";
 
     const update = await updateCompanyService.execute({
       id: company.id,
@@ -80,12 +82,14 @@ describe("UpdateCompanyService", () => {
       whatsapp: contact.whatsapp,
       email: contact.email,
       website: contact.website,
-      address
+      cep: address.cep,
+      number: 123
     });
+
+    console.log(address.cep);
 
     expect(update).toHaveProperty("name", "New name company");
     expect(update).toHaveProperty("email", "newemail@example.com");
-    expect(update).toHaveProperty("address.street", "Street update");
   });
 
   it("Should not be able to invalid update company", async () => {
@@ -161,6 +165,48 @@ describe("UpdateCompanyService", () => {
 
   });
 
+  it("Should not be able to update if CEP not found", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
+    });
+
+    const contact = await fakeContactRepository.create({
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685"
+    });
+
+    const company = await fakeCompanyRepository.create({
+      name: "Business Company",
+      cnpj: "123456",
+      category: "Supermarket",
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      physical_localization: false,
+      contact_id: contact.id,
+      user_id: user.id
+    });
+
+    await expect(updateCompanyService.execute({
+      id: company.id,
+      name: company.name,
+      cnpj: "123456",
+      category: "Category Test",
+      description: "Description Test",
+      services: ["Service Test"],
+      physical_localization: true,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      cep: "11111111"
+    })).rejects.toBeInstanceOf(AppError);
+
+  });
+
   it("Should not be able to update when physical localization is true and address is undefined", async () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",
@@ -197,64 +243,16 @@ describe("UpdateCompanyService", () => {
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
-      whatsapp: "12345685"
+      whatsapp: "12345685",
+      cep: "35930386",
+      number: 12
     };
 
-    await expect(updateCompanyService.execute(update)).rejects.toBeInstanceOf(AppError);
-  });
+    await updateCompanyService.execute(update);
+    const addressCompany = await fakeAddressRepository.findAddressByCompany(company.id);
 
-  it("Should be able to update when physical localization is true and don't has address to company", async () => {
-    const user = await fakeUserRepository.create({
-      name: "John Doe",
-      email: "john.doe@example.com",
-      password: "123456"
-    });
 
-    const contact = await fakeContactRepository.create({
-      telephone: "1234567",
-      email: "business@example.com",
-      website: "www.example.com",
-      whatsapp: "12345685"
-    });
-
-    const company = await fakeCompanyRepository.create({
-      name: "Business Company",
-      cnpj: "123456",
-      category: "Supermarket",
-      description: "Supermarket description",
-      services: ["Supermarket", "Shopping"],
-      physical_localization: false,
-      contact_id: contact.id,
-      user_id: user.id
-    });
-
-    company.physical_localization = true;
-
-    const updatedCompany = await updateCompanyService.execute({
-      id: company.id,
-      name: "Company Update",
-      cnpj: "123456",
-      category: "New Category",
-      services: ["New Service"],
-      description: "New Description",
-      physical_localization: company.physical_localization,
-      telephone: "1234567",
-      email: "business@example.com",
-      website: "www.example.com",
-      whatsapp: "12345685",
-      address: {
-        cep: "123456",
-        street: "Street Test",
-        district: "District Test",
-        number: 123,
-        state: "ST",
-        city: "City Test",
-        company_id: company.id
-      }
-    });
-
-    expect(company.physical_localization).toEqual(true);
-    expect(updatedCompany).toHaveProperty("address");
+    expect(addressCompany).toHaveProperty("id");
   });
 
   it("Should be able to update when physical localization is true and has address to company", async () => {
@@ -282,17 +280,19 @@ describe("UpdateCompanyService", () => {
       user_id: user.id
     });
 
-    const address = await fakeAddressRepository.create({
-      cep: "123456",
-      street: "Street Test",
-      district: "District Test",
-      number: 123,
-      state: "ST",
-      city: "City Test",
+    await fakeAddressRepository.create({
+      cep: "35930021",
+      street: "Rua Francisco Teles",
+      district: "Alvorada",
+      number: 27,
+      state: "MG",
+      city: "João Monlevade",
+      latitude: -19.8368,
+      longitude: -43.1546,
       company_id: company.id
     });
 
-    const updatedCompany = await updateCompanyService.execute({
+    await updateCompanyService.execute({
       id: company.id,
       name: "Company Update",
       cnpj: "123456",
@@ -304,10 +304,13 @@ describe("UpdateCompanyService", () => {
       email: "business@example.com",
       website: "www.example.com",
       whatsapp: "12345685",
-      address
+      cep: "35930386",
+      number: 123
     });
 
+    const companyAddress = await fakeAddressRepository.findAddressByCompany(company.id);
+
     expect(company.physical_localization).toEqual(true);
-    expect(updatedCompany).toHaveProperty("address");
+    expect(companyAddress.cep).toEqual("35930386");
   });
 });

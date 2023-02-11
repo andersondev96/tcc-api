@@ -7,7 +7,7 @@ interface ICoordinates {
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyA3UJXQ9XI4twt4L-9mdAsoa-uNNnMR71E";
 
-export async function getCoordinatesFromCEP(cep: string): Promise<ICoordinates> {
+export async function getCoordinatesFromCEP(cep: string): Promise<ICoordinates | undefined> {
   const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${cep}&key=${GOOGLE_MAPS_API_KEY}`;
 
   const response = await axios.get(endpoint);
@@ -21,7 +21,7 @@ export async function getCoordinatesFromCEP(cep: string): Promise<ICoordinates> 
       lng: location.lng
     };
   } else {
-    throw new Error("Não foi possível obter as coordenadas para o CEP informado");
+    return undefined;
   }
 
 }

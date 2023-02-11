@@ -128,7 +128,7 @@ export class CreateCompanyService {
 
       const address = await getCEP(cep);
 
-      if (!address) {
+      if (!coords) {
         throw new AppError("CEP not found");
       }
 
