@@ -14,6 +14,8 @@ export class AddressesRepository implements IAddressesRepository {
     number,
     state,
     city,
+    latitude,
+    longitude,
     company_id
   }: ICreateAddressDTO): Promise<Address> {
     const address = await prisma.address.create({
@@ -25,6 +27,8 @@ export class AddressesRepository implements IAddressesRepository {
         number,
         state,
         city,
+        latitude,
+        longitude,
         company_id
       }
     });
@@ -34,7 +38,7 @@ export class AddressesRepository implements IAddressesRepository {
 
   public async findByAddress(id: string): Promise<Address> {
     const address = await prisma.address.findUnique({
-      where: { id },
+      where: { id }
     });
 
     return address;
@@ -42,7 +46,7 @@ export class AddressesRepository implements IAddressesRepository {
 
   public async findAddressByCompany(company_id: string): Promise<Address> {
     const findAddress = await prisma.address.findUnique({
-      where: { company_id },
+      where: { company_id }
     });
 
     return findAddress;
@@ -58,7 +62,7 @@ export class AddressesRepository implements IAddressesRepository {
   public async update(data: ICreateAddressDTO): Promise<Address> {
     const updateAddress = await prisma.address.update({
       where: { id: data.id },
-      data: { ...data },
+      data: { ...data }
     });
 
     return updateAddress;

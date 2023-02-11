@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
+import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
 
 import { Company } from "../infra/prisma/entities/Company";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
@@ -29,6 +30,8 @@ interface IRequest {
   number?: number
   state?: string
   city?: string
+  latitude?: number;
+  longitude?: number;
   telephone: string
   whatsapp?: string
   email: string
@@ -73,6 +76,8 @@ export class CreateCompanyService {
     number,
     state,
     city,
+    latitude,
+    longitude,
     telephone,
     whatsapp,
     email,
@@ -126,6 +131,8 @@ export class CreateCompanyService {
     }
 
     if (company.physical_localization) {
+      const coords = await getCoordinatesFromCEP(cep);
+
       await this.addressRepository.create({
         cep,
         street,
@@ -133,6 +140,8 @@ export class CreateCompanyService {
         number,
         state,
         city,
+        latitude: coords.lat,
+        longitude: coords.lng,
         company_id: company.id
       });
     }

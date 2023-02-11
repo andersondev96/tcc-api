@@ -63,7 +63,7 @@ describe("CreateCompanyService", () => {
         }
       ],
       physical_localization: true,
-      cep: "123456",
+      cep: "57018710",
       street: "Street Test",
       district: "District Test",
       number: 123,
@@ -133,7 +133,7 @@ describe("CreateCompanyService", () => {
         }
       ],
       physical_localization: true,
-      cep: "123456",
+      cep: "57018710",
       street: "Street Test",
       district: "District Test",
       number: 123,
@@ -161,7 +161,7 @@ describe("CreateCompanyService", () => {
         }
       ],
       physical_localization: true,
-      cep: "123456",
+      cep: "57018710",
       street: "Street Test",
       district: "District Test",
       number: 123,
@@ -201,7 +201,7 @@ describe("CreateCompanyService", () => {
         }
       ],
       physical_localization: true,
-      cep: "123456",
+      cep: "57018710",
       street: "Street Test",
       district: "District Test",
       number: 123,
@@ -243,7 +243,7 @@ describe("CreateCompanyService", () => {
         }
       ],
       physical_localization: true,
-      cep: "123456",
+      cep: "57018710",
       street: "Street Test",
       district: "District Test",
       number: 123,
@@ -271,7 +271,7 @@ describe("CreateCompanyService", () => {
         }
       ],
       physical_localization: true,
-      cep: "123456",
+      cep: "57018710",
       street: "Street Test",
       district: "District Test",
       number: 123,
