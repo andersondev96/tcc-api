@@ -63,12 +63,10 @@ describe("CreateCompanyService", () => {
         }
       ],
       physical_localization: true,
-      cep: "57018710",
+      cep: "35910000",
       street: "Street Test",
       district: "District Test",
       number: 123,
-      state: "MG",
-      city: "City Test",
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
@@ -76,7 +74,10 @@ describe("CreateCompanyService", () => {
       user_id: user.id
     });
 
+    const address = await fakeAddressRepository.findAddressByCompany(company.id);
+
     expect(company).toHaveProperty("id");
+    expect(address).toHaveProperty("id");
   });
 
   it("Should not be able to create a company if this user not exists", async () => {
@@ -137,8 +138,6 @@ describe("CreateCompanyService", () => {
       street: "Street Test",
       district: "District Test",
       number: 123,
-      state: "MG",
-      city: "City Test",
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
@@ -165,8 +164,6 @@ describe("CreateCompanyService", () => {
       street: "Street Test",
       district: "District Test",
       number: 123,
-      state: "MG",
-      city: "City Test",
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
@@ -205,8 +202,6 @@ describe("CreateCompanyService", () => {
       street: "Street Test",
       district: "District Test",
       number: 123,
-      state: "MG",
-      city: "City Test",
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
@@ -247,8 +242,6 @@ describe("CreateCompanyService", () => {
       street: "Street Test",
       district: "District Test",
       number: 123,
-      state: "MG",
-      city: "City Test",
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
@@ -275,8 +268,6 @@ describe("CreateCompanyService", () => {
       street: "Street Test",
       district: "District Test",
       number: 123,
-      state: "MG",
-      city: "City Test",
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",

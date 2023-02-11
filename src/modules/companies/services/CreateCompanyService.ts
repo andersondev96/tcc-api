@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
+import { getCEP } from "@shared/utils/getCEP";
 import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
 
 import { Company } from "../infra/prisma/entities/Company";
@@ -28,10 +29,6 @@ interface IRequest {
   street?: string
   district?: string
   number?: number
-  state?: string
-  city?: string
-  latitude?: number;
-  longitude?: number;
   telephone: string
   whatsapp?: string
   email: string
@@ -74,10 +71,6 @@ export class CreateCompanyService {
     street,
     district,
     number,
-    state,
-    city,
-    latitude,
-    longitude,
     telephone,
     whatsapp,
     email,
@@ -133,19 +126,24 @@ export class CreateCompanyService {
     if (company.physical_localization) {
       const coords = await getCoordinatesFromCEP(cep);
 
+      const address = await getCEP(cep);
+
+      if (!address) {
+        throw new AppError("CEP not found");
+      }
+
       await this.addressRepository.create({
         cep,
-        street,
-        district,
+        street: address.street || street,
+        district: address.district || district,
         number,
-        state,
-        city,
+        state: address.state,
+        city: address.city,
         latitude: coords.lat,
         longitude: coords.lng,
         company_id: company.id
       });
     }
-
 
     if (schedules) {
       schedules.map(async (schedule) => {
