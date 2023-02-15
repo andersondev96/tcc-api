@@ -154,7 +154,8 @@ model Service {
     name              String
     description       String
     price             Float
-    category          String
+    category_id          String
+    category CategoryService @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     image_url         String?
     highlight_service Boolean? @default(false)
     favorites         Int?     @default(0)
@@ -167,6 +168,16 @@ model Service {
     updatedAt         DateTime @updatedAt
 
     @@map("services")
+}
+
+model CategoryService {
+  id String @id @default(uuid())
+  category  String
+  service Service[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories_services")
 }
 
 model Proposal {
