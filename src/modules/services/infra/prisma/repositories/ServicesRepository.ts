@@ -46,14 +46,26 @@ export class ServicesRepository implements IServicesRepository {
     return services;
   }
 
-  public async listServicesByCategory(company_id: string, category: string): Promise<Service[]> {
-    const services = await prisma.service.findMany({
-      where: {
-        company_id,
-        category: {
-          equals: category
-        }
+  public async listServicesByCategory(company_id: string): Promise<Service[]> {
+    const servicesByCategory = await prisma.service.groupBy({
+      by: ["category"],
+      where: { company_id },
+      _count: {
+        category: true
       }
+    });
+
+    const services: Service[] = servicesByCategory.map(service => {
+      return {
+        name: "",
+        description: "",
+        price: 0,
+        category: service.category,
+        company_id: "",
+        favorites: 0,
+        stars: 0,
+        assessments: service._count.category
+      };
     });
 
     return services;

@@ -6,10 +6,6 @@ import { AppError } from "@shared/errors/AppError";
 import { Service } from "../infra/prisma/entities/Service";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
-interface IRequest {
-  company_id: string;
-  category: string;
-}
 @injectable()
 export class FindServiceByCategoryService {
 
@@ -18,10 +14,10 @@ export class FindServiceByCategoryService {
     private serviceRepository: IServicesRepository,
 
     @inject("CompaniesRepository")
-    private companyRepository: ICompaniesRepository,
+    private companyRepository: ICompaniesRepository
   ) { }
 
-  public async execute({ company_id, category }: IRequest): Promise<Service[]> {
+  public async execute(company_id: string): Promise<Service[]> {
 
     const company = await this.companyRepository.findById(company_id);
 
@@ -29,7 +25,7 @@ export class FindServiceByCategoryService {
       throw new AppError("Company does not exist");
     }
 
-    const services = await this.serviceRepository.listServicesByCategory(company_id, category);
+    const services = await this.serviceRepository.listServicesByCategory(company_id);
 
     return services;
   }

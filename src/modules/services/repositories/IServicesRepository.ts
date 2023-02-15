@@ -7,7 +7,7 @@ export interface IServicesRepository {
 
   listServicesByCompany(company_id: string): Promise<Service[]>;
 
-  listServicesByCategory(company_id: string, category: string): Promise<Service[]>;
+  listServicesByCategory(company_id: string): Promise<Service[]>;
 
   findServicesByName(company_id: string, name: string): Promise<Service[]>;
 
