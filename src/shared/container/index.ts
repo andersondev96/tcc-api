@@ -3,6 +3,8 @@ import { container } from "tsyringe";
 
 import { AssessmentsRepository } from "@modules/assessments/infra/prisma/repositories/AssessmentsRepository";
 import { IAssessmentsRepository } from "@modules/assessments/repositories/IAssessmentsRepository";
+import { CategoriesRepository } from "@modules/categories/infra/prisma/repositories/CategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { AddressesRepository } from "@modules/companies/infra/prisma/repositories/AddressesRepository";
 import { CompaniesRepository } from "@modules/companies/infra/prisma/repositories/CompaniesRepository";
 import { ContactsRepository } from "@modules/companies/infra/prisma/repositories/ContactsRepository";
@@ -128,4 +130,9 @@ container.registerInstance<ICustomersCompaniesRepository>(
 container.registerInstance<IEntrepreneursSettingsRepository>(
   "EntrepreneursSettingsRepository",
   new EntrepreneursSettingsRepository()
+);
+
+container.registerInstance<ICategoriesRepository>(
+  "CategoriesRepository",
+  new CategoriesRepository()
 );

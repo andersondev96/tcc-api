@@ -54,7 +54,8 @@ model Company {
     id                    String         @id @default(uuid())
     name                  String         @unique
     cnpj                  String
-    category              String
+    category_id              String
+    category Category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     description           String?
     services              String[]
     physical_localization Boolean
@@ -155,7 +156,7 @@ model Service {
     description       String
     price             Float
     category_id          String
-    category CategoryService @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    category Category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     image_url         String?
     highlight_service Boolean? @default(false)
     favorites         Int?     @default(0)
@@ -170,14 +171,15 @@ model Service {
     @@map("services")
 }
 
-model CategoryService {
+model Category {
   id String @id @default(uuid())
-  category  String
+  name  String @unique
   service Service[]
+  company Company[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("categories_services")
+  @@map("categories")
 }
 
 model Proposal {
