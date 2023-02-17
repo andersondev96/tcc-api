@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -14,12 +16,14 @@ let fakeScheduleRepository: ISchedulesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let deleteScheduleService: DeleteScheduleService;
 
 describe("DeleteScheduleService", () => {
   beforeEach(() => {
     fakeScheduleRepository = new FakeSchedulesRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     deleteScheduleService = new DeleteScheduleService(
@@ -41,10 +45,14 @@ describe("DeleteScheduleService", () => {
       whatsapp: "12345685"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,

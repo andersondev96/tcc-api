@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 
@@ -9,6 +11,7 @@ import { FindCompanyByUserService } from "../services/FindCompanyByUserService";
 
 let fakeUserRepository: IUsersRepository;
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeContactRepository: IContactsRepository;
 let findCompanyByUserService: FindCompanyByUserService;
 
@@ -16,6 +19,7 @@ describe("FindCompanyByUserService", () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUsersRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeContactRepository = new FakeContactsRepository();
     findCompanyByUserService = new FindCompanyByUserService(
       fakeUserRepository,
@@ -37,10 +41,14 @@ describe("FindCompanyByUserService", () => {
       whatsapp: "12345685"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,
@@ -51,7 +59,7 @@ describe("FindCompanyByUserService", () => {
     const result = {
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,

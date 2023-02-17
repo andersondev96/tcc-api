@@ -301,4 +301,56 @@ describe("CreateCompanyService", () => {
     })).rejects.toBeInstanceOf(AppError);
   });
 
+  it("Should not be able to create a company if category not found", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
+    });
+
+    await expect(createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: "non-existent-category",
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      physical_localization: true,
+      cep: "11111111",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    })).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("Should not be able to create a company if CEP not found", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
+    });
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    await expect(createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      physical_localization: true,
+      cep: "11111111",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    })).rejects.toBeInstanceOf(AppError);
+  });
+
 });

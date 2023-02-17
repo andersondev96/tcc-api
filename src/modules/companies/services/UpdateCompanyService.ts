@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { AppError } from "@shared/errors/AppError";
 import { getCEP } from "@shared/utils/getCEP";
 import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
@@ -50,6 +51,9 @@ export class UpdateCompanyService {
     @inject("CompaniesRepository")
     private companyRepository: ICompaniesRepository,
 
+    @inject("CategoriesRepository")
+    private categoryRepository: ICategoriesRepository,
+
     @inject("ContactsRepository")
     private contactRepository: IContactsRepository,
 
@@ -88,7 +92,7 @@ export class UpdateCompanyService {
       throw new AppError("Company name already used!");
     }
 
-    const checkCategoryExists = await this.companyRepository.findById(category_id);
+    const checkCategoryExists = await this.categoryRepository.findCategoryById(category_id);
 
     if (!checkCategoryExists) {
       throw new AppError("Categories not found");

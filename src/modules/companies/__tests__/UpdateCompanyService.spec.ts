@@ -28,6 +28,7 @@ describe("UpdateCompanyService", () => {
     fakeAddressRepository = new FakeAddressesRepository();
     updateCompanyService = new UpdateCompanyService(
       fakeCompanyRepository,
+      fakeCategoryRepository,
       fakeContactRepository,
       fakeAddressRepository
     );
@@ -93,8 +94,6 @@ describe("UpdateCompanyService", () => {
       cep: address.cep,
       number: 123
     });
-
-    console.log(address.cep);
 
     expect(update).toHaveProperty("name", "New name company");
     expect(update).toHaveProperty("email", "newemail@example.com");
@@ -180,6 +179,52 @@ describe("UpdateCompanyService", () => {
     await expect(updateCompanyService.execute(update)).rejects.toBeInstanceOf(AppError);
 
   });
+
+  it("Should not be able to update if category not found", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
+    });
+
+    const contact = await fakeContactRepository.create({
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685"
+    });
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    const company = await fakeCompanyRepository.create({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      physical_localization: false,
+      contact_id: contact.id,
+      user_id: user.id
+    });
+
+    await expect(updateCompanyService.execute({
+      id: company.id,
+      name: company.name,
+      cnpj: "123456",
+      category_id: "non-existent-category",
+      description: "Description Test",
+      services: ["Service Test"],
+      physical_localization: true,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      cep: "11111111"
+    })).rejects.toBeInstanceOf(AppError);
+  });
+
 
   it("Should not be able to update if CEP not found", async () => {
     const user = await fakeUserRepository.create({
@@ -300,7 +345,7 @@ describe("UpdateCompanyService", () => {
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category_id: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: true,

@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
@@ -13,6 +15,7 @@ let fakeUsersRepository = new FakeUsersRepository();
 let fakeSchedulesRepository: ISchedulesRepository;
 let fakeContactsRepository: IContactsRepository;
 let fakeCompaniesRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let updateScheduleService: UpdateScheduleService;
 
 
@@ -22,6 +25,7 @@ describe("UpdateSchedulesService", () => {
     fakeSchedulesRepository = new FakeSchedulesRepository();
     fakeContactsRepository = new ContactsRepository();
     fakeCompaniesRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     updateScheduleService = new UpdateScheduleService(
       fakeSchedulesRepository
     );
@@ -41,10 +45,14 @@ describe("UpdateSchedulesService", () => {
       website: "www.example.com"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompaniesRepository.create({
       name: "Business Company 1",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       contact_id: contact.id,
@@ -85,10 +93,14 @@ describe("UpdateSchedulesService", () => {
       website: "www.example.com"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompaniesRepository.create({
       name: "Business Company 1",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       contact_id: contact.id,
@@ -124,10 +136,14 @@ describe("UpdateSchedulesService", () => {
       website: "www.example.com"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompaniesRepository.create({
       name: "Business Company 1",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       contact_id: contact.id,
