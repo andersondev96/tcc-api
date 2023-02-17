@@ -1,7 +1,7 @@
 
 import xlsx from "xlsx";
 
-import { Category } from "@prisma/client";
+import { Category } from "@modules/categories/infra/prisma/entities/Category";
 
 export function readXlsxFile(filePath: string): Category[] {
   const workbook = xlsx.readFile(filePath);
