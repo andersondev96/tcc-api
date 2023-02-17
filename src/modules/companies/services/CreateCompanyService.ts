@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 import { getCEP } from "@shared/utils/getCEP";
@@ -20,7 +21,7 @@ interface ISchedule {
 interface IRequest {
   name: string
   cnpj: string
-  category: string
+  category_id: string
   description?: string
   services?: string[]
   schedules?: ISchedule[]
@@ -42,6 +43,9 @@ export class CreateCompanyService {
     @inject("CompaniesRepository")
     private readonly companyRepository: ICompaniesRepository,
 
+    @inject("CategoriesRepository")
+    private readonly categoryRepository: ICategoriesRepository,
+
     @inject("UsersRepository")
     private readonly userRepository: IUsersRepository,
 
@@ -62,7 +66,7 @@ export class CreateCompanyService {
   public async execute({
     name,
     cnpj,
-    category,
+    category_id,
     description,
     services,
     schedules,
@@ -95,6 +99,12 @@ export class CreateCompanyService {
       throw new AppError("Company already exists");
     }
 
+    const checkCategoryExists = await this.categoryRepository.findCategoryById(category_id);
+
+    if (!checkCategoryExists) {
+      throw new AppError("Category not found");
+    }
+
     const contact = await this.contactRepository.create({
       telephone,
       whatsapp,
@@ -105,7 +115,7 @@ export class CreateCompanyService {
     const company = await this.companyRepository.create({
       name,
       cnpj,
-      category,
+      category_id,
       description,
       services,
       physical_localization,

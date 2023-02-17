@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -15,6 +17,7 @@ import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 import { CreateCompanyService } from "../services/CreateCompanyService";
 
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeScheduleRepository: ISchedulesRepository;
@@ -26,6 +29,7 @@ let createCompanyService: CreateCompanyService;
 describe("CreateCompanyService", () => {
   beforeEach(() => {
     fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeScheduleRepository = new FakeSchedulesRepository();
@@ -33,6 +37,7 @@ describe("CreateCompanyService", () => {
     fakeEntrepreneurRepository = new FakeEntrepreneursRepository(),
       createCompanyService = new CreateCompanyService(
         fakeCompanyRepository,
+        fakeCategoryRepository,
         fakeUserRepository,
         fakeContactRepository,
         fakeScheduleRepository,
@@ -48,10 +53,14 @@ describe("CreateCompanyService", () => {
       password: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await createCompanyService.execute({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       schedules: [
@@ -81,11 +90,15 @@ describe("CreateCompanyService", () => {
   });
 
   it("Should not be able to create a company if this user not exists", async () => {
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     await expect(
       createCompanyService.execute({
         name: "Business Company",
         cnpj: "123456",
-        category: "Supermarket",
+        category_id: category.id,
         description: "Supermarket description",
         services: ["Supermarket", "Shopping"],
         schedules: [
@@ -119,10 +132,14 @@ describe("CreateCompanyService", () => {
       password: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     await createCompanyService.execute({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       schedules: [
@@ -148,7 +165,7 @@ describe("CreateCompanyService", () => {
     await expect(createCompanyService.execute({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       schedules: [
@@ -183,10 +200,14 @@ describe("CreateCompanyService", () => {
       user_id: user.id
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     await createCompanyService.execute({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       schedules: [
@@ -223,10 +244,14 @@ describe("CreateCompanyService", () => {
       password: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     await createCompanyService.execute({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       schedules: [
@@ -252,7 +277,7 @@ describe("CreateCompanyService", () => {
     await expect(createCompanyService.execute({
       name: "Business Company 2",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       schedules: [

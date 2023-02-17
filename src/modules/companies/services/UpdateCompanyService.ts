@@ -13,7 +13,7 @@ interface IRequest {
   id: string,
   name: string,
   cnpj: string,
-  category: string,
+  category_id: string,
   description?: string,
   services?: string[],
   physical_localization: boolean,
@@ -33,7 +33,7 @@ interface IResponse {
   id: string;
   name: string;
   cnpj: string;
-  category: string;
+  category_id: string;
   description: string;
   services: string[];
   telephone: string;
@@ -62,7 +62,7 @@ export class UpdateCompanyService {
     id,
     name,
     cnpj,
-    category,
+    category_id,
     description,
     services,
     physical_localization,
@@ -88,6 +88,12 @@ export class UpdateCompanyService {
       throw new AppError("Company name already used!");
     }
 
+    const checkCategoryExists = await this.companyRepository.findById(category_id);
+
+    if (!checkCategoryExists) {
+      throw new AppError("Categories not found");
+    }
+
     const contact = await this.contactRepository.update({
       id: findCompanyById.contact_id,
       telephone,
@@ -100,7 +106,7 @@ export class UpdateCompanyService {
       id: findCompanyById.id,
       name,
       cnpj,
-      category,
+      category_id,
       description,
       services,
       physical_localization,
@@ -152,7 +158,7 @@ export class UpdateCompanyService {
       id: company.id,
       name: company.name,
       cnpj: company.cnpj,
-      category: company.category,
+      category_id: company.category_id,
       description: company.description,
       services: company.services,
       telephone: contact.telephone,

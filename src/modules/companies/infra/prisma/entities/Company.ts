@@ -2,7 +2,7 @@ export class Company {
   id?: string;
   name: string;
   cnpj: string;
-  category: string;
+  category_id: string;
   description?: string;
   stars?: number;
   services?: string[];
@@ -15,7 +15,7 @@ export class Company {
     {
       name,
       cnpj,
-      category,
+      category_id,
       description,
       services,
       stars,
@@ -26,7 +26,7 @@ export class Company {
     return Object.assign(this, {
       name,
       cnpj,
-      category,
+      category_id,
       description,
       services,
       stars,

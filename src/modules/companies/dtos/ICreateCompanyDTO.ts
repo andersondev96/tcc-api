@@ -2,7 +2,7 @@ export interface ICreateCompanyDTO {
   id?: string;
   name: string;
   cnpj: string;
-  category: string;
+  category_id: string;
   description?: string;
   services?: string[];
   physical_localization: boolean;

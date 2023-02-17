@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -11,6 +13,7 @@ import { IContactsRepository } from "../repositories/IContactsRepository";
 import { UpdateCompanyService } from "../services/UpdateCompanyService";
 
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeAddressRepository: IAddressesRepository;
@@ -21,6 +24,7 @@ describe("UpdateCompanyService", () => {
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeAddressRepository = new FakeAddressesRepository();
     updateCompanyService = new UpdateCompanyService(
       fakeCompanyRepository,
@@ -43,10 +47,14 @@ describe("UpdateCompanyService", () => {
       whatsapp: "12345685"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,
@@ -74,7 +82,7 @@ describe("UpdateCompanyService", () => {
       id: company.id,
       name: company.name,
       cnpj: company.cnpj,
-      category: company.category,
+      category_id: category.id,
       description: company.description,
       services: company.services,
       physical_localization: company.physical_localization,
@@ -94,11 +102,15 @@ describe("UpdateCompanyService", () => {
 
   it("Should not be able to invalid update company", async () => {
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = {
       id: "not-existing-id",
       name: "Company Test",
       cnpj: "123456",
-      category: "Category Test",
+      category_id: category.id,
       description: "Description Test",
       services: ["Service 1", "Service 2"],
       physical_localization: false,
@@ -125,10 +137,14 @@ describe("UpdateCompanyService", () => {
       whatsapp: "12345685"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,
@@ -139,7 +155,7 @@ describe("UpdateCompanyService", () => {
     const company2 = await fakeCompanyRepository.create({
       name: "Business",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,
@@ -151,7 +167,7 @@ describe("UpdateCompanyService", () => {
       id: company2.id,
       name: company.name,
       cnpj: "123456",
-      category: "Category Test",
+      category_id: category.id,
       description: "Description Test",
       services: ["Service Test"],
       physical_localization: false,
@@ -179,10 +195,14 @@ describe("UpdateCompanyService", () => {
       whatsapp: "12345685"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,
@@ -194,7 +214,7 @@ describe("UpdateCompanyService", () => {
       id: company.id,
       name: company.name,
       cnpj: "123456",
-      category: "Category Test",
+      category_id: category.id,
       description: "Description Test",
       services: ["Service Test"],
       physical_localization: true,
@@ -221,10 +241,14 @@ describe("UpdateCompanyService", () => {
       whatsapp: "12345685"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: true,
@@ -236,7 +260,7 @@ describe("UpdateCompanyService", () => {
       id: company.id,
       name: "Company Test",
       cnpj: "123456",
-      category: "Category Test",
+      category_id: category.id,
       description: "Description Test",
       services: ["Service 1", "Service 2"],
       physical_localization: true,
@@ -269,10 +293,14 @@ describe("UpdateCompanyService", () => {
       whatsapp: "12345685"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: "Supermarket",
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: true,
@@ -296,7 +324,7 @@ describe("UpdateCompanyService", () => {
       id: company.id,
       name: "Company Update",
       cnpj: "123456",
-      category: "New Category",
+      category_id: category.id,
       services: ["New Service"],
       description: "New Description",
       physical_localization: company.physical_localization,

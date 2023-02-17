@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
@@ -10,7 +12,7 @@ import { FakeContactsRepository } from "../repositories/fakes/FakeContactsReposi
 import { FakeImagesCompanyRepository } from "../repositories/fakes/FakeImagesCompanyRepository";
 import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
-import { ICompaniesRepository } from "../repositories/ICompaniesRepository"
+import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
@@ -18,6 +20,7 @@ import { DeleteCompanyService } from "../services/DeleteCompanyService";
 
 let fakeUserRepository: IUsersRepository;
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeScheduleRepository: ISchedulesRepository;
 let fakeAddressRepository: IAddressesRepository;
@@ -30,6 +33,7 @@ describe("DeleteCompanyService", () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUsersRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeScheduleRepository = new FakeSchedulesRepository();
     fakeAddressRepository = new FakeAddressesRepository();
@@ -43,7 +47,7 @@ describe("DeleteCompanyService", () => {
       fakeImagesCompanyRepository,
       fakeStorageProvider
     );
-  })
+  });
 
   it("Should be able to delete a company", async () => {
     const user = await fakeUserRepository.create({
@@ -56,13 +60,17 @@ describe("DeleteCompanyService", () => {
       telephone: "1234567",
       email: "business@example.com",
       website: "www.example.com",
-      whatsapp: "12345685",
+      whatsapp: "12345685"
+    });
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
     });
 
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,
@@ -78,12 +86,14 @@ describe("DeleteCompanyService", () => {
       state: "MG",
       city: "City Test",
       company_id: company.id,
+      latitude: -19.8368,
+      longitude: -43.1546
     });
 
     await fakeImagesCompanyRepository.create({
       image_name: "image_test.png",
       image_url: "http://localhost:3333/companies/image_test.png",
-      company_id: company.id,
+      company_id: company.id
     });
 
     await deleteCompanyService.execute(company.id);
@@ -95,7 +105,7 @@ describe("DeleteCompanyService", () => {
 
   it("Should not be able to delete a not existing company", async () => {
     await expect(
-      deleteCompanyService.execute('not-existing-company')
+      deleteCompanyService.execute("not-existing-company")
     ).rejects.toBeInstanceOf(AppError);
   });
-})
+});

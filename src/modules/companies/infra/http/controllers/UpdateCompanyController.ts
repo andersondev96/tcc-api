@@ -12,7 +12,7 @@ export class UpdateCompanyController {
     const {
       name,
       cnpj,
-      category,
+      category_id,
       description,
       services,
       physical_localization,
@@ -34,7 +34,7 @@ export class UpdateCompanyController {
       id,
       name,
       cnpj,
-      category,
+      category_id,
       description,
       services,
       physical_localization,

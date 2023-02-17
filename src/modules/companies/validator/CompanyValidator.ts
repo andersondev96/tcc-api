@@ -13,7 +13,7 @@ const companyValidator = {
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().required().messages(customMessage("name")),
     cnpj: Joi.string().required().min(14).max(18).messages(customMessage("cnpj")),
-    category: Joi.string().required().messages(customMessage("category")),
+    category_id: Joi.string().required().messages(customMessage("category")),
     description: Joi.string().messages(customMessage("description")),
     services: Joi.array().min(1).max(5).messages(customMessage("services")),
     schedules: Joi.array().items(schedule).messages(customMessage("schedules")),

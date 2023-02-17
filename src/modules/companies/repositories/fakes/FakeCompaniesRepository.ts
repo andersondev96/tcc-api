@@ -23,14 +23,6 @@ export class FakeCompaniesRepository implements ICompaniesRepository {
     return this.companies;
   }
 
-  public async listByLocalization(latitude: number, longitude: number): Promise<Company[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  public async listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[]> {
-    throw new Error("Method not implemented.");
-  }
-
   public async findByName(name: string): Promise<Company> {
     const findCompanyByName = this.companies.find((company) => company.name === name);
 
@@ -53,10 +45,6 @@ export class FakeCompaniesRepository implements ICompaniesRepository {
     const findCompanyById = this.companies.find((company) => company.id === id);
 
     return findCompanyById;
-  }
-
-  public async contCompany(company_id: string): Promise<number> {
-    throw new Error("Method not implemented.");
   }
 
   public async update(company: ICreateCompanyDTO): Promise<Company> {

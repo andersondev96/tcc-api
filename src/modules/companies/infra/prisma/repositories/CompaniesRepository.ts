@@ -10,7 +10,7 @@ export class CompaniesRepository implements ICompaniesRepository {
     id,
     name,
     cnpj,
-    category,
+    category_id,
     description,
     services,
     physical_localization,
@@ -22,7 +22,7 @@ export class CompaniesRepository implements ICompaniesRepository {
         id,
         name,
         cnpj,
-        category,
+        category_id,
         services,
         description,
         physical_localization,
@@ -47,14 +47,6 @@ export class CompaniesRepository implements ICompaniesRepository {
     console.log(listAllCompanies);
 
     return listAllCompanies;
-  }
-
-  public async listByLocalization(latitude: number, longitude: number): Promise<Company[] | undefined> {
-    throw new Error("Method not implemented.");
-  }
-
-  public async listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[] | undefined> {
-    throw new Error("Method not implemented.");
   }
 
   public async findByName(name: string): Promise<Company> {
