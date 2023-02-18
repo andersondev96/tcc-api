@@ -4,6 +4,12 @@ export class Category {
 
   name: string;
 
+  subcategories?: string;
+
+  createdAt?: Date;
+
+  updatedAt?: Date;
+
   constructor({ name }: Category) {
     return Object.assign(this, {
       name

@@ -1,31 +1,32 @@
 import { inject, injectable } from "tsyringe";
 
-import { readXlsxFile } from "@shared/utils/readXlsxFile";
-
-import { Category } from "../infra/prisma/entities/Category";
+import { IXlsxProvider } from "../providers/XlsxProvider/models/IXlsxProvider";
 import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
-
 @injectable()
 export class ImportCategoryService {
 
   constructor(
     @inject("CategoriesRepository")
-    private categoryRepository: ICategoriesRepository
+    private categoryRepository: ICategoriesRepository,
+
+    @inject("XlsxProvider")
+    private xlsxProvider: IXlsxProvider
   ) { }
 
 
   public async execute(filePath: string): Promise<void> {
 
-    const categories = readXlsxFile(filePath);
+    const categories = await this.xlsxProvider.readXlsxProvider(filePath);
 
     categories.map(async (category) => {
-      const { name } = category;
+      const { name, description } = category;
 
       const categoryNotNull = name !== undefined;
 
       if (categoryNotNull) {
         await this.categoryRepository.create({
-          name
+          name,
+          subcategories: description
         });
       }
     });

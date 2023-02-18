@@ -15,7 +15,7 @@ describe("CreateCategoryService", () => {
   });
 
   it("Should be able to create a category", async () => {
-    const category = await createCategoryService.execute("Agricultura");
+    const category = await createCategoryService.execute("Agricultura", "Plantação, Terra, Adubo");
 
     expect(category).toHaveProperty("id");
   });

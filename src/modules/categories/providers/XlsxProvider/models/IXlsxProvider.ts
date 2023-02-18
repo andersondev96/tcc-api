@@ -1,7 +1,6 @@
-import { Category } from "@prisma/client";
 
 export interface IXlsxProvider {
 
-  readXlsxProvider(filePath: string): Promise<Category[]>;
+  readXlsxProvider(filePath: string): Promise<any[]>;
 
 }

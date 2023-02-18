@@ -13,7 +13,7 @@ export class CreateCategoryService {
     private categoryRepository: ICategoriesRepository
   ) { }
 
-  public async execute(name: string): Promise<Category> {
+  public async execute(name: string, subcategories?: string): Promise<Category> {
 
     const categoryExists = await this.categoryRepository.findCategoryByName(name);
 
@@ -22,7 +22,8 @@ export class CreateCategoryService {
     }
 
     const category = await this.categoryRepository.create({
-      name
+      name,
+      subcategories
     });
 
     return category;

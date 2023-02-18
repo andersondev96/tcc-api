@@ -1,17 +1,17 @@
 import { prisma } from "@database/prisma";
 import { ICreateCategoryDTO } from "@modules/categories/dtos/ICreateCategoryDTO";
 import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
-import { generateCategories } from "@shared/utils/generateCategories";
 
 import { Category } from "../entities/Category";
 
 export class CategoriesRepository implements ICategoriesRepository {
 
-  public async create({ id, name }: ICreateCategoryDTO): Promise<Category> {
+  public async create({ id, name, subcategories }: ICreateCategoryDTO): Promise<Category> {
     const category = await prisma.category.create({
       data: {
         id,
-        name
+        name,
+        subcategories
       }
     });
 
@@ -19,7 +19,7 @@ export class CategoriesRepository implements ICategoriesRepository {
   }
 
   public async createManyCategories(data: ICreateCategoryDTO[]): Promise<Category[]> {
-    for (let i = 0; i < 500; i += 50) {
+    for (let i = 0; i < 1000; i += 100) {
       await prisma.category.findMany({
         where: {
           name: {
