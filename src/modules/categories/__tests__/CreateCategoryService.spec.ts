@@ -21,11 +21,11 @@ describe("CreateCategoryService", () => {
   });
 
   it("Should not be able to create a category if category already exists", async () => {
-    await fakeCategoryRepository.create({
+    const category = await fakeCategoryRepository.create({
       name: "Agricultura"
     });
 
-    await expect(createCategoryService.execute("Agricultura")).rejects.toBeInstanceOf(AppError);
+    await expect(createCategoryService.execute(category.name)).rejects.toBeInstanceOf(AppError);
   });
 });
 
