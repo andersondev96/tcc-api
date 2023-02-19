@@ -9,9 +9,7 @@ import { ensureEntrepreneur } from "@shared/infra/http/middlewares/ensureEntrepr
 
 import { CreateServiceController } from "../controllers/CreateServiceController";
 import { DeleteServiceController } from "../controllers/DeleteServiceController";
-import { FindServiceByCategoryController } from "../controllers/FindServiceByCategoryController";
 import { FindServiceByCompanyController } from "../controllers/FindServiceByCompanyController";
-import { FindServiceByNameController } from "../controllers/FindServiceByNameController";
 import { GetFavoritesController } from "../controllers/GetFavoritesController";
 import { GetServiceHighlightController } from "../controllers/GetServiceHighlightController";
 import { ImportServiceController } from "../controllers/ImportServiceController";
@@ -26,8 +24,6 @@ const createServiceController = new CreateServiceController();
 const importServiceController = new ImportServiceController();
 const showServiceController = new ShowServiceController();
 const findServiceByCompanyController = new FindServiceByCompanyController();
-const findServiceByNameController = new FindServiceByNameController();
-const findServiceByCategoryController = new FindServiceByCategoryController();
 const updateServiceImageController = new UpdateServiceImageController();
 const updateServiceController = new UpdateServiceController();
 const deleteServiceController = new DeleteServiceController();
@@ -54,8 +50,6 @@ servicesRouter.post(
 );
 servicesRouter.get("/:service_id", ensureAuthenticated, ensureEntrepreneur, showServiceController.handle);
 servicesRouter.get("/company/:company_id", findServiceByCompanyController.handle);
-servicesRouter.get("/name/:company_id", findServiceByNameController.handle);
-servicesRouter.get("/category/:company_id", findServiceByCategoryController.handle);
 servicesRouter.patch(
   "/service/:service_id",
   ensureAuthenticated,

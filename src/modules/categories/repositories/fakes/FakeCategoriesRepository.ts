@@ -6,9 +6,6 @@ import { Category } from "@modules/categories/infra/prisma/entities/Category";
 import { ICategoriesRepository } from "../ICategoriesRepository";
 
 export class FakeCategoriesRepository implements ICategoriesRepository {
-  createManyCategories(data: ICreateCategoryDTO[]): Promise<Category[]> {
-    throw new Error("Method not implemented.");
-  }
   categories: Category[] = [];
 
   public async create(data: ICreateCategoryDTO): Promise<Category> {

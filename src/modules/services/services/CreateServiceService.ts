@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { AppError } from "@shared/errors/AppError";
 
@@ -20,8 +21,12 @@ interface IRequest {
 export class CreateServiceService {
 
   constructor(
+
     @inject("ServicesRepository")
     private serviceRepository: IServicesRepository,
+
+    @inject("CategoriesRepository")
+    private categoryRepository: ICategoriesRepository,
 
     @inject("CompaniesRepository")
     private companiesRepository: ICompaniesRepository
@@ -43,16 +48,27 @@ export class CreateServiceService {
       throw new AppError("Company not found");
     }
 
-    const service = await this.serviceRepository.create({
-      name,
-      description,
-      price,
-      category,
-      company_id,
-      highlight_service
-    });
+    const findCategoryCompany = await this.categoryRepository.findCategoryById(company.category_id);
 
-    return service;
+    const subcategories = findCategoryCompany.subcategories.split(",");
 
+    const subcategoriesWithoutSpaces = subcategories.map(subcategory => subcategory.trim());
+
+    for (let i = 0; i < subcategoriesWithoutSpaces.length; i++) {
+      if (subcategoriesWithoutSpaces[i] === category) {
+        const service = await this.serviceRepository.create({
+          name,
+          description,
+          price,
+          category,
+          company_id,
+          highlight_service
+        });
+
+        return service;
+      }
+    }
+
+    throw new AppError("Category not found");
   }
 }

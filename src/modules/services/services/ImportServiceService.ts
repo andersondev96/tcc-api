@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { IXlsxProvider } from "@modules/categories/providers/XlsxProvider/models/IXlsxProvider";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { AppError } from "@shared/errors/AppError";
 
@@ -16,20 +17,38 @@ export class ImportServiceService {
     @inject("ServicesRepository")
     private serviceRepository: IServicesRepository,
 
+    @inject("CategoriesRepository")
+    private categoryRepository: ICategoriesRepository,
+
     @inject("XlsxProvider")
     private xlsxProvider: IXlsxProvider
   ) { }
 
   public async execute(company_id: string, filePath: string): Promise<void> {
 
-    const company = this.companyRepository.findById(company_id);
+    const company = await this.companyRepository.findById(company_id);
 
     if (!company) {
       throw new AppError("Company not found");
     }
 
-    const services = this.xlsxProvider.readXlsxProvider(filePath);
+    const services = await this.xlsxProvider.readXlsxProvider(filePath);
 
-    console.log(services);
+    const findCategoryCompany = await this.categoryRepository.findCategoryById(company.category_id);
+
+    services.map(async (service) => {
+      const { name, description, price, category } = service;
+
+      if (findCategoryCompany.subcategories.includes(category)) {
+        await this.serviceRepository.create({
+          name,
+          description,
+          price,
+          category: findCategoryCompany.id,
+          company_id
+        });
+      }
+    });
+
   }
 }

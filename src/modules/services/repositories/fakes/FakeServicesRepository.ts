@@ -19,10 +19,14 @@ export class FakeServicesRepository implements IServicesRepository {
     return data;
   }
 
-  public async listServicesByCompany(company_id: string): Promise<Service[]> {
-    const services = this.services.filter((service) => service.company_id === company_id);
+  public async listServicesByCompany(company_id: string, name?: string, category?: string, highlight_service?: boolean): Promise<Service[]> {
+    const findServices = this.services.filter((service) => service.company_id === company_id);
 
-    return services;
+    const serviceFilter =
+      findServices.filter(service =>
+        service.name.includes(name) || service.category === category || highlight_service);
+
+    return serviceFilter;
   }
 
   public async listServicesByCategory(company_id: string, category: string): Promise<Service[]> {

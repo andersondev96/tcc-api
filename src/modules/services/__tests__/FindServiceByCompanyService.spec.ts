@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
@@ -14,6 +16,7 @@ let fakeCompanyRepository: ICompaniesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeServiceRepository: IServicesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let findServiceByCompanyService: FindServiceByCompanyService;
 
 describe("FindServiceByCompanyService", () => {
@@ -23,6 +26,7 @@ describe("FindServiceByCompanyService", () => {
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeServiceRepository = new FakeServicesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     findServiceByCompanyService = new FindServiceByCompanyService(
       fakeServiceRepository,
       fakeCompanyRepository
@@ -41,10 +45,15 @@ describe("FindServiceByCompanyService", () => {
       telephone: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category 1",
+      subcategories: "Subcategory category 1,Subcategory category 2,Subcategory category 3"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business name",
       cnpj: "123456",
-      category: "Business Category",
+      category_id: category.id,
       description: "Business Description",
       services: ["Service 1"],
       physical_localization: false,
@@ -52,31 +61,38 @@ describe("FindServiceByCompanyService", () => {
       user_id: user.id
     });
 
-    const service1 = await fakeServiceRepository.create({
+    const service = await fakeServiceRepository.create({
       name: "Service One",
       description: "Service Description",
       price: 20.0,
-      category: "Service Category",
+      category: "Subcategory category 1",
+      image_url: "image_example.png",
       company_id: company.id
     });
 
-    const service2 = await fakeServiceRepository.create({
+    await fakeServiceRepository.create({
       name: "Service Two",
       description: "Service Description 2",
       price: 20.0,
-      category: "Service Category 2",
+      category: "Subcategory category 2",
       company_id: company.id
     });
 
-    const findService = await findServiceByCompanyService.execute(company.id);
+    const findService = await findServiceByCompanyService.execute({
+      company_id: company.id,
+      name: "Service One",
+      category: "Subcategory category One"
+    });
 
-    expect(findService).toEqual([service1, service2]);
+    expect(findService).toEqual([service]);
 
   });
 
   it("Should not be able to find a service to non existent company", async () => {
     await expect(
-      findServiceByCompanyService.execute("non-existent-company"
+      findServiceByCompanyService.execute({
+        company_id: "non-existent-company"
+      }
       )).rejects.toBeInstanceOf(AppError);
   });
 });

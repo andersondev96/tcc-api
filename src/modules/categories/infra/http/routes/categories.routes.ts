@@ -8,6 +8,7 @@ import { ensureEntrepreneur } from "@shared/infra/http/middlewares/ensureEntrepr
 
 import { CreateCategoryController } from "../controllers/CreateCategoryController";
 import { ImportCategoryController } from "../controllers/ImportCategoryController";
+import { ListSubcategoriesToCategoriesController } from "../controllers/ListSubcategoriesToCategoriesController";
 
 const categoriesRoutes = Router();
 
@@ -17,6 +18,7 @@ const upload = multer({
 
 const createCategoryController = new CreateCategoryController();
 const importCategoryController = new ImportCategoryController();
+const listSubcategoriesToCategoriesService = new ListSubcategoriesToCategoriesController();
 
 
 categoriesRoutes.post("/", ensureAuthenticated, ensureEntrepreneur, celebrate(CategoryValidator), createCategoryController.handle);
@@ -26,5 +28,11 @@ categoriesRoutes.post(
   ensureAuthenticated,
   importCategoryController.handle
 );
+categoriesRoutes.get(
+  "/list-subcategories/:category_id",
+  ensureAuthenticated,
+  listSubcategoriesToCategoriesService.handle
+);
+
 
 export default categoriesRoutes;

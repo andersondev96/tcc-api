@@ -5,11 +5,7 @@ export interface IServicesRepository {
 
   create(data: ICreateServiceDTO): Promise<Service>;
 
-  listServicesByCompany(company_id: string): Promise<Service[]>;
-
-  listServicesByCategory(company_id: string): Promise<Service[]>;
-
-  findServicesByName(company_id: string, name: string): Promise<Service[]>;
+  listServicesByCompany(company_id: string, name?: string, category?: string, highlight_service?: boolean): Promise<Service[]>;
 
   findServiceById(id: string): Promise<Service>;
 

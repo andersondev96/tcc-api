@@ -155,8 +155,7 @@ model Service {
     name              String
     description       String
     price             Float
-    category_id          String
-    category Category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    category          String
     image_url         String?
     highlight_service Boolean? @default(false)
     favorites         Int?     @default(0)
@@ -175,7 +174,6 @@ model Category {
   id String @id @default(uuid())
   name  String @unique
   subcategories String?
-  service Service[]
   company Company[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

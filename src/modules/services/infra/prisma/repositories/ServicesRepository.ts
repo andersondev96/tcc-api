@@ -38,52 +38,6 @@ export class ServicesRepository implements IServicesRepository {
     return service;
   }
 
-  public async listServicesByCompany(company_id: string): Promise<Service[]> {
-    const services = await prisma.service.findMany({
-      where: { company_id }
-    });
-
-    return services;
-  }
-
-  public async listServicesByCategory(company_id: string): Promise<Service[]> {
-    const servicesByCategory = await prisma.service.groupBy({
-      by: ["category"],
-      where: { company_id },
-      _count: {
-        category: true
-      }
-    });
-
-    const services: Service[] = servicesByCategory.map(service => {
-      return {
-        name: "",
-        description: "",
-        price: 0,
-        category: service.category,
-        company_id: "",
-        favorites: 0,
-        stars: 0,
-        assessments: service._count.category
-      };
-    });
-
-    return services;
-  }
-
-  public async findServicesByName(company_id: string, name: string): Promise<Service[]> {
-    const services = await prisma.service.findMany({
-      where: {
-        company_id,
-        name: {
-          contains: name
-        }
-      }
-    });
-
-    return services;
-  }
-
   public async findServiceById(id: string): Promise<Service> {
     const service = await prisma.service.findUnique({
       where: {
@@ -92,6 +46,23 @@ export class ServicesRepository implements IServicesRepository {
     });
 
     return service;
+  }
+
+  public async listServicesByCompany(company_id: string, name?: string, category?: string, highlight_service?: boolean): Promise<Service[]> {
+    const services = await prisma.service.findMany({
+      where: {
+        company_id,
+        ...(name && {
+          name: {
+            contains: name
+          }
+        }),
+        ...(category && { category }),
+        ...(highlight_service && { highlight_service })
+      }
+    });
+
+    return services;
   }
 
   public async update(data: ICreateServiceDTO): Promise<Service> {
