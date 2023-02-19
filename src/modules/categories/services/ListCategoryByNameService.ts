@@ -1,4 +1,4 @@
-import { injectAll, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import { Category } from "../infra/prisma/entities/Category";
 import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
@@ -7,13 +7,16 @@ import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 export class ListCategoryByNameService {
 
   constructor(
-    @injectAll("CategoriesRepository")
+    @inject("CategoriesRepository")
     private categoryRepository: ICategoriesRepository
   ) { }
 
   public async execute(name: string): Promise<Category> {
+
     const category = await this.categoryRepository.findCategoryByName(name);
 
-    return category;
+    if (category) {
+      return category;
+    }
   }
 }
