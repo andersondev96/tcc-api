@@ -6,6 +6,7 @@ import { Category } from "@modules/categories/infra/prisma/entities/Category";
 import { ICategoriesRepository } from "../ICategoriesRepository";
 
 export class FakeCategoriesRepository implements ICategoriesRepository {
+
   categories: Category[] = [];
 
   public async create(data: ICreateCategoryDTO): Promise<Category> {
@@ -28,6 +29,10 @@ export class FakeCategoriesRepository implements ICategoriesRepository {
     const category = this.categories.find(c => c.name === name);
 
     return category;
+  }
+
+  public async listCategories(): Promise<Category[]> {
+    return this.categories;
   }
 
 }

@@ -8,4 +8,6 @@ export interface ICategoriesRepository {
 
   findCategoryByName(name: string): Promise<Category>;
 
+  listCategories(): Promise<Category[]>;
+
 }
