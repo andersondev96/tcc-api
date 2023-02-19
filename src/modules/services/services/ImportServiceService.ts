@@ -44,7 +44,7 @@ export class ImportServiceService {
           name,
           description,
           price,
-          category: findCategoryCompany.id,
+          category,
           company_id
         });
       }

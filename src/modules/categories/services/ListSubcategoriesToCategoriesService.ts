@@ -23,7 +23,9 @@ export class ListSubcategoriesToCategoriesService {
 
     const subcategories = category.subcategories.split(",");
 
-    return subcategories;
+    const newSubcategories = subcategories.map(subcategory => subcategory.trim());
+
+    return newSubcategories;
 
   }
 }
