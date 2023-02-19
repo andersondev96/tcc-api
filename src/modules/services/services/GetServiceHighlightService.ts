@@ -9,7 +9,7 @@ export class GetServiceHighlightService {
 
   constructor(
     @inject("ServicesRepository")
-    private servicesRepository: IServicesRepository,
+    private servicesRepository: IServicesRepository
 
   ) { }
 
@@ -32,7 +32,7 @@ export class GetServiceHighlightService {
       });
 
       // Se houver mais de 5 em destaque vai dar erro
-      if (totHighlight >= 5) {
+      if (totHighlight > 5) {
         throw new AppError("Quantity services highlight exceeds 5");
       } else { // Seta highlight_service como true
         service.highlight_service = true;

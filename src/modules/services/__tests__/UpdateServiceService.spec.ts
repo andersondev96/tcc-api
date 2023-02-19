@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
@@ -13,6 +15,7 @@ import { UpdateServiceService } from "../services/UpdateServiceService";
 let fakeServiceRepository: IServicesRepository;
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeContactRepository: IContactsRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeUserRepository: IUsersRepository;
 let updateServiceService: UpdateServiceService;
 
@@ -21,6 +24,7 @@ describe("UpdateServiceService", () => {
     fakeServiceRepository = new FakeServicesRepository(),
       fakeCompanyRepository = new FakeCompaniesRepository(),
       fakeContactRepository = new FakeContactsRepository(),
+      fakeCategoryRepository = new FakeCategoriesRepository(),
       fakeUserRepository = new FakeUsersRepository(),
       updateServiceService = new UpdateServiceService(
         fakeServiceRepository
@@ -39,10 +43,15 @@ describe("UpdateServiceService", () => {
       telephone: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category 1",
+      subcategories: "Subcategory 1"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business name",
       cnpj: "123456",
-      category: "Business Category",
+      category_id: category.id,
       description: "Business Description",
       services: ["Service 1"],
       physical_localization: false,
@@ -54,7 +63,7 @@ describe("UpdateServiceService", () => {
       name: "Service One",
       description: "Service Description",
       price: 20.0,
-      category: "Service Category",
+      category: "Subcategory 1",
       company_id: company.id
     });
 
@@ -66,7 +75,7 @@ describe("UpdateServiceService", () => {
       name: service.name,
       description: service.description,
       price: service.price,
-      category: service.category,
+      category: service.category
     });
 
     expect(service.name).toEqual("Service Updated");
@@ -85,10 +94,15 @@ describe("UpdateServiceService", () => {
       telephone: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category 1",
+      subcategories: "Subcategory 1"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business name",
       cnpj: "123456",
-      category: "Business Category",
+      category_id: category.id,
       description: "Business Description",
       services: ["Service 1"],
       physical_localization: false,
@@ -100,7 +114,7 @@ describe("UpdateServiceService", () => {
       name: "Service One",
       description: "Service Description",
       price: 20.0,
-      category: "Service Category",
+      category: "Subcategory 1",
       company_id: company.id
     });
 
@@ -112,8 +126,8 @@ describe("UpdateServiceService", () => {
       name: service.name,
       description: service.description,
       price: service.price,
-      category: service.category,
+      category: service.category
     })
     ).rejects.toBeInstanceOf(AppError);
   });
-})
+});

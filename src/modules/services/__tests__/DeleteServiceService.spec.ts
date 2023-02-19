@@ -1,3 +1,5 @@
+import { CategoriesRepository } from "@modules/categories/infra/prisma/repositories/CategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
@@ -14,6 +16,7 @@ import { DeleteServiceService } from "../services/DeleteServiceService";
 
 let fakeServiceRepository: IServicesRepository;
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeStorageProvider: IStorageProvider;
@@ -23,6 +26,7 @@ describe("DeleteServiceService", () => {
   beforeEach(() => {
     fakeServiceRepository = new FakeServicesRepository(),
       fakeCompanyRepository = new FakeCompaniesRepository(),
+      fakeCategoryRepository = new CategoriesRepository(),
       fakeContactRepository = new FakeContactsRepository(),
       fakeUserRepository = new FakeUsersRepository(),
       fakeStorageProvider = new FakeStorageProvider(),
@@ -44,10 +48,15 @@ describe("DeleteServiceService", () => {
       telephone: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Example",
+      subcategories: "Subcategory Example"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business name",
       cnpj: "123456",
-      category: "Business Category",
+      category_id: category.id,
       description: "Business Description",
       services: ["Service 1"],
       physical_localization: false,
@@ -59,7 +68,7 @@ describe("DeleteServiceService", () => {
       name: "Service One",
       description: "Service Description",
       price: 20.0,
-      category: "Service Category",
+      category: "Subcategory Example",
       company_id: company.id,
       image_url: "image_example.jpg"
     });
@@ -76,5 +85,5 @@ describe("DeleteServiceService", () => {
     await expect(
       deleteServiceService.execute("not-existing-service")
     ).rejects.toBeInstanceOf(AppError);
-  })
-})
+  });
+});
