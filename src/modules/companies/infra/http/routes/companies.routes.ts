@@ -52,7 +52,7 @@ companiesRouter.post(
 );
 companiesRouter.get("/me", ensureAuthenticated, findCompanyByUserController.handle);
 companiesRouter.get("/:id", findByCompanyController.handle);
-companiesRouter.get("/", ensureAuthenticated, ensureEntrepreneur, listAllCompaniesController.handle);
+companiesRouter.get("/", listAllCompaniesController.handle);
 companiesRouter.put("/:id", updateCompanyController.handle);
 companiesRouter.put(
   "/schedules/:id",
