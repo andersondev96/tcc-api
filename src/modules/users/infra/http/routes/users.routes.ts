@@ -11,12 +11,14 @@ import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthen
 import { CreateUsersController } from "../controllers/CreateUsersController";
 import { DeleteUserController } from "../controllers/DeleteUserController";
 import { FindByUserIdController } from "../controllers/FindByUserIdController";
+import { GoogleAuthenticationController } from "../controllers/GoogleAuthenticationController";
 import { UpdateUserAvatarController } from "../controllers/UpdateUserAvatarController";
 import { UpdateUserController } from "../controllers/UpdateUserController";
 const usersRouter = Router();
 const uploadAvatar = multer(uploadConfig);
 
 const createUserController = new CreateUsersController();
+const googleAuthenticationController = new GoogleAuthenticationController();
 const findByUserIdController = new FindByUserIdController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
@@ -25,6 +27,7 @@ const updateEntrepreneursSettingsController = new UpdateEntrepreneursSettingsCon
 const findUserByEntrepreneurController = new FindUserByEntrepreneurController();
 
 usersRouter.post("/", celebrate(userValidator), createUserController.handle);
+usersRouter.post("/google", googleAuthenticationController.handle);
 usersRouter.get("/profile", ensureAuthenticated, findByUserIdController.handle);
 usersRouter.get("/entrepreneur", ensureAuthenticated, findUserByEntrepreneurController.handle);
 usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);

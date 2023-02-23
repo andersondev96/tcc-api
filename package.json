@@ -38,6 +38,7 @@
         "typescript": "*"
     },
     "dependencies": {
+        "@firebase/auth": "^0.21.3",
         "@prisma/client": "^4.6.1",
         "@types/nodemailer": "^6.4.4",
         "@types/xlsx": "^0.0.36",
@@ -49,6 +50,7 @@
         "express": "^4.17.3",
         "express-async-errors": "^3.1.1",
         "express-errors": "^0.3.1",
+        "firebase": "^9.17.1",
         "handlebars": "^4.7.7",
         "jsonwebtoken": "^8.5.1",
         "multer": "^1.4.5-lts.1",
