@@ -30,7 +30,14 @@ export class ProposalsRepository implements IProposalsRepository {
 
   public async listProposalsByCustomer(customer_id: string): Promise<Proposal[]> {
     const proposals = await prisma.proposal.findMany({
-      where: { customer_id }
+      where: { customer_id },
+      include: {
+        customer: {
+          include: {
+            user: true
+          }
+        }
+      }
     });
 
     return proposals;
@@ -38,7 +45,14 @@ export class ProposalsRepository implements IProposalsRepository {
 
   public async listProposalsByCompany(company_id: string): Promise<Proposal[]> {
     const proposals = await prisma.proposal.findMany({
-      where: { company_id }
+      where: { company_id },
+      include: {
+        customer: {
+          include: {
+            user: true
+          }
+        }
+      }
     });
 
     return proposals;
@@ -71,7 +85,14 @@ export class ProposalsRepository implements IProposalsRepository {
 
   public async findProposalById(proposal_id: string): Promise<Proposal> {
     const proposal = await prisma.proposal.findUnique({
-      where: { id: proposal_id }
+      where: { id: proposal_id },
+      include: {
+        customer: {
+          include: {
+            user: true
+          }
+        }
+      }
     });
 
     return proposal;

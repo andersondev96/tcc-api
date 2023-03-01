@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
+import { AppError } from "@shared/errors/AppError";
 
 import { Proposal } from "../infra/prisma/entities/Proposal";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
@@ -18,6 +19,10 @@ export class ListAllProposalsService {
   public async execute(user_id: string): Promise<Proposal[]> {
 
     const customer = await this.customerRepository.findCustomerByUser(user_id);
+
+    if (!customer) {
+      throw new AppError("User has not a customer");
+    }
 
     const proposals = await this.proposalRepository.listProposalsByCustomer(customer.id);
 
