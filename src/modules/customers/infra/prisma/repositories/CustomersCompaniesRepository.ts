@@ -24,7 +24,11 @@ export class CustomersCompaniesRepository implements ICustomersCompaniesReposito
         company_id
       },
       include: {
-        customer: true
+        customer: {
+          include: {
+            user: true
+          }
+        }
       }
 
     });
