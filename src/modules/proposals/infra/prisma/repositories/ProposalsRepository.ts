@@ -61,6 +61,7 @@ export class ProposalsRepository implements IProposalsRepository {
   public async listProposalsByObjectiveOrName(company_id: string, objective?: string, name?: string): Promise<Proposal[]> {
     const proposals = await prisma.proposal.findMany({
       where: {
+        company_id,
         OR: [
           {
             objective: {
@@ -77,6 +78,13 @@ export class ProposalsRepository implements IProposalsRepository {
             }
           }
         ]
+      },
+      include: {
+        customer: {
+          include: {
+            user: true
+          }
+        }
       }
     });
 
