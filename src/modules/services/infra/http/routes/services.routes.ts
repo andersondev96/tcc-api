@@ -48,7 +48,7 @@ servicesRouter.post(
   ensureAuthenticated,
   importServiceController.handle
 );
-servicesRouter.get("/:service_id", ensureAuthenticated, ensureEntrepreneur, showServiceController.handle);
+servicesRouter.get("/:service_id", showServiceController.handle);
 servicesRouter.get("/company/:company_id", findServiceByCompanyController.handle);
 servicesRouter.patch(
   "/service/:service_id",
