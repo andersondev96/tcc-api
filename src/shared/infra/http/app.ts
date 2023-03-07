@@ -25,6 +25,8 @@ app.use("/company", express.static(`${upload.tmpFolder}/company`));
 
 app.use("/service", express.static(`${upload.tmpFolder}/service`));
 
+app.use("/budgets", express.static(`${upload.tmpFolder}/budgets`));
+
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
