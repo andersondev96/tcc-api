@@ -27,7 +27,12 @@ async function main() {
               create: {
                 name: faker.company.name(),
                 cnpj: faker.random.alpha(13),
-                category: faker.company.bsNoun(),
+                category: {
+                  create: {
+                    name: faker.commerce.department(),
+                    subcategories: faker.commerce.productAdjective()
+                  }
+                },
                 physical_localization: true,
                 description: faker.lorem.text(),
                 services: faker.helpers.arrayElements(),
@@ -46,7 +51,9 @@ async function main() {
                     district: faker.address.secondaryAddress(),
                     number: faker.datatype.number(),
                     state: faker.address.stateAbbr(),
-                    city: faker.address.cityName()
+                    city: faker.address.cityName(),
+                    latitude: Number(faker.address.latitude()),
+                    longitude: Number(faker.address.longitude())
                   }
                 },
                 Schedule: {
@@ -111,6 +118,7 @@ async function main() {
                 }
               }
             }
+
           }
         }
       }
