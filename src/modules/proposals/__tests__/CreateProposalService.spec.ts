@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
@@ -17,6 +19,7 @@ import { CreateProposalService } from "../services/CreateProposalService";
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeCustomerCompanyRepository: ICustomersCompaniesRepository;
 let fakeCustomerRepository: ICustomersRepository;
 let fakeProposalRepository: IProposalsRepository;
@@ -29,6 +32,7 @@ describe("CreateProposalService", () => {
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeCustomerRepository = new FakeCustomersRepository();
     fakeCustomerCompanyRepository = new FakeCustomersCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeProposalRepository = new FakeProposalsRepository();
     createProposalService = new CreateProposalService(
       fakeUserRepository,
@@ -51,10 +55,15 @@ describe("CreateProposalService", () => {
       telephone: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test",
+      subcategories: "Subcategory Test,Subcategory Test 2"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business name",
       cnpj: "123456",
-      category: "Business Category",
+      category_id: category.id,
       description: "Business Description",
       services: ["Service 1"],
       physical_localization: false,
@@ -91,10 +100,15 @@ describe("CreateProposalService", () => {
       telephone: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test",
+      subcategories: "Subcategory Test,Subcategory Test 2"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business name",
       cnpj: "123456",
-      category: "Business Category",
+      category_id: category.id,
       description: "Business Description",
       services: ["Service 1"],
       physical_localization: false,

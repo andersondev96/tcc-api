@@ -78,8 +78,6 @@ export class CreateProposalService {
           customer.id
         );
 
-        console.log(customerCompanyAlreadyExists);
-
         if (!customerCompanyAlreadyExists) {
           await this.customerCompanyRepository.create({
             company_id,

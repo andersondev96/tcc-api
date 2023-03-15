@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
@@ -15,6 +17,7 @@ import { ListProposalsByCompanyService } from "../services/ListProposalsByCompan
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeCustomerRepository: ICustomersRepository;
 let fakeProposalRepository: IProposalsRepository;
 let listProposalsByCompanyService: ListProposalsByCompanyService;
@@ -24,6 +27,7 @@ describe("ListProposalsByCompanyService", () => {
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeCustomerRepository = new FakeCustomersRepository();
     fakeProposalRepository = new FakeProposalsRepository();
     listProposalsByCompanyService = new ListProposalsByCompanyService(
@@ -44,10 +48,15 @@ describe("ListProposalsByCompanyService", () => {
       telephone: "123456"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test",
+      subcategories: "Subcategory Test 1, Subcategory Test 2"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business name",
       cnpj: "123456",
-      category: "Business Category",
+      category_id: category.id,
       description: "Business Description",
       services: ["Service 1"],
       physical_localization: false,
