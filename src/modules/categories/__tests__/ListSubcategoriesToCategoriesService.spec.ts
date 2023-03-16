@@ -1,3 +1,5 @@
+import { AppError } from "@shared/errors/AppError";
+
 import { FakeCategoriesRepository } from "../repositories/fakes/FakeCategoriesRepository";
 import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 import { ListSubcategoriesToCategoriesService } from "../services/ListSubcategoriesToCategoriesService";
@@ -25,5 +27,13 @@ describe("ListSubcategoriesToCategoriesService", () => {
     );
 
     expect(subcategories).toEqual(["Contrução", "Desenho", "Modelagem", "Projeto"]);
+  });
+
+  it("Should not be able to list subcategories if category not found", async () => {
+
+    await expect(
+      listSubcategoriesToCategoryService.execute("category-not-existing"
+      )
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
