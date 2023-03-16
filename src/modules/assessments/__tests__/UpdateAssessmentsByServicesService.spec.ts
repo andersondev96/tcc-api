@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
@@ -8,15 +10,16 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+
 import { FakeAssessmentsRepository } from "../repositories/fakes/FakeAssessmentsRepository";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
-import { UpdateAssessmentsByCompanyService } from "../services/UpdateAssessmentsByCompanyService";
 import { UpdateAssessmentsByServicesService } from "../services/UpdateAssessmentsByServicesService";
 
 
 let updateAssessmentsServicesService: UpdateAssessmentsByServicesService;
 let fakeAssessmentRepository: IAssessmentsRepository;
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeServiceRepository: IServicesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
@@ -25,6 +28,7 @@ describe("CreateAssessmentsCompanyService", () => {
   beforeEach(() => {
     fakeAssessmentRepository = new FakeAssessmentsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeServiceRepository = new FakeServicesRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
@@ -49,10 +53,15 @@ describe("CreateAssessmentsCompanyService", () => {
       whatsapp: "12345685"
     });
 
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test",
+      subcategories: "Subcategory Test 1, Subcategory Test 2"
+    });
+
     const company = await fakeCompanyRepository.create({
       name: "Business Company",
       cnpj: "123456",
-      category: "Supermarket",
+      category_id: category.id,
       description: "Supermarket description",
       services: ["Supermarket", "Shopping"],
       physical_localization: false,

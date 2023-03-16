@@ -26,8 +26,6 @@ export class FindAssessmentsByServicesService {
 
     const assessment = await this.assessmentRepository.findAssessments(service_id);
 
-    console.log(assessment);
-
     return assessment;
   }
 }
