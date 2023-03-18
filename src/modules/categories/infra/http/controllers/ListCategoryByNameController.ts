@@ -9,6 +9,8 @@ export class ListCategoryByNameController {
 
     const { name } = request.query;
 
+    console.log(name);
+
     const listCategoryByNameService = container.resolve(ListCategoryByNameService);
 
     const category = await listCategoryByNameService.execute(String(name));

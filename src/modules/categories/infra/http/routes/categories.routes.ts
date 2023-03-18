@@ -35,8 +35,8 @@ categoriesRoutes.post(
   importCategoryController.handle
 );
 categoriesRoutes.get("/", ensureAuthenticated, listAllCategoriesController.handle);
-categoriesRoutes.get("/:category_id", listCategoryByIdController.handle);
 categoriesRoutes.get("/by-name", ensureAuthenticated, listCategoryByNameController.handle);
+categoriesRoutes.get("/:category_id", listCategoryByIdController.handle);
 categoriesRoutes.get(
   "/list-subcategories/:category_id",
   ensureAuthenticated,
