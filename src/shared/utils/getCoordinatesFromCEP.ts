@@ -11,6 +11,7 @@ export async function getCoordinatesFromCEP(cep: string): Promise<ICoordinates |
   const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${cep}&key=${GOOGLE_MAPS_API_KEY}`;
 
   const response = await axios.get(endpoint);
+  console.log(response);
   const data = response.data;
 
   if (data.status === "OK") {

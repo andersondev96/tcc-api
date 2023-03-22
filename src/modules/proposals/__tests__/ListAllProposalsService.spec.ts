@@ -79,4 +79,6 @@ describe("ListAllProposalsService", () => {
 
     expect(proposals).toEqual([proposal]);
   });
+
+
 });

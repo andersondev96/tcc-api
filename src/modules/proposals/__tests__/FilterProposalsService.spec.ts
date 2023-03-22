@@ -8,6 +8,7 @@ import { FakeCustomersRepository } from "@modules/customers/repositories/fakes/F
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
 
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
@@ -79,5 +80,12 @@ describe("FilterProposalService", () => {
 
     expect(filterProposal).toEqual(proposal);
 
+  });
+
+  it("Should not be able to filter proposals if company not found", async () => {
+
+    await expect(
+      filterProposalsService.execute("company-not-exist", "name", "objective")
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
