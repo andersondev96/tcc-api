@@ -6,6 +6,7 @@ import { User } from "@modules/users/infra/prisma/entities/User";
 import { IUsersRepository } from "../IUsersRepository";
 
 export class FakeUsersRepository implements IUsersRepository {
+
   public async findById(id: string): Promise<User> {
     const findUserById = this.users.find((user) => user.id === id);
 
@@ -16,7 +17,7 @@ export class FakeUsersRepository implements IUsersRepository {
 
   public async create(data: ICreateUserDTO): Promise<User> {
     Object.assign(data, {
-      id: uuid(),
+      id: uuid()
     });
 
     this.users.push(data);
@@ -27,6 +28,18 @@ export class FakeUsersRepository implements IUsersRepository {
     const findUser = this.users.find((user) => user.email === email);
 
     return findUser;
+  }
+
+  public async addFavorite(user_id: string, table_id: string): Promise<User> {
+    const index = this.users.findIndex(user => user.id === user_id);
+
+    if (!this.users[index].favorites) {
+      this.users[index].favorites = [];
+    }
+
+    this.users[index].favorites.push(table_id);
+
+    return this.users[index];
   }
 
   public async update(user: ICreateUserDTO): Promise<User> {

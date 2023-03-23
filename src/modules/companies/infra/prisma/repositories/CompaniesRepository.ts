@@ -113,6 +113,19 @@ export class CompaniesRepository implements ICompaniesRepository {
     return updateCompany;
   }
 
+  public async favoriteCompany(company_id: string): Promise<Company> {
+    const addFavorite = await prisma.company.update({
+      where: { id: company_id },
+      data: {
+        favorites: {
+          increment: 1
+        }
+      }
+    });
+
+    return addFavorite;
+  }
+
   public async delete(id: string): Promise<void> {
     await prisma.company.delete({
       where: { id }

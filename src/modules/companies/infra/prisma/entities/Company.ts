@@ -5,6 +5,7 @@ export class Company {
   category_id: string;
   description?: string;
   stars?: number;
+  favorites?: number;
   services?: string[];
   physical_localization: boolean;
   user_id: string;
@@ -19,6 +20,7 @@ export class Company {
       description,
       services,
       stars,
+      favorites,
       physical_localization,
       contact_id,
       user_id
@@ -30,6 +32,7 @@ export class Company {
       description,
       services,
       stars,
+      favorites,
       physical_localization,
       contact_id,
       user_id

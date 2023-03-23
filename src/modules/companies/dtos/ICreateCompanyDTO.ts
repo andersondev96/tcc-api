@@ -9,5 +9,6 @@ export interface ICreateCompanyDTO {
   user_id: string;
   contact_id: string;
   stars?: number;
+  favorites?: number;
 
 }

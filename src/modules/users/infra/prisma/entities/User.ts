@@ -3,6 +3,7 @@ export class User {
   name: string;
   email: string;
   password: string;
+  favorites?: string[];
   avatar?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -11,7 +12,7 @@ export class User {
     return Object.assign(this, {
       name,
       email,
-      password,
+      password
     });
   }
 }

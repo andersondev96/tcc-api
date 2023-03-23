@@ -14,6 +14,7 @@ import { CreateImageCompanyController } from "../controllers/CreateImageCompanyC
 import { DeleteCompanyController } from "../controllers/DeleteCompanyController";
 import { DeleteImagesCompanyController } from "../controllers/DeleteImagesCompanyController";
 import { DeleteScheduleController } from "../controllers/DeleteScheduleController";
+import { FavoriteCompanyController } from "../controllers/FavoriteCompanyController";
 import { FindCompanyByUserController } from "../controllers/FindCompanyByUserController";
 import { ListAllCompaniesController } from "../controllers/ListAllCompaniesController";
 import { UpdateCompanyController } from "../controllers/UpdateCompanyController";
@@ -29,6 +30,7 @@ const createImageCompanyController = new CreateImageCompanyController();
 const findByCompanyController = new FindByCompanyController();
 const findCompanyByUserController = new FindCompanyByUserController();
 const listAllCompaniesController = new ListAllCompaniesController();
+const favoriteCompanyController = new FavoriteCompanyController();
 const updateCompanyController = new UpdateCompanyController();
 const updateScheduleController = new UpdateScheduleController();
 const updateImagesCompanyController = new UpdateImagesCompanyController();
@@ -60,6 +62,11 @@ companiesRouter.put(
   ensureEntrepreneur,
   celebrate(updateCompanyValidator),
   updateScheduleController.handle
+);
+companiesRouter.patch(
+  "/favorites/:company_id",
+  ensureAuthenticated,
+  favoriteCompanyController.handle
 );
 companiesRouter.delete(
   "/schedules/:id",

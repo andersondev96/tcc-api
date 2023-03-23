@@ -9,8 +9,8 @@ export class UsersRepository implements IUsersRepository {
   async findById(id: string): Promise<User> {
     const user = await prisma.user.findUnique({
       where: {
-        id,
-      },
+        id
+      }
     });
 
     return user;
@@ -23,8 +23,8 @@ export class UsersRepository implements IUsersRepository {
         email,
         password,
         id,
-        avatar,
-      },
+        avatar
+      }
     });
 
     return user;
@@ -33,8 +33,17 @@ export class UsersRepository implements IUsersRepository {
   async findByMail(email: string): Promise<User | undefined> {
     const user = await prisma.user.findUnique({
       where: {
-        email,
-      },
+        email
+      }
+    });
+
+    return user;
+  }
+
+  public async addFavorite(user_id: string, table_id: string): Promise<User> {
+    const user = await prisma.user.update({
+      where: { id: user_id },
+      data: { favorites: [table_id] }
     });
 
     return user;
@@ -45,7 +54,7 @@ export class UsersRepository implements IUsersRepository {
       where: { id: user.id },
       data: {
         ...user
-      },
+      }
     });
 
     return updateUser;

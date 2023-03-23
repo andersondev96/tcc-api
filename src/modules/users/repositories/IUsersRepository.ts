@@ -5,6 +5,7 @@ export interface IUsersRepository {
   create(data: ICreateUserDTO): Promise<User>;
   findById(id: string): Promise<User | undefined>;
   findByMail(email: string): Promise<User | undefined>;
+  addFavorite(user_id: string, table_id: string): Promise<User>;
   update(user: ICreateUserDTO): Promise<User>;
   delete(id: string): Promise<void>;
 
