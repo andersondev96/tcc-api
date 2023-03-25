@@ -17,6 +17,7 @@ import { DeleteScheduleController } from "../controllers/DeleteScheduleControlle
 import { FavoriteCompanyController } from "../controllers/FavoriteCompanyController";
 import { FindCompanyByUserController } from "../controllers/FindCompanyByUserController";
 import { ListAllCompaniesController } from "../controllers/ListAllCompaniesController";
+import { UnfavoriteCompanyController } from "../controllers/UnfavoriteCompanyController";
 import { UpdateCompanyController } from "../controllers/UpdateCompanyController";
 import { UpdateImagesCompanyController } from "../controllers/UpdateImagesCompanyController";
 import { UpdateScheduleController } from "../controllers/UpdateScheduleController";
@@ -31,6 +32,7 @@ const findByCompanyController = new FindByCompanyController();
 const findCompanyByUserController = new FindCompanyByUserController();
 const listAllCompaniesController = new ListAllCompaniesController();
 const favoriteCompanyController = new FavoriteCompanyController();
+const unfavoriteCompanyController = new UnfavoriteCompanyController();
 const updateCompanyController = new UpdateCompanyController();
 const updateScheduleController = new UpdateScheduleController();
 const updateImagesCompanyController = new UpdateImagesCompanyController();
@@ -67,6 +69,11 @@ companiesRouter.patch(
   "/favorites/:company_id",
   ensureAuthenticated,
   favoriteCompanyController.handle
+);
+companiesRouter.patch(
+  "/favorites/unfavorite/:company_id",
+  ensureAuthenticated,
+  unfavoriteCompanyController.handle
 );
 companiesRouter.delete(
   "/schedules/:id",

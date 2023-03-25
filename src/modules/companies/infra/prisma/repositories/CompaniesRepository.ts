@@ -44,8 +44,6 @@ export class CompaniesRepository implements ICompaniesRepository {
       }
     });
 
-    console.log(listAllCompanies);
-
     return listAllCompanies;
   }
 
@@ -125,6 +123,20 @@ export class CompaniesRepository implements ICompaniesRepository {
 
     return addFavorite;
   }
+
+  public async unfavoriteCompany(company_id: string): Promise<Company> {
+    const removeFavorite = await prisma.company.update({
+      where: { id: company_id },
+      data: {
+        favorites: {
+          decrement: 1
+        }
+      }
+    });
+
+    return removeFavorite;
+  }
+
 
   public async delete(id: string): Promise<void> {
     await prisma.company.delete({

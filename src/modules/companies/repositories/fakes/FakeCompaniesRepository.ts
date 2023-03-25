@@ -66,7 +66,23 @@ export class FakeCompaniesRepository implements ICompaniesRepository {
   public async favoriteCompany(company_id: string): Promise<Company> {
     const index = this.companies.findIndex(findCompany => findCompany.id === company_id);
 
-    this.companies[index].favorites = 1;
+    if (!this.companies[index].favorites) {
+      this.companies[index].favorites = 0;
+    }
+
+    this.companies[index].favorites += 1;
+
+    return this.companies[index];
+  }
+
+  public async unfavoriteCompany(company_id: string): Promise<Company> {
+    const index = this.companies.findIndex(findCompany => findCompany.id === company_id);
+
+    if (!this.companies[index].favorites) {
+      this.companies[index].favorites = 0;
+    }
+
+    this.companies[index].favorites -= 1;
 
     return this.companies[index];
   }

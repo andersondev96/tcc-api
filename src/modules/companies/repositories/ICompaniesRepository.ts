@@ -19,6 +19,8 @@ export interface ICompaniesRepository {
 
   favoriteCompany(company_id: string): Promise<Company>;
 
+  unfavoriteCompany(company_id: string): Promise<Company>;
+
   delete(id: string): Promise<void>;
 
 }
