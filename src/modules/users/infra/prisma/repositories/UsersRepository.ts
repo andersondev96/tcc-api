@@ -40,13 +40,19 @@ export class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async addFavorite(user_id: string, table_id: string): Promise<User> {
-    const user = await prisma.user.update({
+  public async addFavorite(user_id: string, favorite: string): Promise<User> {
+    const user = await prisma.user.findUnique({ where: { id: user_id } });
+    if (!user) {
+      throw new Error(`User with id ${user_id} not found`);
+    }
+
+    const updatedFavorites = [...user.favorites, favorite];
+    const updateUser = await prisma.user.update({
       where: { id: user_id },
-      data: { favorites: [table_id] }
+      data: { favorites: updatedFavorites }
     });
 
-    return user;
+    return updateUser;
   }
 
   async update(user: ICreateUserDTO): Promise<User> {
