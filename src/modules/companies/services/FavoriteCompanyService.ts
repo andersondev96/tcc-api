@@ -28,7 +28,7 @@ export class FavoriteCompanyService {
 
     const favoriteCompany = await this.companyRepository.favoriteCompany(company_id);
 
-    this.userRepository.addFavorite(user.id, company_id);
+    await this.userRepository.addFavorite(user.id, company_id);
 
     return favoriteCompany;
   }

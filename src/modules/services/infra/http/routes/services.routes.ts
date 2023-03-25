@@ -14,6 +14,7 @@ import { GetFavoritesController } from "../controllers/GetFavoritesController";
 import { GetServiceHighlightController } from "../controllers/GetServiceHighlightController";
 import { ImportServiceController } from "../controllers/ImportServiceController";
 import { ShowServiceController } from "../controllers/ShowServiceController";
+import { UnfavoriteServiceController } from "../controllers/UnfavoriteServiceController";
 import { UpdateServiceController } from "../controllers/UpdateServiceController";
 import { UpdateServiceImageController } from "../controllers/UpdateServiceImageController";
 
@@ -29,6 +30,7 @@ const updateServiceController = new UpdateServiceController();
 const deleteServiceController = new DeleteServiceController();
 const getServiceHighlightController = new GetServiceHighlightController();
 const getFavoritesController = new GetFavoritesController();
+const unfavoriteServiceController = new UnfavoriteServiceController();
 
 const upload = multer({
   dest: "./tmp"
@@ -60,6 +62,7 @@ servicesRouter.patch(
 
 servicesRouter.patch("/:service_id", ensureAuthenticated, ensureEntrepreneur, getServiceHighlightController.handle);
 servicesRouter.patch("/favorites/:service_id", ensureAuthenticated, getFavoritesController.handle);
+servicesRouter.patch("/favorites/unfavorite/:service_id", ensureAuthenticated, unfavoriteServiceController.handle);
 servicesRouter.put(
   "/:service_id",
   ensureAuthenticated,

@@ -11,17 +11,17 @@ interface IRequest {
 }
 
 @injectable()
-export class GetFavoritesService {
+export class UnfavoriteServiceService {
 
   constructor(
     @inject("ServicesRepository")
     private servicesRepository: IServicesRepository,
-
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
   ) { }
 
   public async execute({ user_id, service_id }: IRequest): Promise<void> {
+    const user = await this.usersRepository.findById(user_id);
 
     const service = await this.servicesRepository.findServiceById(service_id);
 
@@ -29,14 +29,17 @@ export class GetFavoritesService {
       throw new AppError("Service not found");
     }
 
-    if (!service.favorites) {
-      service.favorites = 1;
-    } else {
-      service.favorites += 1;
-    }
+    service.favorites -= 1;
 
     await this.servicesRepository.update(service);
 
-    await this.usersRepository.addFavorite(user_id, service_id);
+    const favoritesUser = user.favorites.filter((item) => item !== service_id);
+
+    user.favorites = favoritesUser;
+
+    await this.usersRepository.update({
+      id: user.id,
+      ...user
+    });
   }
 }
