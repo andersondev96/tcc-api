@@ -12,6 +12,7 @@ import { CreateUsersController } from "../controllers/CreateUsersController";
 import { DeleteUserController } from "../controllers/DeleteUserController";
 import { FindByUserIdController } from "../controllers/FindByUserIdController";
 import { GoogleAuthenticationController } from "../controllers/GoogleAuthenticationController";
+import { ListFavoritesController } from "../controllers/ListFavoritesController";
 import { UpdateUserAvatarController } from "../controllers/UpdateUserAvatarController";
 import { UpdateUserController } from "../controllers/UpdateUserController";
 const usersRouter = Router();
@@ -25,11 +26,13 @@ const deleteUserController = new DeleteUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
 const updateEntrepreneursSettingsController = new UpdateEntrepreneursSettingsController();
 const findUserByEntrepreneurController = new FindUserByEntrepreneurController();
+const listFavoritesController = new ListFavoritesController();
 
 usersRouter.post("/", celebrate(userValidator), createUserController.handle);
 usersRouter.post("/google", googleAuthenticationController.handle);
 usersRouter.get("/profile", ensureAuthenticated, findByUserIdController.handle);
 usersRouter.get("/entrepreneur", ensureAuthenticated, findUserByEntrepreneurController.handle);
+usersRouter.get("/favorites", ensureAuthenticated, listFavoritesController.handle);
 usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);
 usersRouter.put("/", ensureAuthenticated, celebrate(userValidator), updateUserController.handle);
 usersRouter.patch(
