@@ -26,7 +26,10 @@ export class AssessmentsRepository implements IAssessmentsRepository {
 
   public async findAssessmentById(assessment_id: string): Promise<Assessment> {
     const findAssessment = await prisma.assessment.findUnique({
-      where: { id: assessment_id }
+      where: { id: assessment_id },
+      include: {
+        user: true
+      }
     });
 
     return findAssessment;
@@ -34,7 +37,10 @@ export class AssessmentsRepository implements IAssessmentsRepository {
 
   public async findAssessments(table_id: string): Promise<Assessment[]> {
     const assessments = await prisma.assessment.findMany({
-      where: { table_id }
+      where: { table_id },
+      include: {
+        user: true
+      }
     });
 
     return assessments;
