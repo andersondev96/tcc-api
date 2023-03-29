@@ -11,6 +11,7 @@ import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthen
 import { CreateUsersController } from "../controllers/CreateUsersController";
 import { DeleteUserController } from "../controllers/DeleteUserController";
 import { FindByUserIdController } from "../controllers/FindByUserIdController";
+import { FindFavoriteController } from "../controllers/FindFavoriteController";
 import { GoogleAuthenticationController } from "../controllers/GoogleAuthenticationController";
 import { ListFavoritesController } from "../controllers/ListFavoritesController";
 import { UpdateUserAvatarController } from "../controllers/UpdateUserAvatarController";
@@ -27,12 +28,14 @@ const updateUserAvatarController = new UpdateUserAvatarController();
 const updateEntrepreneursSettingsController = new UpdateEntrepreneursSettingsController();
 const findUserByEntrepreneurController = new FindUserByEntrepreneurController();
 const listFavoritesController = new ListFavoritesController();
+const findFavoriteController = new FindFavoriteController();
 
 usersRouter.post("/", celebrate(userValidator), createUserController.handle);
 usersRouter.post("/google", googleAuthenticationController.handle);
 usersRouter.get("/profile", ensureAuthenticated, findByUserIdController.handle);
 usersRouter.get("/entrepreneur", ensureAuthenticated, findUserByEntrepreneurController.handle);
 usersRouter.get("/favorites", ensureAuthenticated, listFavoritesController.handle);
+usersRouter.get("/favorite/:table_id", ensureAuthenticated, findFavoriteController.handle);
 usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);
 usersRouter.put("/", ensureAuthenticated, celebrate(userValidator), updateUserController.handle);
 usersRouter.patch(

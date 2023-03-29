@@ -7,14 +7,16 @@ export class UserMap {
     email,
     name,
     id,
-    avatar
+    avatar,
+    favorites
   }: User): IUserResponseDTO {
     const user = {
       email,
       name,
       id,
       avatar,
-      avatar_url: avatar && `${process.env.APP_API_URL}/avatar/${avatar}`
+      avatar_url: avatar && `${process.env.APP_API_URL}/avatar/${avatar}`,
+      favorites
     };
     return user;
   }
