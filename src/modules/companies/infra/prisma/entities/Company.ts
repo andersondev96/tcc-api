@@ -1,3 +1,9 @@
+
+import { Address } from "./Address";
+import { Contact } from "./Contact";
+import { ImageCompany } from "./ImageCompany";
+import { Schedule } from "./Schedule";
+
 export class Company {
   id?: string;
   name: string;
@@ -10,6 +16,10 @@ export class Company {
   physical_localization: boolean;
   user_id: string;
   contact_id: string;
+  contact?: Contact;
+  address?: Address;
+  ImageCompany?: ImageCompany[];
+  schedule?: Schedule;
 
 
   constructor(
@@ -23,7 +33,11 @@ export class Company {
       favorites,
       physical_localization,
       contact_id,
-      user_id
+      user_id,
+      contact,
+      address,
+      ImageCompany,
+      schedule
     }: Company) {
     return Object.assign(this, {
       name,
@@ -35,7 +49,11 @@ export class Company {
       favorites,
       physical_localization,
       contact_id,
-      user_id
+      user_id,
+      contact,
+      address,
+      ImageCompany,
+      schedule
     });
   }
 }

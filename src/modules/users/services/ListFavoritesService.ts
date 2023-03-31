@@ -10,6 +10,7 @@ interface IResponse {
   companies: {
     id: string;
     name: string;
+    image: string;
   }[];
   services: {
     id: string;
@@ -49,11 +50,23 @@ export class ListFavoritesService {
 
     const formattedCompanies = companies
       .filter(Boolean)
-      .map(({ id, name }) => ({ id, name }));
+      .map(({ id, name, ImageCompany, favorites }) => ({
+        id,
+        name,
+        image: ImageCompany.length > 0 ? ImageCompany[0].image_url : null,
+        favorites
+      }));
 
     const formattedServices = services
       .filter(Boolean)
-      .map(({ id, name, description, company }) => ({ id, name, description, company: company.name }));
+      .map(({ id, name, description, image_url, company, favorites }) => ({
+        id,
+        name,
+        description,
+        image_url,
+        company: company.name,
+        favorites
+      }));
 
     return { companies: formattedCompanies, services: formattedServices };
   }
