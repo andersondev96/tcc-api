@@ -4,6 +4,7 @@ import assessmentsRoute from "@modules/assessments/infra/http/routes/assessments
 import categoriesRoutes from "@modules/categories/infra/http/routes/categories.routes";
 import companiesRoutes from "@modules/companies/infra/http/routes/companies.routes";
 import customersRouter from "@modules/customers/infra/http/routes/customers.routes";
+import entrepreneursRoutes from "@modules/entrepreneurs/infra/http/routes/entrepreneurs.routes";
 import budgetsRoutes from "@modules/proposals/infra/http/routes/budgets.routes";
 import proposalsRouter from "@modules/proposals/infra/http/routes/proposals.routes";
 import servicesRouter from "@modules/services/infra/http/routes/services.routes";
@@ -11,7 +12,6 @@ import authGoogleRouter from "@modules/users/infra/http/routes/authGoogle";
 import passwordRoutes from "@modules/users/infra/http/routes/password.routes";
 import sessionsRouter from "@modules/users/infra/http/routes/sessions.routes";
 import usersRouter from "@modules/users/infra/http/routes/users.routes";
-
 const routes = Router();
 
 routes.use("/users", usersRouter);
@@ -25,6 +25,7 @@ routes.use("/assessments", assessmentsRoute);
 routes.use("/proposals", proposalsRouter);
 routes.use("/budgets", budgetsRoutes);
 routes.use("/customers", customersRouter);
+routes.use("/entrepreneurs", entrepreneursRoutes);
 
 
 export default routes;

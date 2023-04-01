@@ -5,6 +5,7 @@ import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntre
 import { Entrepreneur } from "../entities/Entrepreneur";
 
 export class EntrepreneursRepository implements IEntrepreneursRepository {
+
   public async create({
     id,
     user_id,
@@ -23,7 +24,7 @@ export class EntrepreneursRepository implements IEntrepreneursRepository {
 
   public async findById(id: string): Promise<Entrepreneur> {
     const entrepreneur = await prisma.entrepreneur.findUnique({
-      where: { id },
+      where: { id }
     });
 
     return entrepreneur;
@@ -31,18 +32,24 @@ export class EntrepreneursRepository implements IEntrepreneursRepository {
 
   public async findByUser(user_id: string): Promise<Entrepreneur> {
     const entrepreneur = await prisma.entrepreneur.findUnique({
-      where: { user_id },
+      where: { user_id }
     });
 
-    console.log(entrepreneur);
-
     return entrepreneur;
+  }
+
+  public async findByCompany(company_id: string): Promise<Entrepreneur> {
+    const company = await prisma.entrepreneur.findUnique({
+      where: { company_id }
+    });
+
+    return company;
   }
 
   public async update(data: ICreateEntrepreneurDTO): Promise<Entrepreneur> {
     const entrepreneur = await prisma.entrepreneur.update({
       where: { id: data.id },
-      data: { ...data },
+      data: { ...data }
     });
 
     return entrepreneur;

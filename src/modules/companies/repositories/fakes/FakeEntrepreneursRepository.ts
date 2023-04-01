@@ -11,7 +11,7 @@ export class FakeEntrepreneursRepository implements IEntrepreneursRepository {
 
   public async create(data: ICreateEntrepreneurDTO): Promise<Entrepreneur> {
     Object.assign(data, {
-      id: uuid(),
+      id: uuid()
     });
 
     this.entrepreneurs.push(data);
@@ -29,6 +29,12 @@ export class FakeEntrepreneursRepository implements IEntrepreneursRepository {
     const findEntrepreneurByUser = this.entrepreneurs.find((entrepreneur) => entrepreneur.user_id === user_id);
 
     return findEntrepreneurByUser;
+  }
+
+  public async findByCompany(company_id: string): Promise<Entrepreneur> {
+    const findEntrepreneurByCompany = this.entrepreneurs.find((entrepreneur) => entrepreneur.company_id === company_id);
+
+    return findEntrepreneurByCompany;
   }
 
   public async update(data: ICreateEntrepreneurDTO): Promise<Entrepreneur> {
