@@ -13,11 +13,11 @@ export class GetFavoritesController {
 
     const getFavoritesService = container.resolve(GetFavoritesService);
 
-    await getFavoritesService.execute({
+    const favoriteService = await getFavoritesService.execute({
       user_id: id,
-      service_id,
+      service_id
     });
 
-    return response.status(204).send();
+    return response.status(201).json(favoriteService);
   }
 }

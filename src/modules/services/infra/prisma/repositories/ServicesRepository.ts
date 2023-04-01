@@ -88,6 +88,32 @@ export class ServicesRepository implements IServicesRepository {
     return service;
   }
 
+  public async favoriteService(service_id: string): Promise<Service> {
+    const addFavorite = await prisma.service.update({
+      where: { id: service_id },
+      data: {
+        favorites: {
+          increment: 1
+        }
+      }
+    });
+
+    return addFavorite;
+  }
+
+  public async unfavoriteService(service_id: string): Promise<Service> {
+    const addFavorite = await prisma.service.update({
+      where: { id: service_id },
+      data: {
+        favorites: {
+          decrement: 1
+        }
+      }
+    });
+
+    return addFavorite;
+  }
+
   public async delete(id: string): Promise<void> {
     await prisma.service.delete({
       where: { id }

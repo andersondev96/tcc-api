@@ -66,6 +66,30 @@ export class FakeServicesRepository implements IServicesRepository {
     return this.services[index];
   }
 
+  public async favoriteService(service_id: string): Promise<Service> {
+    const index = this.services.findIndex(service => service.id === service_id);
+
+    if (!this.services[index].favorites) {
+      this.services[index].favorites = 0;
+    }
+
+    this.services[index].favorites += 1;
+
+    return this.services[index];
+  }
+
+  public async unfavoriteService(service_id: string): Promise<Service> {
+    const index = this.services.findIndex(service => service.id === service_id);
+
+    if (!this.services[index].favorites) {
+      this.services[index].favorites = 0;
+    }
+
+    this.services[index].favorites -= 1;
+
+    return this.services[index];
+  }
+
   public async delete(id: string): Promise<void> {
     const index = this.services.findIndex(service => service.id === id);
 

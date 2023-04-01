@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { Service } from "../infra/prisma/entities/Service";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
 interface IRequest {
@@ -21,7 +22,8 @@ export class GetFavoritesService {
     private usersRepository: IUsersRepository
   ) { }
 
-  public async execute({ user_id, service_id }: IRequest): Promise<void> {
+  public async execute({ user_id, service_id }: IRequest): Promise<Service> {
+    const user = await this.usersRepository.findById(user_id);
 
     const service = await this.servicesRepository.findServiceById(service_id);
 
@@ -29,14 +31,10 @@ export class GetFavoritesService {
       throw new AppError("Service not found");
     }
 
-    if (!service.favorites) {
-      service.favorites = 1;
-    } else {
-      service.favorites += 1;
-    }
+    const favoriteService = await this.servicesRepository.favoriteService(service_id);
 
-    await this.servicesRepository.update(service);
+    await this.usersRepository.addFavorite(user.id, service_id);
 
-    await this.usersRepository.addFavorite(user_id, service_id);
+    return favoriteService;
   }
 }

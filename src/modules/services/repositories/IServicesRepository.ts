@@ -13,5 +13,9 @@ export interface IServicesRepository {
 
   updateStars(service_id: string, stars: number): Promise<Service>;
 
+  favoriteService(service_id: string): Promise<Service>;
+
+  unfavoriteService(service_id: string): Promise<Service>;
+
   delete(id: string): Promise<void>;
 }

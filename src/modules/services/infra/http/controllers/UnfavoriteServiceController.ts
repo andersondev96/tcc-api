@@ -13,11 +13,11 @@ export class UnfavoriteServiceController {
 
     const unfavoriteServiceService = container.resolve(UnfavoriteServiceService);
 
-    await unfavoriteServiceService.execute({
+    const favorite = await unfavoriteServiceService.execute({
       user_id: id,
       service_id
     });
 
-    return response.status(204).send();
+    return response.status(201).json(favorite);
   }
 }
