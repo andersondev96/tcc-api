@@ -13,6 +13,6 @@ export class ShowServiceController {
 
     const service = await showServiceService.execute(service_id);
 
-    return response.status(201).json(service);
+    return response.status(200).json(service);
   }
 }

@@ -13,6 +13,6 @@ export class FindByCompanyController {
 
     const company = await findByCompanyService.execute(id);
 
-    return response.json(company);
+    return response.status(200).json(company);
   }
 }
