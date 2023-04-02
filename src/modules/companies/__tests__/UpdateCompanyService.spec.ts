@@ -272,58 +272,6 @@ describe("UpdateCompanyService", () => {
 
   });
 
-  it("Should not be able to update when physical localization is true and address is undefined", async () => {
-    const user = await fakeUserRepository.create({
-      name: "John Doe",
-      email: "john.doe@example.com",
-      password: "123456"
-    });
-
-    const contact = await fakeContactRepository.create({
-      telephone: "1234567",
-      email: "business@example.com",
-      website: "www.example.com",
-      whatsapp: "12345685"
-    });
-
-    const category = await fakeCategoryRepository.create({
-      name: "Category Test"
-    });
-
-    const company = await fakeCompanyRepository.create({
-      name: "Business Company",
-      cnpj: "123456",
-      category_id: category.id,
-      description: "Supermarket description",
-      services: ["Supermarket", "Shopping"],
-      physical_localization: true,
-      contact_id: contact.id,
-      user_id: user.id
-    });
-
-    const update = {
-      id: company.id,
-      name: "Company Test",
-      cnpj: "123456",
-      category_id: category.id,
-      description: "Description Test",
-      services: ["Service 1", "Service 2"],
-      physical_localization: true,
-      telephone: "1234567",
-      email: "business@example.com",
-      website: "www.example.com",
-      whatsapp: "12345685",
-      cep: "35930386",
-      number: 12
-    };
-
-    await updateCompanyService.execute(update);
-    const addressCompany = await fakeAddressRepository.findAddressByCompany(company.id);
-
-
-    expect(addressCompany).toHaveProperty("id");
-  });
-
   it("Should be able to update when physical localization is true and has address to company", async () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",

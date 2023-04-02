@@ -4,6 +4,7 @@ import { ICategoriesRepository } from "@modules/categories/repositories/ICategor
 import { AppError } from "@shared/errors/AppError";
 import { getCEP } from "@shared/utils/getCEP";
 import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
+import { getAddressFromCoordinates, getCurrentLocalization } from "@shared/utils/getCurrentLocalization";
 
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
@@ -120,28 +121,15 @@ export class UpdateCompanyService {
 
     const addressId = await this.addressRepository.findAddressByCompany(findCompanyById.id);
 
-    const coords = await getCoordinatesFromCEP(cep);
+    if (company.physical_localization) {
+      const coords = await getCoordinatesFromCEP(cep);
 
-    if (!coords) {
-      throw new AppError("CEP not found");
-    }
+      if (!coords) {
+        throw new AppError("CEP not found");
+      }
 
-    const address = await getCEP(cep);
+      const address = await getCEP(cep);
 
-    if (company.physical_localization && !addressId) {
-
-      await this.addressRepository.create({
-        cep,
-        street: address.street || street,
-        district: address.district || district,
-        number,
-        state: address.state,
-        city: address.city,
-        latitude: coords.lat,
-        longitude: coords.lng,
-        company_id: company.id
-      });
-    } else if (company.physical_localization && addressId) {
       await this.addressRepository.update({
         id: addressId.id,
         cep,
@@ -154,8 +142,27 @@ export class UpdateCompanyService {
         longitude: coords.lng,
         company_id: company.id
       });
-    } else if (!company.physical_localization && addressId) {
-      await this.addressRepository.delete(addressId.id);
+    }
+
+    if (!company.physical_localization) {
+      const coords = await getCurrentLocalization();
+
+      if (coords) {
+        const address = await getAddressFromCoordinates(coords);
+
+        await this.addressRepository.update({
+          id: addressId.id,
+          cep: address.cep,
+          street: address.street,
+          district: address.district,
+          number: null,
+          state: address.state,
+          city: address.city,
+          latitude: coords.lat,
+          longitude: coords.lng,
+          company_id: company.id
+        });
+      }
     }
 
     const response = {
