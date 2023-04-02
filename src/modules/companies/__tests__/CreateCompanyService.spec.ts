@@ -4,15 +4,15 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { FakeEntrepreneursRepository } from "../../entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { IEntrepreneursRepository } from "../../entrepreneurs/repositories/IEntrepreneursRepository";
 import { FakeAddressesRepository } from "../repositories/fakes/FakeAddressesRepository";
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
-import { FakeEntrepreneursRepository } from "../repositories/fakes/FakeEntrepreneursRepository";
 import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
-import { IEntrepreneursRepository } from "../repositories/IEntrepreneursRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 import { CreateCompanyService } from "../services/CreateCompanyService";
 

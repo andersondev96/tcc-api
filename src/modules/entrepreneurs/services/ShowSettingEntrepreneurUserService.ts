@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
-import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 

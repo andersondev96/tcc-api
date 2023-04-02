@@ -1,9 +1,9 @@
 import { v4 as uuid } from "uuid";
 
-import { ICreateEntrepreneurDTO } from "@modules/companies/dtos/ICreateEntrepreneurDTO";
-import { Entrepreneur } from "@modules/companies/infra/prisma/entities/Entrepreneur";
+import { ICreateEntrepreneurDTO } from "@modules/entrepreneurs/dtos/ICreateEntrepreneurDTO";
+import { Entrepreneur } from "@modules/entrepreneurs/infra/prisma/entities/Entrepreneur";
 
-import { IEntrepreneursRepository } from "../IEntrepreneursRepository";
+import { IEntrepreneursRepository } from "../../../entrepreneurs/repositories/IEntrepreneursRepository";
 
 export class FakeEntrepreneursRepository implements IEntrepreneursRepository {
 

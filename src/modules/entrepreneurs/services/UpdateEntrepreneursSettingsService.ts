@@ -25,9 +25,6 @@ export class UpdateEntrepreneursSettingsService {
 
   public async execute({
     entrepreneur_id,
-    service_name_color,
-    service_price_color,
-    card_color,
     highlight_services_quantity,
     online_budget,
     online_chat,
@@ -43,9 +40,6 @@ export class UpdateEntrepreneursSettingsService {
     const entrepreneurSettings = await this.entrepreneursSettingsRepository.update({
       id: entrepreneur.id,
       entrepreneur_id: entrepreneur.entrepreneur_id,
-      service_name_color,
-      service_price_color,
-      card_color,
       highlight_services_quantity,
       online_budget,
       online_chat,

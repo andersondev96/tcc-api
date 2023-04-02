@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
-import { EntrepreneursRepository } from "@modules/companies/infra/prisma/repositories/EntrepreneursRepository";
+import { EntrepreneursRepository } from "@modules/entrepreneurs/infra/prisma/repositories/EntrepreneursRepository";
 import { AppError } from "@shared/errors/AppError";
 
 export async function ensureEntrepreneur(

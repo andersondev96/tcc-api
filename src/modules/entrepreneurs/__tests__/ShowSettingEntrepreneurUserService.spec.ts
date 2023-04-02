@@ -2,10 +2,10 @@ import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes
 import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
-import { FakeEntrepreneursRepository } from "@modules/companies/repositories/fakes/FakeEntrepreneursRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
-import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";

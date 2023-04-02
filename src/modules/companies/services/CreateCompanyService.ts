@@ -7,11 +7,11 @@ import { getCEP } from "@shared/utils/getCEP";
 import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
 import { getAddressFromCoordinates, getCurrentLocalization } from "@shared/utils/getCurrentLocalization";
 
+import { IEntrepreneursRepository } from "../../entrepreneurs/repositories/IEntrepreneursRepository";
 import { Company } from "../infra/prisma/entities/Company";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
-import { IEntrepreneursRepository } from "../repositories/IEntrepreneursRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 interface ISchedule {
   weekday: string

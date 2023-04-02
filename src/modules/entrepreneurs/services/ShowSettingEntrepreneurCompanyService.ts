@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
-import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
 import { AppError } from "@shared/errors/AppError";
 
 import { EntrepreneurSettings } from "../infra/prisma/entities/EntrepreneurSettings";

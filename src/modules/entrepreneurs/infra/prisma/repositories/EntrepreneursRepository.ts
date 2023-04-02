@@ -1,6 +1,6 @@
 import { prisma } from "@database/prisma";
-import { ICreateEntrepreneurDTO } from "@modules/companies/dtos/ICreateEntrepreneurDTO";
-import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { ICreateEntrepreneurDTO } from "@modules/entrepreneurs/dtos/ICreateEntrepreneurDTO";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
 
 import { Entrepreneur } from "../entities/Entrepreneur";
 

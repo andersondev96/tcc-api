@@ -1,5 +1,7 @@
-import { FakeEntrepreneursRepository } from "@modules/companies/repositories/fakes/FakeEntrepreneursRepository";
-import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { FakeEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursSettingsRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
 import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 
@@ -14,6 +16,7 @@ let usersRepositoryFake: IUsersRepository;
 let fakeHashProvider: IHashProvider;
 let fakeStorageProvider: IStorageProvider;
 let fakeEntrepreneurRepository: IEntrepreneursRepository;
+let fakeEntrepreneurSettingsRepository: IEntrepreneursSettingsRepository;
 let createUserService: CreateUserService;
 let updateUserAvatarService: UpdateUserAvatarService;
 
@@ -23,10 +26,12 @@ describe("Update User Avatar Service", () => {
     fakeHashProvider = new FakeHashProvider();
     fakeStorageProvider = new FakeStorageProvider();
     fakeEntrepreneurRepository = new FakeEntrepreneursRepository();
+    fakeEntrepreneurSettingsRepository = new FakeEntrepreneursSettingsRepository();
     createUserService = new CreateUserService(
       usersRepositoryFake,
       fakeEntrepreneurRepository,
-      fakeHashProvider,
+      fakeEntrepreneurSettingsRepository,
+      fakeHashProvider
     );
 
     updateUserAvatarService = new UpdateUserAvatarService(
@@ -39,12 +44,12 @@ describe("Update User Avatar Service", () => {
     const user = await createUserService.execute({
       name: "John doe",
       email: "john@example.com",
-      password: "123456",
+      password: "123456"
     });
 
     await updateUserAvatarService.execute({
       user_id: user.id,
-      avatar_url: 'IMG_12345678.jpg',
+      avatar_url: "IMG_12345678.jpg"
 
     });
 
@@ -55,21 +60,21 @@ describe("Update User Avatar Service", () => {
     const user = await createUserService.execute({
       name: "John doe",
       email: "john@example.com",
-      password: "123456",
+      password: "123456"
     });
 
     await updateUserAvatarService.execute({
       user_id: user.id,
-      avatar_url: 'image.jpg',
+      avatar_url: "image.jpg"
 
     });
 
     await updateUserAvatarService.execute({
       user_id: user.id,
-      avatar_url: 'IMG_12345678.jpg',
+      avatar_url: "IMG_12345678.jpg"
     });
 
 
-    expect(user.avatar).toEqual('IMG_12345678.jpg');
+    expect(user.avatar).toEqual("IMG_12345678.jpg");
   });
-})
+});

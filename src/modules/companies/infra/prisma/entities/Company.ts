@@ -1,7 +1,7 @@
 
+import { Entrepreneur } from "../../../../entrepreneurs/infra/prisma/entities/Entrepreneur";
 import { Address } from "./Address";
 import { Contact } from "./Contact";
-import { Entrepreneur } from "./Entrepreneur";
 import { ImageCompany } from "./ImageCompany";
 import { Schedule } from "./Schedule";
 

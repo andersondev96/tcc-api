@@ -1,5 +1,5 @@
-import { FakeEntrepreneursRepository } from "@modules/companies/repositories/fakes/FakeEntrepreneursRepository";
-import { IEntrepreneursRepository } from "@modules/companies/repositories/IEntrepreneursRepository";
+import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -40,16 +40,13 @@ describe("UpdateEntrepreneursSettingsService", () => {
 
     const updateEntrepreneur = await updateEntrepreneursSettingsService.execute({
       entrepreneur_id: entrepreneurSettings.entrepreneur_id,
-      service_name_color: "green-400",
-      service_price_color: "gray-200",
-      card_color: "white",
       highlight_services_quantity: 5,
       online_budget: true,
       online_chat: false,
       email_notification: true
     });
 
-    expect(updateEntrepreneur.service_price_color).toEqual("gray-200");
+    expect(updateEntrepreneur.highlight_services_quantity).toEqual(5);
     expect(updateEntrepreneur.online_budget).toEqual(true);
   });
 
