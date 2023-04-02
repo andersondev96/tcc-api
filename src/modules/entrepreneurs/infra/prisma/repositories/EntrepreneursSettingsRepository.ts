@@ -9,9 +9,7 @@ export class EntrepreneursSettingsRepository implements IEntrepreneursSettingsRe
   public async create({
     id,
     entrepreneur_id,
-    service_name_color,
-    service_price_color,
-    card_color,
+    company_logo,
     highlight_services_quantity,
     online_budget,
     online_chat,
@@ -21,9 +19,7 @@ export class EntrepreneursSettingsRepository implements IEntrepreneursSettingsRe
       data: {
         id,
         entrepreneur_id,
-        service_name_color,
-        service_price_color,
-        card_color,
+        company_logo,
         highlight_services_quantity,
         online_budget,
         online_chat,

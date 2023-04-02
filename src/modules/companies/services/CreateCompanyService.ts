@@ -5,6 +5,7 @@ import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 import { getCEP } from "@shared/utils/getCEP";
 import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
+import { getAddressFromCoordinates, getCurrentLocalization } from "@shared/utils/getCurrentLocalization";
 
 import { Company } from "../infra/prisma/entities/Company";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
@@ -81,95 +82,121 @@ export class CreateCompanyService {
     website,
     user_id
   }: IRequest): Promise<Company> {
-    const user = await this.userRepository.findById(user_id);
 
-    if (!user) {
-      throw new AppError("This user does not exist");
-    }
+    try {
+      const user = await this.userRepository.findById(user_id);
 
-    const userHasCompany = await this.companyRepository.findByUser(user_id);
-
-    if (userHasCompany) {
-      throw new AppError("User has a company");
-    }
-
-    const checkCompanyExists = await this.companyRepository.findByName(name);
-
-    if (checkCompanyExists) {
-      throw new AppError("Company already exists");
-    }
-
-    const checkCategoryExists = await this.categoryRepository.findCategoryById(category_id);
-
-    if (!checkCategoryExists) {
-      throw new AppError("Category not found");
-    }
-
-    const contact = await this.contactRepository.create({
-      telephone,
-      whatsapp,
-      email,
-      website
-    });
-
-    const company = await this.companyRepository.create({
-      name,
-      cnpj,
-      category_id,
-      description,
-      services,
-      physical_localization,
-      contact_id: contact.id,
-      user_id
-    });
-
-    const entrepreneur = await this.entrepreneurRepository.findByUser(user_id);
-
-    if (entrepreneur) {
-      await this.entrepreneurRepository.update({
-        id: entrepreneur.id,
-        user_id: user.id,
-        company_id: company.id
-      });
-    }
-
-    if (company.physical_localization) {
-      const coords = await getCoordinatesFromCEP(cep);
-
-      const address = await getCEP(cep);
-
-      if (!coords) {
-        throw new AppError("CEP not found");
+      if (!user) {
+        throw new AppError("This user does not exist");
       }
 
-      await this.addressRepository.create({
-        cep,
-        street: address.street || street,
-        district: address.district || district,
-        number,
-        state: address.state,
-        city: address.city,
-        latitude: coords.lat,
-        longitude: coords.lng,
-        company_id: company.id
+      const userHasCompany = await this.companyRepository.findByUser(user_id);
+
+      if (userHasCompany) {
+        throw new AppError("User has a company");
+      }
+
+      const checkCompanyExists = await this.companyRepository.findByName(name);
+
+      if (checkCompanyExists) {
+        throw new AppError("Company already exists");
+      }
+
+      const checkCategoryExists = await this.categoryRepository.findCategoryById(category_id);
+
+      if (!checkCategoryExists) {
+        throw new AppError("Category not found");
+      }
+
+      const contact = await this.contactRepository.create({
+        telephone,
+        whatsapp,
+        email,
+        website
       });
-    }
 
-    if (schedules) {
-      schedules.map(async (schedule) => {
-        const { weekday, opening_time, closing_time, lunch_time } = schedule;
+      const company = await this.companyRepository.create({
+        name,
+        cnpj,
+        category_id,
+        description,
+        services,
+        physical_localization,
+        contact_id: contact.id,
+        user_id
+      });
 
-        await this.scheduleRepository.create({
-          weekday,
-          opening_time,
-          closing_time,
-          lunch_time,
+      const entrepreneur = await this.entrepreneurRepository.findByUser(user_id);
+
+      if (entrepreneur) {
+        await this.entrepreneurRepository.update({
+          id: entrepreneur.id,
+          user_id: user.id,
           company_id: company.id
         });
-      });
+      }
+
+      if (company.physical_localization) {
+        const coords = await getCoordinatesFromCEP(cep);
+
+        const address = await getCEP(cep);
+
+        if (!coords) {
+          throw new AppError("CEP not found");
+        }
+
+        await this.addressRepository.create({
+          cep,
+          street: address.street || street,
+          district: address.district || district,
+          number,
+          state: address.state,
+          city: address.city,
+          latitude: coords.lat,
+          longitude: coords.lng,
+          company_id: company.id
+        });
+      }
+
+      if (!physical_localization) {
+        const coords = await getCurrentLocalization();
+
+        if (coords) {
+          const address = await getAddressFromCoordinates(coords);
+
+          await this.addressRepository.create({
+            cep,
+            street: address.street || street,
+            district: address.district || district,
+            number,
+            state: address.state,
+            city: address.city,
+            latitude: coords.lat,
+            longitude: coords.lng,
+            company_id: company.id
+          });
+        }
+
+      }
+
+      if (schedules) {
+        schedules.map(async (schedule) => {
+          const { weekday, opening_time, closing_time, lunch_time } = schedule;
+
+          await this.scheduleRepository.create({
+            weekday,
+            opening_time,
+            closing_time,
+            lunch_time,
+            company_id: company.id
+          });
+        });
+      }
+
+
+      return company;
+    } catch (error) {
+      throw new AppError(error.message);
     }
-
-
-    return company;
   }
 }

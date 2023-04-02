@@ -1,6 +1,7 @@
 
 import { Address } from "./Address";
 import { Contact } from "./Contact";
+import { Entrepreneur } from "./Entrepreneur";
 import { ImageCompany } from "./ImageCompany";
 import { Schedule } from "./Schedule";
 
@@ -20,6 +21,7 @@ export class Company {
   address?: Address;
   ImageCompany?: ImageCompany[];
   schedule?: Schedule;
+  entrepreneur?: Entrepreneur;
 
 
   constructor(
@@ -37,7 +39,9 @@ export class Company {
       contact,
       address,
       ImageCompany,
-      schedule
+      schedule,
+      entrepreneur
+
     }: Company) {
     return Object.assign(this, {
       name,
@@ -53,7 +57,8 @@ export class Company {
       contact,
       address,
       ImageCompany,
-      schedule
+      schedule,
+      entrepreneur
     });
   }
 }

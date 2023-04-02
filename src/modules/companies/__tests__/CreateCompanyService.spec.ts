@@ -353,4 +353,35 @@ describe("CreateCompanyService", () => {
     })).rejects.toBeInstanceOf(AppError);
   });
 
+  it("Should be able to create a company if not have a physical localization", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
+    });
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    const company = await createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      physical_localization: false,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    });
+
+    const address = await fakeAddressRepository.findAddressByCompany(company.id);
+
+    expect(company).toHaveProperty("id");
+    expect(address.company_id).toEqual(company.id);
+  });
+
 });

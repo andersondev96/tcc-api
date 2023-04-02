@@ -40,7 +40,12 @@ export class CompaniesRepository implements ICompaniesRepository {
         contact: true,
         Address: true,
         ImageCompany: true,
-        Schedule: true
+        Schedule: true,
+        Entrepreneur: {
+          include: {
+            entrepreneur_settings: true
+          }
+        }
       }
     });
 
@@ -70,7 +75,12 @@ export class CompaniesRepository implements ICompaniesRepository {
         contact: true,
         Address: true,
         ImageCompany: true,
-        Schedule: true
+        Schedule: true,
+        Entrepreneur: {
+          include: {
+            entrepreneur_settings: true
+          }
+        }
       }
     });
 
@@ -84,7 +94,12 @@ export class CompaniesRepository implements ICompaniesRepository {
         contact: true,
         Address: true,
         ImageCompany: true,
-        Schedule: true
+        Schedule: true,
+        Entrepreneur: {
+          include: {
+            entrepreneur_settings: true
+          }
+        }
       }
     });
 

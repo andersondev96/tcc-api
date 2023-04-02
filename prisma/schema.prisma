@@ -122,10 +122,10 @@ model Schedule {
 
 model Address {
     id         String  @id @default(uuid())
-    cep        String
-    street     String
-    district   String
-    number     Int
+    cep        String? @default("")
+    street     String? @default("")
+    district   String? @default("")
+    number     Int?
     state      String
     city       String
     latitude Float
@@ -265,9 +265,7 @@ model Customer_Company {
 model Entrepreneur_Settings {
   id String @id @default(uuid())
   entrepreneur_id String @unique
-  service_name_color String? @default("gray-800")
-  service_price_color String? @default("yellow-900")
-  card_color String? @default("gray-400")
+  company_logo String?
   highlight_services_quantity Int? @default(3)
   online_budget Boolean? @default(false)
   online_chat Boolean? @default(false)
@@ -275,6 +273,5 @@ model Entrepreneur_Settings {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   entrepreneur Entrepreneur @relation(fields: [entrepreneur_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
   @@map("entrepreneurs_settings")
 }
