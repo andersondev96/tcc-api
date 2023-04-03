@@ -2,6 +2,9 @@ import "@shared/container";
 import { CelebrateError } from "celebrate";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
+import { createServer } from "http";
+import path from "path";
+import { Server, Socket } from "socket.io";
 import swaggerUi from "swagger-ui-express";
 
 import upload from "@config/upload";
@@ -10,8 +13,15 @@ import { AppError } from "@shared/errors/AppError";
 import swaggerFile from "../../../swagger.json";
 import routes from "./routes";
 
-
 const app = express();
+app.use(express.static(path.join(__dirname, "..", "..", "..", "..", "public")));
+
+const http = createServer(app);
+const io = new Server(http);
+
+io.on("connection", (socket: Socket) => {
+  console.log("Socket", socket.id);
+});
 
 app.use(cors());
 
@@ -26,8 +36,6 @@ app.use("/company", express.static(`${upload.tmpFolder}/company`));
 app.use("/service", express.static(`${upload.tmpFolder}/service`));
 
 app.use("/budgets", express.static(`${upload.tmpFolder}/budgets`));
-
-app.use("/company_logo", express.static(`${upload.tmpFolder}/company_logo`));
 
 app.use(routes);
 
@@ -53,4 +61,4 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   });
 });
 
-export { app };
+export { http, io };

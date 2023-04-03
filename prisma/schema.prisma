@@ -22,6 +22,9 @@ model User {
     Customer Customer?
     Entrepreneur Entrepreneur[]
     Assessment Assessment[]
+    Chat Chat[]
+    Connection_Socket Connection_Socket[]
+    ChatRoom ChatRoom[]
 
     @@map("users")
 }
@@ -71,6 +74,7 @@ model Company {
     Address               Address?
     ImageCompany          ImageCompany[]
     Entrepreneur          Entrepreneur[]
+    Chat Chat[]
     proposals Proposal[]
     budgets Budget[]
     customer_company Customer_Company[]
@@ -274,4 +278,41 @@ model Entrepreneur_Settings {
   updatedAt DateTime @updatedAt
   entrepreneur Entrepreneur @relation(fields: [entrepreneur_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   @@map("entrepreneurs_settings")
+}
+
+model Chat {
+  id String @id @default(uuid())
+  name String?
+  text String
+  user_id String
+  company_id String
+  chatroom_id String
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  company Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  chatroom ChatRoom @relation(fields: [chatroom_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("chat")
+}
+
+model Connection_Socket {
+  id String @id @default(uuid())
+  user_id String
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  socket_id String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("connection_socket")
+}
+
+model ChatRoom {
+  id String @id @default(uuid())
+  idUsers User[]
+  Chat Chat[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("chat_room")
 }

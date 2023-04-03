@@ -1,6 +1,7 @@
-import "reflect-metadata";
 import "express-async-errors";
+import "reflect-metadata";
+import "../../../websocket/ChatService";
 
-import { app } from "./app";
+import { http } from "./app";
 
-app.listen(3333, () => console.log("Server is running!!"));
+http.listen(3333, () => console.log("Server is running!!"));
