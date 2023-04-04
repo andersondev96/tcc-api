@@ -24,7 +24,7 @@ model User {
     Assessment Assessment[]
     Chat Chat[]
     Connection_Socket Connection_Socket[]
-    ChatRoom ChatRoom[]
+    ChatRoom ChatRoom[] @relation("ChatRoomUsers")
 
     @@map("users")
 }
@@ -309,10 +309,10 @@ model Connection_Socket {
 
 model ChatRoom {
   id String @id @default(uuid())
-  idUsers User[]
-  Chat Chat[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  users User[] @relation("ChatRoomUsers")
+  chats Chat[]
 
   @@map("chat_room")
 }
