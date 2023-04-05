@@ -1,12 +1,12 @@
 
 import { ICreateChatDTO } from "websocket/dtos/ICreateChatDTO";
-import { IChatRepository } from "websocket/repositories/IChatRepository";
+import { IChatsRepository } from "websocket/repositories/IChatsRepository";
 
 import { prisma } from "@database/prisma";
 
 import { Chat } from "../entities/Chat";
 
-export class ChatRepository implements IChatRepository {
+export class ChatsRepository implements IChatsRepository {
   public async create({
     id,
     name,

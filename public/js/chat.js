@@ -1,5 +1,16 @@
 const socket = io("http://localhost:3333");
 
-socket.on("chat_iniciado", data => {
-  console.log(data);
-});
+function onLoad() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const email = urlParams.get("email");
+  const telephone = urlParams.get("telephone");
+
+  console.log(telephone);
+
+  socket.emit("start", {
+    telephone,
+    email
+  });
+}
+
+onLoad();

@@ -1,5 +1,11 @@
 import "@modules/users/providers";
 import { container } from "tsyringe";
+import { ChatRoomsRepository } from "websocket/infra/prisma/repositories/ChatRoomsRepository";
+import { ChatsRepository } from "websocket/infra/prisma/repositories/ChatsRepository";
+import { ConnectionsRepository } from "websocket/infra/prisma/repositories/ConnectionsRepository";
+import { IChatRoomsRepository } from "websocket/repositories/IChatRoomsRepository";
+import { IChatsRepository } from "websocket/repositories/IChatsRepository";
+import { IConnectionsRepository } from "websocket/repositories/IConnectionsRepository";
 
 import { AssessmentsRepository } from "@modules/assessments/infra/prisma/repositories/AssessmentsRepository";
 import { IAssessmentsRepository } from "@modules/assessments/repositories/IAssessmentsRepository";
@@ -42,7 +48,6 @@ import { EtherealMailProvider } from "./providers/MailProvider/implementations/E
 import { IMailProvider } from "./providers/MailProvider/models/IMailProvider";
 import { LocalStorageProvider } from "./providers/StorageProvider/implementations/LocalStorageProvider";
 import { IStorageProvider } from "./providers/StorageProvider/models/IStorageProvider";
-
 
 container.registerSingleton<IUsersRepository>(
   "UsersRepository",
@@ -143,3 +148,19 @@ container.registerInstance<IXlsxProvider>(
   "XlsxProvider",
   new XlsxProvider()
 );
+
+container.registerInstance<IConnectionsRepository>(
+  "ConnectionsRepository",
+  new ConnectionsRepository()
+);
+
+container.registerInstance<IChatsRepository>(
+  "ChatsRepository",
+  new ChatsRepository()
+);
+
+container.registerInstance<IChatRoomsRepository>(
+  "ChatRoomsRepository",
+  new ChatRoomsRepository()
+);
+
