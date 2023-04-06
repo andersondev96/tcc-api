@@ -3,6 +3,7 @@ import { container } from "tsyringe";
 import { io } from "@shared/infra/http/app";
 
 import { CreateConnectionService } from "./services/CreateConnectionService";
+import { GetAllConnectionsService } from "./services/GetAllConnectionsService";
 
 io.on("connect", socket => {
 
@@ -17,6 +18,15 @@ io.on("connect", socket => {
       socket_id: socket.id
     });
 
-    console.log(connection);
+    socket.broadcast.emit("new_connection", connection);
+  });
+
+  socket.on("get_connections", async (callback) => {
+    const getAllConnectionsService = container.resolve(
+      GetAllConnectionsService
+    );
+    const connections = await getAllConnectionsService.execute();
+
+    callback(connections);
   });
 });

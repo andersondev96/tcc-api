@@ -7,5 +7,7 @@ export interface IConnectionsRepository {
 
   findById(id: string): Promise<Connection>;
 
+  listAll(): Promise<Connection[]>;
+
   delete(id: string): Promise<void>;
 }

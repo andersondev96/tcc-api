@@ -6,6 +6,7 @@ import { prisma } from "@database/prisma";
 import { Connection } from "../entities/Connection";
 
 export class ConnectionsRepository implements IConnectionsRepository {
+
   public async create({
     id,
     user_id,
@@ -16,6 +17,9 @@ export class ConnectionsRepository implements IConnectionsRepository {
         id,
         user_id,
         socket_id
+      },
+      include: {
+        user: true
       }
     });
 
@@ -26,10 +30,23 @@ export class ConnectionsRepository implements IConnectionsRepository {
     const connection = await prisma.connection_Socket.findUnique({
       where: {
         id
+      },
+      include: {
+        user: true
       }
     });
 
     return connection;
+  }
+
+  public async listAll(): Promise<Connection[]> {
+    const connections = await prisma.connection_Socket.findMany({
+      include: {
+        user: true
+      }
+    });
+
+    return connections;
   }
 
   public async delete(id: string): Promise<void> {
