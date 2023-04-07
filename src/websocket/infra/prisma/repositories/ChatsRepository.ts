@@ -7,6 +7,7 @@ import { prisma } from "@database/prisma";
 import { Chat } from "../entities/Chat";
 
 export class ChatsRepository implements IChatsRepository {
+
   public async create({
     id,
     name,
@@ -29,6 +30,20 @@ export class ChatsRepository implements IChatsRepository {
     });
 
     return chat;
+  }
+
+  public async findMessages(roomId: string): Promise<Chat[]> {
+    const messages = await prisma.chat.findMany({
+      where: {
+        chatroom_id: roomId
+      },
+      include: {
+        chatroom: true,
+        connection: true
+      }
+    });
+
+    return messages;
   }
 
   public async listAllMessages(chatroom_id: string): Promise<Chat[]> {

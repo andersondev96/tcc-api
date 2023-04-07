@@ -40,7 +40,28 @@ function onLoad() {
 
   socket.on("message", (data) => {
     console.log("message", data);
+    addMessage(data);
   });
+}
+
+function addMessage(data) {
+  const divMessageUser = document.getElementById("message_user");
+
+  divMessageUser.innerHTML += `
+    <span class="user_name user_name_date">
+    <img
+      class="img_user"
+      src=${data.connection.user.avatar}
+    />
+    <strong>${data.connection.user.name}</strong>
+    <span> ${dayjs(data.chat.createdAt).format(
+      "DD/MM/YYYY HH:mm"
+    )}</span></span
+  >
+  <div class="messages">
+    <span class="chat_message">${data.chat.text}</span>
+  </div>
+  `;
 }
 
 function addConnection(connection) {
@@ -65,8 +86,18 @@ document.getElementById("users_list").addEventListener("click", (event) => {
   if (event.target && event.target.matches("li.user_name_list")) {
     const idUser = event.target.getAttribute("idUser");
 
-    socket.emit("start_chat", { idUser }, (data) => {
-      idChatRoom = data.id;
+    socket.emit("start_chat", { idUser }, (response) => {
+      idChatRoom = response.id;
+
+      response.messages.forEach(message => {
+
+        const data = {
+          message,
+          user: message.connection_id
+        };
+
+        addMessage(data);
+      });
     });
   }
 });
