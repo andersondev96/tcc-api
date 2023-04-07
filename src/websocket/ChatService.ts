@@ -3,6 +3,7 @@ import { container } from "tsyringe";
 import { io } from "@shared/infra/http/app";
 
 import { CreateChatRoomService } from "./services/CreateChatRoomService";
+import { CreateChatService } from "./services/CreateChatService";
 import { CreateConnectionService } from "./services/CreateConnectionService";
 import { GetAllConnectionsService } from "./services/GetAllConnectionsService";
 import { GetChatRoomByConnectionsService } from "./services/GetChatRoomByConnectionsService";
@@ -52,7 +53,32 @@ io.on("connect", socket => {
       ]);
     }
 
+    console.log(room);
+
+    socket.join(room.id);
+
     callback(room);
+
+  });
+
+  socket.on("message", async (data) => {
+    const getConnectionBySocketService = container.resolve(GetConnectionBySocketService);
+    const createChatService = container.resolve(CreateChatService);
+
+    const connection = await getConnectionBySocketService.execute(socket.id);
+
+    const chat = await createChatService.execute({
+      name: connection.user.name,
+      text: data.message,
+      chatroom_id: data.idChatRoom,
+      connection_id: connection.id
+    });
+
+    io.to(data.idChatRoom).emit("message", {
+      chat,
+      connection
+    });
+
 
   });
 });

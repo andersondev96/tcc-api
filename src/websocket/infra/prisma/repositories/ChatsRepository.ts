@@ -21,6 +21,10 @@ export class ChatsRepository implements IChatsRepository {
         text,
         chatroom_id,
         connection_id
+      },
+      include: {
+        chatroom: true,
+        connection: true
       }
     });
 
@@ -31,6 +35,10 @@ export class ChatsRepository implements IChatsRepository {
     const messages = await prisma.chat.findMany({
       where: {
         chatroom_id
+      },
+      include: {
+        chatroom: true,
+        connection: true
       }
     });
 

@@ -1,3 +1,5 @@
+import { ChatRoom } from "./ChatRoom";
+import { Connection } from "./Connection";
 
 export class Chat {
   id: string;
@@ -5,14 +7,18 @@ export class Chat {
   text: string;
   chatroom_id: string;
   connection_id: string;
+  chatroom?: ChatRoom;
+  connection?: Connection;
 
-  constructor({ id, name, text, chatroom_id, connection_id }: Chat) {
+  constructor({ id, name, text, chatroom_id, connection_id, chatroom, connection }: Chat) {
     return Object.assign(this, {
       id,
       name,
       text,
       chatroom_id,
-      connection_id
+      connection_id,
+      chatroom,
+      connection
     });
   }
 }

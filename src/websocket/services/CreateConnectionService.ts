@@ -27,8 +27,6 @@ export class CreateConnectionService {
 
     const user = await this.userRepository.findByMail(email);
 
-    console.log(user);
-
     if (!user) {
       throw new AppError("User not found");
     }

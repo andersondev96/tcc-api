@@ -56,6 +56,9 @@ export class ConnectionsRepository implements IConnectionsRepository {
     const connection = await prisma.connection_Socket.findUnique({
       where: {
         socket_id
+      },
+      include: {
+        user: true
       }
     });
 

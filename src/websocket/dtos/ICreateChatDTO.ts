@@ -1,6 +1,6 @@
 
 export interface ICreateChatDTO {
-  id: string;
+  id?: string;
   name?: string;
   text: string;
   chatroom_id: string;
