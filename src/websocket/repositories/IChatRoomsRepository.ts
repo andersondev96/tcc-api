@@ -8,5 +8,7 @@ export interface IChatRoomsRepository {
 
   findById(chatroom_id: string): Promise<ChatRoom>;
 
+  findByConnection(connections: string[]): Promise<ChatRoom>;
+
   delete(chatroom_id: string): Promise<void>;
 }
