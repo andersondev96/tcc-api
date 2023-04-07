@@ -22,9 +22,7 @@ model User {
     Customer Customer?
     Entrepreneur Entrepreneur[]
     Assessment Assessment[]
-    Chat Chat[]
     Connection_Socket Connection_Socket[]
-    ChatRoom ChatRoom[] @relation("ChatRoomUsers")
 
     @@map("users")
 }
@@ -74,7 +72,6 @@ model Company {
     Address               Address?
     ImageCompany          ImageCompany[]
     Entrepreneur          Entrepreneur[]
-    Chat Chat[]
     proposals Proposal[]
     budgets Budget[]
     customer_company Customer_Company[]
@@ -284,11 +281,9 @@ model Chat {
   id String @id @default(uuid())
   name String?
   text String
-  user_id String
-  company_id String
+  connection_id String
   chatroom_id String
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  company Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  connection Connection_Socket @relation(fields: [connection_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   chatroom ChatRoom @relation(fields: [chatroom_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -300,7 +295,9 @@ model Connection_Socket {
   id String @id @default(uuid())
   user_id String @unique
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  socket_id String
+  socket_id String @unique
+  Chat Chat[]
+  ChatRoom ChatRoom[] @relation("ChatRoomConnections")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -311,7 +308,7 @@ model ChatRoom {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  users User[] @relation("ChatRoomUsers")
+  connections Connection_Socket[] @relation("ChatRoomConnections")
   chats Chat[]
 
   @@map("chat_room")

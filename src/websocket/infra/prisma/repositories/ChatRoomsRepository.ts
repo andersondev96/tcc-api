@@ -7,16 +7,13 @@ import { ChatRoom } from "../entities/ChatRoom";
 
 
 export class ChatRoomsRepository implements IChatRoomsRepository {
-  public async create({ id, users }: { id: string, users: string[] }): Promise<ChatRoom> {
+  public async create({ id, connections }: { id: string, connections: string[] }): Promise<ChatRoom> {
     const chatRoom = await prisma.chatRoom.create({
       data: {
         id,
-        users: {
-          connect: users.map((user) => ({ id: user }))
+        connections: {
+          connect: connections.map((user) => ({ id: user }))
         }
-      },
-      include: {
-        users: true
       }
     });
 
@@ -27,9 +24,6 @@ export class ChatRoomsRepository implements IChatRoomsRepository {
     const chatRoom = await prisma.chatRoom.findUnique({
       where: {
         id: chatroom_id
-      },
-      include: {
-        users: true
       }
     });
 

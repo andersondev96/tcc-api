@@ -9,6 +9,8 @@ export interface IConnectionsRepository {
 
   findByUser(user_id: string): Promise<Connection>;
 
+  findBySocket(socket_id: string): Promise<Connection>;
+
   listAll(): Promise<Connection[]>;
 
   update(data: ICreateConnectionDTO): Promise<Connection>;

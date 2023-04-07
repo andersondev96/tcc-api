@@ -11,18 +11,16 @@ export class ChatsRepository implements IChatsRepository {
     id,
     name,
     text,
-    company_id,
-    user_id,
-    chatroom_id
+    chatroom_id,
+    connection_id
   }: ICreateChatDTO): Promise<Chat> {
     const chat = await prisma.chat.create({
       data: {
         id,
         name,
         text,
-        company_id,
-        user_id,
-        chatroom_id
+        chatroom_id,
+        connection_id
       }
     });
 

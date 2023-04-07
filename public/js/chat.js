@@ -1,9 +1,19 @@
 const socket = io("http://localhost:3333");
+let roomId = "";
 
 function onLoad() {
   const urlParams = new URLSearchParams(window.location.search);
+  const name = urlParams.get("name");
   const email = urlParams.get("email");
   const telephone = urlParams.get("telephone");
+
+  document.querySelector(".user_logged").innerHTML += `
+    <img
+      class="avatar_user_logged"
+      src="https://avatars.githubusercontent.com/u/20424197?v=4"
+    />
+    <strong id="user_logged">${name}</strong>
+  `;
 
 
   socket.emit("start", {
@@ -20,7 +30,6 @@ function onLoad() {
   });
 
   socket.emit("get_connections", (connections) => {
-    console.log("getConnections", connections);
 
     connections.map((connection) => {
       if (connection.user.email !== email) {
@@ -31,7 +40,6 @@ function onLoad() {
 }
 
 function addConnection(connection) {
-  console.log("addConnection");
   const usersList = document.getElementById("users_list");
   usersList.innerHTML += `
     <li
@@ -47,5 +55,18 @@ function addConnection(connection) {
   </li>
   `;
 }
+
+document.getElementById("users_list").addEventListener("click", (event) => {
+
+  if (event.target && event.target.matches("li.user_name_list")) {
+    const idUser = event.target.getAttribute("idUser");
+    console.log("idUser", idUser);
+
+    socket.emit("start_chat", { idUser }, (data) => {
+      console.log(data);
+      roomId = data.id;
+    });
+  }
+});
 
 onLoad();

@@ -1,4 +1,4 @@
 export interface ICreateChatRoomDTO {
-  id: string;
-  users: string[];
+  id?: string;
+  connections: string[];
 }

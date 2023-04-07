@@ -2,8 +2,10 @@ import { container } from "tsyringe";
 
 import { io } from "@shared/infra/http/app";
 
+import { CreateChatRoomService } from "./services/CreateChatRoomService";
 import { CreateConnectionService } from "./services/CreateConnectionService";
 import { GetAllConnectionsService } from "./services/GetAllConnectionsService";
+import { GetConnectionBySocketService } from "./services/GetConnectionBySocketService";
 
 io.on("connect", socket => {
 
@@ -28,5 +30,19 @@ io.on("connect", socket => {
     const connections = await getAllConnectionsService.execute();
 
     callback(connections);
+  });
+
+  socket.on("start_chat", async (data, callback) => {
+    const createChatRoomService = container.resolve(CreateChatRoomService);
+    const getConnectionBySocketIdService = container.resolve(GetConnectionBySocketService);
+
+    const userConnectionLogged = await getConnectionBySocketIdService.execute(socket.id);
+
+    const room = await createChatRoomService.execute([data.idUser, userConnectionLogged.id]);
+
+    console.log(room);
+
+    callback(room);
+
   });
 });

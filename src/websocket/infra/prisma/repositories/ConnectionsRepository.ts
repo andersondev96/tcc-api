@@ -52,6 +52,16 @@ export class ConnectionsRepository implements IConnectionsRepository {
     return connection;
   }
 
+  public async findBySocket(socket_id: string): Promise<Connection> {
+    const connection = await prisma.connection_Socket.findUnique({
+      where: {
+        socket_id
+      }
+    });
+
+    return connection;
+  }
+
   public async listAll(): Promise<Connection[]> {
     const connections = await prisma.connection_Socket.findMany({
       include: {
