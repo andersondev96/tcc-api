@@ -39,8 +39,35 @@ export class ConnectionsRepository implements IConnectionsRepository {
     return connection;
   }
 
+  public async findByUser(user_id: string): Promise<Connection> {
+    const connection = await prisma.connection_Socket.findUnique({
+      where: {
+        user_id
+      },
+      include: {
+        user: true
+      }
+    });
+
+    return connection;
+  }
+
   public async listAll(): Promise<Connection[]> {
     const connections = await prisma.connection_Socket.findMany({
+      include: {
+        user: true
+      }
+    });
+
+    return connections;
+  }
+
+  public async update(data: ICreateConnectionDTO): Promise<Connection> {
+    const connections = await prisma.connection_Socket.update({
+      where: {
+        id: data.id
+      },
+      data,
       include: {
         user: true
       }

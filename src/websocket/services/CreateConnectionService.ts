@@ -27,14 +27,11 @@ export class CreateConnectionService {
 
     const user = await this.userRepository.findByMail(email);
 
+    console.log(user);
+
     if (!user) {
       throw new AppError("User not found");
     }
-
-    const connection = await this.connectionRepository.create({
-      user_id: user.id,
-      socket_id
-    });
 
     const customer = await this.customerRepository.findCustomerByUser(user.id);
 
@@ -44,6 +41,23 @@ export class CreateConnectionService {
         telephone
       });
     }
+
+    const connectionAlreadyExists = await this.connectionRepository.findByUser(user.id);
+
+    if (connectionAlreadyExists) {
+      const connection = await this.connectionRepository.update({
+        id: connectionAlreadyExists.id,
+        user_id: user.id,
+        socket_id
+      });
+
+      return connection;
+    }
+
+    const connection = await this.connectionRepository.create({
+      user_id: user.id,
+      socket_id
+    });
 
     return connection;
   }

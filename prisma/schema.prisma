@@ -298,7 +298,7 @@ model Chat {
 
 model Connection_Socket {
   id String @id @default(uuid())
-  user_id String
+  user_id String @unique
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   socket_id String
   createdAt DateTime @default(now())

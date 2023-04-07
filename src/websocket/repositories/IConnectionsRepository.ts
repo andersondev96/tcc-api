@@ -7,7 +7,11 @@ export interface IConnectionsRepository {
 
   findById(id: string): Promise<Connection>;
 
+  findByUser(user_id: string): Promise<Connection>;
+
   listAll(): Promise<Connection[]>;
+
+  update(data: ICreateConnectionDTO): Promise<Connection>;
 
   delete(id: string): Promise<void>;
 }
