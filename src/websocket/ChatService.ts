@@ -38,15 +38,16 @@ io.on("connect", socket => {
   socket.on("start_chat", async (data, callback) => {
     const createChatRoomService = container.resolve(CreateChatRoomService);
     const getChatRoomByConnectionService = container.resolve(GetChatRoomByConnectionsService);
-    const getConnectionBySocketIdService = container.resolve(GetConnectionBySocketService);
+    const getConnectionBySocketService = container.resolve(GetConnectionBySocketService);
     const getMessagesByChatRoomService = container.resolve(GetMessagesByChatRoomService);
 
-    const userConnectionLogged = await getConnectionBySocketIdService.execute(socket.id);
+    const userConnectionLogged = await getConnectionBySocketService.execute(socket.id);
 
     let room = await getChatRoomByConnectionService.execute([
       data.idUser,
       userConnectionLogged.id
     ]);
+
 
     if (!room) {
       room = await createChatRoomService.execute([
@@ -71,9 +72,7 @@ io.on("connect", socket => {
 
     const connection = await getConnectionBySocketService.execute(socket.id);
 
-    console.log("data: ", data);
-
-    const chat = await createChatService.execute({
+    const message = await createChatService.execute({
       name: connection.user.name,
       text: data.message,
       chatroom_id: data.idChatRoom,
@@ -81,7 +80,7 @@ io.on("connect", socket => {
     });
 
     io.to(data.idChatRoom).emit("message", {
-      chat,
+      message,
       connection
     });
 

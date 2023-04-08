@@ -39,7 +39,8 @@ function onLoad() {
   });
 
   socket.on("message", (data) => {
-    if (data.chat.chatroom_id === idChatRoom) {
+    console.log(data);
+    if (data.message.chatroom_id === idChatRoom) {
       addMessage(data);
     }
   });
@@ -48,19 +49,22 @@ function onLoad() {
 function addMessage(data) {
   const divMessageUser = document.getElementById("message_user");
 
+  console.log(data.message.createdAt);
+
   divMessageUser.innerHTML += `
     <span class="user_name user_name_date">
     <img
       class="img_user"
-      src=${data.connection.user.avatar}
+      src=${data.connection.user.avatar ||
+        "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=785&q=80"}
     />
-    <strong>${data.connection.user.name}</strong>
-    <span> ${dayjs(data.chat.createdAt).format(
+    <strong>${data.message.name} &nbsp;</strong>
+    <span> ${dayjs(data.message.createdAt).format(
       "DD/MM/YYYY HH:mm"
     )}</span></span
   >
   <div class="messages">
-    <span class="chat_message">${data.chat.text}</span>
+    <span class="chat_message">${data.message.text}</span>
   </div>
   `;
 }
@@ -89,11 +93,12 @@ document.getElementById("users_list").addEventListener("click", (event) => {
 
     socket.emit("start_chat", { idUser }, (response) => {
       idChatRoom = response.room.id;
+      
 
       response.messages.forEach(message => {
         const data = {
           message,
-          user: message.connection_id
+          connection: message.connection
         };
 
         addMessage(data);

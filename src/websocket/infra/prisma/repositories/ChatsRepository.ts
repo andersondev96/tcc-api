@@ -25,7 +25,11 @@ export class ChatsRepository implements IChatsRepository {
       },
       include: {
         chatroom: true,
-        connection: true
+        connection: {
+          include: {
+            user: true
+          }
+        }
       }
     });
 
@@ -39,7 +43,11 @@ export class ChatsRepository implements IChatsRepository {
       },
       include: {
         chatroom: true,
-        connection: true
+        connection: {
+          include: {
+            user: true
+          }
+        }
       }
     });
 
@@ -53,7 +61,11 @@ export class ChatsRepository implements IChatsRepository {
       },
       include: {
         chatroom: true,
-        connection: true
+        connection: {
+          include: {
+            user: true
+          }
+        }
       }
     });
 

@@ -306,6 +306,7 @@ model Connection_Socket {
 
 model ChatRoom {
   id String @id @default(uuid())
+  connections_id String[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   connections Connection_Socket[] @relation("ChatRoomConnections")

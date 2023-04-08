@@ -10,6 +10,7 @@ export class ChatRoomsRepository implements IChatRoomsRepository {
     const chatRoom = await prisma.chatRoom.create({
       data: {
         id,
+        connections_id: connections,
         connections: {
           connect: connections.map((user) => ({ id: user }))
         }
@@ -23,6 +24,10 @@ export class ChatRoomsRepository implements IChatRoomsRepository {
     const chatRoom = await prisma.chatRoom.findUnique({
       where: {
         id: chatroom_id
+      },
+      include: {
+        connections: true,
+        chats: true
       }
     });
 
@@ -32,13 +37,13 @@ export class ChatRoomsRepository implements IChatRoomsRepository {
   public async findByConnection(connections: string[]): Promise<ChatRoom> {
     const chatRoom = await prisma.chatRoom.findFirst({
       where: {
-        connections: {
-          every: {
-            socket_id: {
-              in: connections
-            }
-          }
+        connections_id: {
+          hasEvery: connections
         }
+      },
+      include: {
+        connections: true,
+        chats: true
       }
     });
 
