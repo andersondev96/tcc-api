@@ -61,8 +61,6 @@ io.on("connect", socket => {
       room.id
     );
 
-    console.log(messages);
-
     callback({ room, messages });
 
   });
@@ -72,6 +70,8 @@ io.on("connect", socket => {
     const createChatService = container.resolve(CreateChatService);
 
     const connection = await getConnectionBySocketService.execute(socket.id);
+
+    console.log("data: ", data);
 
     const chat = await createChatService.execute({
       name: connection.user.name,

@@ -39,8 +39,9 @@ function onLoad() {
   });
 
   socket.on("message", (data) => {
-    console.log("message", data);
-    addMessage(data);
+    if (data.chat.chatroom_id === idChatRoom) {
+      addMessage(data);
+    }
   });
 }
 
@@ -87,10 +88,9 @@ document.getElementById("users_list").addEventListener("click", (event) => {
     const idUser = event.target.getAttribute("idUser");
 
     socket.emit("start_chat", { idUser }, (response) => {
-      idChatRoom = response.id;
+      idChatRoom = response.room.id;
 
       response.messages.forEach(message => {
-
         const data = {
           message,
           user: message.connection_id

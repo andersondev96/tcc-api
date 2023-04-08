@@ -11,6 +11,7 @@ export class GetMessagesByChatRoomService {
   ) { }
 
   public async execute(roomId: string): Promise<Chat[]> {
+    console.log(roomId);
     const messages = await this.chatRepository.findMessages(
       roomId
     );
