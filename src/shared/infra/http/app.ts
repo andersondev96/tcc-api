@@ -3,7 +3,6 @@ import { CelebrateError } from "celebrate";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import { createServer } from "http";
-import path from "path";
 import { Server, Socket } from "socket.io";
 import swaggerUi from "swagger-ui-express";
 
@@ -14,10 +13,15 @@ import swaggerFile from "../../../swagger.json";
 import routes from "./routes";
 
 const app = express();
-app.use(express.static(path.join(__dirname, "..", "..", "..", "..", "public")));
+// app.use(express.static(path.join(__dirname, "..", "..", "..", "..", "public")));
 
 const http = createServer(app);
-const io = new Server(http);
+const io = new Server(http, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
 io.on("connection", (socket: Socket) => {
   console.log("Socket", socket.id);
