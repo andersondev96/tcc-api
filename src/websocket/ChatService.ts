@@ -11,19 +11,26 @@ import { GetConnectionBySocketService } from "./services/GetConnectionBySocketSe
 import { GetMessagesByChatRoomService } from "./services/GetMessagesByChatRoomServices";
 
 io.on("connect", socket => {
+  console.log("Connecting");
 
 
   socket.on("start", async (data) => {
     const { email, telephone } = data;
     const createConnectionService = container.resolve(CreateConnectionService);
 
-    const connection = await createConnectionService.execute({
-      email,
-      telephone,
-      socket_id: socket.id
-    });
+    try {
+      const connection = await createConnectionService.execute({
+        email,
+        telephone,
+        socket_id: socket.id
+      });
 
-    socket.broadcast.emit("new_connection", connection);
+      socket.emit("start-response", { success: true, connection });
+
+      socket.broadcast.emit("new_connection", connection);
+    } catch (err) {
+      socket.emit("start-response", { success: false, error: err.message });
+    }
   });
 
   socket.on("get_connections", async (callback) => {
