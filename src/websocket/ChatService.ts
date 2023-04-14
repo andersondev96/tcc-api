@@ -15,6 +15,7 @@ io.on("connect", socket => {
 
 
   socket.on("start", async (data) => {
+    console.log(data);
     const { email, telephone } = data;
     const createConnectionService = container.resolve(CreateConnectionService);
 
@@ -34,6 +35,7 @@ io.on("connect", socket => {
   });
 
   socket.on("get_connections", async (callback) => {
+
     const getAllConnectionsService = container.resolve(
       GetAllConnectionsService
     );

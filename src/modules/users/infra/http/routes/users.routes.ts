@@ -11,7 +11,7 @@ import { CreateUsersController } from "../controllers/CreateUsersController";
 import { DeleteUserController } from "../controllers/DeleteUserController";
 import { FindByUserIdController } from "../controllers/FindByUserIdController";
 import { FindFavoriteController } from "../controllers/FindFavoriteController";
-import { GoogleAuthenticationController } from "../controllers/GoogleAuthenticationController";
+import { FindUserByEmailController } from "../controllers/FindUserByEmailController";
 import { ListFavoritesController } from "../controllers/ListFavoritesController";
 import { UpdateUserAvatarController } from "../controllers/UpdateUserAvatarController";
 import { UpdateUserController } from "../controllers/UpdateUserController";
@@ -19,7 +19,7 @@ const usersRouter = Router();
 const uploadAvatar = multer(uploadConfig);
 
 const createUserController = new CreateUsersController();
-const googleAuthenticationController = new GoogleAuthenticationController();
+const findUserByEmailController = new FindUserByEmailController();
 const findByUserIdController = new FindByUserIdController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
@@ -29,7 +29,7 @@ const listFavoritesController = new ListFavoritesController();
 const findFavoriteController = new FindFavoriteController();
 
 usersRouter.post("/", celebrate(userValidator), createUserController.handle);
-usersRouter.post("/google", googleAuthenticationController.handle);
+usersRouter.get("/email", findUserByEmailController.handle);
 usersRouter.get("/profile", ensureAuthenticated, findByUserIdController.handle);
 usersRouter.get("/entrepreneur", ensureAuthenticated, findUserByEntrepreneurController.handle);
 usersRouter.get("/favorites", ensureAuthenticated, listFavoritesController.handle);

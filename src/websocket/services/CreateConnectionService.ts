@@ -25,7 +25,11 @@ export class CreateConnectionService {
 
   public async execute({ email, telephone, socket_id }: IRequest): Promise<Connection> {
 
+    console.log(email);
+
     const user = await this.userRepository.findByMail(email);
+
+    console.log(user);
 
     if (!user) {
       throw new AppError("User not found");
