@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
+import { AppError } from "@shared/errors/AppError";
 
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
@@ -23,6 +24,10 @@ export class UpdateServiceImageService {
   public async execute({ service_id, image_url }: IRequest): Promise<void> {
 
     const service = await this.servicesRepository.findServiceById(service_id);
+
+    if (!service) {
+      throw new AppError("Service not found");
+    }
 
     if (service.image_url) {
       await this.storageProvider.delete(service.image_url, "service");

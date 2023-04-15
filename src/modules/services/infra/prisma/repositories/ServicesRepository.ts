@@ -42,9 +42,6 @@ export class ServicesRepository implements IServicesRepository {
     const service = await prisma.service.findUnique({
       where: {
         id
-      },
-      include: {
-        company: true
       }
     });
 
