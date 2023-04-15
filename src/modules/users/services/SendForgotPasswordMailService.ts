@@ -38,19 +38,19 @@ export class SendForgotPasswordMailService {
     await this.usersTokenRepository.create({
       refresh_token: token,
       user_id: user.id,
-      expires_date,
+      expires_date
     });
 
     const variables = {
       name: user.name,
-      link: `${process.env.FORGOT_MAIL_URL}${token}`
-    }
+      link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`
+    };
 
     await this.mailProvider.sendMail(
       email,
       "Recuperação de senha",
       variables,
-      templatePath,
+      templatePath
     );
   }
 }
