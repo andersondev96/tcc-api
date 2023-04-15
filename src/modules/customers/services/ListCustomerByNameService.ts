@@ -5,8 +5,13 @@ import { AppError } from "@shared/errors/AppError";
 
 import { CustomerCompany } from "../infra/prisma/entities/CustomerCompany";
 import { ICustomersCompaniesRepository } from "../repositories/ICustomersCompaniesRepository";
+
+interface IRequest {
+  company_id: string;
+  name?: string | null;
+}
 @injectable()
-export class ListCustomersByCompanyService {
+export class ListCustomerByNameService {
 
   constructor(
     @inject("CompaniesRepository")
@@ -15,14 +20,20 @@ export class ListCustomersByCompanyService {
     private customerCompanyRepository: ICustomersCompaniesRepository
   ) { }
 
-  public async execute(company_id: string): Promise<CustomerCompany[]> {
+  public async execute({ company_id, name }: IRequest): Promise<CustomerCompany[]> {
     const company = await this.companyRepository.findById(company_id);
 
     if (!company) {
       throw new AppError("Company not found");
     }
 
-    const customers = await this.customerCompanyRepository.findCustomerByCompany(company_id);
+    let customers = await this.customerCompanyRepository.findCustomerByCompany(company_id);
+
+    if (name !== undefined) {
+      customers = customers.filter(
+        (customer_company) => customer_company.customer.user.name === name
+      );
+    }
 
     return customers;
   }
