@@ -1,9 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
+import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { AppError } from "@shared/errors/AppError";
 
 import { EntrepreneurSettings } from "../infra/prisma/entities/EntrepreneurSettings";
 import { IEntrepreneursSettingsRepository } from "../repositories/IEntrepreneursSettingsRepository";
+
 
 interface IRequest {
   entrepreneur_id: string;
@@ -20,7 +22,9 @@ export class UpdateEntrepreneursSettingsService {
 
   constructor(
     @inject("EntrepreneursSettingsRepository")
-    private entrepreneursSettingsRepository: IEntrepreneursSettingsRepository
+    private entrepreneurSettingsRepository: IEntrepreneursSettingsRepository,
+    @inject("ServicesRepository")
+    private serviceRepository: IServicesRepository
   ) { }
 
   public async execute({
@@ -31,15 +35,32 @@ export class UpdateEntrepreneursSettingsService {
     email_notification
   }: IRequest): Promise<EntrepreneurSettings> {
 
-    const entrepreneur = await this.entrepreneursSettingsRepository.findByEntrepreneur(entrepreneur_id);
+    const settingsEntrepreneur = await this.entrepreneurSettingsRepository.findByEntrepreneur(entrepreneur_id);
 
-    if (!entrepreneur) {
+    if (!settingsEntrepreneur) {
       throw new AppError("Entrepreneur not found");
     }
 
-    const entrepreneurSettings = await this.entrepreneursSettingsRepository.update({
-      id: entrepreneur.id,
-      entrepreneur_id: entrepreneur.entrepreneur_id,
+
+    const sevicesByCompany = await this.serviceRepository.listServicesByCompany(
+      settingsEntrepreneur.entrepreneur.company_id
+    );
+
+    const contHighlightsService = sevicesByCompany.reduce((acc, service) => {
+      if (service.highlight_service === true) {
+        return acc + 1;
+      } else {
+        return acc;
+      }
+    }, 0);
+
+    if (highlight_services_quantity < contHighlightsService) {
+      throw new AppError("No is possible to decrease highlights, because has more services");
+    }
+
+    const entrepreneurSettings = await this.entrepreneurSettingsRepository.update({
+      id: settingsEntrepreneur.id,
+      entrepreneur_id: settingsEntrepreneur.entrepreneur_id,
       highlight_services_quantity,
       online_budget,
       online_chat,

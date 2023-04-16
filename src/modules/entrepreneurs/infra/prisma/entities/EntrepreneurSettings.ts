@@ -1,3 +1,4 @@
+import { Entrepreneur } from "./Entrepreneur";
 
 export class EntrepreneurSettings {
   id?: string;
@@ -7,10 +8,12 @@ export class EntrepreneurSettings {
   online_budget?: boolean;
   online_chat?: boolean;
   email_notification?: boolean;
+  entrepreneur?: Entrepreneur;
 
-  constructor({ entrepreneur_id }: EntrepreneurSettings) {
+  constructor({ entrepreneur_id, entrepreneur }: EntrepreneurSettings) {
     Object.assign(this, {
-      entrepreneur_id
+      entrepreneur_id,
+      entrepreneur
     });
   }
 }
