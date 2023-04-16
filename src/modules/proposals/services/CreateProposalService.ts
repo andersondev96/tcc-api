@@ -4,6 +4,7 @@ import { inject, injectable } from "tsyringe";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { ICustomersCompaniesRepository } from "@modules/customers/repositories/ICustomersCompaniesRepository";
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
@@ -32,6 +33,8 @@ export class CreateProposalService {
     private customerRepository: ICustomersRepository,
     @inject("CustomersCompaniesRepository")
     private customerCompanyRepository: ICustomersCompaniesRepository,
+    @inject("EntrepreneursSettingsRepository")
+    private entrepreneurSettingsRepository: IEntrepreneursSettingsRepository,
     @inject("ProposalsRepository")
     private proposalRepository: IProposalsRepository,
     @inject("EtherealMailProvider")
@@ -84,22 +87,27 @@ export class CreateProposalService {
       });
 
       if (proposal) {
-        const variables = {
-          name: proposal.company.name,
-          user: user.name,
-          objective: proposal.objective,
-          description: proposal.description,
-          link: `${process.env.APP_WEB_URL}/admin/budget/details/${proposal.id}`
-        };
+        const settings = await this.entrepreneurSettingsRepository.findByCompany(proposal.company_id);
 
-        const email = proposal.company.user.email;
+        if (settings.email_notification) {
+          const variables = {
+            name: proposal.company.name,
+            user: user.name,
+            objective: proposal.objective,
+            description: proposal.description,
+            link: `${process.env.APP_WEB_URL}/admin/budget/details/${proposal.id}`
+          };
 
-        await this.mailProvider.sendMail(
-          email,
-          "Proposta recebida",
-          variables,
-          templatePath
-        );
+          const email = proposal.company.user.email;
+
+          await this.mailProvider.sendMail(
+            email,
+            "Proposta recebida",
+            variables,
+            templatePath
+          );
+        }
+
       }
 
       return proposal;

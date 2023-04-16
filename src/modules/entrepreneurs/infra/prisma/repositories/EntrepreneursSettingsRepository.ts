@@ -29,6 +29,19 @@ export class EntrepreneursSettingsRepository implements IEntrepreneursSettingsRe
 
     return entrepreneurSettings;
   }
+
+  public async findByCompany(company_id: string): Promise<EntrepreneurSettings> {
+    const entrepreneurSettings = await prisma.entrepreneur_Settings.findFirst({
+      where: {
+        entrepreneur: {
+          company_id
+        }
+      }
+    });
+
+    return entrepreneurSettings;
+  }
+
   public async findByEntrepreneur(entrepreneur_id: string): Promise<EntrepreneurSettings> {
     const entrepreneurSettings = await prisma.entrepreneur_Settings.findUnique({
       where: { entrepreneur_id }

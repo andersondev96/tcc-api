@@ -1,26 +1,51 @@
 <style>
-  .container { width: 800px; font-family: Arial, Helvetica, sans-serif;
-  align-items: center; display: flex; flex-direction: column; } span { margin:
-  10px; }
+  .container { 
+      width: 800px; 
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex; 
+      flex-direction: column; 
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    span {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+    }
+
+    footer {
+      margin-top: 16px;
+    }
 </style>
 
-<div class='container'>
-  <span>Oi, {{name}}</span>
+<div class="container">
+  <h1 class="title">Oi, {{name}}</h1>
 
-  <br />
+  <body class="content">
+    <span>O usuário {{user}} enviou uma proposta para você analisar</span>
 
-  <span>O usuário {{user}} enviou uma proposta para você analisar</span>
+    <span>
+      <strong>Objetivo da proposta: </strong>
+      {{objective}}
+    </span>
 
-  <span>Objetivo da proposta: {{objective}}</span>
+    <span>
+      <strong>Descrição</strong>
+      {{description}}
+    </span>
 
-  <span>Descrição</span>
+    <span>Para visualizar toda a proposta, clique neste link:</span>
 
-  <p>{{description}}</p>
+    <a href={{link}}>{{link}}</a>
+  </body>
 
-  <span>Para visualizar toda a proposta, clique neste link:</span>
-
-  <a href={{link}}>{{link}}</a>
-
-  <strong>Obrigado!</strong>
-  <h3>Start Business</h3>
+  <footer>
+    <strong>Obrigado!</strong>
+    <h3>Start Business</h3>
+  </footer>
 </div>
