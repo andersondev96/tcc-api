@@ -27,7 +27,7 @@
   <h1 class="title">Oi, {{user}}</h1>
 
   <body class="content">
-    <span>{{company}} criou te mandou um orçamento para a proposta solicitada.</span>
+    <span>{{company}} enviou um orçamento para a proposta solicitada.</span>
 
     <span>
       <strong>Objetivo da proposta: </strong>
@@ -69,7 +69,9 @@
     <span>E-mail: {{company_email}}</span>
     <span>Telefone: {{company_telephone}}</span>
     <span>Whatsapp: {{company_whatsapp}}</span>
-    <span>Site: {{company_website}}</span>
+    <span>
+      Site: <a href={{company_website}}>{{company_website}}</a>
+    </span>
 
   </body>
 

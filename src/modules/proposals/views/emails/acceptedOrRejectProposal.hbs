@@ -27,23 +27,39 @@
   <h1 class="title">Oi, {{name}}</h1>
 
   <body class="content">
-    {{#if response === "accepted" }}
-      <span>O usuário {{user}} {{response}} a sua proposta.</span>
+    {{ status }}
+    {{#if isEqual }}
+        <span>O usuário {{user}} aceitou a sua proposta.</span>
+          <span>
+            Para dar prosseguimento a negociação, você deverá entrar em contato diretamente com o cliente,
+            as informações de contato do cliente poderão ser encontradas no menu clientes ou nos detalhes
+            sobre a proposta.
+          </span>
+    {{else}}
+        <span>O usuário {{user}} recusou a sua proposta.</span>
+        <span>Infelizmente, não será possível prosseguir com a negociação.</span>
+        <span>Se você quiser ainda tenta negociar com o usuário poderá editar o orçamento ou então fazer contato direto com o usuário.</span>
+  {{/if}}
 
       <span>
-        Para dar prosseguimento a negociação, você deverá entrar em contato diretamente com o cliente,
-        as informações de contato do cliente poderão ser encontradas no menu clientes ou nos detalhes
-        sobre a proposta.
+        <strong>Objetivo da proposta:</strong>
+        {{ objective }}
       </span>
 
-    {{else}}
+      <span>
+          <strong>Descrição:</strong>
+         {{ description }}
+      </span>
 
-      <span>O usuário {{user}} recusou a sua proposta.</span>
-      <span>Infelizmente, não será possível prosseguir com a negociação.</span>
-      <span>Se você quiser ainda tenta negociar com o usuário poderá editar o orçamento ou então fazer contato direto com o usuário.</span>
+      <span>
+        <strong>Detalhes do orçamento:</strong>
+        {{ budget }}
+      </span>
 
-    {{/if}}
-
+      <span>
+        <strong>Informações sobre valores:</strong>
+         R$ {{amount}}
+        </span>
 
     <span>Para mais informações acesse esse link:</span>
 
