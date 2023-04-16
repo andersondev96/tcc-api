@@ -44,11 +44,11 @@ export class CreateProposalService {
   public async execute({ objective, time, description, telephone, company_id, user_id }: IRequest): Promise<Proposal> {
     const company = await this.companyRepository.findById(company_id);
 
-    const templatePath = resolve(__dirname, "..", "views", "emails", "proposalSolicited.hbs");
-
     if (!company) {
       throw new AppError("Company not found");
     }
+
+    const templatePath = resolve(__dirname, "..", "views", "emails", "proposalSolicited.hbs");
 
     const user = await this.usersRepository.findById(user_id);
 

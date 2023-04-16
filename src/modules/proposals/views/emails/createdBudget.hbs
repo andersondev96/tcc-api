@@ -1,0 +1,80 @@
+<style>
+  .container { 
+      width: 800px; 
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex; 
+      flex-direction: column; 
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    span {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+    }
+
+    footer {
+      margin-top: 16px;
+    }
+</style>
+
+<div class="container">
+  <h1 class="title">Oi, {{user}}</h1>
+
+  <body class="content">
+    <span>{{company}} criou te mandou um orçamento para a proposta solicitada.</span>
+
+    <span>
+      <strong>Objetivo da proposta: </strong>
+      {{objective}}
+    </span>
+
+    <span>
+      <strong>Descrição</strong>
+      {{description}}
+    </span>
+
+    <span>
+      <strong>Proposta do empreendedor:</strong>
+      {{proposal}}
+    </span>
+
+    <span>
+      <strong>Data prevista de realização/entrega do serviço:</strong>
+      {{delivery_date}}
+    </span>
+
+    <span>
+      <strong>Valor do serviço/produto:</strong>
+      R$ {{amount}} à vista ou {{installments}}x de R$ {{installmentsAmount}}
+    </span>
+
+    <span>
+      Data de criação da proposta:
+      {{createdAt}}
+    </span>
+
+
+    <span>Para ver mais detalhes sobre a proposata e aceitar ou recusá-la, acesse esse link:</span>
+    <a href={{link}}>{{ link }}</a>
+
+    <span>Para mais informações entre em contato com a {{company}}.</span>
+
+    <span>{{company}}</span>
+    <span>E-mail: {{company_email}}</span>
+    <span>Telefone: {{company_telephone}}</span>
+    <span>Whatsapp: {{company_whatsapp}}</span>
+    <span>Site: {{company_website}}</span>
+
+  </body>
+
+  <footer>
+    <strong>Obrigado!</strong>
+    <h3>Start Business</h3>
+  </footer>
+</div>

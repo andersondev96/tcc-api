@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
 import utc from "dayjs/plugin/utc";
 
 import { IDateProvider } from "../models/IDateProvider";
@@ -8,6 +9,13 @@ dayjs.extend(utc);
 export class DayjsDateProvider implements IDateProvider {
   convertToUTC(date: Date): string {
     return dayjs(date).utc().local().format();
+  }
+
+  convertToNacionalFormat(date: Date): string {
+    const data = dayjs(date).locale("pt-br");
+    const formattedData = data.format("DD/MM/YYYY HH:mm:ss");
+
+    return formattedData;
   }
 
   dateNow(): Date {

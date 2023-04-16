@@ -9,6 +9,8 @@ export class Budget {
   delivery_date: Date;
   amount: number;
   installments: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 
   constructor({
     customer_id,
@@ -17,7 +19,9 @@ export class Budget {
     description,
     delivery_date,
     amount,
-    installments
+    installments,
+    createdAt,
+    updatedAt
   }: Budget) {
     Object.assign(this, {
       customer_id,
@@ -26,7 +30,9 @@ export class Budget {
       description,
       delivery_date,
       amount,
-      installments
+      installments,
+      createdAt,
+      updatedAt
     });
   }
 }

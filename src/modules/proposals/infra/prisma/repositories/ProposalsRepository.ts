@@ -26,7 +26,8 @@ export class ProposalsRepository implements IProposalsRepository {
       include: {
         company: {
           include: {
-            user: true
+            user: true,
+            contact: true
           }
         },
         customer: {
@@ -46,7 +47,8 @@ export class ProposalsRepository implements IProposalsRepository {
       include: {
         company: {
           include: {
-            user: true
+            user: true,
+            contact: true
           }
         },
         customer: {
@@ -64,7 +66,12 @@ export class ProposalsRepository implements IProposalsRepository {
     const proposals = await prisma.proposal.findMany({
       where: { company_id },
       include: {
-        company: true,
+        company: {
+          include: {
+            user: true,
+            contact: true
+          }
+        },
         customer: {
           include: {
             user: true
@@ -98,7 +105,12 @@ export class ProposalsRepository implements IProposalsRepository {
         ]
       },
       include: {
-        company: true,
+        company: {
+          include: {
+            user: true,
+            contact: true
+          }
+        },
         customer: {
           include: {
             user: true
@@ -114,7 +126,12 @@ export class ProposalsRepository implements IProposalsRepository {
     const proposal = await prisma.proposal.findUnique({
       where: { id: proposal_id },
       include: {
-        company: true,
+        company: {
+          include: {
+            user: true,
+            contact: true
+          }
+        },
         customer: {
           include: {
             user: true
@@ -133,7 +150,8 @@ export class ProposalsRepository implements IProposalsRepository {
       include: {
         company: {
           include: {
-            user: true
+            user: true,
+            contact: true
           }
         },
         customer: {
@@ -150,7 +168,20 @@ export class ProposalsRepository implements IProposalsRepository {
   public async updateStatus(id: string, status: string): Promise<Proposal> {
     const proposal = await prisma.proposal.update({
       where: { id },
-      data: { status }
+      data: { status },
+      include: {
+        company: {
+          include: {
+            user: true,
+            contact: true
+          }
+        },
+        customer: {
+          include: {
+            user: true
+          }
+        }
+      }
     });
 
     return proposal;

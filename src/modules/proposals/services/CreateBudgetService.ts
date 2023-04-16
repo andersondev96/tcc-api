@@ -1,5 +1,9 @@
+
+import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 
+import { IDateProvider } from "@modules/users/providers/DateProvider/models/IDateProvider";
+import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { Budget } from "../infra/prisma/entities/Budget";
@@ -20,7 +24,11 @@ export class CreateBudgetService {
     @inject("ProposalsRepository")
     private proposalRepository: IProposalsRepository,
     @inject("BudgetsRepository")
-    private budgetRepository: IBudgetsRepository
+    private budgetRepository: IBudgetsRepository,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider,
+    @inject("EtherealMailProvider")
+    private mailProvider: IMailProvider
   ) { }
 
   public async execute({
@@ -42,6 +50,8 @@ export class CreateBudgetService {
       throw new AppError("Budget already exists");
     }
 
+    const templatePath = resolve(__dirname, "..", "views", "emails", "createdBudget.hbs");
+
     const budget = await this.budgetRepository.create({
       proposal_id,
       customer_id: proposal.customer_id,
@@ -52,7 +62,35 @@ export class CreateBudgetService {
       installments
     });
 
-    await this.proposalRepository.updateStatus(budget.proposal_id, "Budget sent (Awaiting response)");
+    await this.proposalRepository.updateStatus(budget.proposal_id, "Orçamento enviado (Aguardando resposta)");
+
+    const variables = {
+      user: proposal.customer.user.name,
+      company: proposal.company.name,
+      objective: proposal.objective,
+      description: proposal.description,
+      proposal: budget.description,
+      delivery_date: this.dateProvider.convertToNacionalFormat(budget.delivery_date),
+      amount: budget.amount,
+      installments: budget.installments,
+      installmentsAmount: (budget.amount / budget.installments),
+      createdAt: this.dateProvider.convertToNacionalFormat(budget.createdAt),
+      link: `${process.env.APP_WEB_URL}/budget/details/${proposal.id}`,
+      company_email: proposal.company.contact.email,
+      company_telephone: proposal.company.contact.telephone,
+      company_whatsapp: proposal.company.contact.whatsapp,
+      company_website: proposal.company.contact.website
+    };
+
+    const email = proposal.customer.user.email;
+
+    await this.mailProvider.sendMail(
+      email,
+      `Novo orçamento recebido de ${proposal.company.name}`,
+      variables,
+      templatePath
+    );
+
 
     return budget;
 
