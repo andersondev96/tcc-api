@@ -59,7 +59,7 @@ export class CreateProposalService {
         customer = await this.customerRepository.create({
           user_id,
           telephone,
-          status: "negotiation"
+          status: "Em negociação"
         });
 
       } else {
@@ -83,6 +83,7 @@ export class CreateProposalService {
         time,
         description,
         company_id,
+        status: "Aguardando orçamento",
         customer_id: customer.id
       });
 
@@ -102,7 +103,7 @@ export class CreateProposalService {
 
           await this.mailProvider.sendMail(
             email,
-            "Proposta recebida",
+            "Nova proposta recebida",
             variables,
             templatePath
           );

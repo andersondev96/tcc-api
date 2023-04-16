@@ -1,5 +1,5 @@
-import { ICreateCompanyDTO } from "@modules/companies/dtos/ICreateCompanyDTO";
-import { ICreateCustomerDTO } from "@modules/customers/dtos/ICreateCustomerDTO";
+import { Company } from "@modules/companies/infra/prisma/entities/Company";
+import { Customer } from "@modules/customers/infra/prisma/entities/Customer";
 
 export class Proposal {
   id?: string;
@@ -9,8 +9,8 @@ export class Proposal {
   status?: string;
   customer_id: string;
   company_id: string;
-  company?: ICreateCompanyDTO;
-  customer?: ICreateCustomerDTO;
+  company?: Company;
+  customer?: Customer;
 
   constructor({ objective, description, status, customer_id, company_id, company, customer }: Proposal) {
     Object.assign({

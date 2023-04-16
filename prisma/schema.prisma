@@ -189,7 +189,7 @@ model Proposal {
   objective String
   time DateTime? @default(now())
   description String?
-  status String? @default("Waiting for budget")
+  status String?
   customer_id String 
   company_id String
   customer Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: Cascade)

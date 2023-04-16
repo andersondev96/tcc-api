@@ -129,7 +129,19 @@ export class ProposalsRepository implements IProposalsRepository {
   public async update(data: ICreateProposalDTO): Promise<Proposal> {
     const proposal = await prisma.proposal.update({
       where: { id: data.id },
-      data: { ...data }
+      data: { ...data },
+      include: {
+        company: {
+          include: {
+            user: true
+          }
+        },
+        customer: {
+          include: {
+            user: true
+          }
+        }
+      }
     });
 
     return proposal;
