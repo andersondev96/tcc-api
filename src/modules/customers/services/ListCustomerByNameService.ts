@@ -31,7 +31,7 @@ export class ListCustomerByNameService {
 
     if (name !== undefined) {
       customers = customers.filter(
-        (customer_company) => customer_company.customer.user.name === name
+        (customer_company) => customer_company.customer.user.name.includes(name)
       );
     }
 

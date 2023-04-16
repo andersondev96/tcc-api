@@ -1,4 +1,6 @@
 
+import { User } from "@modules/users/infra/prisma/entities/User";
+
 import { Entrepreneur } from "../../../../entrepreneurs/infra/prisma/entities/Entrepreneur";
 import { Address } from "./Address";
 import { Contact } from "./Contact";
@@ -22,6 +24,7 @@ export class Company {
   ImageCompany?: ImageCompany[];
   schedule?: Schedule;
   entrepreneur?: Entrepreneur;
+  user?: User;
 
 
   constructor(
@@ -40,7 +43,8 @@ export class Company {
       address,
       ImageCompany,
       schedule,
-      entrepreneur
+      entrepreneur,
+      user
 
     }: Company) {
     return Object.assign(this, {
@@ -58,7 +62,8 @@ export class Company {
       address,
       ImageCompany,
       schedule,
-      entrepreneur
+      entrepreneur,
+      user
     });
   }
 }

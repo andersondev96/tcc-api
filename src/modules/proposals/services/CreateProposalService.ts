@@ -1,9 +1,11 @@
+import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { ICustomersCompaniesRepository } from "@modules/customers/repositories/ICustomersCompaniesRepository";
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { Proposal } from "../infra/prisma/entities/Proposal";
@@ -31,11 +33,15 @@ export class CreateProposalService {
     @inject("CustomersCompaniesRepository")
     private customerCompanyRepository: ICustomersCompaniesRepository,
     @inject("ProposalsRepository")
-    private proposalRepository: IProposalsRepository
+    private proposalRepository: IProposalsRepository,
+    @inject("EtherealMailProvider")
+    private mailProvider: IMailProvider
   ) { }
 
   public async execute({ objective, time, description, telephone, company_id, user_id }: IRequest): Promise<Proposal> {
     const company = await this.companyRepository.findById(company_id);
+
+    const templatePath = resolve(__dirname, "..", "views", "emails", "proposalSolicited.hbs");
 
     if (!company) {
       throw new AppError("Company not found");
@@ -44,34 +50,16 @@ export class CreateProposalService {
     const user = await this.usersRepository.findById(user_id);
 
     if (user) {
-      const customer = await this.customerRepository.findCustomerByUser(user.id);
+      let customer = await this.customerRepository.findCustomerByUser(user.id);
 
       if (!customer) {
-        const newCustomer = await this.customerRepository.create({
+        customer = await this.customerRepository.create({
           user_id,
           telephone,
           status: "negotiation"
         });
 
-        const proposal = await this.proposalRepository.create({
-          objective,
-          time,
-          description,
-          company_id,
-          customer_id: newCustomer.id
-        });
-
-        return proposal;
-
       } else {
-
-        const proposal = await this.proposalRepository.create({
-          objective,
-          time,
-          description,
-          company_id,
-          customer_id: customer.id
-        });
 
         const customerCompanyAlreadyExists = await this.customerCompanyRepository.findCompanyWithCustomer(
           company_id,
@@ -85,9 +73,36 @@ export class CreateProposalService {
           });
         }
 
-        return proposal;
-
       }
+
+      const proposal = await this.proposalRepository.create({
+        objective,
+        time,
+        description,
+        company_id,
+        customer_id: customer.id
+      });
+
+      if (proposal) {
+        const variables = {
+          name: proposal.company.name,
+          user: user.name,
+          objective: proposal.objective,
+          description: proposal.description,
+          link: `${process.env.APP_WEB_URL}/admin/budget/details/${proposal.id}`
+        };
+
+        const email = proposal.company.user.email;
+
+        await this.mailProvider.sendMail(
+          email,
+          "Proposta recebida",
+          variables,
+          templatePath
+        );
+      }
+
+      return proposal;
     }
 
   }

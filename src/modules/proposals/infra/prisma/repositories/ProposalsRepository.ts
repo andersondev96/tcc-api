@@ -22,6 +22,18 @@ export class ProposalsRepository implements IProposalsRepository {
         description,
         customer_id,
         company_id
+      },
+      include: {
+        company: {
+          include: {
+            user: true
+          }
+        },
+        customer: {
+          include: {
+            user: true
+          }
+        }
       }
     });
 
@@ -32,7 +44,11 @@ export class ProposalsRepository implements IProposalsRepository {
     const proposals = await prisma.proposal.findMany({
       where: { customer_id },
       include: {
-        company: true,
+        company: {
+          include: {
+            user: true
+          }
+        },
         customer: {
           include: {
             user: true
