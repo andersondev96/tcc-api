@@ -1,4 +1,3 @@
-import { User } from "@modules/users/infra/prisma/entities/User";
 
 export interface ICreateCompanyDTO {
   id?: string;
@@ -12,6 +11,5 @@ export interface ICreateCompanyDTO {
   contact_id: string;
   stars?: number;
   favorites?: number;
-  user?: User;
 
 }

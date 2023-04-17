@@ -4,6 +4,7 @@ import { IServicesRepository } from "@modules/services/repositories/IServicesRep
 import { AppError } from "@shared/errors/AppError";
 
 import { EntrepreneurSettings } from "../infra/prisma/entities/EntrepreneurSettings";
+import { IEntrepreneursRepository } from "../repositories/IEntrepreneursRepository";
 import { IEntrepreneursSettingsRepository } from "../repositories/IEntrepreneursSettingsRepository";
 
 
@@ -21,6 +22,8 @@ interface IRequest {
 export class UpdateEntrepreneursSettingsService {
 
   constructor(
+    @inject("EntrepreneursRepository")
+    private entrepreneurRepository: IEntrepreneursRepository,
     @inject("EntrepreneursSettingsRepository")
     private entrepreneurSettingsRepository: IEntrepreneursSettingsRepository,
     @inject("ServicesRepository")
@@ -35,15 +38,16 @@ export class UpdateEntrepreneursSettingsService {
     email_notification
   }: IRequest): Promise<EntrepreneurSettings> {
 
-    const settingsEntrepreneur = await this.entrepreneurSettingsRepository.findByEntrepreneur(entrepreneur_id);
+    const entrepreneur = await this.entrepreneurRepository.findById(entrepreneur_id);
 
-    if (!settingsEntrepreneur) {
+    if (!entrepreneur) {
       throw new AppError("Entrepreneur not found");
     }
 
+    const settingsEntrepreneur = await this.entrepreneurSettingsRepository.findByEntrepreneur(entrepreneur_id);
 
     const sevicesByCompany = await this.serviceRepository.listServicesByCompany(
-      settingsEntrepreneur.entrepreneur.company_id
+      entrepreneur.company_id
     );
 
     const contHighlightsService = sevicesByCompany.reduce((acc, service) => {

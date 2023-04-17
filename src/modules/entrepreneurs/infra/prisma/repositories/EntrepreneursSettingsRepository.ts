@@ -44,14 +44,7 @@ export class EntrepreneursSettingsRepository implements IEntrepreneursSettingsRe
 
   public async findByEntrepreneur(entrepreneur_id: string): Promise<EntrepreneurSettings> {
     const entrepreneurSettings = await prisma.entrepreneur_Settings.findUnique({
-      where: { entrepreneur_id },
-      include: {
-        entrepreneur: {
-          include: {
-            company: true
-          }
-        }
-      }
+      where: { entrepreneur_id }
     });
 
     return entrepreneurSettings;
