@@ -59,12 +59,11 @@ export class ListFavoritesService {
 
     const formattedServices = services
       .filter(Boolean)
-      .map(({ id, name, description, image_url, company, favorites }) => ({
+      .map(({ id, name, description, image_url, favorites }) => ({
         id,
         name,
         description,
         image_url,
-        company: company.name,
         favorites
       }));
 
