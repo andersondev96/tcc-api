@@ -55,7 +55,7 @@ model UserToken {
 model Company {
     id                    String         @id @default(uuid())
     name                  String         @unique
-    cnpj                  String
+    cnpj                  String?
     category_id              String
     category Category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     description           String?

@@ -10,7 +10,7 @@ import { Schedule } from "./Schedule";
 export class Company {
   id?: string;
   name: string;
-  cnpj: string;
+  cnpj?: string;
   category_id: string;
   description?: string;
   stars?: number;

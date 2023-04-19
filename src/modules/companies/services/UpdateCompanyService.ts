@@ -34,7 +34,7 @@ interface IRequest {
 interface IResponse {
   id: string;
   name: string;
-  cnpj: string;
+  cnpj?: string;
   category_id: string;
   description: string;
   services: string[];

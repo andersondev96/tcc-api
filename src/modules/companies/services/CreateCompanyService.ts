@@ -21,7 +21,7 @@ interface ISchedule {
 }
 interface IRequest {
   name: string
-  cnpj: string
+  cnpj?: string
   category_id: string
   description?: string
   services?: string[]
