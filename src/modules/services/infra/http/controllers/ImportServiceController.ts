@@ -12,8 +12,8 @@ export class ImportServiceController {
 
     const importServiceService = container.resolve(ImportServiceService);
 
-    await importServiceService.execute(company_id, file);
+    const importedServices = await importServiceService.execute(company_id, file);
 
-    return response.send().status(201);
+    return response.status(201).json(importedServices);
   }
 }

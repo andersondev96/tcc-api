@@ -5,6 +5,7 @@ import { ICategoriesRepository } from "@modules/categories/repositories/ICategor
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { Service } from "../infra/prisma/entities/Service";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
 @injectable()
@@ -24,7 +25,7 @@ export class ImportServiceService {
     private xlsxProvider: IXlsxProvider
   ) { }
 
-  public async execute(company_id: string, filePath: string): Promise<void> {
+  public async execute(company_id: string, filePath: string): Promise<Service[]> {
 
     const company = await this.companyRepository.findById(company_id);
 
@@ -33,22 +34,26 @@ export class ImportServiceService {
     }
 
     const services = await this.xlsxProvider.readXlsxProvider(filePath);
+    const importedServices: Service[] = [];
 
     const findCategoryCompany = await this.categoryRepository.findCategoryById(company.category_id);
 
-    services.map(async (service) => {
+    await Promise.all(services.map(async (service) => {
       const { name, description, price, category } = service;
 
       if (findCategoryCompany.subcategories.includes(category)) {
-        await this.serviceRepository.create({
+        const createdService = await this.serviceRepository.create({
           name,
           description,
           price,
           category,
           company_id
         });
+        importedServices.push(createdService);
       }
-    });
+    }));
+
+    return importedServices;
 
   }
 }
