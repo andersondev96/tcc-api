@@ -52,20 +52,22 @@ export class CreateServiceService {
       throw new AppError("Company not found");
     }
 
-    const sevicesByCompany = await this.serviceRepository.listServicesByCompany(company.id);
+    if (highlight_service) {
+      const sevicesByCompany = await this.serviceRepository.listServicesByCompany(company.id);
 
-    const contHighlightsService = sevicesByCompany.reduce((acc, service) => {
-      if (service.highlight_service === true) {
-        return acc + 1;
-      } else {
-        return acc;
+      const contHighlightsService = sevicesByCompany.reduce((acc, service) => {
+        if (service.highlight_service === true) {
+          return acc + 1;
+        } else {
+          return acc;
+        }
+      }, 0);
+
+      const settings = await this.entrepreneurSettingsRepository.findByCompany(company.id);
+
+      if (contHighlightsService >= settings.highlight_services_quantity) {
+        throw new AppError(`Maximun services in highlight is ${settings.highlight_services_quantity}`);
       }
-    }, 0);
-
-    const settings = await this.entrepreneurSettingsRepository.findByCompany(company.id);
-
-    if (contHighlightsService >= settings.highlight_services_quantity) {
-      throw new AppError(`Maximun services in highlight is ${settings.highlight_services_quantity}`);
     }
 
     const findCategoryCompany = await this.categoryRepository.findCategoryById(company.category_id);
