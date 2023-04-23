@@ -11,7 +11,7 @@ export class FakeSchedulesRepository implements ISchedulesRepository {
 
   public async create(data: ICreateScheduleDTO): Promise<Schedule> {
     Object.assign(data, {
-      id: uuid(),
+      id: uuid()
     });
 
     this.schedules.push(data);
@@ -39,18 +39,10 @@ export class FakeSchedulesRepository implements ISchedulesRepository {
     return data;
   }
 
-  public async deleteUniqueSchedule(id: string): Promise<void> {
+  public async delete(id: string): Promise<void> {
     const index = this.schedules.findIndex(schedule => schedule.id === id);
 
     this.schedules.splice(index, 1);
-  }
-
-  public async deleteAllSchedules(company_id: string): Promise<void> {
-    const index = this.schedules.findIndex(schedule => schedule.company_id === company_id);
-
-    while (index >= 0) {
-      this.schedules.splice(index, 1);
-    }
   }
 
 }

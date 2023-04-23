@@ -53,15 +53,9 @@ export class SchedulesRepository implements ISchedulesRepository {
     return updateSchedule;
   }
 
-  public async deleteUniqueSchedule(id: string): Promise<void> {
+  public async delete(id: string): Promise<void> {
     await prisma.schedule.delete({
       where: { id }
-    });
-  }
-
-  public async deleteAllSchedules(company_id: string): Promise<void> {
-    await prisma.schedule.deleteMany({
-      where: { company_id }
     });
   }
 

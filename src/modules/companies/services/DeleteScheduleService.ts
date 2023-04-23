@@ -20,6 +20,6 @@ export class DeleteScheduleService {
       throw new AppError("Schedule not found");
     }
 
-    await this.scheduleRepository.deleteUniqueSchedule(schedule_id);
+    await this.scheduleRepository.delete(schedule_id);
   }
 }
