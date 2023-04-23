@@ -1,12 +1,20 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
+import { User } from "@modules/users/infra/prisma/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
 import { Assessment } from "../infra/prisma/entities/Assessment";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
 
+interface IAssessment {
+  assessment: Assessment;
+}
+
+interface IResponse extends IAssessment {
+  user: User;
+}
 interface IRequest {
   user_id: string;
   company_id: string;
@@ -51,7 +59,10 @@ export class CreateAssessmentsCompanyService {
 
       await this.companyRepository.updateStars(company.id, company.stars);
 
-      return assessment;
+      return {
+        ...assessment,
+        user
+      };
     }
 
   }

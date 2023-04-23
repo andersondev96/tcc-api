@@ -50,7 +50,10 @@ export class CreateAssessmentsServicesService {
 
       await this.serviceRepository.updateStars(service.id, service.stars);
 
-      return assessment;
+      return {
+        ...assessment,
+        user
+      };
     }
   }
 }
