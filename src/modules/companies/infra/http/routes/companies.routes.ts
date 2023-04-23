@@ -5,7 +5,6 @@ import multer from "multer";
 import uploadConfig from "@config/upload";
 import { FindByCompanyController } from "@modules/companies/infra/http/controllers/FindByCompanyController";
 import { companyValidator } from "@modules/companies/validator/CompanyValidator";
-import { updateCompanyValidator } from "@modules/companies/validator/UpdateCompanyValidator";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 import { ensureEntrepreneur } from "@shared/infra/http/middlewares/ensureEntrepreneur";
 
@@ -62,7 +61,6 @@ companiesRouter.put(
   "/schedules/:id",
   ensureAuthenticated,
   ensureEntrepreneur,
-  celebrate(updateCompanyValidator),
   updateScheduleController.handle
 );
 companiesRouter.patch(

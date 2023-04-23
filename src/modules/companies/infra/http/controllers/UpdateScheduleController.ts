@@ -9,17 +9,14 @@ export class UpdateScheduleController {
 
     const { id } = request.params;
 
-    const {
-      weekday,
-      opening_time,
-      closing_time,
-      lunch_time,
-      company_id
-    } = request.body;
+    const schedules = request.body.schedules;
 
     const updateScheduleService = container.resolve(UpdateScheduleService);
 
-    const schedule = await updateScheduleService.execute({ id, weekday, opening_time, closing_time, company_id, lunch_time });
+    const schedule = await updateScheduleService.execute({
+      company_id: id,
+      schedules
+    });
 
     return response.status(201).json(schedule);
   }

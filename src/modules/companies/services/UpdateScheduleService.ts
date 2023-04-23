@@ -40,13 +40,19 @@ export class UpdateScheduleService {
     const listSchedules = await this.scheduleRepository.findSchedulesByCompany(company.id);
 
     const newSchedules: ISchedules[] = [];
+    const schedulesWithoutId: ISchedules[] = [];
 
     for (const schedule of schedules) {
+      if (!schedule.id) {
+        schedulesWithoutId.push(schedule);
+        continue;
+      }
+
       const oldScheduleIndex = listSchedules.findIndex(s => s.id === schedule.id);
 
-      if (oldScheduleIndex === -1) { // schedule não existe na lista de schedules, adiciona novos schedules
+      if (oldScheduleIndex === -1) {
         newSchedules.push(schedule);
-      } else { // schedule existe na lista de schedules, edita o schedule
+      } else {
         const oldSchedule = listSchedules[oldScheduleIndex];
         if (
           oldSchedule.weekday !== schedule.weekday ||
@@ -68,6 +74,18 @@ export class UpdateScheduleService {
 
     // Insere ou atualiza os schedules
     const updatedSchedules: Schedule[] = [];
+
+    if (schedulesWithoutId.length > 0) {
+      for (const schedule of schedulesWithoutId) {
+        const addNewSchedules = await this.scheduleRepository.create({
+          ...schedule,
+          company_id
+        });
+
+        updatedSchedules.push(addNewSchedules);
+
+      }
+    }
 
     for (const schedule of newSchedules) {
       const updatedSchedule = await this.scheduleRepository.update(schedule);

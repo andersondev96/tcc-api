@@ -4,5 +4,5 @@ export interface ICreateScheduleDTO {
   opening_time: string;
   closing_time: string;
   lunch_time?: string;
-  company_id: string;
+  company_id?: string;
 }
