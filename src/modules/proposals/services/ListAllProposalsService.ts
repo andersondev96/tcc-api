@@ -6,6 +6,13 @@ import { AppError } from "@shared/errors/AppError";
 import { Proposal } from "../infra/prisma/entities/Proposal";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
 
+interface IResponse {
+  user_id: string;
+  objective?: string;
+  description?: string;
+  status?: string;
+}
+
 @injectable()
 export class ListAllProposalsService {
 
@@ -16,7 +23,7 @@ export class ListAllProposalsService {
     private proposalRepository: IProposalsRepository
   ) { }
 
-  public async execute(user_id: string): Promise<Proposal[]> {
+  public async execute({ user_id, objective, description, status }: IResponse): Promise<Proposal[]> {
 
     const customer = await this.customerRepository.findCustomerByUser(user_id);
 
@@ -24,7 +31,16 @@ export class ListAllProposalsService {
       throw new AppError("User has not a customer");
     }
 
-    const proposals = await this.proposalRepository.listProposalsByCustomer(customer.id);
+    let proposals = await this.proposalRepository.listProposalsByCustomer(customer.id);
+
+    if (objective || description || status) {
+      proposals = proposals.filter(prop =>
+        prop.objective.includes(objective) ||
+        prop.description.includes(description) ||
+        prop.status.includes(status)
+      );
+    }
+
 
     return proposals;
 
