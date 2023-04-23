@@ -1,14 +1,21 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
 
 import { GoogleAuthenticationService } from "@modules/users/services/GoogleAuthenticationService";
 
 export class GoogleAuthenticationController {
 
   public async handle(request: Request, response: Response) {
-    const googleAuthenticationService = new GoogleAuthenticationService();
+    const { name, email, avatar } = request.body;
 
-    const auth = googleAuthenticationService.SignInWithGoogle();
+    const googleAuthenticationService = container.resolve(GoogleAuthenticationService);
 
-    return response.json(auth);
+    const auth = await googleAuthenticationService.execute({
+      name,
+      email,
+      avatar
+    });
+
+    return response.status(201).json(auth);
   }
 }

@@ -1,33 +1,101 @@
-import { AppError } from "@shared/errors/AppError";
-import { auth } from "@shared/infra/http/firebase";
+import { sign } from "jsonwebtoken";
+import { inject, injectable } from "tsyringe";
 
+import authConfig from "@config/auth";
+
+
+import { IDateProvider } from "../providers/DateProvider/models/IDateProvider";
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
+import { IUsersRepository } from "../repositories/IUsersRepository";
+import { IUsersTokenRepository } from "../repositories/IUsersTokenRepository";
+
+interface IRequest {
+  name?: string;
+  email: string;
+  avatar?: string;
+}
+
+interface IResponse {
+  user: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  token: string;
+  refresh_token: string;
+}
+
+@injectable()
 export class GoogleAuthenticationService {
 
-  public async SignInWithGoogle(): Promise<{
-    id: string,
-    name: string,
-    email: string,
-    photoURL: string,
-  } | null> {
-    return new Promise((resolve, reject) => {
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          const { uid, displayName, email, photoURL } = user;
+  constructor(
+    @inject("UsersRepository")
+    private userRepository: IUsersRepository,
+    @inject("UsersTokenRepository")
+    private usersTokenRepository: IUsersTokenRepository,
+    @inject("HashProvider")
+    private hashProvider: IHashProvider,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
+  ) { }
 
-          if (!displayName || !email) {
-            reject(new AppError("Missing display name or email from google account"));
-          }
+  public async execute({ name, email, avatar }: IRequest): Promise<IResponse> {
 
-          resolve({
-            id: uid,
-            name: displayName,
-            email,
-            photoURL
-          });
-        } else {
-          resolve(null);
-        }
+    let user = await this.userRepository.findByMail(email);
+
+    if (!user) {
+      const hashPassword = await this.hashProvider.generateHash("zI3D~*2Y");
+      user = await this.userRepository.create({
+        name,
+        email,
+        password: hashPassword,
+        avatar
       });
-    });
+
+    }
+
+    if (user) {
+      const {
+        secret_token,
+        expires_in_token,
+        secret_refresh_token,
+        expires_in_refresh_token,
+        expires_refresh_token_days
+      } = authConfig;
+
+      const token = sign({}, secret_token, {
+        subject: user.id,
+        expiresIn: expires_in_token
+      });
+
+      const refresh_token = sign({ email }, secret_refresh_token, {
+        subject: user.id,
+        expiresIn: expires_in_refresh_token
+      });
+
+      const refresh_token_expires_date = this.dateProvider.addDays(
+        expires_refresh_token_days
+      );
+
+      await this.usersTokenRepository.create({
+        user_id: user.id,
+        refresh_token,
+        expires_date: refresh_token_expires_date
+      });
+
+      const tokenReturn: IResponse = {
+        token,
+        user: {
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar
+        },
+        refresh_token
+      };
+
+      return tokenReturn;
+
+    }
+
   }
 }
