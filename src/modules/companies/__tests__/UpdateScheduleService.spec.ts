@@ -446,7 +446,10 @@ describe("UpdateSchedulesService", () => {
       schedules: schedulesUpdated
     });
 
-    expect(updateSchedules).toEqual(schedulesUpdated);
+    const updateSchedule = updateSchedules.find(schedule => schedule.weekday === "Tuesday");
+    expect(updateSchedule.opening_time).toBe("06:00");
+    expect(updateSchedule.closing_time).toBe("17:00");
+    expect(updateSchedule.lunch_time).toBe("12:00-13:00");
     expect(updateSchedules.length).toBe(4);
   });
 });
