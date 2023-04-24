@@ -8,6 +8,7 @@ import { IProposalsRepository } from "../repositories/IProposalsRepository";
 
 interface IRequest {
   company_id: string;
+  page?: number;
   objective?: string;
   description?: string;
   status?: string;
@@ -24,14 +25,14 @@ export class ListProposalsByCompanyService {
     private proposalRepository: IProposalsRepository
   ) { }
 
-  public async execute({ company_id, objective, description, status, name }: IRequest): Promise<Proposal[]> {
+  public async execute({ company_id, page, objective, description, status, name }: IRequest): Promise<Proposal[]> {
     const company = await this.companyRepository.findById(company_id);
 
     if (!company) {
       throw new AppError("Company not found");
     }
 
-    let proposals = await this.proposalRepository.listProposalsByCompany(company_id);
+    let proposals = await this.proposalRepository.listProposalsByCompany(company_id, page);
 
     if (objective || description || status || name) {
       proposals = proposals.filter(prop =>

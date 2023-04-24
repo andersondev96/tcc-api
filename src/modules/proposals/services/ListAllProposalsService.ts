@@ -8,6 +8,7 @@ import { IProposalsRepository } from "../repositories/IProposalsRepository";
 
 interface IResponse {
   user_id: string;
+  page?: number;
   objective?: string;
   description?: string;
   status?: string;
@@ -24,7 +25,7 @@ export class ListAllProposalsService {
     private proposalRepository: IProposalsRepository
   ) { }
 
-  public async execute({ user_id, objective, description, status, company }: IResponse): Promise<Proposal[]> {
+  public async execute({ user_id, page, objective, description, status, company }: IResponse): Promise<Proposal[]> {
 
     const customer = await this.customerRepository.findCustomerByUser(user_id);
 
@@ -32,7 +33,7 @@ export class ListAllProposalsService {
       throw new AppError("User has not a customer");
     }
 
-    let proposals = await this.proposalRepository.listProposalsByCustomer(customer.id);
+    let proposals = await this.proposalRepository.listProposalsByCustomer(customer.id, page);
 
     if (objective || description || status || company) {
       proposals = proposals.filter(prop =>

@@ -8,12 +8,13 @@ export class ListAllProposalsController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
 
-    const { objective, description, status, company } = request.query;
+    const { page, objective, description, status, company } = request.query;
 
     const listAllProposalsService = container.resolve(ListAllProposalsService);
 
     const proposals = await listAllProposalsService.execute({
       user_id: id,
+      page: page ? parseInt(page as string) : undefined,
       objective: objective ? String(objective) : undefined,
       description: description ? String(description) : undefined,
       status: status ? String(status) : undefined,
