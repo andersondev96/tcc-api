@@ -8,7 +8,7 @@ export class ListAllProposalsController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
 
-    const { objective, description, status } = request.query;
+    const { objective, description, status, company } = request.query;
 
     const listAllProposalsService = container.resolve(ListAllProposalsService);
 
@@ -16,7 +16,9 @@ export class ListAllProposalsController {
       user_id: id,
       objective: objective ? String(objective) : undefined,
       description: description ? String(description) : undefined,
-      status: status ? String(status) : undefined
+      status: status ? String(status) : undefined,
+      company: company ? String(company) : undefined
+
     });
 
     return response.status(201).json(proposals);

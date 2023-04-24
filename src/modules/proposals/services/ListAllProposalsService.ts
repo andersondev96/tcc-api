@@ -11,6 +11,7 @@ interface IResponse {
   objective?: string;
   description?: string;
   status?: string;
+  company?: string;
 }
 
 @injectable()
@@ -23,7 +24,7 @@ export class ListAllProposalsService {
     private proposalRepository: IProposalsRepository
   ) { }
 
-  public async execute({ user_id, objective, description, status }: IResponse): Promise<Proposal[]> {
+  public async execute({ user_id, objective, description, status, company }: IResponse): Promise<Proposal[]> {
 
     const customer = await this.customerRepository.findCustomerByUser(user_id);
 
@@ -33,11 +34,12 @@ export class ListAllProposalsService {
 
     let proposals = await this.proposalRepository.listProposalsByCustomer(customer.id);
 
-    if (objective || description || status) {
+    if (objective || description || status || company) {
       proposals = proposals.filter(prop =>
         prop.objective.includes(objective) ||
         prop.description.includes(description) ||
-        prop.status.includes(status)
+        prop.status.includes(status) ||
+        prop.company.name.includes(company)
       );
     }
 

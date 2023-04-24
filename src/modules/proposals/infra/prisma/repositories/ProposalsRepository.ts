@@ -44,6 +44,9 @@ export class ProposalsRepository implements IProposalsRepository {
   public async listProposalsByCustomer(customer_id: string): Promise<Proposal[]> {
     const proposals = await prisma.proposal.findMany({
       where: { customer_id },
+      orderBy: {
+        updatedAt: "asc"
+      },
       include: {
         company: {
           include: {
@@ -65,6 +68,9 @@ export class ProposalsRepository implements IProposalsRepository {
   public async listProposalsByCompany(company_id: string): Promise<Proposal[]> {
     const proposals = await prisma.proposal.findMany({
       where: { company_id },
+      orderBy: {
+        updatedAt: "asc"
+      },
       include: {
         company: {
           include: {
