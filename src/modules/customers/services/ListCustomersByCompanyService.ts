@@ -5,6 +5,12 @@ import { AppError } from "@shared/errors/AppError";
 
 import { CustomerCompany } from "../infra/prisma/entities/CustomerCompany";
 import { ICustomersCompaniesRepository } from "../repositories/ICustomersCompaniesRepository";
+
+interface IResponse {
+  company_id: string;
+  name?: string;
+  email?: string;
+}
 @injectable()
 export class ListCustomersByCompanyService {
 
@@ -15,15 +21,22 @@ export class ListCustomersByCompanyService {
     private customerCompanyRepository: ICustomersCompaniesRepository
   ) { }
 
-  public async execute(company_id: string): Promise<CustomerCompany[]> {
+  public async execute({ company_id, name, email }: IResponse): Promise<CustomerCompany[]> {
     const company = await this.companyRepository.findById(company_id);
 
     if (!company) {
       throw new AppError("Company not found");
     }
 
-    const customers = await this.customerCompanyRepository.findCustomerByCompany(company_id);
+    let customersByCompany = await this.customerCompanyRepository.findCustomerByCompany(company_id);
 
-    return customers;
+    if (name || email) {
+      customersByCompany = customersByCompany.filter(cs =>
+        cs.customer.user.name.includes(name) ||
+        cs.customer.user.email.includes(email)
+      );
+    }
+
+    return customersByCompany;
   }
 }
