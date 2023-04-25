@@ -11,8 +11,8 @@ interface IImages {
   id?: string;
   title?: string;
   image_name: string;
-  image_url: string;
-  company_id: string;
+  image_url?: string;
+  company_id?: string;
 
 }
 interface IRequest {
@@ -60,6 +60,10 @@ export class UpdateImagesCompanyService {
       } else {
         const oldImage = listImages[oldImagesIndex];
 
+        if (oldImage.image_name) {
+          await this.storageProvider.delete(oldImage.image_name, "companies");
+        }
+
         if (oldImage.image_name !== image.image_name) {
           newImages.push(image);
         }
@@ -75,18 +79,19 @@ export class UpdateImagesCompanyService {
     }
 
     // Insere ou atualiza imagens
-    const updatedImages: IImages[] = [];
+    const updatedImages: ImageCompany[] = [];
 
     if (imagesWithoutId.length > 0) {
       for (const image of imagesWithoutId) {
-        await this.storageProvider.save(image.image_name, "companies");
         const addNewImages = await this.imageCompanyRepository.create({
           image_name: image.image_name,
-          image_url: `http://localhost:3333/compoany/${image.id}`,
+          image_url: `http://localhost:3333/company/${image.image_name}`,
           company_id
         });
 
         updatedImages.push(addNewImages);
+
+        await this.storageProvider.save(addNewImages.image_name, "companies");
       }
     }
 
@@ -94,11 +99,13 @@ export class UpdateImagesCompanyService {
       const updatedImage = await this.imageCompanyRepository.update({
         id: image.id,
         image_name: image.image_name,
-        image_url: `http://localhost:3333/compoany/${image.id}`,
+        image_url: `http://localhost:3333/company/${image.image_name}`,
         company_id
       });
 
       updatedImages.push(updatedImage);
+
+      await this.storageProvider.save(updatedImage.image_name, "companies");
     }
 
     return updatedImages;

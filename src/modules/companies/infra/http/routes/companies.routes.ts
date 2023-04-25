@@ -80,10 +80,10 @@ companiesRouter.delete(
   deleteScheduleController.handle
 );
 companiesRouter.put(
-  "/images/:id",
+  "/images/:company_id",
   ensureAuthenticated,
   ensureEntrepreneur,
-  upload.single("company"),
+  upload.array("company[]"),
   updateImagesCompanyController.handle
 );
 companiesRouter.delete(

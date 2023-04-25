@@ -24,12 +24,13 @@ describe("UpdateImagesCompanyService", () => {
     fakeImagesCompanyRepository = new FakeImagesCompanyRepository();
     fakeStorageProvider = new FakeStorageProvider();
     updateImageCompanyService = new UpdateImagesCompanyService(
+      fakeCompanyRepository,
       fakeImagesCompanyRepository,
       fakeStorageProvider
     );
   });
 
-  it("Should be able to update a image company", async () => {
+  it("Should be able to update an image company", async () => {
 
     const category = await fakeCategoryRepository.create({
       name: "Category Test"
@@ -46,22 +47,354 @@ describe("UpdateImagesCompanyService", () => {
       user_id: "user-id"
     });
 
-    const image = await fakeImagesCompanyRepository.create({
-      image_name: "image1.jpg",
-      image_url: "localhost://image1.jpg",
+    const images = [
+      {
+        image_name: "image1.jpg",
+        image_url: "http://localhost:3333/company/image1.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image2.jpg",
+        image_url: "http://localhost:3333/company/image2.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image3.jpg",
+        image_url: "http://localhost:3333/company/image3.jpg",
+        company_id: company.id
+      }
+    ];
+
+    await Promise.all(
+      images.map(image => fakeImagesCompanyRepository.create(image))
+    );
+
+    const imagesCompany = await fakeImagesCompanyRepository.findImagesByCompany(company.id);
+
+    const imagesUpdated = [
+      {
+        id: imagesCompany[0].id,
+        image_name: "image1updated.jpg",
+        image_url: "http://localhost:3333/company/image1updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[1].id,
+        image_name: "image2updated.jpg",
+        image_url: "http://localhost:3333/company/image2updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[2].id,
+        image_name: "image3updated.jpg",
+        image_url: "http://localhost:3333/company/image3updated.jpg",
+        company_id: company.id
+      }
+    ];
+
+    const updateImages = await updateImageCompanyService.execute({
+      company_id: company.id,
+      images: imagesUpdated
+    });
+
+    expect(updateImages).toEqual(imagesUpdated);
+    expect(updateImages.length).toEqual(3);
+
+    const updateImage = updateImages.find((image) => image.image_name === "image1updated.jpg");
+    expect(updateImage.image_url).toEqual("http://localhost:3333/company/image1updated.jpg");
+  });
+
+  it("Should be able to update an image if have an existing image", async () => {
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    const company = await fakeCompanyRepository.create({
+      name: "New Company",
+      cnpj: "12345",
+      category_id: category.id,
+      description: "Description Company",
+      services: ["Service 1", "Service 2"],
+      contact_id: "contact-id",
+      physical_localization: false,
+      user_id: "user-id"
+    });
+
+    const images = [
+      {
+        image_name: "image1.jpg",
+        image_url: "http://localhost:3333/company/image1.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image2.jpg",
+        image_url: "http://localhost:3333/company/image2.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image3.jpg",
+        image_url: "http://localhost:3333/company/image3.jpg",
+        company_id: company.id
+      }
+    ];
+
+    await fakeImagesCompanyRepository.create({
+      image_name: "image4.jpg",
+      image_url: "http://localhost:3333/company/image4.jpg",
       company_id: company.id
     });
 
-    image.image_name = "image2.jpg";
+    await Promise.all(
+      images.map(image => fakeImagesCompanyRepository.create(image))
+    );
 
-    await updateImageCompanyService.execute(image.id, "image2.jpg");
+    const imagesCompany = await fakeImagesCompanyRepository.findImagesByCompany(company.id);
 
-    expect(image.image_name).toEqual("image2.jpg");
+    const imagesUpdated = [
+      {
+        id: imagesCompany[0].id,
+        image_name: "image1updated.jpg",
+        image_url: "http://localhost:3333/company/image1updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[1].id,
+        image_name: "image2updated.jpg",
+        image_url: "http://localhost:3333/company/image2updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[2].id,
+        image_name: "image3updated.jpg",
+        image_url: "http://localhost:3333/company/image3updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[3].id,
+        image_name: "image4updated.jpg",
+        image_url: "http://localhost:3333/company/image4updated.jpg",
+        company_id: company.id
+      }
+    ];
+
+    const updateImages = await updateImageCompanyService.execute({
+      company_id: company.id,
+      images: imagesUpdated
+    });
+
+    expect(updateImages).toEqual(imagesUpdated);
+    expect(updateImages.length).toEqual(4);
   });
 
-  it("Should not be able to update a non existing image", async () => {
+  it("Should be able to update an image when add a new image", async () => {
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    const company = await fakeCompanyRepository.create({
+      name: "New Company",
+      cnpj: "12345",
+      category_id: category.id,
+      description: "Description Company",
+      services: ["Service 1", "Service 2"],
+      contact_id: "contact-id",
+      physical_localization: false,
+      user_id: "user-id"
+    });
+
+    const images = [
+      {
+        image_name: "image1.jpg",
+        image_url: "http://localhost:3333/company/image1.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image2.jpg",
+        image_url: "http://localhost:3333/company/image2.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image3.jpg",
+        image_url: "http://localhost:3333/company/image3.jpg",
+        company_id: company.id
+      }
+    ];
+
+    await Promise.all(
+      images.map(image => fakeImagesCompanyRepository.create(image))
+    );
+
+    const imagesCompany = await fakeImagesCompanyRepository.findImagesByCompany(company.id);
+
+    const imagesUpdated = [
+      {
+        id: imagesCompany[0].id,
+        image_name: "image1updated.jpg",
+        image_url: "http://localhost:3333/company/image1updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[1].id,
+        image_name: "image2updated.jpg",
+        image_url: "http://localhost:3333/company/image2updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[2].id,
+        image_name: "image3updated.jpg",
+        image_url: "http://localhost:3333/company/image3updated.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "new_image.jpg",
+        image_url: "http://localhost:3333/company/new_image.jpg",
+        company_id: company.id
+      }
+    ];
+
+    const updateImages = await updateImageCompanyService.execute({
+      company_id: company.id,
+      images: imagesUpdated
+    });
+
+    const newImage = updateImages.find((image) => image.image_name === "new_image.jpg");
+    expect(newImage.image_url).toEqual("http://localhost:3333/company/new_image.jpg");
+  });
+
+  it("Should be able to delete an image", async () => {
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    const company = await fakeCompanyRepository.create({
+      name: "New Company",
+      cnpj: "12345",
+      category_id: category.id,
+      description: "Description Company",
+      services: ["Service 1", "Service 2"],
+      contact_id: "contact-id",
+      physical_localization: false,
+      user_id: "user-id"
+    });
+
+    const images = [
+      {
+        image_name: "image1.jpg",
+        image_url: "http://localhost:3333/company/image1.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image2.jpg",
+        image_url: "http://localhost:3333/company/image2.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image3.jpg",
+        image_url: "http://localhost:3333/company/image3.jpg",
+        company_id: company.id
+      },
+      {
+        image_name: "image4.jpg",
+        image_url: "http://localhost:3333/company/image4.jpg",
+        company_id: company.id
+      }
+    ];
+
+    await Promise.all(
+      images.map(image => fakeImagesCompanyRepository.create(image))
+    );
+
+    const imagesCompany = await fakeImagesCompanyRepository.findImagesByCompany(company.id);
+
+    const imagesUpdated = [
+      {
+        id: imagesCompany[0].id,
+        image_name: "image1updated.jpg",
+        image_url: "http://localhost:3333/company/image1updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[1].id,
+        image_name: "image2updated.jpg",
+        image_url: "http://localhost:3333/company/image2updated.jpg",
+        company_id: company.id
+      },
+      {
+        id: imagesCompany[2].id,
+        image_name: "image3updated.jpg",
+        image_url: "http://localhost:3333/company/image3updated.jpg",
+        company_id: company.id
+      }
+    ];
+
+    const updateImages = await updateImageCompanyService.execute({
+      company_id: company.id,
+      images: imagesUpdated
+    });
+
+    expect(updateImages).toEqual(imagesUpdated);
+    expect(updateImages.length).toBe(3);
+  });
+
+  it("Should not be able to update images if company not found", async () => {
+
+    const images = [
+      {
+        image_name: "image1.jpg",
+        image_url: "http://localhost:3333/company/image1.jpg",
+        company_id: "company-id"
+      },
+      {
+        image_name: "image2.jpg",
+        image_url: "http://localhost:3333/company/image2.jpg",
+        company_id: "company-id"
+      },
+      {
+        image_name: "image3.jpg",
+        image_url: "http://localhost:3333/company/image3.jpg",
+        company_id: "company-id"
+      }
+    ];
+
+    await Promise.all(
+      images.map(image => fakeImagesCompanyRepository.create(image))
+    );
+
+    const imagesCompany = await fakeImagesCompanyRepository.findImagesByCompany("company-id");
+
+    const imagesUpdated = [
+      {
+        id: imagesCompany[0].id,
+        image_name: "image1updated.jpg",
+        image_url: "http://localhost:3333/company/image1updated.jpg",
+        company_id: "company-id"
+      },
+      {
+        id: imagesCompany[1].id,
+        image_name: "image2updated.jpg",
+        image_url: "http://localhost:3333/company/image2updated.jpg",
+        company_id: "company-id"
+      },
+      {
+        id: imagesCompany[2].id,
+        image_name: "image3updated.jpg",
+        image_url: "http://localhost:3333/company/image3updated.jpg",
+        company_id: "company-id"
+      },
+      {
+        image_name: "new_image.jpg",
+        image_url: "http://localhost:3333/company/new_image.jpg",
+        company_id: "company-id"
+      }
+    ];
+
     await expect(
-      updateImageCompanyService.execute("non-existing-image", "image-name"))
-      .rejects.toBeInstanceOf(AppError);
+      updateImageCompanyService.execute({
+        company_id: "company-not-found",
+        images: imagesUpdated
+      })).rejects.toBeInstanceOf(AppError);
   });
 });

@@ -9,21 +9,15 @@ export class UpdateImagesCompanyController {
 
     const { company_id } = request.params;
 
-    const { images } = request.body;
+    const images = request.body.images;
 
-    const imageUpdates = images.map((image: { id: string, filename: string }) => (
-      {
-        id: image.id,
-        image_name: image.filename,
-        image_url: "http://localhost:3333/companies",
-        company_id
-      }));
+    const imagesName = images.map((image) => image.image_name);
 
     const updateImagesCompanyService = container.resolve(UpdateImagesCompanyService);
 
     await updateImagesCompanyService.execute({
       company_id,
-      images: imageUpdates
+      images: imagesName
     });
 
     return response.status(204).send();
