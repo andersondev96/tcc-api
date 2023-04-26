@@ -17,7 +17,7 @@ interface IImages {
 }
 interface IRequest {
   company_id: string;
-  images: IImages[];
+  images: string[];
 }
 
 @injectable()
@@ -42,73 +42,44 @@ export class UpdateImagesCompanyService {
       throw new AppError("Company not found");
     }
 
-    const listImages = await this.imageCompanyRepository.findImagesByCompany(company.id);
+    const currentImages = await this.imageCompanyRepository.findImagesByCompany(company.id);
 
-    const newImages: IImages[] = [];
-    const imagesWithoutId: IImages[] = [];
+    // Atualiza ou exclui as imagens existentes
+    for (const currentImage of currentImages) {
+      const index = images.findIndex((imageId) => imageId === currentImage.id);
 
-    for (const image of images) {
-      if (!image.id) {
-        imagesWithoutId.push(image);
-        continue;
-      }
-
-      const oldImagesIndex = listImages.findIndex(img => img.id === image.id);
-
-      if (oldImagesIndex === -1) {
-        newImages.push(image);
+      if (index === -1) {
+        // Imagem não fornecida pelo usuário
+        await this.storageProvider.delete(currentImage.image_name, "companies");
+        await this.imageCompanyRepository.delete(currentImage.id);
       } else {
-        const oldImage = listImages[oldImagesIndex];
-
-        if (oldImage.image_name) {
-          await this.storageProvider.delete(oldImage.image_name, "companies");
-        }
-
-        if (oldImage.image_name !== image.image_name) {
-          newImages.push(image);
-        }
-
-        listImages.splice(oldImagesIndex, 1);
-      }
-    }
-
-    // Deleta as imagens que não existem mais
-    for (const image of listImages) {
-      await this.storageProvider.delete(image.image_name, "companies");
-      await this.imageCompanyRepository.delete(image.id);
-    }
-
-    // Insere ou atualiza imagens
-    const updatedImages: ImageCompany[] = [];
-
-    if (imagesWithoutId.length > 0) {
-      for (const image of imagesWithoutId) {
-        const addNewImages = await this.imageCompanyRepository.create({
-          image_name: image.image_name,
-          image_url: `http://localhost:3333/company/${image.image_name}`,
-          company_id
+        // Imagem fornecida pelo usuário
+        const newImageUrl = images[index];
+        await this.storageProvider.delete(currentImage.image_name, "companies");
+        await this.storageProvider.save(newImageUrl, "companies")
+        await this.imageCompanyRepository.update({
+          id: currentImage.id,
+          company_id,
+          image_name: images[index],
+          image_url: `http://localhost:3333/company/${images[index]}`,
         });
 
-        updatedImages.push(addNewImages);
-
-        await this.storageProvider.save(addNewImages.image_name, "companies");
+        //Remove a imagem da lista de imagens
+        images.splice(index, 1);
       }
     }
 
-    for (const image of newImages) {
-      const updatedImage = await this.imageCompanyRepository.update({
-        id: image.id,
-        image_name: image.image_name,
-        image_url: `http://localhost:3333/company/${image.image_name}`,
-        company_id
+    // Adiciona novas imagens
+    for (const imageUrl of images) {
+      await this.storageProvider.save(imageUrl, "companies");
+      await this.imageCompanyRepository.create({
+        company_id: company.id,
+        image_name: imageUrl,
+        image_url: `http://localhost:3333/company/${imageUrl}`,
       });
-
-      updatedImages.push(updatedImage);
-
-      await this.storageProvider.save(updatedImage.image_name, "companies");
     }
 
-    return updatedImages;
+    return this.imageCompanyRepository.findImagesByCompany(company.id);
 
   }
 }
