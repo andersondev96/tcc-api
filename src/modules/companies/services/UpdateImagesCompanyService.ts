@@ -3,7 +3,6 @@ import { inject, injectable } from "tsyringe";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 import { AppError } from "@shared/errors/AppError";
 
-import { ImageCompany } from "../infra/prisma/entities/ImageCompany";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IImagesCompanyRepository } from "../repositories/IImagesCompanyRepository";
 
@@ -34,7 +33,7 @@ export class UpdateImagesCompanyService {
     private storageProvider: IStorageProvider
   ) { }
 
-  public async execute({ company_id, images }: IRequest): Promise<ImageCompany[]> {
+  public async execute({ company_id, images }: IRequest): Promise<IImages[]> {
 
     const company = await this.companyRepository.findById(company_id);
 
@@ -42,44 +41,34 @@ export class UpdateImagesCompanyService {
       throw new AppError("Company not found");
     }
 
-    const currentImages = await this.imageCompanyRepository.findImagesByCompany(company.id);
+    const listImages = await this.imageCompanyRepository.findImagesByCompany(company.id);
 
-    // Atualiza ou exclui as imagens existentes
-    for (const currentImage of currentImages) {
-      const index = images.findIndex((imageId) => imageId === currentImage.id);
+    const convertImages = images.map((imageString, index) => ({
+      id: listImages[index].id,
+      image_name: imageString,
+      image_url: `http://localhost:3333/company/${imageString}`,
+      company_id: company.id,
+    }));
 
-      if (index === -1) {
-        // Imagem não fornecida pelo usuário
-        await this.storageProvider.delete(currentImage.image_name, "companies");
-        await this.imageCompanyRepository.delete(currentImage.id);
-      } else {
-        // Imagem fornecida pelo usuário
-        const newImageUrl = images[index];
-        await this.storageProvider.delete(currentImage.image_name, "companies");
-        await this.storageProvider.save(newImageUrl, "companies")
-        await this.imageCompanyRepository.update({
-          id: currentImage.id,
-          company_id,
-          image_name: images[index],
-          image_url: `http://localhost:3333/company/${images[index]}`,
-        });
+    listImages.forEach(async (image) => {
+      await this.storageProvider.delete(image.image_name, "company");
+    });
 
-        //Remove a imagem da lista de imagens
-        images.splice(index, 1);
-      }
-    }
+    const updatedImages = await Promise.all(convertImages.map(async (image) => {
 
-    // Adiciona novas imagens
-    for (const imageUrl of images) {
-      await this.storageProvider.save(imageUrl, "companies");
-      await this.imageCompanyRepository.create({
+      const updateImage = await this.imageCompanyRepository.update({
+        id: image.id,
+        image_name: image.image_name,
+        image_url: image.image_url,
         company_id: company.id,
-        image_name: imageUrl,
-        image_url: `http://localhost:3333/company/${imageUrl}`,
       });
-    }
 
-    return this.imageCompanyRepository.findImagesByCompany(company.id);
+      await this.storageProvider.save(image.image_name, "company");
+
+      return updateImage;
+    }));
+
+    return updatedImages;
 
   }
 }

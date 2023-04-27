@@ -83,7 +83,7 @@ companiesRouter.put(
   "/images/:company_id",
   ensureAuthenticated,
   ensureEntrepreneur,
-  upload.array("company[]"),
+  upload.array("company"),
   updateImagesCompanyController.handle
 );
 companiesRouter.delete(

@@ -3,15 +3,20 @@ import { container } from "tsyringe";
 
 import { UpdateImagesCompanyService } from "@modules/companies/services/UpdateImagesCompanyService";
 
+interface IFiles {
+  filename: string;
+}
 export class UpdateImagesCompanyController {
 
   public async handle(request: Request, response: Response): Promise<Response> {
 
     const { company_id } = request.params;
 
-    const images = request.body.images;
+    const company = request.files as IFiles[];
 
-    const imagesName = images.map((image) => image.image_name);
+    const imagesName = company.map((image) => image.filename);
+
+    console.log(imagesName);
 
     const updateImagesCompanyService = container.resolve(UpdateImagesCompanyService);
 
