@@ -6,6 +6,7 @@ import { prisma } from "@database/prisma";
 import { ChatRoom } from "../entities/ChatRoom";
 
 export class ChatRoomsRepository implements IChatRoomsRepository {
+
   public async create({ id, connections }: { id: string, connections: string[] }): Promise<ChatRoom> {
     const chatRoom = await prisma.chatRoom.create({
       data: {

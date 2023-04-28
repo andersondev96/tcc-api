@@ -8,8 +8,8 @@ class GetAllConnectionsService {
     @inject("ConnectionsRepository")
     private connectionRepository: IConnectionsRepository
   ) { }
-  async execute(): Promise<Connection[]> {
-    const connections = await this.connectionRepository.listAll();
+  async execute(loggedConnectionId: string): Promise<Connection[]> {
+    const connections = await this.connectionRepository.listAllWithChat(loggedConnectionId);
 
     return connections;
   }

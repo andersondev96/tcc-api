@@ -39,7 +39,13 @@ io.on("connect", socket => {
     const getAllConnectionsService = container.resolve(
       GetAllConnectionsService
     );
-    const connections = await getAllConnectionsService.execute();
+
+    const getConnectionBySocketService = container.resolve(GetConnectionBySocketService);
+
+    const userConnectionLogged = await getConnectionBySocketService.execute(socket.id);
+
+    const connections = await getAllConnectionsService.execute(userConnectionLogged.id);
+
 
     callback(connections);
   });

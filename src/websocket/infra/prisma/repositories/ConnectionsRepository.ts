@@ -65,8 +65,15 @@ export class ConnectionsRepository implements IConnectionsRepository {
     return connection;
   }
 
-  public async listAll(): Promise<Connection[]> {
+  async listAllWithChat(loggedConnectionId: string): Promise<Connection[]> {
     const connections = await prisma.connection_Socket.findMany({
+      where: {
+        Chat: {
+          some: {
+            connection_id: loggedConnectionId
+          }
+        }
+      },
       include: {
         user: true
       }
