@@ -36,11 +36,16 @@ export class UnfavoriteServiceService {
 
     user.favorites = favoritesUser;
 
-    await this.usersRepository.update({
+    const unfavorited = await this.usersRepository.update({
       id: user.id,
       ...user
     });
 
-    return favoriteService;
+    return {
+      ...favoriteService,
+      image_url: favoriteService.image_url
+        ? `${process.env.APP_API_URL}/service/${favoriteService.image_url}`
+        : undefined
+    };
   }
 }

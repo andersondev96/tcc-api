@@ -87,7 +87,12 @@ export class CreateServiceService {
           highlight_service
         });
 
-        return service;
+        return {
+          ...service,
+          image_url: service.image_url
+            ? `${process.env.APP_API_URL}/service/${service.image_url}`
+            : undefined
+        };
       }
     }
 

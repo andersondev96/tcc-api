@@ -85,7 +85,12 @@ export class UpdateServiceService {
           company_id: service.company_id
         });
 
-        return serviceUpdate;
+        return {
+          ...serviceUpdate,
+          image_url: serviceUpdate.image_url
+            ? `${process.env.APP_API_URL}/service/${serviceUpdate.image_url}`
+            : undefined
+        };
       }
     }
 

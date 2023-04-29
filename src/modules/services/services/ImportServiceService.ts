@@ -53,7 +53,16 @@ export class ImportServiceService {
       }
     }));
 
-    return importedServices;
+    const returnServices = importedServices.map((service) => {
+      return {
+        ...service,
+        image_url: service.image_url
+          ? `${process.env.APP_API_URL}/service/${service.image_url}`
+          : undefined
+      }
+    })
+
+    return returnServices;
 
   }
 }
