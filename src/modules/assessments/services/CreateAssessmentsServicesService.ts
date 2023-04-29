@@ -52,7 +52,10 @@ export class CreateAssessmentsServicesService {
 
       return {
         ...assessment,
-        user
+        user: {
+          ...user,
+          avatar: user.avatar ? `${process.env.APP_API_URL}/avatar/${user.avatar}` : undefined
+        }
       };
     }
   }

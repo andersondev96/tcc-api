@@ -26,6 +26,18 @@ export class FindAssessmentsByCompanyService {
 
     const assessments = await this.assessmentRepository.findAssessments(company_id);
 
-    return assessments;
+    const assessmentsUserAvatar = assessments.map((assessment) => {
+      return {
+        ...assessment,
+        user: {
+          ...assessment.user,
+          avatar: assessment.user.avatar
+            ? `${process.env.APP_API_URL}/avatar/${assessment.user.avatar}`
+            : undefined
+        }
+      }
+    });
+
+    return assessmentsUserAvatar;
   }
 }

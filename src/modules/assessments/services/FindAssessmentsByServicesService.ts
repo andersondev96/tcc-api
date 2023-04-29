@@ -24,8 +24,20 @@ export class FindAssessmentsByServicesService {
       throw new AppError("Service not found");
     }
 
-    const assessment = await this.assessmentRepository.findAssessments(service_id);
+    const assessments = await this.assessmentRepository.findAssessments(service_id);
 
-    return assessment;
+    const assessmentsUserAvatar = assessments.map((assessment) => {
+      return {
+        ...assessment,
+        user: {
+          ...assessment.user,
+          avatar: assessment.user.avatar
+            ? `${process.env.APP_API_URL}/avatar/${assessment.user.avatar}`
+            : undefined
+        }
+      }
+    });
+
+    return assessmentsUserAvatar;
   }
 }
