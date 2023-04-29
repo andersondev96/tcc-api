@@ -86,6 +86,8 @@ export class AuthenticateUserService {
         name: user.name,
         email: user.email,
         avatar: user.avatar
+          ? `${process.env.APP_API_URL}/avatar/${user.avatar}`
+          : null
       },
       refresh_token
     };
