@@ -8,6 +8,9 @@ import { IServicesRepository } from "../repositories/IServicesRepository";
 
 interface IRequest {
   company_id: string,
+  pagination?: boolean,
+  page?: number,
+  perPage?: number,
   name?: string,
   category?: string,
   highlight_service?: boolean
@@ -23,7 +26,13 @@ export class FindServiceByCompanyService {
     private companyRepository: ICompaniesRepository
   ) { }
 
-  public async execute({ company_id, name, category, highlight_service }: IRequest): Promise<Service[]> {
+  public async execute({
+    company_id,
+    pagination = false,
+    page, perPage,
+    name, category,
+    highlight_service
+  }: IRequest): Promise<{ services: Service[], totalResults: number }> {
 
     const company = await this.companyRepository.findById(company_id);
 
@@ -38,10 +47,18 @@ export class FindServiceByCompanyService {
       highlight_service
     );
 
+    const totalResults = services.length;
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
+    const servicesByPage = services.slice(start, end);
+
     services.map(service => (
       service.image_url = service.image_url && `${process.env.APP_API_URL}/service/${service.image_url}`
     ));
 
-    return services;
+    return {
+      services: servicesByPage,
+      totalResults
+    };
   }
 }

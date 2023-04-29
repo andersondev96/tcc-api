@@ -8,7 +8,7 @@ export class FindServiceByCompanyController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { company_id } = request.params;
 
-    const { name, category, highlight_service } = request.query;
+    const { page, perPage, name, category, highlight_service } = request.query;
 
     const serviceName = typeof name === "string" ? name : "";
     const serviceCategory = typeof category === "string" ? category : "";
@@ -18,6 +18,8 @@ export class FindServiceByCompanyController {
 
     const services = await findServiceByCompanyService.execute({
       company_id,
+      page: parseInt(page as string),
+      perPage: parseInt(perPage as string),
       name: serviceName,
       category: serviceCategory,
       highlight_service: serviceHighlightService
