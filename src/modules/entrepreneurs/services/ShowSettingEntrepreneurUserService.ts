@@ -36,7 +36,9 @@ export class ShowSettingEntrepreneurUserService {
 
     return {
       ...settings,
-      company_logo: `${process.env.APP_API_URL}/company_logo/${settings.company_logo}`
+      company_logo: settings.company_logo
+        ? `${process.env.APP_API_URL}/company_logo/${settings.company_logo}`
+        : undefined
     };
   }
 }
