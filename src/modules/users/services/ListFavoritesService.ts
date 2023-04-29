@@ -63,7 +63,7 @@ export class ListFavoritesService {
         id,
         name,
         description,
-        image_url,
+        image_url: image_url ? `${process.env.APP_API_URL}/service/${image_url}` : null,
         favorites
       }));
 

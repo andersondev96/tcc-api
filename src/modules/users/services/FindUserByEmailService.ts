@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
-
-import { User } from "../infra/prisma/entities/User";
+import { IUserResponseDTO } from "../dtos/IUserResponseDTO";
+import { UserMap } from "../mapper/UserMap";
 import { IUsersRepository } from "../repositories/IUsersRepository";
 
 @injectable()
@@ -12,10 +12,10 @@ export class FindUserByEmailService {
     private userRepository: IUsersRepository
   ) { }
 
-  public async execute(email: string): Promise<User> {
+  public async execute(email: string): Promise<IUserResponseDTO> {
 
     const user = await this.userRepository.findByMail(email);
 
-    return user;
+    return UserMap.toDTO(user);
   }
 }
