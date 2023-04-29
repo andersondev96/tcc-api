@@ -8,12 +8,14 @@ export class FilterProposalsController {
   public async handle(request: Request, response: Response) {
     const { company_id } = request.params;
 
-    const { name, objective } = request.query;
+    const { page, perPage, name, objective } = request.query;
 
     const filterProposalsService = container.resolve(FilterProposalsService);
 
     const proposals = await filterProposalsService.execute(
       company_id,
+      parseInt(page as string),
+      parseInt(perPage as string),
       String(name),
       String(objective)
     );

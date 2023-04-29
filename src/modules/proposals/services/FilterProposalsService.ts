@@ -16,15 +16,23 @@ export class FilterProposalsService {
     private proposalRepository: IProposalsRepository
   ) { }
 
-  public async execute(company_id: string, name?: string, objective?: string): Promise<Proposal[]> {
+  public async execute(company_id: string, page: number, perPage: number, name?: string, objective?: string): Promise<{ proposals: Proposal[], totalResults: number }> {
     const company = await this.companyRepository.findById(company_id);
 
     if (!company) {
       throw new AppError("Company not found");
     }
 
-    const proposal = await this.proposalRepository.listProposalsByObjectiveOrName(company_id, objective, name);
+    const proposals = await this.proposalRepository.listProposalsByObjectiveOrName(company_id, objective, name);
 
-    return proposal;
+    console.log(proposals);
+    console.log(page, perPage);
+
+    const totalResults = proposals.length;
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
+    const proposalsByPage = proposals.slice(start, end);
+
+    return { proposals: proposalsByPage, totalResults };
   }
 }

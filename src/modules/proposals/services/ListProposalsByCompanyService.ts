@@ -8,7 +8,8 @@ import { IProposalsRepository } from "../repositories/IProposalsRepository";
 
 interface IRequest {
   company_id: string;
-  page?: number;
+  page: number;
+  perPage: number;
   objective?: string;
   description?: string;
   status?: string;
@@ -25,14 +26,14 @@ export class ListProposalsByCompanyService {
     private proposalRepository: IProposalsRepository
   ) { }
 
-  public async execute({ company_id, page, objective, description, status, name }: IRequest): Promise<Proposal[]> {
+  public async execute({ company_id, page, perPage, objective, description, status, name }: IRequest): Promise<{ proposals: Proposal[], totalResults: number }> {
     const company = await this.companyRepository.findById(company_id);
 
     if (!company) {
       throw new AppError("Company not found");
     }
 
-    let proposals = await this.proposalRepository.listProposalsByCompany(company_id, page);
+    let proposals = await this.proposalRepository.listProposalsByCompany(company_id);
 
     if (objective || description || status || name) {
       proposals = proposals.filter(prop =>
@@ -43,6 +44,14 @@ export class ListProposalsByCompanyService {
       );
     }
 
-    return proposals;
+    const totalResults = proposals.length;
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
+    const proposalsByPage = proposals.slice(start, end);
+
+    return {
+      proposals: proposalsByPage,
+      totalResults,
+    };
   }
 }

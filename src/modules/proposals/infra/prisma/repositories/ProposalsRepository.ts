@@ -41,13 +41,10 @@ export class ProposalsRepository implements IProposalsRepository {
     return proposal;
   }
 
-  public async listProposalsByCustomer(customer_id: string, per_page = 10, page = 1): Promise<Proposal[]> {
-    const skip = per_page * (page - 1);
+  public async listProposalsByCustomer(customer_id: string): Promise<Proposal[]> {
 
     const proposals = await prisma.proposal.findMany({
       where: { customer_id },
-      skip,
-      take: per_page,
       include: {
         company: {
           include: {
@@ -66,13 +63,10 @@ export class ProposalsRepository implements IProposalsRepository {
     return proposals;
   }
 
-  public async listProposalsByCompany(company_id: string, per_page = 10, page = 1): Promise<Proposal[]> {
-    const skip = per_page * (page - 1);
+  public async listProposalsByCompany(company_id: string): Promise<Proposal[]> {
 
     const proposals = await prisma.proposal.findMany({
       where: { company_id },
-      skip,
-      take: per_page,
       include: {
         company: {
           include: {
@@ -85,7 +79,7 @@ export class ProposalsRepository implements IProposalsRepository {
             user: true
           }
         }
-      }
+      },
     });
 
     return proposals;
