@@ -40,12 +40,7 @@ io.on("connect", socket => {
       GetAllConnectionsService
     );
 
-    const getConnectionBySocketService = container.resolve(GetConnectionBySocketService);
-
-    const userConnectionLogged = await getConnectionBySocketService.execute(socket.id);
-
-    const connections = await getAllConnectionsService.execute(userConnectionLogged.id);
-
+    const connections = await getAllConnectionsService.execute();
 
     callback(connections);
   });

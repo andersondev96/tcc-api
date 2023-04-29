@@ -8,10 +8,22 @@ class GetAllConnectionsService {
     @inject("ConnectionsRepository")
     private connectionRepository: IConnectionsRepository
   ) { }
-  async execute(loggedConnectionId: string): Promise<Connection[]> {
-    const connections = await this.connectionRepository.listAllWithChat(loggedConnectionId);
+  async execute(): Promise<Connection[]> {
+    const connections = await this.connectionRepository.listAll();
 
-    return connections;
+    const returnConnections = connections.map((connection) => {
+      return {
+        ...connection,
+        user: {
+          ...connection.user,
+          avatar: connection.user.avatar
+            ? `${process.env.APP_API_URL}/avatar/${connection.user.avatar}`
+            : undefined
+        }
+      }
+    })
+
+    return returnConnections;
   }
 }
 

@@ -11,7 +11,7 @@ export interface IConnectionsRepository {
 
   findBySocket(socket_id: string): Promise<Connection>;
 
-  listAllWithChat(loggedConnectionId: string): Promise<Connection[]>;
+  listAll(): Promise<Connection[]>;
 
   update(data: ICreateConnectionDTO): Promise<Connection>;
 
