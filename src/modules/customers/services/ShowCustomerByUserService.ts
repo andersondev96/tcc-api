@@ -31,6 +31,14 @@ export class ShowCustomerByUserService {
       throw new AppError("User don't have a customer");
     }
 
-    return customer;
+    return {
+      ...customer,
+      user: {
+        ...user,
+        avatar: user.avatar
+          ? `${process.env.APP_API_URL}/avatar/${customer.user.avatar}`
+          : undefined
+      }
+    };
   }
 }

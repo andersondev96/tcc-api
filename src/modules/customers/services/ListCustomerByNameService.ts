@@ -35,6 +35,18 @@ export class ListCustomerByNameService {
       );
     }
 
-    return customers;
+    const customersWithUserAvatar = customers.map((customer) => {
+      return {
+        ...customer,
+        user: {
+          ...customer.user,
+          avatar: customer.user.avatar
+            ? `${process.env.APP_API_URL}/avatar/${customer.user.avatar}`
+            : undefined
+        }
+      }
+    });
+
+    return customersWithUserAvatar;
   }
 }
