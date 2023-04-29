@@ -8,6 +8,8 @@ import { ICustomersCompaniesRepository } from "../repositories/ICustomersCompani
 
 interface IResponse {
   company_id: string;
+  page: number;
+  perPage: number;
   name?: string;
   email?: string;
 }
@@ -21,7 +23,7 @@ export class ListCustomersByCompanyService {
     private customerCompanyRepository: ICustomersCompaniesRepository
   ) { }
 
-  public async execute({ company_id, name, email }: IResponse): Promise<CustomerCompany[]> {
+  public async execute({ company_id, page, perPage, name, email }: IResponse): Promise<{ customers: CustomerCompany[], totalResults: number }> {
     const company = await this.companyRepository.findById(company_id);
 
     if (!company) {
@@ -37,7 +39,14 @@ export class ListCustomersByCompanyService {
       );
     }
 
-    const customersWithUserAvatar = customersByCompany.map((customerCompany) => {
+    const totalResults = customersByCompany.length;
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
+    const customersByPage = customersByCompany.slice(start, end);
+
+
+
+    const customersWithUserAvatar = customersByPage.map((customerCompany) => {
       return {
         ...customerCompany,
         customer: {
@@ -52,6 +61,9 @@ export class ListCustomersByCompanyService {
       }
     });
 
-    return customersWithUserAvatar;
+    return {
+      customers: customersWithUserAvatar,
+      totalResults,
+    };
   }
 }
