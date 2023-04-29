@@ -34,6 +34,9 @@ export class ShowSettingEntrepreneurCompanyService {
 
     const settings = await this.entrepreneurSettings.findByEntrepreneur(entrepreneur.id);
 
-    return settings;
+    return {
+      ...settings,
+      company_logo: `${process.env.APP_API_URL}/company_logo/${settings.company_logo}`
+    };
   }
 }

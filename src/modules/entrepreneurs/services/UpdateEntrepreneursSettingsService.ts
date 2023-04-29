@@ -71,7 +71,10 @@ export class UpdateEntrepreneursSettingsService {
       email_notification
     });
 
-    return entrepreneurSettings;
+    return {
+      ...entrepreneurSettings,
+      company_logo: `${process.env.APP_API_URL}/company_logo/${entrepreneurSettings.company_logo}`
+    };
 
   }
 }
