@@ -57,7 +57,7 @@ export class ProposalsRepository implements IProposalsRepository {
             user: true
           }
         }
-      }
+      },
     });
 
     return proposals;

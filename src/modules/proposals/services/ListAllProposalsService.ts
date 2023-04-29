@@ -8,7 +8,8 @@ import { IProposalsRepository } from "../repositories/IProposalsRepository";
 
 interface IResponse {
   user_id: string;
-  page?: number;
+  page: number;
+  perPage: number;
   objective?: string;
   description?: string;
   status?: string;
@@ -25,7 +26,7 @@ export class ListAllProposalsService {
     private proposalRepository: IProposalsRepository
   ) { }
 
-  public async execute({ user_id, page, objective, description, status, company }: IResponse): Promise<Proposal[]> {
+  public async execute({ user_id, page, perPage, objective, description, status, company }: IResponse): Promise<{ proposals: Proposal[], totalResults: number }> {
 
     const customer = await this.customerRepository.findCustomerByUser(user_id);
 
@@ -33,7 +34,7 @@ export class ListAllProposalsService {
       throw new AppError("User has not a customer");
     }
 
-    let proposals = await this.proposalRepository.listProposalsByCustomer(customer.id, page);
+    let proposals = await this.proposalRepository.listProposalsByCustomer(customer.id);
 
     if (objective || description || status || company) {
       proposals = proposals.filter(prop =>
@@ -44,8 +45,16 @@ export class ListAllProposalsService {
       );
     }
 
+    const totalResults = proposals.length;
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
+    const proposalsByPage = proposals.slice(start, end);
 
-    return proposals;
+
+    return {
+      proposals: proposalsByPage,
+      totalResults
+    };
 
   }
 }

@@ -25,9 +25,6 @@ export class FilterProposalsService {
 
     const proposals = await this.proposalRepository.listProposalsByObjectiveOrName(company_id, objective, name);
 
-    console.log(proposals);
-    console.log(page, perPage);
-
     const totalResults = proposals.length;
     const start = (page - 1) * perPage;
     const end = start + perPage;
