@@ -26,6 +26,15 @@ export class ListBudgetByProposalService {
 
     const budget = await this.budgetRepository.findBudgetByProposal(proposal_id);
 
-    return budget;
+    const returnBudget = {
+      ...budget,
+      files: budget.files.map((file) => {
+        return file.length > 0
+          ? `${process.env.APP_API_URL}/budgets/${file}`
+          : undefined
+      })
+    }
+
+    return returnBudget;
   }
 }

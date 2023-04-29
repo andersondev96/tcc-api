@@ -111,7 +111,18 @@ export class CreateProposalService {
 
       }
 
-      return proposal;
+      return {
+        ...proposal,
+        customer: {
+          ...proposal.customer,
+          user: {
+            ...proposal.customer.user,
+            avatar: proposal.customer.user.avatar
+              ? `${process.env.APP_API_URL}/avatar/${proposal.customer.user.avatar}`
+              : undefined
+          }
+        }
+      };
     }
 
   }

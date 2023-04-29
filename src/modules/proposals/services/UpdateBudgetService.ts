@@ -50,7 +50,16 @@ export class UpdateBudgetService {
 
     await this.proposalRepository.updateStatus(budget.proposal_id, "Budget update (Awaiting response)");
 
-    return budget;
+    const returnBudget = {
+      ...budget,
+      files: budget.files.map((file) => {
+        return file.length > 0
+          ? `${process.env.APP_API_URL}/budgets/${file}`
+          : undefined
+      })
+    }
+
+    return returnBudget;
 
 
   }
