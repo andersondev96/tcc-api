@@ -25,6 +25,17 @@ export class CreateChatService {
       connection_id
     });
 
-    return chat;
+    return {
+      ...chat,
+      connection: {
+        ...chat.connection,
+        user: {
+          ...chat.connection.user,
+          avatar: chat.connection.user.avatar
+            ? `${process.env.APP_API_URL}/avatar/${chat.connection.user.avatar}`
+            : undefined
+        }
+      }
+    };
   }
 }
