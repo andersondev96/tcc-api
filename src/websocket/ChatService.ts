@@ -5,14 +5,13 @@ import { io } from "@shared/infra/http/app";
 import { CreateChatRoomService } from "./services/CreateChatRoomService";
 import { CreateChatService } from "./services/CreateChatService";
 import { CreateConnectionService } from "./services/CreateConnectionService";
+import { DeleteChatRoomService } from "./services/DeleteChatRoomService";
 import { GetAllConnectionsService } from "./services/GetAllConnectionsService";
 import { GetChatRoomByConnectionsService } from "./services/GetChatRoomByConnectionsService";
 import { GetConnectionBySocketService } from "./services/GetConnectionBySocketService";
 import { GetMessagesByChatRoomService } from "./services/GetMessagesByChatRoomServices";
 
 io.on("connect", socket => {
-  console.log("Connecting");
-
 
   socket.on("start", async (data) => {
     console.log(data);
@@ -96,4 +95,21 @@ io.on("connect", socket => {
 
 
   });
+
+  socket.on("disconnecting", async () => {
+    console.log("disconnecting");
+    const getConnectionBySocketService = container.resolve(GetConnectionBySocketService);
+    const getChatRoomByConnectionService = container.resolve(GetChatRoomByConnectionsService);
+    const deleteChatRoomService = container.resolve(DeleteChatRoomService);
+
+    const connection = await getConnectionBySocketService.execute(socket.id);
+    console.log(connection);
+    const room = await getChatRoomByConnectionService.execute([connection.user_id, connection.id]);
+
+    if (room) {
+      await deleteChatRoomService.execute(room.id);
+      socket.to(room.id).emit("user_disconnected", { userId: connection.user.id });
+    }
+
+  })
 });
