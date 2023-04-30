@@ -15,6 +15,22 @@ export class GetMessagesByChatRoomService {
       roomId
     );
 
-    return messages;
+    const userAvatarUrl = messages.map((message) => {
+      return {
+        ...message,
+        connection: {
+          ...message.connection,
+          user: {
+            ...message.connection.user,
+            avatar: message.connection.user.avatar
+              ? `${process.env.APP_API_URL}/avatar/${message.connection.user.avatar}`
+              : undefined
+          }
+        }
+
+      }
+    })
+
+    return userAvatarUrl;
   }
 }
