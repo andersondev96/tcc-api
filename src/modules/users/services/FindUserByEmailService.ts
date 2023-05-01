@@ -16,6 +16,10 @@ export class FindUserByEmailService {
 
     const user = await this.userRepository.findByMail(email);
 
+    if (!user) {
+      return undefined;
+    }
+
     return UserMap.toDTO(user);
   }
 }
