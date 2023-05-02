@@ -97,7 +97,6 @@ io.on("connect", socket => {
   });
 
   socket.on("disconnecting", async () => {
-    console.log("disconnecting");
     const getConnectionBySocketService = container.resolve(GetConnectionBySocketService);
     const getChatRoomByConnectionService = container.resolve(GetChatRoomByConnectionsService);
     const deleteChatRoomService = container.resolve(DeleteChatRoomService);
