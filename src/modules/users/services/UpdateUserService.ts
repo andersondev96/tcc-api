@@ -1,4 +1,4 @@
-import { injectable, inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
 
@@ -47,6 +47,11 @@ export class UpdateUserService {
 
     delete user.password;
 
-    return user;
+    return {
+      ...user,
+      avatar: user.avatar
+        ? `${process.env.APP_API_URL}/avatar/${user.avatar}`
+        : null
+    };
   }
 }
