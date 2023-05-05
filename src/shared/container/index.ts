@@ -47,6 +47,7 @@ import { IUsersTokenRepository } from "@modules/users/repositories/IUsersTokenRe
 import { EtherealMailProvider } from "./providers/MailProvider/implementations/EtherealMailProvider";
 import { IMailProvider } from "./providers/MailProvider/models/IMailProvider";
 import { LocalStorageProvider } from "./providers/StorageProvider/implementations/LocalStorageProvider";
+import { S3StorageProvider } from "./providers/StorageProvider/implementations/S3StorageProvider";
 import { IStorageProvider } from "./providers/StorageProvider/models/IStorageProvider";
 
 container.registerSingleton<IUsersRepository>(
@@ -64,9 +65,14 @@ container.registerInstance<IMailProvider>(
   new EtherealMailProvider()
 );
 
+const diskStorage = {
+  local: LocalStorageProvider,
+  s3: S3StorageProvider
+}
+
 container.registerInstance<IStorageProvider>(
   "StorageProvider",
-  new LocalStorageProvider()
+  new diskStorage[process.env.disk]
 );
 
 container.registerInstance<ICompaniesRepository>(
