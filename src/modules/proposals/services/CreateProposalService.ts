@@ -37,7 +37,7 @@ export class CreateProposalService {
     private entrepreneurSettingsRepository: IEntrepreneursSettingsRepository,
     @inject("ProposalsRepository")
     private proposalRepository: IProposalsRepository,
-    @inject("EtherealMailProvider")
+    @inject("MailProvider")
     private mailProvider: IMailProvider
   ) { }
 

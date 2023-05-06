@@ -20,7 +20,7 @@ export class AcceptOrRejectProposalService {
     private budgetRepository: IBudgetsRepository,
     @inject("EntrepreneursSettingsRepository")
     private entrepreneurSettingsRepository: IEntrepreneursSettingsRepository,
-    @inject("EtherealMailProvider")
+    @inject("MailProvider")
     private mailProvider: IMailProvider
   ) { }
 

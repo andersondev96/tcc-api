@@ -1,5 +1,8 @@
-import "@modules/users/providers";
 import { container } from "tsyringe";
+
+import "@modules/users/providers";
+import "@shared/container/providers";
+
 import { ChatRoomsRepository } from "websocket/infra/prisma/repositories/ChatRoomsRepository";
 import { ChatsRepository } from "websocket/infra/prisma/repositories/ChatsRepository";
 import { ConnectionsRepository } from "websocket/infra/prisma/repositories/ConnectionsRepository";
@@ -44,11 +47,6 @@ import { UsersTokenRepository } from "@modules/users/infra/prisma/repositories/U
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IUsersTokenRepository } from "@modules/users/repositories/IUsersTokenRepository";
 
-import { EtherealMailProvider } from "./providers/MailProvider/implementations/EtherealMailProvider";
-import { IMailProvider } from "./providers/MailProvider/models/IMailProvider";
-import { LocalStorageProvider } from "./providers/StorageProvider/implementations/LocalStorageProvider";
-import { S3StorageProvider } from "./providers/StorageProvider/implementations/S3StorageProvider";
-import { IStorageProvider } from "./providers/StorageProvider/models/IStorageProvider";
 
 container.registerSingleton<IUsersRepository>(
   "UsersRepository",
@@ -58,21 +56,6 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<IUsersTokenRepository>(
   "UsersTokenRepository",
   UsersTokenRepository
-);
-
-container.registerInstance<IMailProvider>(
-  "EtherealMailProvider",
-  new EtherealMailProvider()
-);
-
-const diskStorage = {
-  local: LocalStorageProvider,
-  s3: S3StorageProvider
-}
-
-container.registerInstance<IStorageProvider>(
-  "StorageProvider",
-  new diskStorage[process.env.disk]
 );
 
 container.registerInstance<ICompaniesRepository>(

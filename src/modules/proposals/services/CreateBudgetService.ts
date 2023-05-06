@@ -2,10 +2,10 @@
 import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 
-import { IDateProvider } from "@modules/users/providers/DateProvider/models/IDateProvider";
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 
+import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
 import { Budget } from "../infra/prisma/entities/Budget";
 import { IBudgetsRepository } from "../repositories/IBudgetsRepository";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
@@ -27,7 +27,7 @@ export class CreateBudgetService {
     private budgetRepository: IBudgetsRepository,
     @inject("DayjsDateProvider")
     private dateProvider: IDateProvider,
-    @inject("EtherealMailProvider")
+    @inject("MailProvider")
     private mailProvider: IMailProvider
   ) { }
 

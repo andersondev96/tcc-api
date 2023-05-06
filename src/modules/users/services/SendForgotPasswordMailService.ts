@@ -2,10 +2,10 @@ import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 import { v4 as uuidV4 } from "uuid";
 
-import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 
-import { IDateProvider } from "../providers/DateProvider/models/IDateProvider";
+import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
+import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { IUsersRepository } from "../repositories/IUsersRepository";
 import { IUsersTokenRepository } from "../repositories/IUsersTokenRepository";
 
@@ -18,7 +18,7 @@ export class SendForgotPasswordMailService {
     private usersTokenRepository: IUsersTokenRepository,
     @inject("DayjsDateProvider")
     private dateProvider: IDateProvider,
-    @inject("EtherealMailProvider")
+    @inject("MailProvider")
     private mailProvider: IMailProvider
   ) { }
 

@@ -1,7 +1,7 @@
 import { AppError } from "@shared/errors/AppError";
 
-import { FakeDateProvider } from "../providers/DateProvider/Fakes/FakeDateProvider";
-import { IDateProvider } from '../providers/DateProvider/models/IDateProvider';
+import { FakeDateProvider } from "../../../shared/container/providers/DateProvider/Fakes/FakeDateProvider";
+import { IDateProvider } from '../../../shared/container/providers/DateProvider/models/IDateProvider';
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";

@@ -2,8 +2,8 @@ import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 
-import { FakeDateProvider } from "../providers/DateProvider/Fakes/FakeDateProvider";
-import { IDateProvider } from "../providers/DateProvider/models/IDateProvider";
+import { FakeDateProvider } from "../../../shared/container/providers/DateProvider/Fakes/FakeDateProvider";
+import { IDateProvider } from "../../../shared/container/providers/DateProvider/models/IDateProvider";
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRepository";
 import { IUsersRepository } from "../repositories/IUsersRepository";
