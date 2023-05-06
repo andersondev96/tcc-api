@@ -1,4 +1,4 @@
-import { ICreateChatRoomDTO } from "websocket/dtos/ICreateChatRoomDTO";
+import { ICreateChatRoomDTO } from "@modules/websocket/dtos/ICreateChatRoomDTO";
 
 import { ChatRoom } from "../infra/prisma/entities/ChatRoom";
 

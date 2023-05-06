@@ -1,5 +1,5 @@
-import { ICreateConnectionDTO } from "websocket/dtos/ICreateConnectionDTO";
-import { IConnectionsRepository } from "websocket/repositories/IConnectionsRepository";
+import { ICreateConnectionDTO } from "@modules/websocket/dtos/ICreateConnectionDTO";
+import { IConnectionsRepository } from "@modules/websocket/repositories/IConnectionsRepository";
 
 import { prisma } from "@database/prisma";
 

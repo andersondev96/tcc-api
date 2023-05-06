@@ -1,6 +1,6 @@
+import { IChatRoomsRepository } from "@modules/websocket/repositories/IChatRoomsRepository";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
-import { IChatRoomsRepository } from "websocket/repositories/IChatRoomsRepository";
 
 
 @injectable()

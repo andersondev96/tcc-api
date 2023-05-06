@@ -1,6 +1,6 @@
+import { Connection } from "@modules/websocket/infra/prisma/entities/Connection";
+import { IConnectionsRepository } from "@modules/websocket/repositories/IConnectionsRepository";
 import { inject, injectable } from "tsyringe";
-import { Connection } from "websocket/infra/prisma/entities/Connection";
-import { IConnectionsRepository } from "websocket/repositories/IConnectionsRepository";
 
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";

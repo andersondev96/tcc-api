@@ -1,4 +1,4 @@
-import { ICreateConnectionDTO } from "websocket/dtos/ICreateConnectionDTO";
+import { ICreateConnectionDTO } from "@modules/websocket/dtos/ICreateConnectionDTO";
 
 import { Connection } from "../infra/prisma/entities/Connection";
 

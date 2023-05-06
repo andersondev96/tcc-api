@@ -1,6 +1,6 @@
+import { Chat } from "@modules/websocket/infra/prisma/entities/Chat";
+import { IChatsRepository } from "@modules/websocket/repositories/IChatsRepository";
 import { inject, injectable } from "tsyringe";
-import { Chat } from "websocket/infra/prisma/entities/Chat";
-import { IChatsRepository } from "websocket/repositories/IChatsRepository";
 
 @injectable()
 export class GetMessagesByChatRoomService {

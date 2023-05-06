@@ -3,12 +3,12 @@ import { container } from "tsyringe";
 import "@modules/users/providers";
 import "@shared/container/providers";
 
-import { ChatRoomsRepository } from "websocket/infra/prisma/repositories/ChatRoomsRepository";
-import { ChatsRepository } from "websocket/infra/prisma/repositories/ChatsRepository";
-import { ConnectionsRepository } from "websocket/infra/prisma/repositories/ConnectionsRepository";
-import { IChatRoomsRepository } from "websocket/repositories/IChatRoomsRepository";
-import { IChatsRepository } from "websocket/repositories/IChatsRepository";
-import { IConnectionsRepository } from "websocket/repositories/IConnectionsRepository";
+import { ChatRoomsRepository } from "@modules/websocket/infra/prisma/repositories/ChatRoomsRepository";
+import { ChatsRepository } from "@modules/websocket/infra/prisma/repositories/ChatsRepository";
+import { ConnectionsRepository } from "@modules/websocket/infra/prisma/repositories/ConnectionsRepository";
+import { IChatRoomsRepository } from "@modules/websocket/repositories/IChatRoomsRepository";
+import { IChatsRepository } from "@modules/websocket/repositories/IChatsRepository";
+import { IConnectionsRepository } from "@modules/websocket/repositories/IConnectionsRepository";
 
 import { AssessmentsRepository } from "@modules/assessments/infra/prisma/repositories/AssessmentsRepository";
 import { IAssessmentsRepository } from "@modules/assessments/repositories/IAssessmentsRepository";

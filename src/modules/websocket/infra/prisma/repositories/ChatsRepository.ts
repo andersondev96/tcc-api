@@ -1,6 +1,6 @@
 
-import { ICreateChatDTO } from "websocket/dtos/ICreateChatDTO";
-import { IChatsRepository } from "websocket/repositories/IChatsRepository";
+import { ICreateChatDTO } from "@modules/websocket/dtos/ICreateChatDTO";
+import { IChatsRepository } from "@modules/websocket/repositories/IChatsRepository";
 
 import { prisma } from "@database/prisma";
 

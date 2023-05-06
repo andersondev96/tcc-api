@@ -1,4 +1,4 @@
-import { Chat } from "websocket/infra/prisma/entities/Chat";
+import { Chat } from "@modules/websocket/infra/prisma/entities/Chat";
 
 export interface ICreateChatRoomDTO {
   id?: string;

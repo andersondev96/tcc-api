@@ -1,5 +1,5 @@
 
-import { IChatRoomsRepository } from "websocket/repositories/IChatRoomsRepository";
+import { IChatRoomsRepository } from "@modules/websocket/repositories/IChatRoomsRepository";
 
 import { prisma } from "@database/prisma";
 
