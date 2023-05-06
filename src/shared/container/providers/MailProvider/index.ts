@@ -4,7 +4,7 @@ import { SESMailProvider } from "./implementations/SESMailProvider";
 import { IMailProvider } from "./models/IMailProvider";
 
 const mailProvider = {
-  local: container.resolve(EtherealMailProvider),
+  ethereal: container.resolve(EtherealMailProvider),
   ses: container.resolve(SESMailProvider),
 }
 
