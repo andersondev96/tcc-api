@@ -7,6 +7,7 @@ import { FindUserByEntrepreneurController } from "@modules/entrepreneurs/infra/h
 import { userValidator } from "@modules/users/validator/UserValidator";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
+import { updateUserValidator } from "@modules/users/validator/UpdateUserValidator";
 import { CreateUsersController } from "../controllers/CreateUsersController";
 import { DeleteUserController } from "../controllers/DeleteUserController";
 import { FindByUserIdController } from "../controllers/FindByUserIdController";
@@ -35,7 +36,7 @@ usersRouter.get("/entrepreneur", ensureAuthenticated, findUserByEntrepreneurCont
 usersRouter.get("/favorites", ensureAuthenticated, listFavoritesController.handle);
 usersRouter.get("/favorite/:table_id", ensureAuthenticated, findFavoriteController.handle);
 usersRouter.delete("/", ensureAuthenticated, deleteUserController.handle);
-usersRouter.put("/", ensureAuthenticated, celebrate(userValidator), updateUserController.handle);
+usersRouter.put("/", ensureAuthenticated, celebrate(updateUserValidator), updateUserController.handle);
 usersRouter.patch(
   "/avatar",
   ensureAuthenticated,

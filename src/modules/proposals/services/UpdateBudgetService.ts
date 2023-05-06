@@ -48,7 +48,7 @@ export class UpdateBudgetService {
       installments
     });
 
-    await this.proposalRepository.updateStatus(budget.proposal_id, "Budget update (Awaiting response)");
+    await this.proposalRepository.updateStatus(budget.proposal_id, "Orçamento atualizado (Aguardando resposta)");
 
     const returnBudget = {
       ...budget,

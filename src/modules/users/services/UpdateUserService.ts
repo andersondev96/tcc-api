@@ -10,7 +10,7 @@ interface IRequest {
   id?: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
 @injectable()
@@ -34,6 +34,21 @@ export class UpdateUserService {
 
     if (emailExists && emailExists.id !== id) {
       throw new AppError("Email address already used");
+    }
+
+    if (!password) {
+      const user = await this.userRepository.update({
+        ...userExists,
+        name,
+        email,
+      });
+
+      return {
+        ...user,
+        avatar: user.avatar
+          ? `${process.env.APP_API_URL}/avatar/${user.avatar}`
+          : null
+      };
     }
 
     const hashedPassword = await this.hashProvider.generateHash(password);
