@@ -27,14 +27,20 @@ export class FindAssessmentsByServicesService {
     const assessments = await this.assessmentRepository.findAssessments(service_id);
 
     const assessmentsUserAvatar = assessments.map((assessment) => {
+      if (!assessment.user) {
+        return assessment;
+      }
+
+      const userWithAvatar = {
+        ...assessment.user,
+        avatar: assessment.user.avatar
+          ? `${process.env.APP_API_URL}/avatar/${assessment.user.avatar}`
+          : undefined
+      }
+
       return {
         ...assessment,
-        user: {
-          ...assessment.user,
-          avatar: assessment.user.avatar
-            ? `${process.env.APP_API_URL}/avatar/${assessment.user.avatar}`
-            : undefined
-        }
+        user: userWithAvatar
       }
     });
 

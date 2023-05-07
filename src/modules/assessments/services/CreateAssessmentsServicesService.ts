@@ -44,19 +44,21 @@ export class CreateAssessmentsServicesService {
 
       const servicesAssessment = await this.assessmentRepository.findAssessments(service.id);
 
-      const totStars = servicesAssessment.reduce((sum, current) => sum + current.stars, 0);
+      const totalStars = servicesAssessment.reduce((sum, current) => sum + current.stars, 0);
 
-      service.stars = Math.trunc((totStars / (servicesAssessment.length)));
+      const averageStars = Math.trunc((totalStars / (servicesAssessment.length)));
 
-      await this.serviceRepository.updateStars(service.id, service.stars);
+      await this.serviceRepository.updateStars(service.id, averageStars);
 
-      return {
+      const updatedAssessment = {
         ...assessment,
         user: {
           ...user,
           avatar: user.avatar ? `${process.env.APP_API_URL}/avatar/${user.avatar}` : undefined
         }
-      };
+      }
+
+      return updatedAssessment;
     }
   }
 }

@@ -53,19 +53,22 @@ export class CreateAssessmentsCompanyService {
       });
 
       const companiesAssessment = await this.assessmentRepository.findAssessments(company.id);
-      const totStars = companiesAssessment.reduce((sum, current) => sum + current.stars, 0);
 
-      company.stars = Math.trunc((totStars / (companiesAssessment.length)));
+      const totalStars = companiesAssessment.reduce((sum, current) => sum + current.stars, 0);
 
-      await this.companyRepository.updateStars(company.id, company.stars);
+      const averageStars = Math.trunc((totalStars / (companiesAssessment.length)));
 
-      return {
+      await this.companyRepository.updateStars(company.id, averageStars);
+
+      const updatedAssessment = {
         ...assessment,
         user: {
           ...user,
           avatar: user.avatar ? `${process.env.APP_API_URL}/avatar/${user.avatar}` : undefined
         }
-      };
+      }
+
+      return updatedAssessment;
     }
 
   }

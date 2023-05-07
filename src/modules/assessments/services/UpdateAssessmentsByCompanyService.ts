@@ -46,12 +46,12 @@ export class UpdateAssessmentsByCompanyService {
     });
 
     const companiesAssessment = await this.assessmentRepository.findAssessments(findAssessment.table_id);
-    const totStars = companiesAssessment.reduce((sum, current) => sum + current.stars, 0);
+    const totalStars = companiesAssessment.reduce((sum, current) => sum + current.stars, 0);
 
 
-    company.stars = Math.trunc((totStars / (companiesAssessment.length)));
+    const averageStars = Math.trunc((totalStars / (companiesAssessment.length)));
 
-    await this.companyRepository.updateStars(company.id, company.stars);
+    await this.companyRepository.updateStars(company.id, averageStars);
 
     return assessment;
 

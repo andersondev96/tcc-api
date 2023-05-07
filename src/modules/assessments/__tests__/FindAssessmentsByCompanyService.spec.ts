@@ -37,7 +37,8 @@ describe("FindAssessmentsByCompanyService", () => {
     const user = await fakeUserRepository.create({
       name: "John Doe",
       email: "john@example.com",
-      password: "1234561"
+      password: "1234561",
+      avatar: "image_url.png"
     });
 
     const contact = await fakeContactRepository.create({
