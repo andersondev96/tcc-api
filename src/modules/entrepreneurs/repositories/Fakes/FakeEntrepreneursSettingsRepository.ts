@@ -26,6 +26,12 @@ export class FakeEntrepreneursSettingsRepository implements IEntrepreneursSettin
     return entrepreneurSettings;
   }
 
+  public async findByCompany(company_id: string): Promise<EntrepreneurSettings> {
+    const entrepreneurSettings = this.entrepreneursSettings.find(settings => settings.entrepreneur.company_id === company_id);
+
+    return entrepreneurSettings;
+  }
+
   public async update(data: ICreateEntrepreneurSettingsDTO): Promise<EntrepreneurSettings> {
     const index = this.entrepreneursSettings.findIndex(settings => settings.id === data.id);
 

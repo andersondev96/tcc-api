@@ -74,9 +74,6 @@ describe("ShowSettingEntrepreneurUserService", () => {
 
     const entrepreneurSettings = await fakeEntrepreneurSettingsRepository.create({
       entrepreneur_id: entrepreneur.id,
-      service_name_color: "green-400",
-      service_price_color: "gray-200",
-      card_color: "white",
       highlight_services_quantity: 5,
       online_budget: true,
       online_chat: false,

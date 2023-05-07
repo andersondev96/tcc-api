@@ -46,11 +46,11 @@ export class UpdateEntrepreneursSettingsService {
 
     const settingsEntrepreneur = await this.entrepreneurSettingsRepository.findByEntrepreneur(entrepreneur_id);
 
-    const sevicesByCompany = await this.serviceRepository.listServicesByCompany(
+    const servicesByCompany = await this.serviceRepository.listServicesByCompany(
       entrepreneur.company_id
     );
 
-    const contHighlightsService = sevicesByCompany.reduce((acc, service) => {
+    const contHighlightsService = servicesByCompany.reduce((acc, service) => {
       if (service.highlight_service === true) {
         return acc + 1;
       } else {
