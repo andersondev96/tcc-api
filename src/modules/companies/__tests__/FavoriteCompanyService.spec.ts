@@ -3,6 +3,7 @@ import { ICategoriesRepository } from "@modules/categories/repositories/ICategor
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 
+import { AppError } from "@shared/errors/AppError";
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
@@ -61,5 +62,18 @@ describe("FavoriteCompanyService", () => {
 
     expect(favoriteCompany.favorites).toEqual(1);
     expect(favoritesUser).toEqual[favoriteCompany.id];
+  });
+
+  it("Should not be able to favorite a company if company not found", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john@example.com",
+      password: "123456"
+    });
+
+    await expect(favoriteCompanyService.execute(
+      user.id,
+      "company-not-found"
+    )).rejects.toBeInstanceOf(AppError);
   });
 });

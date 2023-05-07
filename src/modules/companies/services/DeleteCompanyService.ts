@@ -43,7 +43,7 @@ export class DeleteCompanyService {
     const schedules = await this.scheduleRepository.findSchedulesByCompany(company_id);
 
     if (schedules) {
-      await this.scheduleRepository.deleteAllSchedules(company_id);
+      await this.scheduleRepository.delete(company_id);
     }
 
     const address = await this.addressRepository.findAddressByCompany(company_id);
