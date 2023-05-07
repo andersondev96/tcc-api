@@ -35,7 +35,16 @@ describe("ShowCustomerByUserService", () => {
 
     const showCustomer = await showCustomerByUserService.execute(user.id);
 
-    expect(showCustomer).toEqual(customer);
+    expect(showCustomer).toEqual({
+      ...customer,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        avatar: undefined,
+      }
+    });
   });
 
   it("Should not be able to show a customer if user not found", async () => {

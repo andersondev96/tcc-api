@@ -6,7 +6,6 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
-import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
 import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCustomersCompaniesRepository } from "../repositories/fakes/FakeCustomersCompaniesRepository";
 import { FakeCustomersRepository } from "../repositories/fakes/FakeCustomersRepository";
@@ -28,7 +27,6 @@ describe("ListCustomersByCompanyService", () => {
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeCompanyRepository = new FakeCompaniesRepository();
-    fakeCategoryRepository = new FakeCategoriesRepository();
     fakeCustomerRepository = new FakeCustomersRepository();
     fakeCustomerCompanyRepository = new FakeCustomersCompaniesRepository();
     listCustomersByCompanyService = new ListCustomersByCompanyService(
@@ -74,25 +72,20 @@ describe("ListCustomersByCompanyService", () => {
       customer_id: customer.id
     });
 
-    const { customers, totalResults } = await listCustomersByCompanyService.execute({
+    const listCustomersByCompany = await listCustomersByCompanyService.execute({
       company_id: company.id,
       page: 1,
       perPage: 10
-    }
-    );
+    });
 
-    expect(customers).toEqual(customerCompany);
-
-    expect(totalResults).toEqual(1);
+    expect(listCustomersByCompany).toEqual([customerCompany]);
   });
 
   it("Should not be able to list customers by company if company not found", async () => {
-    await expect(
-      listCustomersByCompanyService.execute({
-        company_id: "company-not-exist",
-        page: 1,
-        perPage: 10
-      })
-    ).rejects.toBeInstanceOf(AppError);
+    await expect({
+      company_id: "company-not-exist",
+      page: 1,
+      perPage: 10
+    }).rejects.toBeInstanceOf(AppError);
   });
 });

@@ -52,9 +52,9 @@ export class ListCustomersByCompanyService {
         customer: {
           ...customerCompany.customer,
           user: {
-            ...customerCompany.customer.user,
-            avatar: customerCompany.customer.user.avatar
-              ? `${process.env.APP_API_URL}/avatar/${customerCompany.customer.user.avatar}`
+            ...customerCompany.customer?.user,
+            avatar: customerCompany.customer?.user?.avatar
+              ? `${process.env.APP_API_URL}/avatar/${customerCompany.customer?.user?.avatar}`
               : undefined
           }
         }
