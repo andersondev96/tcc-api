@@ -9,6 +9,7 @@ import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 
+import { AppError } from "@shared/errors/AppError";
 import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 import { UpdateServiceImageService } from "../services/UpdateServiceImageService";
@@ -80,5 +81,14 @@ describe("UpdateServiceImageService", () => {
 
     expect(service.image_url).toEqual("image_test.png");
 
+  });
+
+  it("Should not be able to update service image if service not found", async () => {
+
+    expect(updateServiceImageService.execute({
+      service_id: "service-not-found",
+      image_url: "image_test.png"
+    })
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

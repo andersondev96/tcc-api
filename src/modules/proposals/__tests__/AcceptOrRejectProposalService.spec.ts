@@ -10,6 +10,12 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { FakeEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursSettingsRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
+import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes/FakeMailProvider";
+import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { FakeBudgetRepository } from "../repositories/fakes/FakeBudgetsRepository";
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { IBudgetsRepository } from "../repositories/IBudgetsRepository";
@@ -22,7 +28,10 @@ let fakeCompanyRepository: ICompaniesRepository;
 let fakeCategoryRepository: ICategoriesRepository;
 let fakeCustomerRepository: ICustomersRepository;
 let fakeProposalRepository: IProposalsRepository;
+let fakeEntrepreneurRepository: IEntrepreneursRepository;
+let fakeEntrepreneurSettingsRepository: IEntrepreneursSettingsRepository;
 let fakeBudgetRepository: IBudgetsRepository;
+let fakeMailProvider: IMailProvider;
 let acceptOrRejectProposalService: AcceptOrRejectProposalService;
 
 describe("AcceptOrRejectProposalService", () => {
@@ -32,11 +41,17 @@ describe("AcceptOrRejectProposalService", () => {
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeCategoryRepository = new FakeCategoriesRepository();
     fakeCustomerRepository = new FakeCustomersRepository();
+    fakeEntrepreneurRepository = new FakeEntrepreneursRepository();
+    fakeEntrepreneurSettingsRepository = new FakeEntrepreneursSettingsRepository();
+    fakeMailProvider = new FakeMailProvider();
 
     fakeProposalRepository = new FakeProposalsRepository();
     fakeBudgetRepository = new FakeBudgetRepository();
     acceptOrRejectProposalService = new AcceptOrRejectProposalService(
-      fakeProposalRepository
+      fakeProposalRepository,
+      fakeBudgetRepository,
+      fakeEntrepreneurSettingsRepository,
+      fakeMailProvider
     );
   });
 
@@ -66,6 +81,16 @@ describe("AcceptOrRejectProposalService", () => {
       physical_localization: false,
       contact_id: contact.id,
       user_id: user.id
+    });
+
+    const entrepreneur = await fakeEntrepreneurRepository.create({
+      user_id: user.id,
+      company_id: company.id,
+    });
+
+    fakeEntrepreneurSettingsRepository.create({
+      entrepreneur_id: entrepreneur.id,
+      email_notification: true
     });
 
     const customer = await fakeCustomerRepository.create({

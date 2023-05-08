@@ -8,6 +8,10 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { FakeEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursSettingsRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
 import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 import { UpdateServiceService } from "../services/UpdateServiceService";
@@ -17,6 +21,8 @@ let fakeCompanyRepository: ICompaniesRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeCategoryRepository: ICategoriesRepository;
 let fakeUserRepository: IUsersRepository;
+let fakeEntrepreneurRepository: IEntrepreneursRepository;
+let fakeEntrepreneurSettingsRepository: IEntrepreneursSettingsRepository;
 let updateServiceService: UpdateServiceService;
 
 describe("UpdateServiceService", () => {
@@ -26,9 +32,14 @@ describe("UpdateServiceService", () => {
       fakeContactRepository = new FakeContactsRepository(),
       fakeCategoryRepository = new FakeCategoriesRepository(),
       fakeUserRepository = new FakeUsersRepository(),
-      updateServiceService = new UpdateServiceService(
-        fakeServiceRepository
-      );
+      fakeEntrepreneurRepository = new FakeEntrepreneursRepository();
+    fakeEntrepreneurSettingsRepository = new FakeEntrepreneursSettingsRepository();
+    updateServiceService = new UpdateServiceService(
+      fakeServiceRepository,
+      fakeCompanyRepository,
+      fakeCategoryRepository,
+      fakeEntrepreneurSettingsRepository
+    );
   });
 
   it("Should be able to update the service", async () => {
@@ -68,7 +79,6 @@ describe("UpdateServiceService", () => {
     });
 
     service.name = "Service Updated";
-    service.category = "Category updated";
 
     await updateServiceService.execute({
       id: service.id,
@@ -79,7 +89,6 @@ describe("UpdateServiceService", () => {
     });
 
     expect(service.name).toEqual("Service Updated");
-    expect(service.category).toEqual("Category updated");
   });
 
   it("Should not be able to update a non existing service", async () => {

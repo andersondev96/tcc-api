@@ -12,6 +12,12 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { FakeEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursSettingsRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
+import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes/FakeMailProvider";
+import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
 import { CreateProposalService } from "../services/CreateProposalService";
@@ -23,6 +29,9 @@ let fakeCategoryRepository: ICategoriesRepository;
 let fakeCustomerCompanyRepository: ICustomersCompaniesRepository;
 let fakeCustomerRepository: ICustomersRepository;
 let fakeProposalRepository: IProposalsRepository;
+let fakeEntrepreneurRepository: IEntrepreneursRepository;
+let fakeEntrepreneurSettingsRepository: IEntrepreneursSettingsRepository;
+let fakeMailProvider: IMailProvider;
 let createProposalService: CreateProposalService;
 
 describe("CreateProposalService", () => {
@@ -34,12 +43,17 @@ describe("CreateProposalService", () => {
     fakeCustomerCompanyRepository = new FakeCustomersCompaniesRepository();
     fakeCategoryRepository = new FakeCategoriesRepository();
     fakeProposalRepository = new FakeProposalsRepository();
+    fakeEntrepreneurRepository = new FakeEntrepreneursRepository();
+    fakeEntrepreneurSettingsRepository = new FakeEntrepreneursSettingsRepository();
+    fakeMailProvider = new FakeMailProvider();
     createProposalService = new CreateProposalService(
       fakeUserRepository,
       fakeCompanyRepository,
       fakeCustomerRepository,
       fakeCustomerCompanyRepository,
-      fakeProposalRepository
+      fakeEntrepreneurSettingsRepository,
+      fakeProposalRepository,
+      fakeMailProvider
     );
   });
 
@@ -71,7 +85,17 @@ describe("CreateProposalService", () => {
       user_id: user.id
     });
 
-    await fakeCustomerRepository.create({
+    const entrepreneur = await fakeEntrepreneurRepository.create({
+      user_id: user.id,
+      company_id: company.id,
+    });
+
+    const settings = await fakeEntrepreneurSettingsRepository.create({
+      entrepreneur_id: entrepreneur.id,
+      email_notification: true
+    });
+
+    const customer = await fakeCustomerRepository.create({
       user_id: user.id
     });
 
@@ -81,7 +105,7 @@ describe("CreateProposalService", () => {
       time: new Date(),
       description: "Description Example",
       telephone: "(11) 11111111",
-      company_id: company.id,
+      company_id: entrepreneur.company_id,
       user_id: user.id
     });
 

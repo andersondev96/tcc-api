@@ -10,6 +10,10 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { FakeDateProvider } from "@shared/container/providers/DateProvider/Fakes/FakeDateProvider";
+import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
+import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes/FakeMailProvider";
+import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { FakeBudgetRepository } from "../repositories/fakes/FakeBudgetsRepository";
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { IBudgetsRepository } from "../repositories/IBudgetsRepository";
@@ -24,6 +28,8 @@ let fakeCategoryRepository: ICategoriesRepository;
 let fakeCustomerRepository: ICustomersRepository;
 let fakeProposalRepository: IProposalsRepository;
 let fakeBudgetRepository: IBudgetsRepository;
+let fakeDatePrivider: IDateProvider;
+let fakeMailProvider: IMailProvider;
 let createBudgetService: CreateBudgetService;
 
 describe("Create Budget Service", () => {
@@ -34,10 +40,14 @@ describe("Create Budget Service", () => {
     fakeCategoryRepository = new FakeCategoriesRepository();
     fakeCustomerRepository = new FakeCustomersRepository();
     fakeProposalRepository = new FakeProposalsRepository();
+    fakeDatePrivider = new FakeDateProvider();
+    fakeMailProvider = new FakeMailProvider();
     fakeBudgetRepository = new FakeBudgetRepository();
     createBudgetService = new CreateBudgetService(
       fakeProposalRepository,
-      fakeBudgetRepository
+      fakeBudgetRepository,
+      fakeDatePrivider,
+      fakeMailProvider
     );
   });
 

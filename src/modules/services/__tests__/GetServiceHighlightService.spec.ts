@@ -6,7 +6,6 @@ import { ICompaniesRepository } from "@modules/companies/repositories/ICompanies
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
 
 import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";

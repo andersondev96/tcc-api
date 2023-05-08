@@ -76,16 +76,18 @@ describe("FilterProposalService", () => {
       customer_id: customer.id
     });
 
-    const filterProposal = await filterProposalsService.execute(company.id, "John Doe");
+    const filterProposal = await filterProposalsService.execute(company.id, 1, 5);
 
-    expect(filterProposal).toEqual(proposal);
+    expect(filterProposal.totalResults).toBeGreaterThan(0);
+    expect(filterProposal.proposals[0]).toEqual(expect.objectContaining(proposal));
+
 
   });
 
   it("Should not be able to filter proposals if company not found", async () => {
 
     await expect(
-      filterProposalsService.execute("company-not-exist", "name", "objective")
+      filterProposalsService.execute("company-not-exist", 1, 5, "name", "objective")
     ).rejects.toBeInstanceOf(AppError);
   });
 });

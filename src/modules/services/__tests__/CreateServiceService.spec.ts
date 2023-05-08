@@ -8,6 +8,10 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { FakeEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursSettingsRepository";
+import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
 import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 import { CreateServiceService } from "../services/CreateServiceService";
@@ -16,6 +20,8 @@ let fakeServiceRepository: IServicesRepository;
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeCategoryRepository: ICategoriesRepository;
 let fakeUserRepository: IUsersRepository;
+let fakeEntrepreneurRepository: IEntrepreneursRepository;
+let fakeEntrepreneurSettingsRepository: IEntrepreneursSettingsRepository;
 let fakeContactRepository: IContactsRepository;
 let createServiceService: CreateServiceService;
 
@@ -26,10 +32,13 @@ describe("CreateServiceService", () => {
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeCategoryRepository = new FakeCategoriesRepository();
     fakeContactRepository = new FakeContactsRepository();
+    fakeEntrepreneurRepository = new FakeEntrepreneursRepository();
+    fakeEntrepreneurSettingsRepository = new FakeEntrepreneursSettingsRepository();
     createServiceService = new CreateServiceService(
       fakeServiceRepository,
       fakeCategoryRepository,
-      fakeCompanyRepository
+      fakeCompanyRepository,
+      fakeEntrepreneurSettingsRepository
     );
   });
 

@@ -67,7 +67,8 @@ describe("FindServiceByCompanyService", () => {
       price: 20.0,
       category: "Subcategory category 1",
       image_url: "image_example.png",
-      company_id: company.id
+      company_id: company.id,
+      highlight_service: true
     });
 
     await fakeServiceRepository.create({
@@ -81,10 +82,17 @@ describe("FindServiceByCompanyService", () => {
     const findService = await findServiceByCompanyService.execute({
       company_id: company.id,
       name: "Service One",
-      category: "Subcategory category One"
+      category: "Subcategory category One",
+      page: 1,
+      perPage: 5
     });
 
-    expect(findService).toEqual([service]);
+    console.log(findService);
+
+    expect(findService).toEqual({
+      services: [service],
+      totalResults: 1
+    });
 
   });
 
