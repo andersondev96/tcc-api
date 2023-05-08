@@ -77,8 +77,8 @@ describe("FindFavoriteService", () => {
     const favoriteCompany = await findFavoriteService.execute(user.id, company.id);
     const favoriteService = await findFavoriteService.execute(user.id, service.id);
 
-    expect(favoriteCompany).toEqual(company);
-    expect(favoriteService).toEqual(service);
+    expect(favoriteCompany).toEqual([company.id]);
+    expect(favoriteService).toEqual([service.id]);
 
   });
 

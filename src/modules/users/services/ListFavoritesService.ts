@@ -53,7 +53,7 @@ export class ListFavoritesService {
       .map(({ id, name, ImageCompany, favorites }) => ({
         id,
         name,
-        image: ImageCompany.length > 0 ? ImageCompany[0].image_url : null,
+        image: ImageCompany && ImageCompany.length > 0 ? ImageCompany[0].image_url : null,
         favorites
       }));
 

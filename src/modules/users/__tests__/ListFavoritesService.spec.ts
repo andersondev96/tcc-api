@@ -77,7 +77,10 @@ describe("ListFavoritesService", () => {
 
     const favorites = await listFavoritesService.execute(user.id);
 
-    expect(favorites).toEqual([company, service]);
+    expect(favorites).toEqual({
+      companies: [company],
+      services: [service]
+    });
 
   });
 });
