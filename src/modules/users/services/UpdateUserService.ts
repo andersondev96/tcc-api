@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
 
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { User } from "../infra/prisma/entities/User";
 import { UsersRepository } from "../infra/prisma/repositories/UsersRepository";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
@@ -64,9 +65,7 @@ export class UpdateUserService {
 
     return {
       ...user,
-      avatar: user.avatar
-        ? `${process.env.APP_API_URL}/avatar/${user.avatar}`
-        : null
+      avatar: getUserAvatarUrl(user, "avatar")
     };
   }
 }

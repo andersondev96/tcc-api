@@ -64,7 +64,11 @@ export class CreateAssessmentsCompanyService {
         ...assessment,
         user: {
           ...user,
-          avatar: user.avatar ? `${process.env.APP_API_URL}/avatar/${user.avatar}` : undefined
+          avatar: user.avatar
+            ? `${process.env.disk === "local"
+              ? process.env.APP_API_URL
+              : process.env.AWS_BUCKET_URL}/avatar/${user.avatar
+            }` : undefined
         }
       }
 

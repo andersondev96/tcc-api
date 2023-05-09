@@ -5,6 +5,7 @@ import authConfig from "@config/auth";
 import { AppError } from "@shared/errors/AppError";
 
 import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { IUsersRepository } from "../repositories/IUsersRepository";
 import { IUsersTokenRepository } from "../repositories/IUsersTokenRepository";
@@ -85,9 +86,7 @@ export class AuthenticateUserService {
       user: {
         name: user.name,
         email: user.email,
-        avatar: user.avatar
-          ? `${process.env.APP_API_URL}/avatar/${user.avatar}`
-          : null
+        avatar: getUserAvatarUrl(user, "avatar")
       },
       refresh_token
     };

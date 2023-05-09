@@ -63,7 +63,10 @@ export class ListFavoritesService {
         id,
         name,
         description,
-        image_url: image_url ? `${process.env.APP_API_URL}/service/${image_url}` : null,
+        image_url: image_url ?
+          `${process.env.disk === "local"
+            ? process.env.APP_API_URL
+            : process.env.AWS_BUCKET_URL}/service/${image_url}` : undefined,
         favorites
       }));
 
