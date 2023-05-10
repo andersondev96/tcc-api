@@ -5,6 +5,7 @@ import { ICompaniesRepository } from "@modules/companies/repositories/ICompanies
 import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getServiceImageUrl } from "@shared/utils/getFilesUrl";
 import { Service } from "../infra/prisma/entities/Service";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
@@ -87,9 +88,7 @@ export class UpdateServiceService {
 
         return {
           ...serviceUpdate,
-          image_url: serviceUpdate.image_url
-            ? `${process.env.APP_API_URL}/service/${serviceUpdate.image_url}`
-            : undefined
+          image_url: getServiceImageUrl(service, "service")
         };
       }
     }

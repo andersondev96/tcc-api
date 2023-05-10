@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getServiceImageUrl } from "@shared/utils/getFilesUrl";
 import { Service } from "../infra/prisma/entities/Service";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
@@ -37,9 +38,7 @@ export class GetFavoritesService {
 
     return {
       ...favoriteService,
-      image_url: favoriteService.image_url
-        ? `${process.env.APP_API_URL}/service/${favoriteService.image_url}`
-        : undefined
+      image_url: getServiceImageUrl(service, "service")
     };
   }
 }

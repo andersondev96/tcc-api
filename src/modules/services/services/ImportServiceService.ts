@@ -5,6 +5,7 @@ import { ICategoriesRepository } from "@modules/categories/repositories/ICategor
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getServiceImageUrl } from "@shared/utils/getFilesUrl";
 import { Service } from "../infra/prisma/entities/Service";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
@@ -56,9 +57,7 @@ export class ImportServiceService {
     const returnServices = importedServices.map((service) => {
       return {
         ...service,
-        image_url: service.image_url
-          ? `${process.env.APP_API_URL}/service/${service.image_url}`
-          : undefined
+        image_url: getServiceImageUrl(service, "service")
       }
     })
 

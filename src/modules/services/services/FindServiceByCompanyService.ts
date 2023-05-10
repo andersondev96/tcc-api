@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getServiceImageUrl } from "@shared/utils/getFilesUrl";
 import { Service } from "../infra/prisma/entities/Service";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 
@@ -53,7 +54,7 @@ export class FindServiceByCompanyService {
     const servicesByPage = services.slice(start, end);
 
     services.map(service => (
-      service.image_url = service.image_url && `${process.env.APP_API_URL}/service/${service.image_url}`
+      service.image_url = getServiceImageUrl(service, "service")
     ));
 
     return {

@@ -1,9 +1,5 @@
+import { Service } from "@modules/services/infra/prisma/entities/Service";
 import { User } from "@modules/users/infra/prisma/entities/User";
-
-type ImageObject = {
-  image_url?: string;
-  avatar: string;
-};
 
 export function getUserAvatarUrl(objectWithImage: User, segment: string): string {
 
@@ -18,9 +14,9 @@ export function getUserAvatarUrl(objectWithImage: User, segment: string): string
   return `${baseUrl}/${segment}/${objectWithImage.avatar}`;
 }
 
-export function getServiceImageUrl(objectWithImage: User, segment: string): string {
+export function getServiceImageUrl(objectWithImage: Service, segment: string): string {
 
-  if (!objectWithImage.avatar) {
+  if (!objectWithImage.image_url) {
     return undefined;
   }
 
@@ -28,5 +24,5 @@ export function getServiceImageUrl(objectWithImage: User, segment: string): stri
     ? process.env.APP_API_URL
     : process.env.AWS_BUCKET_URL;
 
-  return `${baseUrl}/${segment}/${objectWithImage.avatar}`;
+  return `${baseUrl}/${segment}/${objectWithImage.image_url}`;
 }
