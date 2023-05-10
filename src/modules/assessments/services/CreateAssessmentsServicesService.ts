@@ -4,6 +4,7 @@ import { IServicesRepository } from "@modules/services/repositories/IServicesRep
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { Assessment } from "../infra/prisma/entities/Assessment";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
 
@@ -54,7 +55,7 @@ export class CreateAssessmentsServicesService {
         ...assessment,
         user: {
           ...user,
-          avatar: user.avatar ? `${process.env.APP_API_URL}/avatar/${user.avatar}` : undefined
+          avatar: getUserAvatarUrl(user, "avatar")
         }
       }
 

@@ -5,6 +5,7 @@ import { User } from "@modules/users/infra/prisma/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { Assessment } from "../infra/prisma/entities/Assessment";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
 
@@ -64,11 +65,7 @@ export class CreateAssessmentsCompanyService {
         ...assessment,
         user: {
           ...user,
-          avatar: user.avatar
-            ? `${process.env.disk === "local"
-              ? process.env.APP_API_URL
-              : process.env.AWS_BUCKET_URL}/avatar/${user.avatar
-            }` : undefined
+          avatar: getUserAvatarUrl(user, "avatar")
         }
       }
 

@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { Assessment } from "../infra/prisma/entities/Assessment";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
 
@@ -33,9 +34,7 @@ export class FindAssessmentsByServicesService {
 
       const userWithAvatar = {
         ...assessment.user,
-        avatar: assessment.user.avatar
-          ? `${process.env.APP_API_URL}/avatar/${assessment.user.avatar}`
-          : undefined
+        avatar: getUserAvatarUrl(assessment.user, "avatar")
       }
 
       return {
