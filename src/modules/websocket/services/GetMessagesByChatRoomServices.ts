@@ -1,5 +1,6 @@
 import { Chat } from "@modules/websocket/infra/prisma/entities/Chat";
 import { IChatsRepository } from "@modules/websocket/repositories/IChatsRepository";
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -22,9 +23,7 @@ export class GetMessagesByChatRoomService {
           ...message.connection,
           user: {
             ...message.connection.user,
-            avatar: message.connection.user.avatar
-              ? `${process.env.APP_API_URL}/avatar/${message.connection.user.avatar}`
-              : undefined
+            avatar: getUserAvatarUrl(message.connection.user, "avatar")
           }
         }
 

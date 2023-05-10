@@ -1,5 +1,6 @@
 import { Chat } from "@modules/websocket/infra/prisma/entities/Chat";
 import { IChatsRepository } from "@modules/websocket/repositories/IChatsRepository";
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { inject, injectable } from "tsyringe";
 
 interface IResponse {
@@ -31,9 +32,7 @@ export class CreateChatService {
         ...chat.connection,
         user: {
           ...chat.connection.user,
-          avatar: chat.connection.user.avatar
-            ? `${process.env.APP_API_URL}/avatar/${chat.connection.user.avatar}`
-            : undefined
+          avatar: getUserAvatarUrl(chat.connection.user, "avatar")
         }
       }
     };

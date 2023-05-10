@@ -1,5 +1,6 @@
 import { Connection } from "@modules/websocket/infra/prisma/entities/Connection";
 import { IConnectionsRepository } from "@modules/websocket/repositories/IConnectionsRepository";
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -16,9 +17,7 @@ class GetAllConnectionsService {
         ...connection,
         user: {
           ...connection.user,
-          avatar: connection.user.avatar
-            ? `${process.env.APP_API_URL}/avatar/${connection.user.avatar}`
-            : undefined
+          avatar: getUserAvatarUrl(connection.user, "avatar")
         }
       }
     })
