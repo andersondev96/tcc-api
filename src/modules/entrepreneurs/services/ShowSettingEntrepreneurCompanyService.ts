@@ -4,6 +4,7 @@ import { ICompaniesRepository } from "@modules/companies/repositories/ICompanies
 import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getCompanyLogo } from "@shared/utils/getFilesUrl";
 import { EntrepreneurSettings } from "../infra/prisma/entities/EntrepreneurSettings";
 import { IEntrepreneursSettingsRepository } from "../repositories/IEntrepreneursSettingsRepository";
 
@@ -36,9 +37,7 @@ export class ShowSettingEntrepreneurCompanyService {
 
     return {
       ...settings,
-      company_logo: settings.company_logo
-        ? `${process.env.APP_API_URL}/company_logo/${settings.company_logo}`
-        : undefined
+      company_logo: getCompanyLogo(settings, "company_logo")
     };
   }
 }

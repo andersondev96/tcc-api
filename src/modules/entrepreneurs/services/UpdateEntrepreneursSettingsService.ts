@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getCompanyLogo } from "@shared/utils/getFilesUrl";
 import { EntrepreneurSettings } from "../infra/prisma/entities/EntrepreneurSettings";
 import { IEntrepreneursRepository } from "../repositories/IEntrepreneursRepository";
 import { IEntrepreneursSettingsRepository } from "../repositories/IEntrepreneursSettingsRepository";
@@ -73,7 +74,7 @@ export class UpdateEntrepreneursSettingsService {
 
     return {
       ...entrepreneurSettings,
-      company_logo: `${process.env.APP_API_URL}/company_logo/${entrepreneurSettings.company_logo}`
+      company_logo: getCompanyLogo(entrepreneurSettings, "company_logo")
     };
 
   }

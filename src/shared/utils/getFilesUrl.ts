@@ -1,3 +1,4 @@
+import { EntrepreneurSettings } from "@modules/entrepreneurs/infra/prisma/entities/EntrepreneurSettings";
 import { Budget } from "@modules/proposals/infra/prisma/entities/Budget";
 import { Service } from "@modules/services/infra/prisma/entities/Service";
 import { User } from "@modules/users/infra/prisma/entities/User";
@@ -42,5 +43,20 @@ export function getBudgetFiles(objectWithFile: Budget, segment: string): string[
     return file.length > 0 ?
       `${baseUrl}/${segment}/${file}` : undefined
   }).filter(Boolean);
+
+}
+
+export function getCompanyLogo(objectLogoCompany: EntrepreneurSettings, segment: string): string {
+
+  if (!objectLogoCompany.company_logo) {
+    return undefined;
+  }
+
+  const baseUrl = process.env.disk === "local"
+    ? process.env.APP_API_URL
+    : process.env.AWS_BUCKET_URL;
+
+
+  return `${baseUrl}/${segment}/${objectLogoCompany.company_logo}`;
 
 }
