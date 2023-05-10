@@ -60,7 +60,9 @@ export class UpdateImagesCompanyService {
         return {
           id: null,
           image_name: imageString,
-          image_url: `http://localhost:3333/company/${imageString}`,
+          image_url: process.env.disk === "local"
+            ? `${process.env.APP_API_URL}/company/${imageString}`
+            : `${process.env.AWS_BUCKET_URL}/company/${imageString}`,
           company_id: company.id
         };
       }
@@ -68,7 +70,9 @@ export class UpdateImagesCompanyService {
       return {
         id: existingImage.id,
         image_name: imageString,
-        image_url: `http://localhost:3333/company/${imageString}`,
+        image_url: process.env.disk === "local"
+          ? `${process.env.APP_API_URL}/company/${imageString}`
+          : `${process.env.AWS_BUCKET_URL}/company/${imageString}`,
         company_id: company.id
       };
     });

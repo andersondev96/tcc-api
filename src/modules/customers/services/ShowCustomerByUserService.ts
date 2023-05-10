@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { Customer } from "../infra/prisma/entities/Customer";
 import { ICustomersRepository } from "../repositories/ICustomersRepository";
 
@@ -35,9 +36,7 @@ export class ShowCustomerByUserService {
       ...customer,
       user: {
         ...user,
-        avatar: user.avatar
-          ? `${process.env.APP_API_URL}/avatar/${customer.user.avatar}`
-          : undefined
+        avatar: getUserAvatarUrl(user, "avatar")
       }
     };
   }

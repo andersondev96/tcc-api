@@ -40,7 +40,9 @@ export class CreateImageCompanyService {
     images_name.map(async (image) => {
       await this.imageCompanyRepository.create({
         image_name: image,
-        image_url: `http://localhost:3333/company/${image}`,
+        image_url: process.env.disk === "local"
+          ? `${process.env.APP_API_URL}/company/${image}`
+          : `${process.env.AWS_BUCKET_URL}/company/${image}`,
         company_id
       });
 
