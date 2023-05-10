@@ -47,8 +47,6 @@ export class UpdateProposalService {
       company_id: proposalExists.company_id
     });
 
-    console.log(proposal.customer.user.name);
-
     if (proposal) {
       const settings = await this.entrepreneurSettingsRepository.findByCompany(proposal.company_id);
 

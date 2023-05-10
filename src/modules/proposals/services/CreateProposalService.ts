@@ -9,6 +9,7 @@ import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { Proposal } from "../infra/prisma/entities/Proposal";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
 
@@ -117,9 +118,7 @@ export class CreateProposalService {
           ...proposal.customer,
           user: {
             ...proposal.customer.user,
-            avatar: proposal.customer.user.avatar
-              ? `${process.env.APP_API_URL}/avatar/${proposal.customer.user.avatar}`
-              : undefined
+            avatar: getUserAvatarUrl(user, "avatar")
           }
         }
       };

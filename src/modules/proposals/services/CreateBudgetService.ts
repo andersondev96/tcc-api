@@ -6,6 +6,7 @@ import { IMailProvider } from "@shared/container/providers/MailProvider/models/I
 import { AppError } from "@shared/errors/AppError";
 
 import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
+import { getBudgetFiles } from "@shared/utils/getFilesUrl";
 import { Budget } from "../infra/prisma/entities/Budget";
 import { IBudgetsRepository } from "../repositories/IBudgetsRepository";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
@@ -93,11 +94,7 @@ export class CreateBudgetService {
 
     const returnBudget = {
       ...budget,
-      files: budget.files.map((file) => {
-        return file.length > 0
-          ? `${process.env.APP_API_URL}/budgets/${file}`
-          : undefined
-      })
+      files: getBudgetFiles(budget, "budget")
     }
 
 

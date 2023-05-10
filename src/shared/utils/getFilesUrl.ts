@@ -1,3 +1,4 @@
+import { Budget } from "@modules/proposals/infra/prisma/entities/Budget";
 import { Service } from "@modules/services/infra/prisma/entities/Service";
 import { User } from "@modules/users/infra/prisma/entities/User";
 
@@ -25,4 +26,21 @@ export function getServiceImageUrl(objectWithImage: Service, segment: string): s
     : process.env.AWS_BUCKET_URL;
 
   return `${baseUrl}/${segment}/${objectWithImage.image_url}`;
+}
+
+export function getBudgetFiles(objectWithFile: Budget, segment: string): string[] {
+
+  if (!objectWithFile.files) {
+    return [];
+  }
+
+  const baseUrl = process.env.disk === "local"
+    ? process.env.APP_API_URL
+    : process.env.AWS_BUCKET_URL;
+
+  return objectWithFile.files.map((file) => {
+    return file.length > 0 ?
+      `${baseUrl}/${segment}/${file}` : undefined
+  }).filter(Boolean);
+
 }
