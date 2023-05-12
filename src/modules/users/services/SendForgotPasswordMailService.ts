@@ -43,7 +43,9 @@ export class SendForgotPasswordMailService {
 
     const variables = {
       name: user.name,
-      link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`
+      link: process.env.APP_ENV === 'production'
+        ? `${process.env.APP_WEB_URL}/reset-password?token=${token}`
+        : `${process.env.APP_WEB_URL_PROD}/reset-password?token=${token}`
     };
 
     await this.mailProvider.sendMail(

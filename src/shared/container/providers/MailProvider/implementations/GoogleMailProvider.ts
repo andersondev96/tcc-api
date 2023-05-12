@@ -29,7 +29,7 @@ export class GoogleMailProvider implements IMailProvider {
 
     const message = await this.client.sendMail({
       to,
-      from: "Administrador <administrador@startbusinesshome.dev>",
+      from: "Administrador - Start Business <administrador@startbusinesshome.dev>",
       subject,
       html: templateHTML
     });
