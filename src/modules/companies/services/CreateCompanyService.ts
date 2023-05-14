@@ -7,6 +7,7 @@ import { getCEP } from "@shared/utils/getCEP";
 import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
 import { getAddressFromCoordinates, getCurrentLocalization } from "@shared/utils/getCurrentLocalization";
 
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { IEntrepreneursRepository } from "../../entrepreneurs/repositories/IEntrepreneursRepository";
 import { Company } from "../infra/prisma/entities/Company";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
@@ -42,25 +43,28 @@ interface IRequest {
 export class CreateCompanyService {
   constructor(
     @inject("CompaniesRepository")
-    private readonly companyRepository: ICompaniesRepository,
+    private companyRepository: ICompaniesRepository,
 
     @inject("CategoriesRepository")
-    private readonly categoryRepository: ICategoriesRepository,
+    private categoryRepository: ICategoriesRepository,
 
     @inject("UsersRepository")
-    private readonly userRepository: IUsersRepository,
+    private userRepository: IUsersRepository,
 
     @inject("ContactsRepository")
-    private readonly contactRepository: IContactsRepository,
+    private contactRepository: IContactsRepository,
 
     @inject("SchedulesRepository")
-    private readonly scheduleRepository: ISchedulesRepository,
+    private scheduleRepository: ISchedulesRepository,
 
     @inject("AddressesRepository")
-    private readonly addressRepository: IAddressesRepository,
+    private addressRepository: IAddressesRepository,
 
     @inject("EntrepreneursRepository")
-    private readonly entrepreneurRepository: IEntrepreneursRepository
+    private entrepreneurRepository: IEntrepreneursRepository,
+
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider,
 
   ) { }
 
@@ -193,6 +197,7 @@ export class CreateCompanyService {
         });
       }
 
+      await this.cacheProvider.invalidatePrefix(`companies-list`)
 
       return company;
     } catch (error) {
