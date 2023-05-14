@@ -9,7 +9,6 @@ import { IServicesRepository } from "../repositories/IServicesRepository";
 
 interface IRequest {
   company_id: string,
-  pagination?: boolean,
   page?: number,
   perPage?: number,
   name?: string,
@@ -29,7 +28,6 @@ export class FindServiceByCompanyService {
 
   public async execute({
     company_id,
-    pagination = false,
     page, perPage,
     name, category,
     highlight_service
