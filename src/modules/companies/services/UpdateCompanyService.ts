@@ -6,6 +6,8 @@ import { getCEP } from "@shared/utils/getCEP";
 import { getCoordinatesFromCEP } from "@shared/utils/getCoordinatesFromCEP";
 import { getAddressFromCoordinates, getCurrentLocalization } from "@shared/utils/getCurrentLocalization";
 
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+import { Company } from "../infra/prisma/entities/Company";
 import { IAddressesRepository } from "../repositories/IAddressesRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
@@ -59,7 +61,10 @@ export class UpdateCompanyService {
     private contactRepository: IContactsRepository,
 
     @inject("AddressesRepository")
-    private addressRepository: IAddressesRepository
+    private addressRepository: IAddressesRepository,
+
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider,
 
   ) { }
 
@@ -82,6 +87,8 @@ export class UpdateCompanyService {
   }: IRequest): Promise<IResponse> {
 
     const findCompanyById = await this.companyRepository.findById(id);
+
+
 
     if (!findCompanyById) {
       throw new AppError("Company does not exist!");
@@ -163,6 +170,12 @@ export class UpdateCompanyService {
           company_id: company.id
         });
       }
+    }
+
+    const companyCache = await this.cacheProvider.recover<Company>(`company:${id}`);
+
+    if (companyCache) {
+      await this.cacheProvider.invalidatePrefix('company');
     }
 
     const response = {

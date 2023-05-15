@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 
 import { AppError } from "@shared/errors/AppError";
 
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { Company } from "../infra/prisma/entities/Company";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 
@@ -10,18 +11,30 @@ import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 export class FindByCompanyService {
   constructor(
     @inject("CompaniesRepository")
-    private companyRepository: ICompaniesRepository
+    private companyRepository: ICompaniesRepository,
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider,
 
   ) { }
 
   public async execute(id: string): Promise<Company> {
 
-    const company = await this.companyRepository.findById(id);
+    let company = await this.cacheProvider.recover<Company>(`company:${id}`);
 
     if (!company) {
-      throw new AppError("Company does not exist");
+      company = await this.companyRepository.findById(id);
+
+      if (!company) {
+        throw new AppError("Company does not exist");
+      }
+
+      console.log('A query no banco foi feita');
+
+      await this.cacheProvider.save(`company:${id}`, company);
     }
 
     return company;
+
+
   }
 }
