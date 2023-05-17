@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { Assessment } from "../infra/prisma/entities/Assessment";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
@@ -13,9 +14,11 @@ export class FindAssessmentsByCompanyService {
   constructor(
     @inject("AssessmentsRepository")
     private assessmentRepository: IAssessmentsRepository,
-
     @inject("CompaniesRepository")
-    private companyRepository: ICompaniesRepository
+    private companyRepository: ICompaniesRepository,
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider
+
   ) { }
 
   public async execute(company_id: string): Promise<Assessment[]> {
@@ -25,23 +28,30 @@ export class FindAssessmentsByCompanyService {
       throw new AppError("Company not found");
     }
 
-    const assessments = await this.assessmentRepository.findAssessments(company_id);
+    let assessmentsUserAvatar = await this.cacheProvider.recover<Assessment[]>(`assessments-company:${company_id}`);
 
-    const assessmentsUserAvatar = assessments.map((assessment) => {
-      if (!assessment.user) {
-        return assessment;
-      }
+    if (!assessmentsUserAvatar) {
+      const assessments = await this.assessmentRepository.findAssessments(company_id);
 
-      const userWithAvatar = {
-        ...assessment.user,
-        avatar: getUserAvatarUrl(assessment.user, "avatar")
-      }
+      assessmentsUserAvatar = assessments.map((assessment) => {
+        if (!assessment.user) {
+          return assessment;
+        }
 
-      return {
-        ...assessment,
-        user: userWithAvatar
-      };
-    });
+        const userWithAvatar = {
+          ...assessment.user,
+          avatar: getUserAvatarUrl(assessment.user, "avatar")
+        }
+
+        return {
+          ...assessment,
+          user: userWithAvatar
+        };
+      });
+
+      await this.cacheProvider.save(`assessments-company:${company_id}`, assessmentsUserAvatar);
+
+    }
 
     return assessmentsUserAvatar;
   }

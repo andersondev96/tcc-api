@@ -5,6 +5,7 @@ import { User } from "@modules/users/infra/prisma/entities/User";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { Assessment } from "../infra/prisma/entities/Assessment";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
@@ -32,7 +33,9 @@ export class CreateAssessmentsCompanyService {
     @inject("CompaniesRepository")
     private companyRepository: ICompaniesRepository,
     @inject("UsersRepository")
-    private userRepository: IUsersRepository
+    private userRepository: IUsersRepository,
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider
   ) { }
 
   public async execute({ user_id, company_id, comment, stars }: IRequest): Promise<Assessment> {
@@ -60,6 +63,8 @@ export class CreateAssessmentsCompanyService {
       const averageStars = Math.trunc((totalStars / (companiesAssessment.length)));
 
       await this.companyRepository.updateStars(company.id, averageStars);
+
+      await this.cacheProvider.invalidate(`assessments-company:${company_id}`);
 
       const updatedAssessment = {
         ...assessment,

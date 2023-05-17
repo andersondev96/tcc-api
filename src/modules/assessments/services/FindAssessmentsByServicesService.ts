@@ -3,6 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { Assessment } from "../infra/prisma/entities/Assessment";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
@@ -14,7 +15,9 @@ export class FindAssessmentsByServicesService {
     @inject("AssessmentsRepository")
     private assessmentRepository: IAssessmentsRepository,
     @inject("ServicesRepository")
-    private serviceRepository: IServicesRepository
+    private serviceRepository: IServicesRepository,
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider
   ) { }
 
   public async execute(service_id: string): Promise<Assessment[]> {
@@ -25,23 +28,32 @@ export class FindAssessmentsByServicesService {
       throw new AppError("Service not found");
     }
 
-    const assessments = await this.assessmentRepository.findAssessments(service_id);
+    let assessmentsUserAvatar = await this.cacheProvider.recover<Assessment[]>(`assessments-service:${service_id}`);
 
-    const assessmentsUserAvatar = assessments.map((assessment) => {
-      if (!assessment.user) {
-        return assessment;
-      }
+    if (!assessmentsUserAvatar) {
 
-      const userWithAvatar = {
-        ...assessment.user,
-        avatar: getUserAvatarUrl(assessment.user, "avatar")
-      }
+      const assessments = await this.assessmentRepository.findAssessments(service_id);
 
-      return {
-        ...assessment,
-        user: userWithAvatar
-      }
-    });
+      assessmentsUserAvatar = assessments.map((assessment) => {
+        if (!assessment.user) {
+          return assessment;
+        }
+
+        const userWithAvatar = {
+          ...assessment.user,
+          avatar: getUserAvatarUrl(assessment.user, "avatar")
+        }
+
+        return {
+          ...assessment,
+          user: userWithAvatar
+        }
+      });
+
+      await this.cacheProvider.save(`assessments-service:${service_id}`, assessmentsUserAvatar);
+
+      console.log("Adicionou ao cache");
+    }
 
     return assessmentsUserAvatar;
   }
