@@ -6,8 +6,9 @@ import { ICompaniesRepository } from "@modules/companies/repositories/ICompanies
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { AppError } from "@shared/errors/AppError";
-
 
 import { FakeAssessmentsRepository } from "../repositories/fakes/FakeAssessmentsRepository";
 import { IAssessmentsRepository } from "../repositories/IAssessmentsRepository";
@@ -18,6 +19,7 @@ let fakeCompanyRepository: ICompaniesRepository;
 let fakeCategoryRepository: ICategoriesRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeAssessmentRepository: IAssessmentsRepository;
+let fakeCacheProvider: ICacheProvider;
 let findAssessmentsByCompanyService: FindAssessmentsByCompanyService;
 
 describe("FindAssessmentsByCompanyService", () => {
@@ -27,9 +29,11 @@ describe("FindAssessmentsByCompanyService", () => {
     fakeCategoryRepository = new FakeCategoriesRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeAssessmentRepository = new FakeAssessmentsRepository();
+    fakeCacheProvider = new FakeCacheProvider();
     findAssessmentsByCompanyService = new FindAssessmentsByCompanyService(
       fakeAssessmentRepository,
-      fakeCompanyRepository
+      fakeCompanyRepository,
+      fakeCacheProvider
     );
   });
 

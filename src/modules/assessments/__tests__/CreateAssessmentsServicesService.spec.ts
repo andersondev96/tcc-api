@@ -8,6 +8,8 @@ import { FakeServicesRepository } from "@modules/services/repositories/fakes/Fak
 import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { FakeAssessmentsRepository } from "../repositories/fakes/FakeAssessmentsRepository";
@@ -21,6 +23,7 @@ let fakeCategoryRepository: ICategoriesRepository;
 let fakeServiceRepository: IServicesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
+let fakeCacheProvider: ICacheProvider;
 
 describe("CreateAssessmentsCompanyService", () => {
   beforeEach(() => {
@@ -30,10 +33,12 @@ describe("CreateAssessmentsCompanyService", () => {
     fakeServiceRepository = new FakeServicesRepository();
     fakeUserRepository = new FakeUsersRepository();
     fakeContactRepository = new FakeContactsRepository();
+    fakeCacheProvider = new FakeCacheProvider();
     createAssessmentsServicesService = new CreateAssessmentsServicesService(
       fakeAssessmentRepository,
       fakeServiceRepository,
-      fakeUserRepository
+      fakeUserRepository,
+      fakeCacheProvider
     );
 
   });
