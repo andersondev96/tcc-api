@@ -2,6 +2,8 @@ import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes
 import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { FakeEntrepreneursRepository } from "../../entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
@@ -23,6 +25,7 @@ let fakeContactRepository: IContactsRepository;
 let fakeScheduleRepository: ISchedulesRepository;
 let fakeAddressRepository: IAddressesRepository;
 let fakeEntrepreneurRepository: IEntrepreneursRepository;
+let fakeCacheProvider: ICacheProvider;
 let createCompanyService: CreateCompanyService;
 
 
@@ -35,15 +38,17 @@ describe("CreateCompanyService", () => {
     fakeScheduleRepository = new FakeSchedulesRepository();
     fakeAddressRepository = new FakeAddressesRepository();
     fakeEntrepreneurRepository = new FakeEntrepreneursRepository(),
-      createCompanyService = new CreateCompanyService(
-        fakeCompanyRepository,
-        fakeCategoryRepository,
-        fakeUserRepository,
-        fakeContactRepository,
-        fakeScheduleRepository,
-        fakeAddressRepository,
-        fakeEntrepreneurRepository
-      );
+      fakeCacheProvider = new FakeCacheProvider();
+    createCompanyService = new CreateCompanyService(
+      fakeCompanyRepository,
+      fakeCategoryRepository,
+      fakeUserRepository,
+      fakeContactRepository,
+      fakeScheduleRepository,
+      fakeAddressRepository,
+      fakeEntrepreneurRepository,
+      fakeCacheProvider
+    );
   });
 
   it("Should be able to create a company", async () => {

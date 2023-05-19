@@ -2,8 +2,8 @@ import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes
 import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-
 import { AppError } from "@shared/errors/AppError";
+
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";

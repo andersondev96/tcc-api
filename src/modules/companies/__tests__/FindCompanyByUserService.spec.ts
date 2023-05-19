@@ -2,6 +2,8 @@ import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes
 import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
@@ -9,10 +11,12 @@ import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { FindCompanyByUserService } from "../services/FindCompanyByUserService";
 
+
 let fakeUserRepository: IUsersRepository;
 let fakeCompanyRepository: ICompaniesRepository;
 let fakeCategoryRepository: ICategoriesRepository;
 let fakeContactRepository: IContactsRepository;
+let fakeCacheProvider: ICacheProvider;
 let findCompanyByUserService: FindCompanyByUserService;
 
 describe("FindCompanyByUserService", () => {
@@ -21,9 +25,11 @@ describe("FindCompanyByUserService", () => {
     fakeCompanyRepository = new FakeCompaniesRepository();
     fakeCategoryRepository = new FakeCategoriesRepository();
     fakeContactRepository = new FakeContactsRepository();
+    fakeCacheProvider = new FakeCacheProvider();
     findCompanyByUserService = new FindCompanyByUserService(
       fakeUserRepository,
-      fakeCompanyRepository
+      fakeCompanyRepository,
+      fakeCacheProvider
     );
   });
 

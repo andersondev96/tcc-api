@@ -1,3 +1,5 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
@@ -6,8 +8,7 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
-import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
-import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
+
 import { FakeCustomersCompaniesRepository } from "../repositories/fakes/FakeCustomersCompaniesRepository";
 import { FakeCustomersRepository } from "../repositories/fakes/FakeCustomersRepository";
 import { ICustomersCompaniesRepository } from "../repositories/ICustomersCompaniesRepository";

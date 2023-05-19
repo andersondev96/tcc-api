@@ -2,6 +2,8 @@ import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes
 import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
@@ -17,6 +19,7 @@ let fakeCompanyRepository: ICompaniesRepository;
 let fakeCategoryRepository: ICategoriesRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeScheduleRepository: ISchedulesRepository;
+let fakeCacheProvider: ICacheProvider;
 let findByCompanyService: FindByCompanyService;
 
 describe("FindByCompanyService", () => {
@@ -26,8 +29,10 @@ describe("FindByCompanyService", () => {
     fakeCategoryRepository = new FakeCategoriesRepository();
     fakeContactRepository = new FakeContactsRepository();
     fakeScheduleRepository = new FakeSchedulesRepository();
+    fakeCacheProvider = new FakeCacheProvider();
     findByCompanyService = new FindByCompanyService(
-      fakeCompanyRepository
+      fakeCompanyRepository,
+      fakeCacheProvider
     );
   });
 
