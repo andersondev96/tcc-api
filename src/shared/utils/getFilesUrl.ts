@@ -29,7 +29,7 @@ export function getCompanyImages(objectCompanyImages: Company, segment: string):
 
   return objectCompanyImages.ImageCompany.map((file) => {
     return file.image_name ?
-      `${baseUrl}/${segment}/${file.image_name}` : undefined
+      `${baseUrl}/${segment}/${file.image_name}` : undefined;
   }).filter(Boolean);
 
 }
@@ -59,7 +59,7 @@ export function getBudgetFiles(objectWithFile: Budget, segment: string): string[
 
   return objectWithFile.files.map((file) => {
     return file.length > 0 ?
-      `${baseUrl}/${segment}/${file}` : undefined
+      `${baseUrl}/${segment}/${file}` : undefined;
   }).filter(Boolean);
 
 }

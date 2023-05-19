@@ -2,8 +2,8 @@ import { inject, injectable } from "tsyringe";
 
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
 import { AppError } from "@shared/errors/AppError";
-
 import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
+
 import { CustomerCompany } from "../infra/prisma/entities/CustomerCompany";
 import { ICustomersCompaniesRepository } from "../repositories/ICustomersCompaniesRepository";
 
@@ -46,7 +46,6 @@ export class ListCustomersByCompanyService {
     const customersByPage = customersByCompany.slice(start, end);
 
 
-
     const customersWithUserAvatar = customersByPage.map((customerCompany) => {
       return {
         ...customerCompany,
@@ -57,12 +56,12 @@ export class ListCustomersByCompanyService {
             avatar: getUserAvatarUrl(customerCompany.customer?.user, "avatar")
           }
         }
-      }
+      };
     });
 
     return {
       customers: customersWithUserAvatar,
-      totalResults,
+      totalResults
     };
   }
 }
