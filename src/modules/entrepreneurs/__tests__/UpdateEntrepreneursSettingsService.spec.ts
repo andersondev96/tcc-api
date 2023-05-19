@@ -1,17 +1,18 @@
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
+import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
+import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
+import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
+import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
 import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
 import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
+import { FakeServicesRepository } from "@modules/services/repositories/fakes/FakeServicesRepository";
+import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
-import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
-import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
-import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
-import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
-import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
-import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
-import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
-import { FakeServicesRepository } from "@modules/services/repositories/fakes/FakeServicesRepository";
+
 import { FakeEntrepreneursSettingsRepository } from "../repositories/Fakes/FakeEntrepreneursSettingsRepository";
 import { IEntrepreneursSettingsRepository } from "../repositories/IEntrepreneursSettingsRepository";
 import { UpdateEntrepreneursSettingsService } from "../services/UpdateEntrepreneursSettingsService";
