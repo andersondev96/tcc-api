@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { Category } from "../infra/prisma/entities/Category";
 import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 
@@ -8,15 +9,20 @@ export class ListCategoryByNameService {
 
   constructor(
     @inject("CategoriesRepository")
-    private categoryRepository: ICategoriesRepository
+    private categoryRepository: ICategoriesRepository,
+
+    @inject("CacheProvider")
+    private cacheProvider: ICacheProvider,
   ) { }
 
   public async execute(name: string): Promise<Category> {
 
-    const category = await this.categoryRepository.findCategoryByName(name);
+    let category = await this.cacheProvider.recover<Category>(`category-name:${name}`);
 
-    if (category) {
-      return category;
+    if (!category) {
+      category = await this.categoryRepository.findCategoryByName(name);
     }
+
+    return category;
   }
 }
