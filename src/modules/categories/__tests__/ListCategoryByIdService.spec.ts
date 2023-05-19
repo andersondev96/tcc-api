@@ -1,3 +1,5 @@
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { FakeCategoriesRepository } from "../repositories/fakes/FakeCategoriesRepository";
@@ -5,14 +7,17 @@ import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 import { ListCategoryByIdService } from "../services/ListCategoryByIdService";
 
 let fakeCategoryRepository: ICategoriesRepository;
+let fakeCacheProvider: ICacheProvider;
 let listCategoryByIdService: ListCategoryByIdService;
 
 
 describe("ListCategoryByIdService", () => {
   beforeEach(() => {
     fakeCategoryRepository = new FakeCategoriesRepository();
+    fakeCacheProvider = new FakeCacheProvider();
     listCategoryByIdService = new ListCategoryByIdService(
-      fakeCategoryRepository
+      fakeCategoryRepository,
+      fakeCacheProvider
     );
   });
 

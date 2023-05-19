@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+
 import { IXlsxProvider } from "../providers/XlsxProvider/models/IXlsxProvider";
 import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 @injectable()
@@ -14,7 +15,7 @@ export class ImportCategoryService {
     private xlsxProvider: IXlsxProvider,
 
     @inject("CacheProvider")
-    private cacheProvider: ICacheProvider,
+    private cacheProvider: ICacheProvider
   ) { }
 
 
@@ -35,7 +36,7 @@ export class ImportCategoryService {
       }
     });
 
-    await this.cacheProvider.invalidate('all-categories');
+    await this.cacheProvider.invalidate("all-categories");
 
   }
 }

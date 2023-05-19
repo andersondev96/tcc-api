@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 
 import { IXlsxProvider } from "../XlsxProvider/models/IXlsxProvider";
 
-export class XlsxProviderFaker implements IXlsxProvider {
+export class FakeXlsProvider implements IXlsxProvider {
 
   public async readXlsxProvider(filePath: string): Promise<any[]> {
     const fileContent = fs.readFileSync(filePath);

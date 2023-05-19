@@ -1,4 +1,6 @@
 
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { FakeCategoriesRepository } from "../repositories/fakes/FakeCategoriesRepository";
@@ -6,12 +8,17 @@ import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 import { CreateCategoryService } from "../services/CreateCategoryService";
 
 let fakeCategoryRepository: ICategoriesRepository;
+let fakeCacheProvider: ICacheProvider;
 let createCategoryService: CreateCategoryService;
 
 describe("CreateCategoryService", () => {
   beforeEach(() => {
     fakeCategoryRepository = new FakeCategoriesRepository();
-    createCategoryService = new CreateCategoryService(fakeCategoryRepository);
+    fakeCacheProvider = new FakeCacheProvider();
+    createCategoryService = new CreateCategoryService(
+      fakeCategoryRepository,
+      fakeCacheProvider
+    );
   });
 
   it("Should be able to create a category", async () => {

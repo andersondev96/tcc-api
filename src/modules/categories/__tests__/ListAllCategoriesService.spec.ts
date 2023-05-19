@@ -1,15 +1,21 @@
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+
 import { FakeCategoriesRepository } from "../repositories/fakes/FakeCategoriesRepository";
 import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 import { ListAllCategoriesService } from "../services/ListAllCategoriesService";
 
 let fakeCategoryRepository: ICategoriesRepository;
+let fakeCacheProvider: ICacheProvider;
 let listAllCategoriesService: ListAllCategoriesService;
 
 describe("ListAllCategoriesService", () => {
   beforeEach(() => {
     fakeCategoryRepository = new FakeCategoriesRepository();
+    fakeCacheProvider = new FakeCacheProvider();
     listAllCategoriesService = new ListAllCategoriesService(
-      fakeCategoryRepository
+      fakeCategoryRepository,
+      fakeCacheProvider
     );
   });
 

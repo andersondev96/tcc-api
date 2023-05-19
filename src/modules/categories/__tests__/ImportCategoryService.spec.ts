@@ -1,5 +1,8 @@
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+
 import { CategoriesRepository } from "../infra/prisma/repositories/CategoriesRepository";
-import { XlsxProviderFaker } from "../providers/Fakes/XlsxProviderFaker";
+import { FakeXlsProvider } from "../providers/Fakes/FakeXlsProvider";
 import { IXlsxProvider } from "../providers/XlsxProvider/models/IXlsxProvider";
 import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 import { ImportCategoryService } from "../services/ImportCategoryService";
@@ -7,15 +10,18 @@ import { ImportCategoryService } from "../services/ImportCategoryService";
 
 describe("ImportCategoryService", () => {
   let fakeCategoryRepository: ICategoriesRepository;
-  let xlsxProviderFaker: IXlsxProvider;
+  let fakeXlsProvider: IXlsxProvider;
+  let fakeCacheProvider: ICacheProvider;
   let importCategoryService: ImportCategoryService;
 
   beforeEach(() => {
     fakeCategoryRepository = new CategoriesRepository();
-    xlsxProviderFaker = new XlsxProviderFaker();
+    fakeXlsProvider = new FakeXlsProvider();
+    fakeCacheProvider = new FakeCacheProvider();
     importCategoryService = new ImportCategoryService(
       fakeCategoryRepository,
-      xlsxProviderFaker
+      fakeXlsProvider,
+      fakeCacheProvider
     );
   });
 
@@ -27,12 +33,12 @@ describe("ImportCategoryService", () => {
       { id: "category-3", name: "Category 3", subcategories: "Subcategory 3" }
     ];
 
-    jest.spyOn(xlsxProviderFaker, "readXlsxProvider").mockResolvedValue(categories);
+    jest.spyOn(fakeXlsProvider, "readXlsxProvider").mockResolvedValue(categories);
     jest.spyOn(fakeCategoryRepository, "create");
 
     await importCategoryService.execute(filePath);
 
-    expect(xlsxProviderFaker.readXlsxProvider).toHaveBeenCalledWith(filePath);
+    expect(fakeXlsProvider.readXlsxProvider).toHaveBeenCalledWith(filePath);
     expect(fakeCategoryRepository.create).toHaveBeenCalledTimes(3);
   });
 
@@ -44,12 +50,12 @@ describe("ImportCategoryService", () => {
       { id: "category-3", name: "Category 3", subcategories: "Subcategory 3" }
     ];
 
-    jest.spyOn(xlsxProviderFaker, "readXlsxProvider").mockResolvedValue(categories);
+    jest.spyOn(fakeXlsProvider, "readXlsxProvider").mockResolvedValue(categories);
     jest.spyOn(fakeCategoryRepository, "create");
 
     await importCategoryService.execute(filePath);
 
-    expect(xlsxProviderFaker.readXlsxProvider).toHaveBeenCalledWith(filePath);
+    expect(fakeXlsProvider.readXlsxProvider).toHaveBeenCalledWith(filePath);
     expect(fakeCategoryRepository.create).toHaveBeenCalledTimes(2);
   });
 });
