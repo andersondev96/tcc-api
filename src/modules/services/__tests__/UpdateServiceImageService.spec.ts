@@ -8,8 +8,8 @@ import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsers
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { FakeStorageProvider } from "@shared/container/providers/StorageProvider/fakes/FakerStorageProvider";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
-
 import { AppError } from "@shared/errors/AppError";
+
 import { FakeServicesRepository } from "../repositories/fakes/FakeServicesRepository";
 import { IServicesRepository } from "../repositories/IServicesRepository";
 import { UpdateServiceImageService } from "../services/UpdateServiceImageService";

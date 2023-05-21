@@ -1,4 +1,4 @@
-import { CategoriesRepository } from "@modules/categories/infra/prisma/repositories/CategoriesRepository";
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
 import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
 import { FakeCompaniesRepository } from "@modules/companies/repositories/fakes/FakeCompaniesRepository";
 import { FakeContactsRepository } from "@modules/companies/repositories/fakes/FakeContactsRepository";
@@ -26,7 +26,7 @@ describe("DeleteServiceService", () => {
   beforeEach(() => {
     fakeServiceRepository = new FakeServicesRepository(),
       fakeCompanyRepository = new FakeCompaniesRepository(),
-      fakeCategoryRepository = new CategoriesRepository(),
+      fakeCategoryRepository = new FakeCategoriesRepository(),
       fakeContactRepository = new FakeContactsRepository(),
       fakeUserRepository = new FakeUsersRepository(),
       fakeStorageProvider = new FakeStorageProvider(),
