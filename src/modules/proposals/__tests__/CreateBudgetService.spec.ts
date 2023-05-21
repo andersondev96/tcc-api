@@ -8,12 +8,12 @@ import { FakeCustomersRepository } from "@modules/customers/repositories/fakes/F
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
-
 import { FakeDateProvider } from "@shared/container/providers/DateProvider/Fakes/FakeDateProvider";
 import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
 import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes/FakeMailProvider";
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
+import { AppError } from "@shared/errors/AppError";
+
 import { FakeBudgetRepository } from "../repositories/fakes/FakeBudgetsRepository";
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { IBudgetsRepository } from "../repositories/IBudgetsRepository";

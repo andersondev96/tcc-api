@@ -10,13 +10,15 @@ export class FakeEntrepreneursSettingsRepository implements IEntrepreneursSettin
   entrepreneursSettings: EntrepreneurSettings[] = [];
 
   public async create(data: ICreateEntrepreneurSettingsDTO): Promise<EntrepreneurSettings> {
-    Object.assign(data, {
+    const entrepreneurSettings = new EntrepreneurSettings(data);
+
+    Object.assign(entrepreneurSettings, {
       id: uuid()
     });
 
-    this.entrepreneursSettings.push(data);
+    this.entrepreneursSettings.push(entrepreneurSettings);
 
-    return data;
+    return entrepreneurSettings;
   }
 
 

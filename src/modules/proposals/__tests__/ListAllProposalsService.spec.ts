@@ -8,6 +8,7 @@ import { FakeCustomersRepository } from "@modules/customers/repositories/fakes/F
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { AppError } from "@shared/errors/AppError";
 
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
@@ -75,9 +76,24 @@ describe("ListAllProposalsService", () => {
       customer_id: customer.id
     });
 
-    const proposals = await listAllProposalsService.execute(user.id);
+    const proposals = await listAllProposalsService.execute({
+      user_id: user.id,
+      page: 1,
+      perPage: 10,
+      objective: "Objective Example",
+      description: "Description Example",
+      company: "Business name"
+    });
 
-    expect(proposals).toEqual([proposal]);
+    expect(proposals).toEqual({ proposals: [proposal], totalResults: 1 });
+  });
+
+  it("Should not be able list all proposals if customer not found", async () => {
+    await expect(listAllProposalsService.execute({
+      user_id: "customer-not-founc",
+      page: 1,
+      perPage: 10
+    })).rejects.toBeInstanceOf(AppError);
   });
 
 

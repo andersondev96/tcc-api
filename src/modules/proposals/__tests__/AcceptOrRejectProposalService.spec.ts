@@ -6,16 +6,16 @@ import { ICompaniesRepository } from "@modules/companies/repositories/ICompanies
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
 import { FakeCustomersRepository } from "@modules/customers/repositories/fakes/FakeCustomersRepository";
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
-import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
-import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
-
 import { FakeEntrepreneursRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
 import { FakeEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursSettingsRepository";
 import { IEntrepreneursRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursRepository";
 import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
+import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes/FakeMailProvider";
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
+import { AppError } from "@shared/errors/AppError";
+
 import { FakeBudgetRepository } from "../repositories/fakes/FakeBudgetsRepository";
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
 import { IBudgetsRepository } from "../repositories/IBudgetsRepository";
@@ -85,10 +85,12 @@ describe("AcceptOrRejectProposalService", () => {
 
     const entrepreneur = await fakeEntrepreneurRepository.create({
       user_id: user.id,
-      company_id: company.id,
+      company_id: company.id
     });
 
-    fakeEntrepreneurSettingsRepository.create({
+    console.log(entrepreneur.id);
+
+    await fakeEntrepreneurSettingsRepository.create({
       entrepreneur_id: entrepreneur.id,
       email_notification: true
     });
@@ -105,7 +107,7 @@ describe("AcceptOrRejectProposalService", () => {
       description: "Description Example"
     });
 
-    await fakeBudgetRepository.create({
+    const budget = await fakeBudgetRepository.create({
       proposal_id: proposal.id,
       company_id: company.id,
       customer_id: customer.id,
@@ -115,9 +117,9 @@ describe("AcceptOrRejectProposalService", () => {
       installments: 2
     });
 
-    const acceptOrRejectProposal = await acceptOrRejectProposalService.execute(proposal.id, "accept");
+    const acceptOrRejectProposal = await acceptOrRejectProposalService.execute(budget.proposal_id, "accept");
 
-    expect(acceptOrRejectProposal.status).toEqual("Proposal accepted");
+    expect(acceptOrRejectProposal.status).toEqual("Proposta aceita");
   });
 
   it("Should be able to reject proposal", async () => {
@@ -172,7 +174,7 @@ describe("AcceptOrRejectProposalService", () => {
 
     const acceptOrRejectProposal = await acceptOrRejectProposalService.execute(proposal.id, "reject");
 
-    expect(acceptOrRejectProposal.status).toEqual("Proposal rejected");
+    expect(acceptOrRejectProposal.status).toEqual("Proposal recusada");
   });
 
   it("Should not be able to accept or reject a proposal if response is invalid", async () => {

@@ -87,10 +87,14 @@ describe("ListBudgetByProposalService", () => {
       description: "Description Budget Example",
       delivery_date: new Date(),
       amount: 200.50,
-      installments: 2
+      installments: 2,
+      files: []
     });
 
     const listBudgetByProposal = await listBudgetByProposalService.execute(proposal.id);
+
+    console.log(listBudgetByProposal);
+    console.log(budget);
 
     expect(listBudgetByProposal).toEqual(budget);
   });

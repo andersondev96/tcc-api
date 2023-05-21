@@ -6,8 +6,12 @@ import { ICompaniesRepository } from "@modules/companies/repositories/ICompanies
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
 import { FakeCustomersRepository } from "@modules/customers/repositories/fakes/FakeCustomersRepository";
 import { ICustomersRepository } from "@modules/customers/repositories/ICustomersRepository";
+import { FakeEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/Fakes/FakeEntrepreneursSettingsRepository";
+import { IEntrepreneursSettingsRepository } from "@modules/entrepreneurs/repositories/IEntrepreneursSettingsRepository";
 import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { FakeMailProvider } from "@shared/container/providers/MailProvider/Fakes/FakeMailProvider";
+import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { FakeProposalsRepository } from "../repositories/fakes/FakeProposalsRepository";
@@ -20,6 +24,8 @@ let fakeCompanyRepository: ICompaniesRepository;
 let fakeCategoryRepository: ICategoriesRepository;
 let fakeCustomerRepository: ICustomersRepository;
 let fakeProposalRepository: IProposalsRepository;
+let fakeEntrepreneurSettingsRepository: IEntrepreneursSettingsRepository;
+let fakeMailProvider: IMailProvider;
 let updateProposalService: UpdateProposalService;
 
 describe("UpdateProposalService", () => {
@@ -30,8 +36,12 @@ describe("UpdateProposalService", () => {
     fakeCategoryRepository = new FakeCategoriesRepository();
     fakeCustomerRepository = new FakeCustomersRepository();
     fakeProposalRepository = new FakeProposalsRepository();
+    fakeEntrepreneurSettingsRepository = new FakeEntrepreneursSettingsRepository();
+    fakeMailProvider = new FakeMailProvider();
     updateProposalService = new UpdateProposalService(
-      fakeProposalRepository
+      fakeProposalRepository,
+      fakeEntrepreneurSettingsRepository,
+      fakeMailProvider
     );
   });
 

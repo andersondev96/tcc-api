@@ -2,11 +2,11 @@
 import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 
+import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
 import { IMailProvider } from "@shared/container/providers/MailProvider/models/IMailProvider";
 import { AppError } from "@shared/errors/AppError";
-
-import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
 import { getBudgetFiles } from "@shared/utils/getFilesUrl";
+
 import { Budget } from "../infra/prisma/entities/Budget";
 import { IBudgetsRepository } from "../repositories/IBudgetsRepository";
 import { IProposalsRepository } from "../repositories/IProposalsRepository";
@@ -95,7 +95,7 @@ export class CreateBudgetService {
     const returnBudget = {
       ...budget,
       files: getBudgetFiles(budget, "budget")
-    }
+    };
 
 
     return returnBudget;

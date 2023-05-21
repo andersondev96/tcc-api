@@ -84,14 +84,25 @@ describe("ListProposalsByCompanyService", () => {
       customer_id: customer.id
     });
 
-    const listProposals = await listProposalsByCompanyService.execute(company.id);
+    const listProposals = await listProposalsByCompanyService.execute({
+      company_id: company.id,
+      page: 1,
+      perPage: 10,
+      name: "John Doe",
+      objective: "Objective Example",
+      description: "Description Example"
+    });
 
-    expect(listProposals).toEqual([proposal, proposal2]);
+    expect(listProposals).toEqual({ proposals: [proposal, proposal2], totalResults: 2 });
   });
 
   it("Should not be able to list proposal if company not found", async () => {
     await expect(
-      listProposalsByCompanyService.execute("not-existing-company")
+      listProposalsByCompanyService.execute({
+        company_id: "not-existing-company",
+        page: 1,
+        perPage: 10
+      })
     ).rejects.toBeInstanceOf(AppError);
   });
 });

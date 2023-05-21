@@ -9,6 +9,7 @@ export class EntrepreneurSettings {
   online_chat?: boolean;
   email_notification?: boolean;
   entrepreneur?: Entrepreneur;
+  company_id?: string;
 
   constructor({ entrepreneur_id, entrepreneur }: EntrepreneurSettings) {
     Object.assign(this, {

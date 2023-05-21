@@ -54,6 +54,8 @@ export class AcceptOrRejectProposalService {
     if (proposal) {
       const settings = await this.entrepreneurSettingsRepository.findByCompany(proposal.company_id);
 
+      console.log(settings);
+
       const budget = await this.budgetRepository.findBudgetByProposal(proposal.id);
 
       if (settings.email_notification) {
