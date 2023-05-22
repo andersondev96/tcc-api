@@ -1,19 +1,15 @@
 import { AppError } from "@shared/errors/AppError";
 
-import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
-import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "../repositories/IUsersRepository";
 import { DeleteUserService } from "../services/DeleteUserService";
 
 let fakeUsersRepository: IUsersRepository;
-let fakeHashProvider: IHashProvider;
 let deleteUserService: DeleteUserService;
 
 describe("DeleteUserService", () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
-    fakeHashProvider = new FakeHashProvider();
     deleteUserService = new DeleteUserService(fakeUsersRepository);
   });
 
@@ -21,7 +17,7 @@ describe("DeleteUserService", () => {
     const user = await fakeUsersRepository.create({
       name: "John doe",
       email: "john@example.com",
-      password: "123456",
+      password: "123456"
     });
 
     await deleteUserService.execute(user.id);
@@ -33,10 +29,10 @@ describe("DeleteUserService", () => {
 
   it("Should not be able to delete a invalid user", async () => {
 
-    await expect(deleteUserService.execute('invalid-id')).rejects.toBeInstanceOf(
+    await expect(deleteUserService.execute("invalid-id")).rejects.toBeInstanceOf(
       AppError
     );
   });
 
 
-})
+});

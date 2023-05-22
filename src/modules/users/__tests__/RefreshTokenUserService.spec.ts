@@ -1,9 +1,9 @@
 import { AppError } from "@shared/errors/AppError";
 
 import { FakeDateProvider } from "../../../shared/container/providers/DateProvider/Fakes/FakeDateProvider";
-import { IDateProvider } from '../../../shared/container/providers/DateProvider/models/IDateProvider';
+import { IDateProvider } from "../../../shared/container/providers/DateProvider/models/IDateProvider";
 import { FakeHashProvider } from "../providers/HashProvider/Fakes/FakeHashProvider";
-import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
+import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { FakeUsersRepository } from "../repositories/Fakes/FakeUsersRepository";
 import { FakeUsersTokenRepository } from "../repositories/Fakes/FakeUsersTokenRepository";
 import { IUsersRepository } from "../repositories/IUsersRepository";
@@ -18,7 +18,7 @@ let fakeUsersTokenRepository: IUsersTokenRepository;
 let refreshTokenUserService: RefreshTokenUserService;
 let authenticateUserService: AuthenticateUserService;
 
-describe('RefreshTokenUserService', () => {
+describe("RefreshTokenUserService", () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeUsersTokenRepository = new FakeUsersTokenRepository();
@@ -40,33 +40,33 @@ describe('RefreshTokenUserService', () => {
 
   it("should be able generate a new token", async () => {
     const user = await fakeUsersRepository.create({
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      password: '123456'
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
     });
 
     const authentication = await authenticateUserService.execute({
       email: user.email,
-      password: user.password,
+      password: user.password
     });
 
     const response = await refreshTokenUserService.execute(
       authentication.refresh_token
     );
 
-    expect(response).toHaveProperty('refresh_token');
-  })
+    expect(response).toHaveProperty("refresh_token");
+  });
 
-  it('should be able to user token is invalid', async () => {
+  it("should be able to user token is invalid", async () => {
     const user = await fakeUsersRepository.create({
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      password: '123456',
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
     });
 
     const authentication = await authenticateUserService.execute({
       email: user.email,
-      password: user.password,
+      password: user.password
     });
 
     const refresh_token = await fakeUsersTokenRepository.findByUserAndRefreshToken(
@@ -78,5 +78,6 @@ describe('RefreshTokenUserService', () => {
 
     await expect(refreshTokenUserService.execute(
       authentication.refresh_token)).rejects.toBeInstanceOf(AppError);
-  })
+  });
+
 });

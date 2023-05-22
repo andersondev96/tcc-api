@@ -17,7 +17,7 @@ describe("DeleteUserService", () => {
     const user = await fakeUsersRepository.create({
       name: "John Doe",
       email: "john@example.com",
-      password: "123456",
+      password: "123456"
     });
 
     const findUser = await findByUserIdService.execute(user.id);
@@ -29,14 +29,14 @@ describe("DeleteUserService", () => {
         email: "john@example.com",
         name: "John Doe", id: findUser.id
       }
-    )
+    );
   });
 
   it("Should not be able find to invalid user", async () => {
 
-    await expect(findByUserIdService.execute('invalid-id')).rejects.toBeInstanceOf(
+    await expect(findByUserIdService.execute("invalid-id")).rejects.toBeInstanceOf(
       AppError
     );
   });
 
-})
+});

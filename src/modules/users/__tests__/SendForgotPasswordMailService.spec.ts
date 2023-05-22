@@ -37,7 +37,7 @@ describe("Send Forgot Password Mail Service", () => {
     const user = await fakeUsersRepository.create({
       name: "John doe",
       email: "john@example.com",
-      password: "123456",
+      password: "123456"
     });
 
     await sendForgotPasswordMailService.execute(user.email);
@@ -57,11 +57,11 @@ describe("Send Forgot Password Mail Service", () => {
     const user = await fakeUsersRepository.create({
       name: "John doe",
       email: "john@example.com",
-      password: "123456",
+      password: "123456"
     });
 
     await sendForgotPasswordMailService.execute(user.email);
 
     expect(generateTokenMail).toBeCalled();
-  })
-})
+  });
+});
