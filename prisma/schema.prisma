@@ -166,7 +166,6 @@ model Service {
     assessments       Int?     @default(0)
     company_id        String
     company           Company  @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-    service_proposal Service_Proposal[]
     createdAt         DateTime @default(now())
     updatedAt         DateTime @updatedAt
 
@@ -195,7 +194,6 @@ model Proposal {
   customer Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   company Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   budget Budget?
-  service_proposal_customer Service_Proposal[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -235,19 +233,6 @@ model Customer {
   updatedAt DateTime @updatedAt
 
   @@map("customers")
-}
-
-model Service_Proposal {
-  id String @id @default(uuid())
-  service_id String
-  proposal_id String
-  customer_id String
-  service Service @relation(fields: [service_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  proposal Proposal @relation(fields: [proposal_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("services_proposals")
 }
 
 model Customer_Company {
