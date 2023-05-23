@@ -6,7 +6,7 @@
   "author": "Anderson Fernandes Ferreira",
   "license": "MIT",
   "scripts": {
-    "build": "prisma migrate deploy && babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "test": "jest",
     "start": "prisma migrate dev && npm run dev"
