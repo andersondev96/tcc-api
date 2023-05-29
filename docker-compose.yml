@@ -14,12 +14,11 @@ services:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
   redis:
-    image: redis
+    image: redis:latest
+    restart: always
     container_name: redis
-    hostname: redis
-    command: redis-server --requirepass qh0rD121v2Iv
     ports:
-      - 56379:6379
+      - 6379:6379
 
   pgadmin:
     image: dpage/pgadmin4
