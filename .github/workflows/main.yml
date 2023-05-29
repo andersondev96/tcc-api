@@ -45,5 +45,5 @@ jobs:
             cd ~/app/tcc-api
             npm install
             npx prisma migrate deploy
-            sudo pm2 restart tcc_api
+            pm2 restart tcc_api
           
