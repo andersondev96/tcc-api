@@ -34,3 +34,16 @@ jobs:
           source: "., !node_modules"
           target: "~/app/tcc-api"
           
+      - name: Update API
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/app/tcc-api
+            npm install
+            npx prisma migrate deploy
+            sudo pm2 restart tcc_api
+          
