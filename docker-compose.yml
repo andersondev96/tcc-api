@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: mydb
+      POSTGRES_DB: tcc-api
     volumes:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
