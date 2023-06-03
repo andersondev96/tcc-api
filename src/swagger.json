@@ -1,1011 +1,1318 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "Start Business Documentation",
-        "description": "This is a api start business",
-        "version": "1.0.0",
-        "contact": {
-            "email": "anderson.ferreira@aluno.ufop.br"
-        }
-    },
-    "paths": {
-        "/users": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Create a user",
-                "description": "Create a new user",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            },
-                            "examples": {
-                                "user": {
-                                    "value": {
-                                        "name": "John Doe",
-                                        "email": "john@example.com",
-                                        "password": "12345678"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "400": {
-                        "description": "Email address already used"
-                    },
-                    "200": {
-                        "description": "User created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
-        "/users/{id}": {
-            "put": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Update a user",
-                "description": "Update a user by id",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "User id is required"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            },
-                            "examples": {
-                                "user": {
-                                    "value": {
-                                        "name": "Josy Doe",
-                                        "email": "josy@example.com",
-                                        "password": "123456"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Delete a user",
-                "description": "Delete a user by id",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "User id is required"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User removed successfully"
-                    },
-                    "400": {
-                        "description": "Invalid id"
-                    },
-                    "404": {
-                        "description": "User not found"
-                    }
-                }
-            }
-        },
-        "/users/profile": {
-            "get": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Get profile",
-                "description": "Get profile to user",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/users/avatar": {
-            "patch": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Update a user avatar",
-                "description": "Update a user avatar image",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "avatar": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "204": {
-                        "description": "Image avatar updated"
-                    },
-                    "404": {
-                        "description": "User not found"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            }
-        },
-        "/sessions": {
-            "post": {
-                "tags": [
-                    "Sessions"
-                ],
-                "summary": "Authentication User",
-                "description": "Authentication user",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "400": {
-                        "description": "Email or password invalid!"
-                    }
-                }
-            }
-        },
-        "/sessions/refresh-token": {
-            "post": {
-                "tags": [
-                    "Sessions"
-                ],
-                "summary": "Refresh token",
-                "description": "Generate a new refresh token to the user",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "token": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Refresh token generated successfully",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/components/schemas/UserTokens"
-                        }
-                    },
-                    "400": {
-                        "description": "Refresh token does not exists"
-                    }
-                }
-            }
-        },
-        "/password/forgot": {
-            "post": {
-                "tags": [
-                    "Password"
-                ],
-                "summary": "Forgot password",
-                "description": "Forgot password",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "email": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "400": {
-                        "description": "User does not exists"
-                    }
-                }
-            }
-        },
-        "/password/reset": {
-            "post": {
-                "tags": [
-                    "Password"
-                ],
-                "summary": "Reset password",
-                "description": "Reset password",
-                "parameters": [
-                    {
-                        "name": "token",
-                        "in": "query",
-                        "description": "Token password",
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "password": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "400": {
-                        "description": "Token does not exists"
-                    }
-                }
-            }
-        },
-        "/companies": {
-            "post": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Create a company",
-                "description": "Create a new company",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Company"
-                            },
-                            "examples": {
-                                "company": {
-                                    "value": {
-                                        "name": "Business Example",
-                                        "cnpj": "123456",
-                                        "category": "Category Example",
-                                        "description": "Description Example",
-                                        "services": [
-                                            "Service 1",
-                                            "Service 2"
-                                        ],
-                                        "schedules": [
-                                            {
-                                                "day_of_week": "Saturday",
-                                                "opening_time": "08:00",
-                                                "closing_time": "18:00",
-                                                "lunch_time": "12:00-13:00"
-                                            },
-                                            {
-                                                "day_of_week": "Tuesday",
-                                                "opening_time": "08:00",
-                                                "closing_time": "18:00",
-                                                "lunch_time": "12:00-13:00"
-                                            }
-                                        ],
-                                        "physical_localization": true,
-                                        "telephone": "123456",
-                                        "whatsapp": "123456",
-                                        "email": "email@example.com",
-                                        "website": "http://www.example.com",
-                                        "address": {
-                                            "cep": "123456",
-                                            "street": "Street Test",
-                                            "district": "District Test",
-                                            "number": 123,
-                                            "state": "MG",
-                                            "city": "City Test"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "400": {
-                        "description": "Company already exists"
-                    },
-                    "200": {
-                        "description": "Company created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Company"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "List companies",
-                "description": "List all companies",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Companies found successfully",
-                        "schema": {
-                            "$ref": "#/components/schemas/Company"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
-        "/companies/images/{id}": {
-            "post": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Upload a company image",
-                "description": "Upload a image to company",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "Company id is required"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "company": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "binary"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Company image created successfully"
-                    },
-                    "400": {
-                        "description": "Company does not exist"
-                    },
-                    "500": {
-                        "description": "Server error"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Update image company",
-                "description": "Update image company by image id",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "Image id is required"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "company": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Image has updated successfully"
-                    },
-                    "400": {
-                        "description": "Image id does not exist"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Delete a image company",
-                "description": "Delete a image company by image id",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "Image id is required"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Image deleted successfully"
-                    },
-                    "400": {
-                        "description": "Image not found"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
-        "/companies/{id}": {
-            "get": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Find a company",
-                "description": "Find a company by id",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "Company id is required"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Company found successfully",
-                        "schema": {
-                            "$ref": "#/components/schemas/Company"
-                        }
-                    },
-                    "400": {
-                        "description": "Company does not exist"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Update company",
-                "description": "Update a company by id",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "Company id is required"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "cnpj": {
-                                        "type": "string"
-                                    },
-                                    "category": {
-                                        "type": "string"
-                                    },
-                                    "description": {
-                                        "type": "string"
-                                    },
-                                    "services": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "physical_localization": {
-                                        "type": "boolean"
-                                    },
-                                    "telephone": {
-                                        "type": "string"
-                                    },
-                                    "whatsapp": {
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "website": {
-                                        "type": "string"
-                                    },
-                                    "address": {
-                                        "$ref": "#/components/schemas/Address"
-                                    }
-                                }
-                            },
-                            "examples": {
-                                "company": {
-                                    "value": {
-                                        "name": "Company Update",
-                                        "cnpj": "1234567890",
-                                        "category": "Category Update",
-                                        "description": "Description Update",
-                                        "services": [
-                                            "Service 1 Update",
-                                            "Service2 Update"
-                                        ],
-                                        "physical_localization": true,
-                                        "telephone": "12345678",
-                                        "whatsapp": "123456858",
-                                        "email": "business@update.com",
-                                        "website": "www.update.com",
-                                        "address": {
-                                            "cep": "123456",
-                                            "street": "Street Update",
-                                            "district": "District Update",
-                                            "number": 123,
-                                            "state": "MG",
-                                            "city": "City Update"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Company update successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Company"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Company not exists"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Delete a company",
-                "description": "Delete a company by id company",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "Company id is required"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Company removed successfully"
-                    },
-                    "404": {
-                        "description": "Company not found"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        },
-        "/companies/schedules/{id}": {
-            "put": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Update a schedule",
-                "description": "update a schedule by schedule id",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "Schedule id is required"
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Schedule"
-                            },
-                            "examples": {
-                                "schedule": {
-                                    "value": {
-                                        "day_of_week": "Friday",
-                                        "opening_time": "09:00",
-                                        "closing_time": "19:00",
-                                        "company_id": "Your Company ID"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Schedule update successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Schedule"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Schedule does not exists"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Companies"
-                ],
-                "summary": "Delete a schedule",
-                "description": "Delete a company schedule by schedule id",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "Schedule id is required"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Schedule deleted successfully"
-                    },
-                    "400": {
-                        "description": "Schedule not found"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
-                    }
-                }
-            }
-        }
-    },
-    "components": {
-        "schemas": {
-            "User": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                }
-            },
-            "UserTokens": {
-                "type": "object",
-                "properties": {
-                    "refresh_token": {
-                        "type": "string"
-                    },
-                    "token": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Company": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "cnpj": {
-                        "type": "string"
-                    },
-                    "category": {
-                        "type": "string"
-                    },
-                    "services": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "physical_localization": {
-                        "type": "boolean"
-                    },
-                    "contact": {
-                        "$ref": "#/components/schemas/Contact"
-                    },
-                    "schedules": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Schedule"
-                        }
-                    },
-                    "address": {
-                        "$ref": "#/components/schemas/Address"
-                    }
-                }
-            },
-            "Schedule": {
-                "type": "object",
-                "properties": {
-                    "day_of_week": {
-                        "type": "string"
-                    },
-                    "opening_type": {
-                        "type": "string"
-                    },
-                    "closing_time": {
-                        "type": "string"
-                    },
-                    "lunch_time": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Contact": {
-                "type": "object",
-                "properties": {
-                    "telephone": {
-                        "type": "string"
-                    },
-                    "whatsapp": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "website": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Address": {
-                "type": "object",
-                "properties": {
-                    "cep": {
-                        "type": "string"
-                    },
-                    "street": {
-                        "type": "string"
-                    },
-                    "district": {
-                        "type": "string"
-                    },
-                    "number": {
-                        "type": "integer"
-                    },
-                    "state": {
-                        "type": "string"
-                    },
-                    "city": {
-                        "type": "string"
-                    }
-                }
-            },
-            "ImageCompany": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "title": {
-                        "type": "string"
-                    },
-                    "image_name": {
-                        "type": "string"
-                    },
-                    "image_url": {
-                        "type": "string"
-                    },
-                    "company": {
-                        "$ref": "#/components/schemas/Company"
-                    }
-                }
-            }
-        },
-        "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
-            }
-        }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Start Business Documentation",
+    "description": "This is a api start business",
+    "version": "1.0.0",
+    "contact": {
+      "email": "anderson.ferreira@aluno.ufop.br"
     }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "John Doe",
+                    "email": "john@example.com",
+                    "password": "12345678"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Email address already used"
+          },
+          "200": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update a user",
+        "description": "Update a user by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Josy Doe",
+                    "email": "josy@example.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete a user",
+        "description": "Delete a user by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User removed successfully"
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get profile",
+        "description": "Get profile to user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/avatar": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update a user avatar",
+        "description": "Update a user avatar image",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Image avatar updated"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "tags": ["Sessions"],
+        "summary": "Authentication User",
+        "description": "Authentication user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Email or password invalid!"
+          }
+        }
+      }
+    },
+    "/sessions/refresh-token": {
+      "post": {
+        "tags": ["Sessions"],
+        "summary": "Refresh token",
+        "description": "Generate a new refresh token to the user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Refresh token generated successfully",
+            "schema": {
+              "type": "object",
+              "$ref": "#/components/schemas/UserTokens"
+            }
+          },
+          "400": {
+            "description": "Refresh token does not exists"
+          }
+        }
+      }
+    },
+    "/password/forgot": {
+      "post": {
+        "tags": ["Password"],
+        "summary": "Forgot password",
+        "description": "Forgot password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "User does not exists"
+          }
+        }
+      }
+    },
+    "/password/reset": {
+      "post": {
+        "tags": ["Password"],
+        "summary": "Reset password",
+        "description": "Reset password",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Token password",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Token does not exists"
+          }
+        }
+      }
+    },
+    "/companies": {
+      "post": {
+        "tags": ["Companies"],
+        "summary": "Create a company",
+        "description": "Create a new company",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Company"
+              },
+              "examples": {
+                "company": {
+                  "value": {
+                    "name": "Business Example",
+                    "cnpj": "123456",
+                    "category": "Category Example",
+                    "description": "Description Example",
+                    "services": ["Service 1", "Service 2"],
+                    "schedules": [
+                      {
+                        "weekday": "Saturday",
+                        "opening_time": "08:00",
+                        "closing_time": "18:00",
+                        "lunch_time": "12:00-13:00"
+                      },
+                      {
+                        "weekday": "Tuesday",
+                        "opening_time": "08:00",
+                        "closing_time": "18:00",
+                        "lunch_time": "12:00-13:00"
+                      }
+                    ],
+                    "physical_localization": true,
+                    "telephone": "123456",
+                    "whatsapp": "123456",
+                    "email": "email@example.com",
+                    "website": "http://www.example.com",
+                    "address": {
+                      "cep": "123456",
+                      "street": "Street Test",
+                      "district": "District Test",
+                      "number": 123,
+                      "state": "MG",
+                      "city": "City Test"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Company already exists"
+          },
+          "200": {
+            "description": "Company created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Companies"],
+        "summary": "List companies",
+        "description": "List all companies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Companies found successfully",
+            "schema": {
+              "$ref": "#/components/schemas/Company"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/companies/images/{id}": {
+      "post": {
+        "tags": ["Companies"],
+        "summary": "Upload a company image",
+        "description": "Upload a image to company",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Company id is required"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Company image created successfully"
+          },
+          "400": {
+            "description": "Company does not exist"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Companies"],
+        "summary": "Update image company",
+        "description": "Update image company by image id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Image id is required"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "company": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image has updated successfully"
+          },
+          "400": {
+            "description": "Image id does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Companies"],
+        "summary": "Delete a image company",
+        "description": "Delete a image company by image id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Image id is required"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image deleted successfully"
+          },
+          "400": {
+            "description": "Image not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/companies/{id}": {
+      "get": {
+        "tags": ["Companies"],
+        "summary": "Find a company",
+        "description": "Find a company by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Company id is required"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Company found successfully",
+            "schema": {
+              "$ref": "#/components/schemas/Company"
+            }
+          },
+          "400": {
+            "description": "Company does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Companies"],
+        "summary": "Update company",
+        "description": "Update a company by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Company id is required"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "services": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "physical_localization": {
+                    "type": "boolean"
+                  },
+                  "telephone": {
+                    "type": "string"
+                  },
+                  "whatsapp": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "website": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              },
+              "examples": {
+                "company": {
+                  "value": {
+                    "name": "Company Update",
+                    "cnpj": "1234567890",
+                    "category": "Category Update",
+                    "description": "Description Update",
+                    "services": ["Service 1 Update", "Service2 Update"],
+                    "physical_localization": true,
+                    "telephone": "12345678",
+                    "whatsapp": "123456858",
+                    "email": "business@update.com",
+                    "website": "www.update.com",
+                    "address": {
+                      "cep": "123456",
+                      "street": "Street Update",
+                      "district": "District Update",
+                      "number": 123,
+                      "state": "MG",
+                      "city": "City Update"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Company update successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Company not exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Companies"],
+        "summary": "Delete a company",
+        "description": "Delete a company by id company",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Company id is required"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Company removed successfully"
+          },
+          "404": {
+            "description": "Company not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/companies/schedules/{id}": {
+      "put": {
+        "tags": ["Companies"],
+        "summary": "Update a schedule",
+        "description": "update a schedule by schedule id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Schedule id is required"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Schedule"
+              },
+              "examples": {
+                "schedule": {
+                  "value": {
+                    "weekday": "Friday",
+                    "opening_time": "09:00",
+                    "closing_time": "19:00",
+                    "company_id": "Your Company ID"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Schedule update successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Schedule"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Schedule does not exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Companies"],
+        "summary": "Delete a schedule",
+        "description": "Delete a company schedule by schedule id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Schedule id is required"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule deleted successfully"
+          },
+          "400": {
+            "description": "Schedule not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/services/{id}": {
+      "post": {
+        "tags": ["Services"],
+        "summary": "Create a new service",
+        "description": "Create a new service to company",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Company id is required"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Service"
+              },
+              "examples": {
+                "service": {
+                  "value": {
+                    "name": "Manutenção de computadores",
+                    "description": "Concerto e reparo de peças de computadores e notebooks",
+                    "price": 100.0,
+                    "category": "Informática"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Company id does not exist"
+          },
+          "201": {
+            "description": "Service created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/services/{company_id}": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Find service by company",
+        "description": "Find service by company and by name",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "required": true,
+            "description": "Company id is required"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Service name"
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Company not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/services/category/{company_id}": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Find service by category",
+        "description": "Find service company by category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "required": true,
+            "description": "Company id is required"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Category name"
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Company not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/services/image/{service_id}": {
+      "patch": {
+        "tags": ["Services"],
+        "summary": "Upload a image service",
+        "description": "Upload a image service by service id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "description": "service id is required"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "service": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Image updated"
+          },
+          "404": {
+            "description": "Service not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/services/{service_id}": {
+      "put": {
+        "tags": ["Services"],
+        "summary": "Update a service",
+        "description": "Update a service by service id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "description": "service id is required"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Service"
+              },
+              "examples": {
+                "service": {
+                  "value": {
+                    "name": "Manutenção de computadores",
+                    "description": "Concerto e reparo de peças de computadores e notebooks",
+                    "price": 100.0,
+                    "category": "Informática"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Company id does not exist"
+          },
+          "201": {
+            "description": "Service updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Services"],
+        "summary": "Get Service Highlight",
+        "description": "Get service highlight by your id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "description": "service id is required"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Service id does not exist"
+          },
+          "204": {
+            "description": "Service highlight updated"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Services"],
+        "summary": "Delete a service",
+        "description": "Delete a service by service id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "description": "service id is required"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service removed successfully"
+          },
+          "400": {
+            "description": "Service not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/services/favorites/{service_id}": {
+      "patch": {
+        "tags": ["Services"],
+        "summary": "Get Favorites",
+        "description": "Get service with favorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "required": true,
+            "description": "service id is required"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Service id does not exist"
+          },
+          "204": {
+            "description": "Service favorite updated"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserTokens": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cnpj": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "physical_localization": {
+            "type": "boolean"
+          },
+          "contact": {
+            "$ref": "#/components/schemas/Contact"
+          },
+          "schedules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Schedule"
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          }
+        }
+      },
+      "Schedule": {
+        "type": "object",
+        "properties": {
+          "weekday": {
+            "type": "string"
+          },
+          "opening_type": {
+            "type": "string"
+          },
+          "closing_time": {
+            "type": "string"
+          },
+          "lunch_time": {
+            "type": "string"
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "telephone": {
+            "type": "string"
+          },
+          "whatsapp": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "cep": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "district": {
+            "type": "string"
+          },
+          "number": {
+            "type": "integer"
+          },
+          "state": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          }
+        }
+      },
+      "ImageCompany": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "image_name": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string"
+          },
+          "company": {
+            "$ref": "#/components/schemas/Company"
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string"
+          },
+          "company_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }

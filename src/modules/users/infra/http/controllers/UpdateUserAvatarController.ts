@@ -5,16 +5,16 @@ import { UpdateUserAvatarService } from "@modules/users/services/UpdateUserAvata
 
 export class UpdateUserAvatarController {
 
-    async handle(request: Request, response: Response): Promise<Response> {
+  async handle(request: Request, response: Response): Promise<Response> {
 
-        const { id } = request.user;
+    const { id } = request.user;
 
-        const avatar_url = request.file.filename;
+    const avatar_url = request.file.filename;
 
-        const updateUserAvatarService = container.resolve(UpdateUserAvatarService);
+    const updateUserAvatarService = container.resolve(UpdateUserAvatarService);
 
-        await updateUserAvatarService.execute({ user_id: id, avatar_url });
+    await updateUserAvatarService.execute({ user_id: id, avatar_url });
 
-        return response.status(204).send();
-    }
+    return response.status(204).send();
+  }
 }

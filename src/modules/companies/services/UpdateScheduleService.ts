@@ -1,47 +1,97 @@
-import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
+
+import { AppError } from "@shared/errors/AppError";
+
 import { Schedule } from "../infra/prisma/entities/Schedule";
 import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
 
+interface ISchedules {
+  id?: string;
+  weekday: string;
+  opening_time: string;
+  closing_time: string;
+  lunch_time?: string;
+  company_id?: string;
+}
 interface IRequest {
-    id?: string;
-    day_of_week: string;
-    opening_time: string;
-    closing_time: string;
-    lunch_time?: string;
-    company_id: string;
+  company_id: string;
+  schedules: ISchedules[];
 }
 
 @injectable()
 export class UpdateScheduleService {
 
-    constructor(
-        @inject("SchedulesRepository")
-        private scheduleRepository: ISchedulesRepository,
-    ) { }
+  constructor(
+    @inject("CompaniesRepository")
+    private companyRepository: ICompaniesRepository,
+    @inject("SchedulesRepository")
+    private scheduleRepository: ISchedulesRepository
+  ) { }
 
-    public async execute(data: IRequest): Promise<Schedule> {
+  public async execute({ company_id, schedules }: IRequest): Promise<ISchedules[]> {
 
-        const schedule = await this.scheduleRepository.findById(data.id);
+    const company = await this.companyRepository.findById(company_id);
 
-        if (!schedule) {
-            throw new AppError("Schedule not exist!");
+    if (!company) {
+      throw new AppError("Compony not found");
+    }
+
+    const listSchedules = await this.scheduleRepository.findSchedulesByCompany(company.id);
+
+    const newSchedules: ISchedules[] = [];
+    const schedulesWithoutId: ISchedules[] = [];
+
+    for (const schedule of schedules) {
+      if (!schedule.id) {
+        schedulesWithoutId.push(schedule);
+        continue;
+      }
+
+      const oldScheduleIndex = listSchedules.findIndex(s => s.id === schedule.id);
+
+      if (oldScheduleIndex === -1) {
+        newSchedules.push(schedule);
+      } else {
+        const oldSchedule = listSchedules[oldScheduleIndex];
+        if (
+          oldSchedule.weekday !== schedule.weekday ||
+          oldSchedule.opening_time !== schedule.opening_time ||
+          oldSchedule.closing_time !== schedule.closing_time ||
+          oldSchedule.lunch_time !== schedule.lunch_time
+        ) {
+          newSchedules.push(schedule);
         }
 
-        if (data.company_id !== schedule.company_id) {
-            throw new AppError("Company invalid!");
-        }
+        listSchedules.splice(oldScheduleIndex, 1);
+      }
+    }
 
-        const update = await this.scheduleRepository.update({
-            id: data.id,
-            day_of_week: data.day_of_week,
-            opening_time: data.opening_time,
-            closing_time: data.closing_time,
-            lunch_time: data.lunch_time,
-            company_id: data.company_id,
+    // Deleta os schedules que não existem mais
+    for (const schedule of listSchedules) {
+      await this.scheduleRepository.delete(schedule.id);
+    }
+
+    // Insere ou atualiza os schedules
+    const updatedSchedules: Schedule[] = [];
+
+    if (schedulesWithoutId.length > 0) {
+      for (const schedule of schedulesWithoutId) {
+        const addNewSchedules = await this.scheduleRepository.create({
+          ...schedule,
+          company_id
         });
 
-        return update;
+        updatedSchedules.push(addNewSchedules);
+
+      }
     }
+
+    for (const schedule of newSchedules) {
+      const updatedSchedule = await this.scheduleRepository.update(schedule);
+      updatedSchedules.push(updatedSchedule);
+    }
+
+    return updatedSchedules;
+  }
 }

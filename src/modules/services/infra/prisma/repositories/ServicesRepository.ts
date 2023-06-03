@@ -1,11 +1,26 @@
 import { prisma } from "@database/prisma";
 import { ICreateServiceDTO } from "@modules/services/dtos/ICreateServiceDTO";
 import { IServicesRepository } from "@modules/services/repositories/IServicesRepository";
+
 import { Service } from "../entities/Service";
 
 export class ServicesRepository implements IServicesRepository {
 
-    public async create({
+  public async create({
+    id,
+    name,
+    description,
+    price,
+    category,
+    image_url,
+    highlight_service,
+    favorites,
+    stars,
+    assessments,
+    company_id
+  }: ICreateServiceDTO): Promise<Service> {
+    const service = await prisma.service.create({
+      data: {
         id,
         name,
         description,
@@ -17,81 +32,89 @@ export class ServicesRepository implements IServicesRepository {
         stars,
         assessments,
         company_id
-    }: ICreateServiceDTO): Promise<Service> {
-        const service = await prisma.service.create({
-            data: {
-                id,
-                name,
-                description,
-                price,
-                category,
-                image_url,
-                highlight_service,
-                favorites,
-                stars,
-                assessments,
-                company_id
-            }
-        });
+      }
+    });
 
-        return service;
-    }
+    return service;
+  }
 
-    public async listServicesByCompany(company_id: string): Promise<Service[]> {
-        const services = await prisma.service.findMany({
-            where: { company_id },
-        });
+  public async findServiceById(id: string): Promise<Service> {
+    const service = await prisma.service.findUnique({
+      where: {
+        id
+      }
+    });
 
-        return services;
-    }
+    return service;
+  }
 
-    public async listServicesByCategory(category: string): Promise<Service[]> {
-        const services = await prisma.service.findMany({
-            where: {
-                category: {
-                    contains: category,
-                }
-            }
-        });
+  public async listServicesByCompany(company_id: string, name?: string, category?: string, highlight_service?: boolean): Promise<Service[]> {
+    const services = await prisma.service.findMany({
+      where: {
+        company_id,
+        ...(name && {
+          name: {
+            contains: name
+          }
+        }),
+        ...(category && { category }),
+        ...(highlight_service && { highlight_service })
+      }
+    });
 
-        return services;
-    }
+    return services;
+  }
 
-    public async findServicesByName(name: string): Promise<Service[]> {
-        const services = await prisma.service.findMany({
-            where: {
-                name: {
-                    contains: name,
-                }
-            }
-        });
+  public async update(data: ICreateServiceDTO): Promise<Service> {
+    const service = await prisma.service.update({
+      where: { id: data.id },
+      data: { ...data }
+    });
 
-        return services;
-    }
+    return service;
+  }
 
-    public async findServiceById(id: string): Promise<Service> {
-        const service = await prisma.service.findUnique({
-            where: {
-                id
-            }
-        });
+  public async updateStars(service_id: string, stars: number): Promise<Service> {
+    const service = await prisma.service.update({
+      where: { id: service_id },
+      data: {
+        stars
+      }
+    });
 
-        return service;
-    }
+    return service;
+  }
 
-    public async update(data: ICreateServiceDTO): Promise<Service> {
-        const service = await prisma.service.update({
-            where: { id: data.id },
-            data: { ...data }
-        });
+  public async favoriteService(service_id: string): Promise<Service> {
+    const addFavorite = await prisma.service.update({
+      where: { id: service_id },
+      data: {
+        favorites: {
+          increment: 1
+        }
+      }
+    });
 
-        return service;
-    }
+    return addFavorite;
+  }
 
-    public async delete(id: string): Promise<void> {
-        await prisma.service.delete({
-            where: { id }
-        });
-    }
+  public async unfavoriteService(service_id: string): Promise<Service> {
+    const addFavorite = await prisma.service.update({
+      where: { id: service_id },
+      data: {
+        favorites: {
+          decrement: 1
+        }
+      }
+    });
+
+    return addFavorite;
+  }
+
+  public async delete(id: string): Promise<void> {
+    await prisma.service.delete({
+      where: { id }
+    });
+  }
 
 }

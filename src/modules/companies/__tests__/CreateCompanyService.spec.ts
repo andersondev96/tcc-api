@@ -1,223 +1,392 @@
-import { AppError } from "@shared/errors/AppError";
-import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
+import { FakeCategoriesRepository } from "@modules/categories/repositories/fakes/FakeCategoriesRepository";
+import { ICategoriesRepository } from "@modules/categories/repositories/ICategoriesRepository";
+import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { FakeCacheProvider } from "@shared/container/providers/CacheProvider/Fakes/FakeCacheProvider";
+import { ICacheProvider } from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+import { AppError } from "@shared/errors/AppError";
+
+import { FakeEntrepreneursRepository } from "../../entrepreneurs/repositories/Fakes/FakeEntrepreneursRepository";
+import { IEntrepreneursRepository } from "../../entrepreneurs/repositories/IEntrepreneursRepository";
+import { FakeAddressesRepository } from "../repositories/fakes/FakeAddressesRepository";
+import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
+import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
+import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
+import { IAddressesRepository } from "../repositories/IAddressesRepository";
+import { ICompaniesRepository } from "../repositories/ICompaniesRepository";
 import { IContactsRepository } from "../repositories/IContactsRepository";
 import { ISchedulesRepository } from "../repositories/ISchedulesRepository";
-import { IAddressesRepository } from "../repositories/IAddressesRepository";
-import { FakeCompaniesRepository } from "../repositories/fakes/FakeCompaniesRepository";
-import { FakeUsersRepository } from "@modules/users/repositories/Fakes/FakeUsersRepository";
-import { FakeSchedulesRepository } from "../repositories/fakes/FakeSchedulesRepository";
-import { FakeAddressesRepository } from "../repositories/fakes/FakeAddressesRepository";
-import { FakeContactsRepository } from "../repositories/fakes/FakeContactsRepository";
 import { CreateCompanyService } from "../services/CreateCompanyService";
 
 let fakeCompanyRepository: ICompaniesRepository;
+let fakeCategoryRepository: ICategoriesRepository;
 let fakeUserRepository: IUsersRepository;
 let fakeContactRepository: IContactsRepository;
 let fakeScheduleRepository: ISchedulesRepository;
 let fakeAddressRepository: IAddressesRepository;
+let fakeEntrepreneurRepository: IEntrepreneursRepository;
+let fakeCacheProvider: ICacheProvider;
 let createCompanyService: CreateCompanyService;
 
-describe('CreateCompanyService', () => {
-    beforeEach(() => {
-        fakeCompanyRepository = new FakeCompaniesRepository();
-        fakeUserRepository = new FakeUsersRepository();
-        fakeContactRepository = new FakeContactsRepository();
-        fakeScheduleRepository = new FakeSchedulesRepository();
-        fakeAddressRepository = new FakeAddressesRepository();
-        createCompanyService = new CreateCompanyService(
-            fakeCompanyRepository,
-            fakeUserRepository,
-            fakeContactRepository,
-            fakeScheduleRepository,
-            fakeAddressRepository
-        );
-    })
 
-    it("Should be able to create a company", async () => {
-        const user = await fakeUserRepository.create({
-            name: "John Doe",
-            email: "john.doe@example.com",
-            password: "123456"
-        });
+describe("CreateCompanyService", () => {
+  beforeEach(() => {
+    fakeCompanyRepository = new FakeCompaniesRepository();
+    fakeCategoryRepository = new FakeCategoriesRepository();
+    fakeUserRepository = new FakeUsersRepository();
+    fakeContactRepository = new FakeContactsRepository();
+    fakeScheduleRepository = new FakeSchedulesRepository();
+    fakeAddressRepository = new FakeAddressesRepository();
+    fakeEntrepreneurRepository = new FakeEntrepreneursRepository(),
+      fakeCacheProvider = new FakeCacheProvider();
+    createCompanyService = new CreateCompanyService(
+      fakeCompanyRepository,
+      fakeCategoryRepository,
+      fakeUserRepository,
+      fakeContactRepository,
+      fakeScheduleRepository,
+      fakeAddressRepository,
+      fakeEntrepreneurRepository,
+      fakeCacheProvider
+    );
+  });
 
-        const company = await createCompanyService.execute({
-            name: "Business Company",
-            cnpj: "123456",
-            category: "Supermarket",
-            description: "Supermarket description",
-            services: ["Supermarket", "Shopping"],
-            schedules: [
-                {
-                    "day_of_week": "Monday",
-                    "opening_time": "08:00",
-                    "closing_time": "18:00",
-                    "lunch_time": "12:00-13:00"
-                },
-            ],
-            physical_localization: true,
-            address:
-            {
-                "cep": "123456",
-                "street": "Street Test",
-                "district": "District Test",
-                "number": 123,
-                "state": "MG",
-                "city": "City Test"
-            },
-            telephone: "1234567",
-            email: "business@example.com",
-            website: "www.example.com",
-            whatsapp: "12345685",
-            user_id: user.id,
-        });
-
-        expect(company).toHaveProperty("id");
+  it("Should be able to create a company", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
     });
 
-    it("Should not be able to create a company if this user not exists", async () => {
-        await expect(
-            createCompanyService.execute({
-                name: "Business Company",
-                cnpj: "123456",
-                category: "Supermarket",
-                description: "Supermarket description",
-                services: ["Supermarket", "Shopping"],
-                schedules: [
-                    {
-                        "day_of_week": "Monday",
-                        "opening_time": "08:00",
-                        "closing_time": "18:00",
-                        "lunch_time": "12:00-13:00"
-                    },
-                ],
-                physical_localization: false,
-                telephone: "1234567",
-                email: "business@example.com",
-                website: "www.example.com",
-                whatsapp: "12345685",
-                user_id: 'user-invalid',
-            })
-        ).rejects.toBeInstanceOf(AppError);
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
     });
 
-    it("Should not be able to create a company if this company already exists", async () => {
-        const user = await fakeUserRepository.create({
-            name: "John Doe",
-            email: "john.doe@example.com",
-            password: "123456"
-        });
-
-        await createCompanyService.execute({
-            name: "Business Company",
-            cnpj: "123456",
-            category: "Supermarket",
-            description: "Supermarket description",
-            services: ["Supermarket", "Shopping"],
-            schedules: [
-                {
-                    "day_of_week": "Monday",
-                    "opening_time": "08:00",
-                    "closing_time": "18:00",
-                    "lunch_time": "12:00-13:00"
-                },
-            ],
-            physical_localization: false,
-            telephone: "1234567",
-            email: "business@example.com",
-            website: "www.example.com",
-            whatsapp: "12345685",
-            user_id: user.id,
-        });
-
-        await expect(
-            createCompanyService.execute({
-                name: "Business Company",
-                cnpj: "123456",
-                category: "Supermarket",
-                description: "Supermarket description",
-                services: ["Supermarket", "Shopping"],
-                schedules: [
-                    {
-                        "day_of_week": "Monday",
-                        "opening_time": "08:00",
-                        "closing_time": "18:00",
-                        "lunch_time": "12:00-13:00"
-                    },
-                ],
-                physical_localization: false,
-                telephone: "1234567",
-                email: "business@example.com",
-                website: "www.example.com",
-                whatsapp: "12345685",
-                user_id: user.id,
-            })
-        ).rejects.toBeInstanceOf(AppError);
+    const company = await createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      cep: "35910000",
+      street: "Street Test",
+      district: "District Test",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
     });
 
-    it("Should not be able to create a company if number of services exceeds 3", async () => {
-        const user = await fakeUserRepository.create({
-            name: "John Doe",
-            email: "john.doe@example.com",
-            password: "123456"
-        });
+    const address = await fakeAddressRepository.findAddressByCompany(company.id);
 
-        await expect(
-            createCompanyService.execute({
-                name: "Business Company",
-                cnpj: "123456",
-                category: "Supermarket",
-                description: "Supermarket description",
-                services: ["Service 1", "Service 2", "Service 3", "Service 4"],
-                schedules: [
-                    {
-                        "day_of_week": "Monday",
-                        "opening_time": "08:00",
-                        "closing_time": "18:00",
-                        "lunch_time": "12:00-13:00"
-                    },
-                ],
-                physical_localization: false,
-                telephone: "1234567",
-                email: "business@example.com",
-                website: "www.example.com",
-                whatsapp: "12345685",
-                user_id: user.id,
-            })
-        ).rejects.toBeInstanceOf(AppError);
+    expect(company).toHaveProperty("id");
+    expect(address).toHaveProperty("id");
+  });
+
+  it("Should not be able to create a company if this user not exists", async () => {
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
     });
 
-    it("Should not be able to create a company if physical localization is true and address is undefined", async () => {
-        const user = await fakeUserRepository.create({
-            name: "John Doe",
-            email: "john.doe@example.com",
-            password: "123456"
-        });
+    await expect(
+      createCompanyService.execute({
+        name: "Business Company",
+        cnpj: "123456",
+        category_id: category.id,
+        description: "Supermarket description",
+        services: ["Supermarket", "Shopping"],
+        schedules: [
+          {
+            "weekday": "Monday",
+            "opening_time": "08:00",
+            "closing_time": "18:00",
+            "lunch_time": "12:00-13:00"
+          }
+        ],
+        physical_localization: false,
+        telephone: "1234567",
+        email: "business@example.com",
+        website: "www.example.com",
+        whatsapp: "12345685",
+        user_id: "user-invalid"
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
 
-        await expect(
-            createCompanyService.execute({
-                name: "Business Company",
-                cnpj: "123456",
-                category: "Supermarket",
-                description: "Supermarket description",
-                services: ["Service1", "Service2"],
-                schedules: [
-                    {
-                        "day_of_week": "Monday",
-                        "opening_time": "08:00",
-                        "closing_time": "18:00",
-                        "lunch_time": "12:00-13:00"
-                    },
-                ],
-                physical_localization: true,
-                telephone: "1234567",
-                email: "business@example.com",
-                website: "www.example.com",
-                whatsapp: "12345685",
-                user_id: user.id,
-            })
-        ).rejects.toBeInstanceOf(AppError);
+  it("Should not be able to create a company if this company already exists", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
     });
 
+    const user2 = await fakeUserRepository.create({
+      name: "Jan Doe",
+      email: "jan.doe@example.com",
+      password: "123456"
+    });
 
-})
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    await createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      cep: "57018710",
+      street: "Street Test",
+      district: "District Test",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    });
+
+    await expect(createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      cep: "57018710",
+      street: "Street Test",
+      district: "District Test",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user2.id
+    })).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("Should be able to create a company when entrepreneur exists", async () => {
+    const user = await fakeUserRepository.create({
+      name: "Jan Doe",
+      email: "jan.doe@example.com",
+      password: "123456"
+    });
+
+    const entrepreneur = await fakeEntrepreneurRepository.create({
+      user_id: user.id
+    });
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    await createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      cep: "57018710",
+      street: "Street Test",
+      district: "District Test",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    });
+
+    const findEntrepreneur = await fakeEntrepreneurRepository.findById(entrepreneur.id);
+
+    expect(findEntrepreneur).toHaveProperty("company_id");
+
+
+  });
+
+  it("Should not be able to create a company if user has a company", async () => {
+    const user = await fakeUserRepository.create({
+      name: "Jan Doe",
+      email: "jan.doe@example.com",
+      password: "123456"
+    });
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    await createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      cep: "57018710",
+      street: "Street Test",
+      district: "District Test",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    });
+
+    await expect(createCompanyService.execute({
+      name: "Business Company 2",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      schedules: [
+        {
+          "weekday": "Monday",
+          "opening_time": "08:00",
+          "closing_time": "18:00",
+          "lunch_time": "12:00-13:00"
+        }
+      ],
+      physical_localization: true,
+      cep: "57018710",
+      street: "Street Test",
+      district: "District Test",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    })).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("Should not be able to create a company if category not found", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
+    });
+
+    await expect(createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: "non-existent-category",
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      physical_localization: true,
+      cep: "11111111",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    })).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("Should not be able to create a company if CEP not found", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
+    });
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    await expect(createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      physical_localization: true,
+      cep: "11111111",
+      number: 123,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    })).rejects.toBeInstanceOf(AppError);
+  });
+
+  it("Should be able to create a company if not have a physical localization", async () => {
+    const user = await fakeUserRepository.create({
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "123456"
+    });
+
+    const category = await fakeCategoryRepository.create({
+      name: "Category Test"
+    });
+
+    const company = await createCompanyService.execute({
+      name: "Business Company",
+      cnpj: "123456",
+      category_id: category.id,
+      description: "Supermarket description",
+      services: ["Supermarket", "Shopping"],
+      physical_localization: false,
+      telephone: "1234567",
+      email: "business@example.com",
+      website: "www.example.com",
+      whatsapp: "12345685",
+      user_id: user.id
+    });
+
+    const address = await fakeAddressRepository.findAddressByCompany(company.id);
+
+    expect(company).toHaveProperty("id");
+    expect(address.company_id).toEqual(company.id);
+  });
+
+});

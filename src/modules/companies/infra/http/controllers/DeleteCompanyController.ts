@@ -1,17 +1,18 @@
-import { DeleteCompanyService } from "@modules/companies/services/DeleteCompanyService";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { DeleteCompanyService } from "@modules/companies/services/DeleteCompanyService";
+
 export class DeleteCompanyController {
 
-    public async handle(request: Request, response: Response): Promise<Response> {
+  public async handle(request: Request, response: Response): Promise<Response> {
 
-        const { id } = request.params;
+    const { id } = request.params;
 
-        const deleteCompanyController = container.resolve(DeleteCompanyService);
+    const deleteCompanyController = container.resolve(DeleteCompanyService);
 
-        await deleteCompanyController.execute(id);
+    await deleteCompanyController.execute(id);
 
-        return response.send().status(200);
-    }
+    return response.send().status(200);
+  }
 }

@@ -1,53 +1,54 @@
 import { prisma } from "@database/prisma";
 import { ICreateContactDTO } from "@modules/companies/dtos/ICreateContactDTO";
 import { IContactsRepository } from "@modules/companies/repositories/IContactsRepository";
+
 import { Contact } from "../entities/Contact";
 
 export class ContactsRepository implements IContactsRepository {
 
-    public async create({
+  public async create({
+    telephone,
+    email,
+    whatsapp,
+    website,
+    id
+  }: ICreateContactDTO): Promise<Contact> {
+    const contact = await prisma.contact.create({
+      data: {
+        id,
         telephone,
         email,
         whatsapp,
-        website,
+        website
+      }
+    });
+
+    return contact;
+  }
+
+  public async findById(id: string): Promise<Contact> {
+    const findByContact = await prisma.contact.findUnique({
+      where: {
         id
-    }: ICreateContactDTO): Promise<Contact> {
-        const contact = await prisma.contact.create({
-            data: {
-                id,
-                telephone,
-                email,
-                whatsapp,
-                website,
-            },
-        });
+      }
+    });
 
-        return contact;
-    }
+    return findByContact;
+  }
 
-    public async findById(id: string): Promise<Contact> {
-        const findByContact = await prisma.contact.findUnique({
-            where: {
-                id
-            },
-        });
+  public async update(data: ICreateContactDTO): Promise<Contact> {
+    const updateContact = await prisma.contact.update({
+      where: { id: data.id },
+      data: { ...data }
+    });
 
-        return findByContact;
-    }
+    return updateContact;
+  }
 
-    public async update(data: ICreateContactDTO): Promise<Contact> {
-        const updateContact = await prisma.contact.update({
-            where: { id: data.id },
-            data: { ...data },
-        });
-
-        return updateContact;
-    }
-
-    public async delete(id: string): Promise<void> {
-        await prisma.contact.delete({
-            where: { id }
-        });
-    }
+  public async delete(id: string): Promise<void> {
+    await prisma.contact.delete({
+      where: { id }
+    });
+  }
 
 }

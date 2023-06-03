@@ -1,21 +1,22 @@
+import { getUserAvatarUrl } from "@shared/utils/getFilesUrl";
 import { IUserResponseDTO } from "../dtos/IUserResponseDTO";
 import { User } from "../infra/prisma/entities/User";
 
 export class UserMap {
 
-    static toDTO({
-        email,
-        name,
-        id,
-        avatar,
-    }: User): IUserResponseDTO {
-        const user = {
-            email,
-            name,
-            id,
-            avatar,
-            avatar_url: avatar && `${process.env.APP_API_URL}/avatar/${avatar}`,
-        };
-        return user;
-    }
+  static toDTO(user: User): IUserResponseDTO {
+
+    const { id, email, name, avatar, favorites } = user;
+
+    const userDTO = {
+      id,
+      name,
+      email,
+      avatar,
+      avatar_url: getUserAvatarUrl(user, "avatar"),
+      favorites
+    };
+
+    return userDTO;
+  }
 }

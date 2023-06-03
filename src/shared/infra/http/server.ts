@@ -1,6 +1,8 @@
-import "reflect-metadata";
+import "dotenv/config";
 import "express-async-errors";
+import "reflect-metadata";
+import "../../../modules/websocket/ChatService";
 
-import { app } from "./app";
+import { http } from "./app";
 
-app.listen(3333, () => console.log("Server is running!!"));
+http.listen(3333, () => console.log("Server is running!!"));

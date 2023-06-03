@@ -15,11 +15,29 @@ model User {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     avatar    String?
+    favorites String[]
 
-    userToken UserToken[]
-    Company   Company[]
+    userToken    UserToken[]
+    Company      Company?
+    Customer Customer?
+    Entrepreneur Entrepreneur[]
+    Assessment Assessment[]
+    Connection_Socket Connection_Socket[]
 
     @@map("users")
+}
+
+model Entrepreneur {
+    id         String   @id @default(uuid())
+    user_id    String   @unique
+    user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    company_id String?  @unique
+    company    Company? @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now())
+    entrepreneur_settings Entrepreneur_Settings?
+
+    @@map("entrepreneurs")
 }
 
 model UserToken {
@@ -37,12 +55,15 @@ model UserToken {
 model Company {
     id                    String         @id @default(uuid())
     name                  String         @unique
-    cnpj                  String
-    category              String
+    cnpj                  String?
+    category_id              String
+    category Category @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     description           String?
     services              String[]
     physical_localization Boolean
-    user_id               String
+    stars Int? @default(0)
+    favorites Int? @default(0)
+    user_id               String         @unique
     user                  User           @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     Service               Service[]
     contact               Contact        @relation(fields: [contact_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -50,8 +71,27 @@ model Company {
     Schedule              Schedule[]
     Address               Address?
     ImageCompany          ImageCompany[]
+    Entrepreneur          Entrepreneur[]
+    proposals Proposal[]
+    budgets Budget[]
+    customer_company Customer_Company[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@map("companies")
+}
+
+model Assessment {
+  id String @id @default(uuid())
+  user_id String
+  table_id String
+  comment String
+  stars Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+@@map("assessments")
 }
 
 model Contact {
@@ -69,7 +109,7 @@ model Contact {
 
 model Schedule {
     id           String   @id @default(uuid())
-    day_of_week  String
+    weekday       String
     opening_time String
     closing_time String
     lunch_time   String?
@@ -83,12 +123,14 @@ model Schedule {
 
 model Address {
     id         String  @id @default(uuid())
-    cep        String
-    street     String
-    district   String
-    number     Int
+    cep        String? @default("")
+    street     String? @default("")
+    district   String? @default("")
+    number     Int?
     state      String
     city       String
+    latitude Float
+    longitude Float
     company    Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
     company_id String  @unique
 
@@ -128,4 +170,132 @@ model Service {
     updatedAt         DateTime @updatedAt
 
     @@map("services")
+}
+
+model Category {
+  id String @id @default(uuid())
+  name  String @unique
+  subcategories String?
+  company Company[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model Proposal {
+  id String @id @default(uuid())
+  objective String
+  time DateTime? @default(now())
+  description String?
+  status String?
+  customer_id String 
+  company_id String
+  customer Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  company Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  budget Budget?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+@@map("proposals")
+}
+
+model Budget {
+  id String @id @default(uuid())
+  customer_id String
+  company_id String
+  proposal_id String @unique
+  description String
+  files String[]
+  delivery_date DateTime @db.Date
+  amount Float
+  installments Int 
+  customer Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: Cascade) 
+  company Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  proposal Proposal @relation(fields: [proposal_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("budgets")
+}
+
+model Customer {
+  id String @id @default(uuid())
+  user_id String @unique
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  telephone String?
+  status String?
+  proposal Proposal[]
+  budget Budget[]
+  customer_company Customer_Company[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("customers")
+}
+
+model Customer_Company {
+  id String @id @default(uuid())
+  company_id String
+  customer_id String
+  company Company @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  customer Customer @relation (fields: [customer_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("customers_companies")
+
+}
+
+model Entrepreneur_Settings {
+  id String @id @default(uuid())
+  entrepreneur_id String @unique
+  company_logo String?
+  highlight_services_quantity Int? @default(3)
+  online_budget Boolean? @default(false)
+  online_chat Boolean? @default(false)
+  email_notification Boolean? @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  entrepreneur Entrepreneur @relation(fields: [entrepreneur_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  @@map("entrepreneurs_settings")
+}
+
+model Chat {
+  id String @id @default(uuid())
+  name String?
+  text String
+  connection_id String
+  chatroom_id String
+  connection Connection_Socket @relation(fields: [connection_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  chatroom ChatRoom @relation(fields: [chatroom_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("chat")
+}
+
+model Connection_Socket {
+  id String @id @default(uuid())
+  user_id String @unique
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  socket_id String @unique
+  Chat Chat[]
+  ChatRoom ChatRoom[] @relation("ChatRoomConnections")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("connection_socket")
+}
+
+model ChatRoom {
+  id String @id @default(uuid())
+  connections_id String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  connections Connection_Socket[] @relation("ChatRoomConnections")
+  chats Chat[]
+
+  @@map("chat_room")
 }

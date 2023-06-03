@@ -1,104 +1,162 @@
 import { prisma } from "@database/prisma";
 import { ICreateCompanyDTO } from "@modules/companies/dtos/ICreateCompanyDTO";
 import { ICompaniesRepository } from "@modules/companies/repositories/ICompaniesRepository";
+
 import { Company } from "../entities/Company";
 
 export class CompaniesRepository implements ICompaniesRepository {
 
-    public async create({
+  public async create({
+    id,
+    name,
+    cnpj,
+    category_id,
+    description,
+    services,
+    physical_localization,
+    user_id,
+    contact_id
+  }: ICreateCompanyDTO): Promise<Company> {
+    const company = await prisma.company.create({
+      data: {
         id,
         name,
         cnpj,
-        category,
-        description,
+        category_id,
         services,
+        description,
         physical_localization,
         user_id,
-        contact_id,
-    }: ICreateCompanyDTO): Promise<Company> {
-        const company = await prisma.company.create({
-            data: {
-                id,
-                name,
-                cnpj,
-                category,
-                services,
-                description,
-                physical_localization,
-                user_id,
-                contact_id,
-            },
-        });
+        contact_id
+      }
+    });
 
-        return company;
-    }
+    return company;
+  }
 
-    public async listAll(): Promise<Company[]> {
-        const listAllCompanies = await prisma.company.findMany({
-            include: {
-                contact: true,
-                Address: true,
-                ImageCompany: true,
-                Schedule: true,
-            }
-        });
+  public async listAll(): Promise<Company[]> {
+    const listAllCompanies = await prisma.company.findMany({
+      include: {
+        contact: true,
+        Address: true,
+        ImageCompany: true,
+        Schedule: true,
+        Entrepreneur: {
+          include: {
+            entrepreneur_settings: true
+          }
+        }
+      }
+    });
 
-        console.log(listAllCompanies);
+    return listAllCompanies;
+  }
 
-        return listAllCompanies;
-    }
+  public async findByName(name: string): Promise<Company> {
+    const company = await prisma.company.findUnique({
+      where: { name }
+    });
 
-    public async listByLocalization(latitude: number, longitude: number): Promise<Company[] | undefined> {
-        throw new Error("Method not implemented.");
-    }
+    return company;
+  }
 
-    public async listByFilter(category?: string, state?: string, city?: string, price?: number): Promise<Company[] | undefined> {
-        throw new Error("Method not implemented.");
-    }
+  public async findByContactId(contact_id: string): Promise<Company> {
+    const findCompanyByContact = await prisma.company.findUnique({
+      where: { contact_id }
+    });
 
-    public async findByName(name: string): Promise<Company> {
-        const company = await prisma.company.findUnique({
-            where: { name },
-        });
+    return findCompanyByContact;
+  }
 
-        return company;
-    }
+  public async findByUser(user_id: string): Promise<Company> {
+    const findCompanyByUser = await prisma.company.findUnique({
+      where: { user_id },
+      include: {
+        contact: true,
+        Address: true,
+        ImageCompany: true,
+        Schedule: true,
+        Entrepreneur: {
+          include: {
+            entrepreneur_settings: true
+          }
+        }
+      }
+    });
 
-    public async findByContactId(contact_id: string): Promise<Company> {
-        const findCompanyByContact = await prisma.company.findUnique({
-            where: { contact_id },
-        });
+    return findCompanyByUser;
+  }
 
-        return findCompanyByContact;
-    }
+  public async findById(id: string): Promise<Company> {
+    const company = await prisma.company.findUnique({
+      where: { id },
+      include: {
+        contact: true,
+        Address: true,
+        ImageCompany: true,
+        Schedule: true,
+        Entrepreneur: {
+          include: {
+            entrepreneur_settings: true
+          }
+        }
+      }
+    });
 
-    public async findById(id: string): Promise<Company> {
-        const company = await prisma.company.findUnique({
-            where: { id },
-            include: {
-                contact: true,
-                Address: true,
-                ImageCompany: true,
-                Schedule: true,
-            }
-        });
+    return company;
+  }
 
-        return company;
-    }
+  public async update(company: ICreateCompanyDTO): Promise<Company> {
+    const updateCompany = await prisma.company.update({
+      where: { id: company.id },
+      data: { ...company }
+    });
 
-    public async update(company: ICreateCompanyDTO): Promise<Company> {
-        const updateCompany = await prisma.company.update({
-            where: { id: company.id },
-            data: { ...company },
-        });
+    return updateCompany;
+  }
 
-        return updateCompany;
-    }
+  public async updateStars(company_id: string, stars: number): Promise<Company> {
+    const updateCompany = await prisma.company.update({
+      where: { id: company_id },
+      data: {
+        stars
+      }
+    });
 
-    public async delete(id: string): Promise<void> {
-        await prisma.company.delete({
-            where: { id },
-        });
-    }
+    return updateCompany;
+  }
+
+  public async favoriteCompany(company_id: string): Promise<Company> {
+    const addFavorite = await prisma.company.update({
+      where: { id: company_id },
+      data: {
+        favorites: {
+          increment: 1
+        }
+      }
+    });
+
+    return addFavorite;
+  }
+
+  public async unfavoriteCompany(company_id: string): Promise<Company> {
+    const removeFavorite = await prisma.company.update({
+      where: { id: company_id },
+      data: {
+        favorites: {
+          decrement: 1
+        }
+      }
+    });
+
+    return removeFavorite;
+  }
+
+
+  public async delete(id: string): Promise<void> {
+    await prisma.company.delete({
+      where: { id }
+    });
+  }
 
 }

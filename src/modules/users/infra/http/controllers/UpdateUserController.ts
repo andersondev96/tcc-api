@@ -4,18 +4,18 @@ import { container } from "tsyringe";
 import { UpdateUserService } from "@modules/users/services/UpdateUserService";
 
 export class UpdateUserController {
-    async handle(request: Request, response: Response): Promise<Response> {
+  async handle(request: Request, response: Response): Promise<Response> {
 
-        const { id } = request.params;
+    const { id } = request.user;
 
-        const { name, email, password } = request.body;
+    const { name, email, password } = request.body;
 
-        const updateUserService = container.resolve(
-            UpdateUserService
-        );
+    const updateUserService = container.resolve(
+      UpdateUserService
+    );
 
-        const user = await updateUserService.execute({ id, name, email, password });
+    const user = await updateUserService.execute({ id, name, email, password });
 
-        return response.json(user);
-    }
+    return response.json(user);
+  }
 }

@@ -1,19 +1,30 @@
-import { UpdateImagesCompanyService } from "@modules/companies/services/UpdateImagesCompanyService";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { UpdateImagesCompanyService } from "@modules/companies/services/UpdateImagesCompanyService";
+
+interface IFiles {
+  filename: string;
+}
 export class UpdateImagesCompanyController {
 
-    public async handle(request: Request, response: Response): Promise<Response> {
+  public async handle(request: Request, response: Response): Promise<Response> {
 
-        const { id } = request.params;
+    const { company_id } = request.params;
 
-        const company = request.file.filename;
+    const company = request.files as IFiles[];
 
-        const updateImagesCompanyService = container.resolve(UpdateImagesCompanyService);
+    const imagesName = company.map((image) => image.filename);
 
-        await updateImagesCompanyService.execute(id, company);
+    console.log(imagesName);
 
-        return response.status(204).send();
-    }
+    const updateImagesCompanyService = container.resolve(UpdateImagesCompanyService);
+
+    await updateImagesCompanyService.execute({
+      company_id,
+      images: imagesName
+    });
+
+    return response.status(204).send();
+  }
 }
