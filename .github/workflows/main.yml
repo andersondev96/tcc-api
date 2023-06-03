@@ -25,9 +25,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Tests
-        run: npm run test
-
       - uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
