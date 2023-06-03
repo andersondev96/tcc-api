@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [homologation]
+    branches: [main]
 
 
   workflow_dispatch:
@@ -45,5 +45,5 @@ jobs:
             cd ~/app/tcc-api
             npm install
             npx prisma migrate deploy
-            pm2 restart tcc_api
+            pm2 restart api
           
