@@ -9,9 +9,9 @@ import swaggerUi from "swagger-ui-express";
 import upload from "@config/upload";
 import * as Sentry from "@sentry/node";
 import { AppError } from "@shared/errors/AppError";
-import rateLimiter from "@shared/infra/http/middlewares/rateLimiter";
 
 import swaggerFile from "../../../swagger.json";
+import rateLimiter from "./middlewares/rateLimiter";
 import routes from "./routes";
 
 const app = express();

@@ -173,9 +173,15 @@ export class UpdateCompanyService {
     }
 
     const companyCache = await this.cacheProvider.recover<Company>(`company:${id}`);
+    const compnayUserCache = await this.cacheProvider.recover<Company>(`companies-list:${findCompanyById.user_id}`);
 
     if (companyCache) {
       await this.cacheProvider.invalidatePrefix('company');
+    }
+
+    if (compnayUserCache) {
+      await this.cacheProvider.invalidatePrefix(`companies-list`);
+      console.log('companies-list invalid')
     }
 
     const response = {
