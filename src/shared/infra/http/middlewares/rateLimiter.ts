@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import IORedis from "ioredis";
 import { RateLimiterRedis } from "rate-limiter-flexible";
 
-import { AppError } from "@shared/errors/AppError";
 
 const redisClient = new IORedis({
   host: process.env.REDIS_HOST,
@@ -12,7 +11,7 @@ const redisClient = new IORedis({
 const limiter = new RateLimiterRedis({
   storeClient: redisClient,
   keyPrefix: "rateLimiter",
-  points: 10,
+  points: 20,
   duration: 5
 });
 
@@ -26,6 +25,9 @@ export default async function rateLimiter(
 
     return next();
   } catch (err) {
-    throw new AppError("Too many requests", 429);
+    response.status(429).json({
+      error: "Too Many Requests",
+      message: "You have exceeded the request rate limit. Please try again later."
+    });
   }
 }
