@@ -24,7 +24,10 @@ export class ServiceMapper {
       description,
       price,
       category,
-      image_url: image_url && `${process.env.APP_API_URL}/service/${image_url}`,
+      image_url: image_url ?
+        `${process.env.disk === "local"
+          ? process.env.APP_API_URL
+          : process.env.AWS_BUCKET_URL}/service/${image_url}` : undefined,
       highlight_service,
       favorites,
       stars,
