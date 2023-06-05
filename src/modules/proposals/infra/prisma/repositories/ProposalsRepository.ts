@@ -11,6 +11,7 @@ export class ProposalsRepository implements IProposalsRepository {
     objective,
     time,
     description,
+    status,
     customer_id,
     company_id
   }: ICreateProposalDTO): Promise<Proposal> {
@@ -20,6 +21,7 @@ export class ProposalsRepository implements IProposalsRepository {
         objective,
         time,
         description,
+        status,
         customer_id,
         company_id
       },

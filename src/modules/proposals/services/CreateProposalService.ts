@@ -88,6 +88,8 @@ export class CreateProposalService {
         customer_id: customer.id
       });
 
+      console.log(proposal);
+
       if (proposal) {
         const settings = await this.entrepreneurSettingsRepository.findByCompany(proposal.company_id);
 

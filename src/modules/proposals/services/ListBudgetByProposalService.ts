@@ -25,13 +25,17 @@ export class ListBudgetByProposalService {
       throw new AppError("Proposal not found");
     }
 
-    const budget = await this.budgetRepository.findBudgetByProposal(proposal_id);
+    let budget = await this.budgetRepository.findBudgetByProposal(proposal_id);
 
-    const returnBudget = {
-      ...budget,
-      files: getBudgetFiles(budget, "budgets")
+    if (budget) {
+      budget = {
+        ...budget,
+        files: getBudgetFiles(budget, "budgets")
+      }
     }
 
-    return returnBudget;
+    console.log(budget);
+
+    return budget;
   }
 }
