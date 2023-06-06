@@ -18,8 +18,8 @@ export class FindServiceByCompanyController {
 
     const services = await findServiceByCompanyService.execute({
       company_id,
-      page: parseInt(page as string),
-      perPage: parseInt(perPage as string),
+      page: page ? parseInt(page as string) : undefined,
+      perPage: perPage ? parseInt(perPage as string) : undefined,
       name: serviceName,
       category: serviceCategory,
       highlight_service: serviceHighlightService

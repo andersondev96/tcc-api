@@ -47,8 +47,8 @@ export class FindServiceByCompanyService {
     );
 
     const totalResults = services.length;
-    const start = (page - 1) * perPage;
-    const end = start + perPage;
+    const start = page ? (page - 1) * perPage : 1;
+    const end = perPage ? start + perPage : totalResults;
     const servicesByPage = services.slice(start, end);
 
     services.map(service => (
