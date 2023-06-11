@@ -41,7 +41,8 @@ export class AcceptOrRejectProposalService {
 
     const proposal = await this.proposalRepository.updateStatus(proposal_id, status);
 
-    const templatePath = resolve(__dirname, "..", "views", "emails", "acceptedOrRejectProposal.hbs");
+    const templatePathAccept = resolve(__dirname, "..", "views", "emails", "acceptedProposal.hbs");
+    const templatePathReject = resolve(__dirname, "..", "views", "emails", "rejecteProposal.hbs");
 
     Handlebars.registerHelper("isEqual", function (status, options) {
       if (status == "Proposta aceita") {
@@ -72,15 +73,29 @@ export class AcceptOrRejectProposalService {
 
         const email = proposal.company.user.email;
 
-        await this.mailProvider.sendMail(
-          email,
-          `${status === "Proposta aceita" ?
-            "Proposta de orçamento aceita" :
-            "Proposta de orçamento recusada"
-          }`,
-          variables,
-          templatePath
-        );
+        if (status === "Proposta aceita") {
+          await this.mailProvider.sendMail(
+            email,
+            `${status === "Proposta aceita" ?
+              "Proposta de orçamento aceita" :
+              "Proposta de orçamento recusada"
+            }`,
+            variables,
+            templatePathAccept
+          );
+        } else {
+          await this.mailProvider.sendMail(
+            email,
+            `${status === "Proposta aceita" ?
+              "Proposta de orçamento aceita" :
+              "Proposta de orçamento recusada"
+            }`,
+            variables,
+            templatePathReject
+          );
+        }
+
+
       }
     }
 
