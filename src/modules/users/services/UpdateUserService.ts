@@ -47,7 +47,9 @@ export class UpdateUserService {
       return {
         ...user,
         avatar: user.avatar
-          ? `${process.env.APP_API_URL}/avatar/${user.avatar}`
+          ? `${process.env.disk === "local"
+            ? process.env.APP_API_URL
+            : process.env.AWS_BUCKET_URL}/avatar/${user.avatar}`
           : null
       };
     }
@@ -63,9 +65,11 @@ export class UpdateUserService {
 
     delete user.password;
 
-    return {
+    const returnUser = {
       ...user,
       avatar: getUserAvatarUrl(user, "avatar")
     };
+
+    return returnUser;
   }
 }
