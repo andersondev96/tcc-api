@@ -5,6 +5,7 @@ import authConfig from "@config/auth";
 
 
 import { IDateProvider } from "@shared/container/providers/DateProvider/models/IDateProvider";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/models/IStorageProvider";
 import { IHashProvider } from "../providers/HashProvider/models/IHashProvider";
 import { IUsersRepository } from "../repositories/IUsersRepository";
 import { IUsersTokenRepository } from "../repositories/IUsersTokenRepository";
@@ -36,7 +37,9 @@ export class GoogleAuthenticationService {
     @inject("HashProvider")
     private hashProvider: IHashProvider,
     @inject("DayjsDateProvider")
-    private dateProvider: IDateProvider
+    private dateProvider: IDateProvider,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider
   ) { }
 
   public async execute({ name, email, avatar }: IRequest): Promise<IResponse> {
@@ -51,6 +54,10 @@ export class GoogleAuthenticationService {
         password: hashPassword,
         avatar
       });
+
+      if (avatar) {
+        await this.storageProvider.save(avatar, "avatar");
+      }
 
     }
 
