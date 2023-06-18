@@ -8,6 +8,7 @@ import { companyValidator } from "@modules/companies/validator/CompanyValidator"
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 import { ensureEntrepreneur } from "@shared/infra/http/middlewares/ensureEntrepreneur";
 
+import { updateCompanyValidator } from "@modules/companies/validator/UpdateCompanyValidator";
 import { CreateCompanyController } from "../controllers/CreateCompanyController";
 import { CreateImageCompanyController } from "../controllers/CreateImageCompanyController";
 import { DeleteCompanyController } from "../controllers/DeleteCompanyController";
@@ -56,7 +57,7 @@ companiesRouter.post(
 companiesRouter.get("/me", ensureAuthenticated, findCompanyByUserController.handle);
 companiesRouter.get("/:id", findByCompanyController.handle);
 companiesRouter.get("/", listAllCompaniesController.handle);
-companiesRouter.put("/:id", updateCompanyController.handle);
+companiesRouter.put("/:id", celebrate(updateCompanyValidator), updateCompanyController.handle);
 companiesRouter.put(
   "/schedules/:id",
   ensureAuthenticated,

@@ -5,8 +5,8 @@ import { customMessage } from "@shared/utils/errors";
 const updateCompanyValidator = {
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().required().messages(customMessage("name")),
-    cnpj: Joi.string().min(14).max(18).messages(customMessage("cnpj")),
-    category: Joi.string().required().messages(customMessage("category")),
+    cnpj: Joi.string().min(14).max(18).empty("").messages(customMessage("cnpj")),
+    category_id: Joi.string().required().messages(customMessage("category")),
     description: Joi.string().messages(customMessage("description")),
     services: Joi.array().min(1).max(5).messages(customMessage("services")),
     physical_localization: Joi.boolean().required().messages(customMessage("physical_localization")),
