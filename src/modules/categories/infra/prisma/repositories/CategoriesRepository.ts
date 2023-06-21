@@ -57,7 +57,11 @@ export class CategoriesRepository implements ICategoriesRepository {
   }
 
   public async listCategories(): Promise<Category[]> {
-    const categories = await prisma.category.findMany();
+    const categories = await prisma.category.findMany({
+      orderBy: {
+        name: 'asc'
+      }
+    });
 
     return categories;
   }
