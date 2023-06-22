@@ -28,7 +28,8 @@ export class FindServiceByCompanyService {
 
   public async execute({
     company_id,
-    page, perPage,
+    page = 1,
+    perPage,
     name, category,
     highlight_service
   }: IRequest): Promise<{ services: Service[], totalResults: number }> {
@@ -47,8 +48,8 @@ export class FindServiceByCompanyService {
     );
 
     const totalResults = services.length;
-    const start = page ? (page - 1) * perPage : 1;
-    const end = perPage ? start + perPage : totalResults;
+    const start = perPage ? (page - 1) * perPage : (page - 1) * totalResults;
+    const end = perPage ? start + perPage : start + totalResults;
     const servicesByPage = services.slice(start, end);
 
     services.map(service => (
