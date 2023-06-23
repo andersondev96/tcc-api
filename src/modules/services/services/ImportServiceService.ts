@@ -54,6 +54,8 @@ export class ImportServiceService {
           company_id
         });
         importedServices.push(createdService);
+      } else {
+        throw new AppError("Services not found");
       }
     }));
 
