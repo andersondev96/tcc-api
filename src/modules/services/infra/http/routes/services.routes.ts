@@ -47,7 +47,7 @@ servicesRouter.post(
   "/import/:company_id",
   upload.single("file"),
   ensureAuthenticated,
-  ensureAuthenticated,
+  ensureEntrepreneur,
   importServiceController.handle
 );
 servicesRouter.get("/:service_id", showServiceController.handle);
