@@ -38,6 +38,11 @@ export class CustomersRepository implements ICustomersRepository {
         user: {
           name
         }
+      },
+      orderBy: {
+        user: {
+          name: "asc"
+        }
       }
     });
 
@@ -51,7 +56,7 @@ export class CustomersRepository implements ICustomersRepository {
       include: {
         user: true,
         customer_company: true
-      }
+      },
     });
 
     return customer;
@@ -64,6 +69,11 @@ export class CustomersRepository implements ICustomersRepository {
           every: {
             company_id
           }
+        }
+      },
+      orderBy: {
+        user: {
+          name: "asc"
         }
       }
     });

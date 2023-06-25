@@ -59,6 +59,9 @@ export class ServicesRepository implements IServicesRepository {
         }),
         ...(category && { category }),
         ...(highlight_service && { highlight_service })
+      },
+      orderBy: {
+        name: "asc"
       }
     });
 

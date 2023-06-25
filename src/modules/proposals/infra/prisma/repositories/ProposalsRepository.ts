@@ -47,6 +47,9 @@ export class ProposalsRepository implements IProposalsRepository {
 
     const proposals = await prisma.proposal.findMany({
       where: { customer_id },
+      orderBy: {
+        createdAt: "asc"
+      },
       include: {
         company: {
           include: {
@@ -69,6 +72,9 @@ export class ProposalsRepository implements IProposalsRepository {
 
     const proposals = await prisma.proposal.findMany({
       where: { company_id },
+      orderBy: {
+        createdAt: "asc"
+      },
       include: {
         company: {
           include: {
@@ -107,6 +113,9 @@ export class ProposalsRepository implements IProposalsRepository {
             }
           }
         ]
+      },
+      orderBy: {
+        createdAt: "asc"
       },
       include: {
         company: {
