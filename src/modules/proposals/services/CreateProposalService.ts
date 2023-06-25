@@ -63,6 +63,11 @@ export class CreateProposalService {
           status: "Em negociação"
         });
 
+        await this.customerCompanyRepository.findCompanyWithCustomer(
+          company_id,
+          customer.id
+        );
+
       } else {
 
         const customerCompanyAlreadyExists = await this.customerCompanyRepository.findCompanyWithCustomer(
