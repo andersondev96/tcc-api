@@ -35,7 +35,7 @@ jobs:
           target: "~/app/tcc-api"
           
       - name: Update API
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v1.1.1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -46,4 +46,4 @@ jobs:
             npm install
             npx prisma migrate deploy
             pm2 restart api
-          
+            
