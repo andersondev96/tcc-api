@@ -1,5 +1,11 @@
 # Trabalho de conclusão de curso (TCC)
 
+<div>
+ <img src="https://img.shields.io/github/languages/count/andersondev96/tcc-api">
+    <img src="https://img.shields.io/github/repo-size/andersondev96/tcc-api">
+    <img src="https://img.shields.io/github/last-commit/andersondev96/tcc-api">
+</div>
+
 <b> Índice </b>
 <div>
 <ul>
