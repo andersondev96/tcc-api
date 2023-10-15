@@ -1,4 +1,7 @@
 # Trabalho de conclusão de curso (TCC)
+Projeto desenvolvido para o trabalho de conclusão de curso (TCC) de Sistemas de Informação - UFOP.
+
+
 
 <div>
  <img src="https://img.shields.io/github/license/andersondev96/tcc-api"/>
@@ -20,8 +23,6 @@
 </ul>
 <div>
 
-
-Projeto desenvolvido para o trabalho de conclusão de curso (TCC) de Sistemas de Informação - UFOP.
 
 ## 📄 Sobre o projeto
 
@@ -46,6 +47,27 @@ Para a implementação do servidor, foi utilizada como linguagem de programaçã
   </a>
   <a href="https://www.docker.com/" target="_blank">
     <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
+  </a>
+  <a href="https://expressjs.com/pt-br/">
+    <img src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB">
+  </a>
+  <a href="https://babeljs.io/">
+    <img src="https://img.shields.io/badge/Babel-F9DC3e?style=for-the-badge&logo=babel&logoColor=black">
+  </a>
+  <a href="https://www.prisma.io/">
+    <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white">
+  </a>
+  <a href="https://socket.io/">
+    <img src="https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101">
+  </a>
+  <a class="https://jwt.io/">
+    <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens">
+  </a>
+  <a class="https://jestjs.io/pt-BR/">
+    <img src="https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white">
+  </a>
+  <a class="https://eslint.org/">
+    <img src="https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white">
   </a>
 </div>
 
@@ -171,7 +193,14 @@ REDIS_PASSWORD=your-redis-password
   </li>
   <li>Execute as migrations do prisma: <br>
   <code>npx prisma migrate dev</code></li>
-<li>Para testar as requisições você pode utilizar <i>softwares</i> como insomnia ou postman.
+  <li>
+    Com tudo configurado você poderá acessar a aplicação com o comando
+    
+  <code>npm run dev</code>
+  </li>
+  <li>A aplicação será executada na porta <code>3333</code> do servidor. Para acessar as rotas você precisar de um software para realizar requisições HTTP, como o Postman ou Insomnia. Nele você poderá acessar as rotas, com a seguinte URL:
+  
+<code>http://localhost:3333</code></li>
 
 As collections estão disponíveis no link abaixo:
 
