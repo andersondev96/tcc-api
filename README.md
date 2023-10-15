@@ -3,26 +3,26 @@
 <b> Índice </b>
 <div>
 <ul>
-<li><a href="#sobre-o-projeto">Sobre o projeto</a></li>
-<li><a href="#tecnologias-utilizadas">Tecnologias utilizadas</a></li>
-<li><a href="#requisitos">Requisitos</a></li>
-<li><a href="#banco-de-dados">Banco de dados</a></li>
-<li><a href="#como-executar-a-aplicação">Como executar a aplicação</a></li>
-<li><a href="#deploy-da-aplicação">Deploy da aplicação</a></li>
-<li><a href="#como-contribuir">Como contribuir</a></li>
-<li><a href="#licença">Licença</a></li>
-<li><a href="#autor">Autor</a></li>
+<li><a href="#-sobre-o-projeto">Sobre o projeto</a></li>
+<li><a href="#-tecnologias-utilizadas">Tecnologias utilizadas</a></li>
+<li><a href="#-requisitos">Requisitos</a></li>
+<li><a href="#-banco-de-dados">Banco de dados</a></li>
+<li><a href="#-como-executar-a-aplicação">Como executar a aplicação</a></li>
+<li><a href="#-deploy-da-aplicação">Deploy da aplicação</a></li>
+<li><a href="#-como-contribuir">Como contribuir</a></li>
+<li><a href="#-licença">Licença</a></li>
+<li><a href="#-autor">Autor</a></li>
 </ul>
 <div>
 
 
 Projeto desenvolvido para o trabalho de conclusão de curso (TCC) de Sistemas de Informação - UFOP.
 
-## Sobre o projeto
+## 📄 Sobre o projeto
 
 O projeto desenvolvido tem o objetivo de auxiliar os microempreendedores individuais (MEIs), por meio de um sistema que permite divulgar os seu negócio e serviços, aproximando do seu público-alvo e aumentando o seu alcance.
 
-## Tecnologias utilizadas
+## 🧑‍💻 Tecnologias utilizadas
 
 Para a implementação do servidor, foi utilizada como linguagem de programação o TypeScript, com os bancos de dados Postgres e Redis e a biblioteca do Node.js.
 
@@ -45,7 +45,7 @@ Para a implementação do servidor, foi utilizada como linguagem de programaçã
 </div>
 
 
-## Requisitos
+## 🔧 Requisitos
 
 ### Usuários
 <ul>
@@ -114,13 +114,13 @@ Para a implementação do servidor, foi utilizada como linguagem de programaçã
   <li>Remover conta</li>
 </ul>
 
-## Banco de dados
+## 🔑 Banco de dados
 
 O banco de dados principal foi o potgreSQL, abaixo é exibido o diagrama ER com as tabelas e relacionamentos.
 
 <img src="tcc-api - public.png">
 
-## Como executar a aplicação
+## 🚀 Como executar a aplicação
 Antes de executar a aplicação certifique que você tenha instalada uma versão LTS do Node, npm e docker.
 
 Para executar a aplicação deve seguir os seguintes passos:
@@ -177,36 +177,38 @@ As collections estão disponíveis no link abaixo:
 </a>
 </ol>
 
-## Deploy da aplicação
+## ⚙ Deploy da aplicação
 O deploy da aplicação foi feito utilizando a plataforma AWS da Amazon, utilizando o EC2.
 
 Para o deploy foi criada uma máquina virtual do ubuntu e configurada as chaves de SSH.
 
 Além disso foi utilizado o Proxy Reverso, com o <i>nginx</i> e o PM2 para gerenciar os processos do Node.
 
-## Como contribuir
+## 🤝 Como contribuir
 <ol>
 <li>
   Faça um fork do repositório.
   Crie uma nova branch com as suas alterações:
   
-  <code>
-    git checkout -b my-feature
-  </code>
+  <code>git checkout -b my-feature</code>
   </li>
 
-<li>Salve as suas alterações e crie uma mensagem de commit, dizendo o que você fez: git commit -m "feature: My new feature".
+<li>Salve as suas alterações e crie uma mensagem de commit, dizendo o que você fez: 
+  
+  <code>git commit -m "feature: My new feature"</code>
 </li>
 
 <li>
-Envie as suas alterações:git push origin my-feature.
+Envie as suas alterações: 
+  
+  <code>git push origin my-feature</code>
 </li>
 </ol>
 
-## Licença
+## 📝 Licença
  <p>Este projeto está sobre a licença <a href="LICENSE">MIT</a>.
 
-## Autor
+## 👥 Autor
 
 <div style="display:flex; flex-direction:column; align-items: center;">
   <a href="https://www.linkedin.com/in/anderson-fernandes96/">
